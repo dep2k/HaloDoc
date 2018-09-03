@@ -1,27 +1,19 @@
 
 import React from 'react';
-import { createStore } from "redux";
 import { Provider } from "react-redux";
 import AppStackNavigator from './src/Navigation/AppNavigator'
+import store from './src/store'
 
-
-const initialState = {
-  counter: 0
-};
-
-const rootReducer = (state = initialState, action) => {
-
-  switch (action.type) {
-
-    case 'INCREASE_COUNTER':
-      return { counter: state.counter + 1 }
-    case 'DECREASE_COUNTER':
-      return { counter: state.counter - 1 }
-  }
-  return state;
-};
-
-const store = createStore(rootReducer);
+// import AWSAppSyncClient from "aws-appsync";
+// import { Rehydrated } from "aws-appsync-react";
+// import { AUTH_TYPE } from "aws-appsync/lib/link/auth-link";
+// import { graphql, ApolloProvider, compose } from "react-apollo";
+// import * as AWS from "aws-sdk";
+// import AppSync from "./AppSync.js";
+// import AllPostsQuery from "./Queries/AllPostsQuery";
+// import NewPostMutation from "./Queries/NewPostMutation";
+// import DeletePostMutation from "./Queries/DeletePostMutation";
+// import UpdatePostMutation from "./Queries/UpdatePostMutation";
 
 export default class App extends React.Component {
 
