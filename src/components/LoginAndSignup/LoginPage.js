@@ -1,5 +1,6 @@
 import React  from 'react';
 import {connect} from 'react-redux'
+//import gql from 'graphql-tag'
 
 import {
   Stylesheet,
@@ -24,7 +25,7 @@ class LoginPage extends React.Component {
                 color="#ffaa00" />
 
                 <TouchableOpacity onPress = {()=>this.props.increaseCounter()} >
-                  <Text>Strings.hello</Text>
+                  <Text>Increment</Text>
                 </TouchableOpacity>
 
                 <Text>{this.props.counter}</Text>
