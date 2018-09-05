@@ -17,7 +17,7 @@ class TestPageUI extends React.Component {
      //For justifyContent available options are
      //flex-start, center, flex-end, space-around, space-between and space-evenly.
 
-        <View style={{ flex: 1, flexDirection: 'column',justifyContent: 'center', justifyContent:'space-evenly',
+        <View style={{ flex: 1, flexDirection: 'row',justifyContent: 'flex-start', justifyContent:'space-evenly',
                        alignItems: 'center'}}>
         <View style={{ width: 150, height: 150, backgroundColor: 'powderblue' }} />
         <View style={{ width: 150, height: 150, backgroundColor: 'skyblue' }} />
