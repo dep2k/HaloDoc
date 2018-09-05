@@ -44,7 +44,7 @@ class ButtonUI extends React.Component {
                         onPress={this._onPressButton}
                          underlayColor= "white">
                     <View style={styles.button}>
-                        <Text style={styles.buttonText}>TouchableHighlight</Text>
+                        <Text style={styles.buttonText}>TouchableHighlight Modified</Text>
                     </View>
                  </TouchableHighlight>
                 <TouchableOpacity onPress={this._onPressButton}>
