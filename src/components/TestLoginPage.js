@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 
+
 class TestLoginPage extends React.Component {
   _onPressButton() {
     Alert.alert("You tapped the button!");
@@ -24,21 +25,13 @@ class TestLoginPage extends React.Component {
           backgroundColor: "lightblue"
         }}
       >
-        <View
-          style={{
-            position: "absolute",
-            height: 60,
-            width: "100%",
-            justifyContent: "flex-start",
-            backgroundColor: "blue"
-          }}
-        />
+   
         <Image
           source={require("./images/ImageLogo.jpg")}
           style={{
             height: 80,
             width: 100,
-            marginTop: 80,
+            marginTop: 20,
             marginLeft: 240,
             backgroundColor: "transparent"
           }}
@@ -51,7 +44,7 @@ class TestLoginPage extends React.Component {
             width: "100%",
             height: 400,
             alignItems: "center",
-            paddingTop: 30
+            paddingTop: 80
           }}
         >
           <Text
