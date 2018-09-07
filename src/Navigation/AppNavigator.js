@@ -4,16 +4,25 @@ import MainMenuPage from '../components/MainMenuPage'
 import TestLoginPage from '../components/TestLoginPage'
 import PetCategories from '../components/PetRegistration/PetCategories'
 import { createStackNavigator } from 'react-navigation'
+
 import TestPageUI from '../components/TestPageUI'
 import WelcomePage from '../components/LoginAndSignup/WelcomePage'
 import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
-// import  TestPage from '../components/TestPage'
+ 
 // import TextInputUI from '../components/TextInputUI'
 
 // import ButtonUI from '../components/ButtonUI'
 // import TestFlatList from '../components/TestFlatList'
 
 const AppStackNavigator = createStackNavigator(
+     {
+       MainMenuPage : {
+         screen: MainMenuPage,
+         navigationOptions: {
+           header: null
+         }
+       }
+     },
      {
        RegistrationPage: {
          screen: RegistrationPage,
@@ -54,10 +63,7 @@ const AppStackNavigator = createStackNavigator(
       })
     },
 
-    Menu: {
-      screen: MainMenuPage
-    },
-
+    
     TestPageUI: {
       screen: TestPageUI
     }
