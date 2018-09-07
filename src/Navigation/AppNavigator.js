@@ -4,15 +4,34 @@ import MainMenuPage from '../components/MainMenuPage'
 import TestLoginPage from '../components/TestLoginPage'
 import PetCategories from '../components/PetRegistration/PetCategories'
 import { createStackNavigator } from 'react-navigation'
-
+import TestPageUI from '../components/TestPageUI'
+import WelcomePage from '../components/LoginAndSignup/WelcomePage'
+import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 // import  TestPage from '../components/TestPage'
 // import TextInputUI from '../components/TextInputUI'
-// import TestPageUI from '../components/TestPageUI'
+
 // import ButtonUI from '../components/ButtonUI'
 // import TestFlatList from '../components/TestFlatList'
 
 const AppStackNavigator = createStackNavigator(
-  {
+     {
+       RegistrationPage: {
+         screen: RegistrationPage,
+         navigationOptions: {
+            header: null
+         }
+       }
+     },
+     {
+      WelcomePage:{
+        screen: WelcomePage,
+        navigationOptions: {
+          header: null
+        }
+      }
+  },
+     
+   {
     PetCategories: {
       screen: PetCategories,
       navigationOptions: {
@@ -36,16 +55,15 @@ const AppStackNavigator = createStackNavigator(
     },
 
     Menu: {
-        screen: MainMenuPage
+      screen: MainMenuPage
     },
-    // ButtonUI: ButtonUI,
-    // TestFlatList: TestFlatList,
-    // TextInputUI: TextInputUI,
-    // TestPageUI : TestPageUI,
-    // Test: TestPage,
+
+    TestPageUI: {
+      screen: TestPageUI
+    }
   },
   {
-    initialRouteName: "PetCategories"
+    initialRouteName: "TestPageUI"
   }
 );
 
