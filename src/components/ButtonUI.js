@@ -4,7 +4,7 @@ import { View, Alert, Button, StyleSheet, Text, Platform, TouchableHighlight
 
 class ButtonUI extends React.Component {
     _onPressButton () {
-    Alert.alert('You tapped the button!');
+    Alert.alert('You tapped the button!')
     }
     _onLongPressButton() {
         Alert.alert('You long-pressed the button!')

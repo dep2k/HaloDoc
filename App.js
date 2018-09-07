@@ -12,6 +12,15 @@ import * as AWS from "aws-sdk";
 import AppSync from "./AppSync.js";
 
 
+
+// const client = new AWSAppSyncClient({
+//   url: awsconfig.graphqlEndpoint,
+//   region: awsconfig.region,
+//   auth: { type: AUTH_TYPE.API_KEY, apiKey: awsconfig.apiKey }
+// });
+
+
+//import AppSync from "./AppSync.js";
 // import AllPostsQuery from "./Queries/AllPostsQuery";
 // import NewPostMutation from "./Queries/NewPostMutation";
 // import DeletePostMutation from "./Queries/DeletePostMutation";
@@ -51,6 +60,7 @@ export default class App extends React.Component {
       </ApolloProvider>
 
     );
+     
   }
 }
 
