@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text ,ImageBackground} from "react-native";
 
 
 class Welcomepage extends React.Component {

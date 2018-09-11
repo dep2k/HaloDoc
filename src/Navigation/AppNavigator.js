@@ -8,39 +8,54 @@ import { createStackNavigator } from 'react-navigation'
 import TestPageUI from '../components/TestPageUI'
 import WelcomePage from '../components/LoginAndSignup/WelcomePage'
 import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
- 
+import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
+import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
 // import TextInputUI from '../components/TextInputUI'
 
 // import ButtonUI from '../components/ButtonUI'
 // import TestFlatList from '../components/TestFlatList'
 
 const AppStackNavigator = createStackNavigator(
-     {
-       MainMenuPage : {
-         screen: MainMenuPage,
-         navigationOptions: {
-           header: null
-         }
-       }
-     },
-     {
-       RegistrationPage: {
-         screen: RegistrationPage,
-         navigationOptions: {
-            header: null
-         }
-       }
-     },
-     {
-      WelcomePage:{
-        screen: WelcomePage,
-        navigationOptions: {
-          header: null
-        }
+  {
+    PetRegistrationForm: {
+      screen: PetRegistrationForm,
+      navigationOptions: {
+        header: null
       }
+    }
   },
-     
-   {
+  {
+    SuccesfulLogin: {
+      screen: SuccesfulLogin,
+      navigationOptions: {
+        header: null
+      }
+    }
+  },
+
+  {
+    MainMenuPage: {
+      screen: MainMenuPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    RegistrationPage: {
+      screen: RegistrationPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    //Problem with this page
+    WelcomePage: {
+      screen: WelcomePage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
     PetCategories: {
       screen: PetCategories,
       navigationOptions: {
@@ -52,6 +67,7 @@ const AppStackNavigator = createStackNavigator(
       screen: TestLoginPage
     },
 
+    //Problem with this page
     Login: {
       screen: LoginPage,
       navigationOptions: ({ navigation }) => ({
@@ -63,13 +79,13 @@ const AppStackNavigator = createStackNavigator(
       })
     },
 
-    
     TestPageUI: {
       screen: TestPageUI
     }
   },
+
   {
-    initialRouteName: "TestPageUI"
+    initialRouteName: "PetRegistrationForm"
   }
 );
 
