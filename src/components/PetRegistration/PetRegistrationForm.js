@@ -1,6 +1,7 @@
 import React from "react";
 import {View, Image, StyleSheet, ScrollView, Text, TextInput, TouchableOpacity} from "react-native";
-
+import { CheckBox } from "react-native-elements"
+;
 class PetRegistrationForm extends React.Component {
 
     render() {
@@ -9,6 +10,7 @@ class PetRegistrationForm extends React.Component {
             <Text style={{ fontWeight: "bold", fontSize: 20, color: "#BED885", width: "80%", marginBottom: "5%", marginHorizontal: "10%", textAlign: "center" }}>
               HISTORIA CLINICA
             </Text>
+        
             <View style={{ backgroundColor: "transparent", height: 220, width: "90%", marginHorizontal: "5%" }}>
               <View style={{ flexDirection: "row", height: 30, width: "100%", marginBottom: 5 }}>
                 <TextInput style={{ width: "100%", height: 30, borderBottomWidth: 1, justifyContent: "flex-end", alignItems: "center" }} placeholder="Nombre" placeholderColor="grey" />

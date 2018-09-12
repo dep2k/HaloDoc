@@ -22,18 +22,15 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    }
-  },
-  {
+    },
+
     SuccesfulLogin: {
       screen: SuccesfulLogin,
       navigationOptions: {
         header: null
       }
-    }
-  },
+    },
 
-  {
     MainMenuPage: {
       screen: MainMenuPage,
       navigationOptions: {
@@ -83,9 +80,8 @@ const AppStackNavigator = createStackNavigator(
       screen: TestPageUI
     }
   },
-
   {
-    initialRouteName: "PetRegistrationForm"
+    initialRouteName: "TestPageUI"
   }
 );
 
