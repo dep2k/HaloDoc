@@ -24,37 +24,20 @@ class LoginPage extends React.Component {
                 title="Go To Home"
                 color="#ffaa00" />
 
-                <TouchableOpacity onPress = {()=>this.props.increaseCounter()} >
-                  <Text>Increment</Text>
-                </TouchableOpacity>
+              <TouchableOpacity >
+                <Text>Increment</Text>
+              </TouchableOpacity>
 
-                <Text>{this.props.counter}</Text>
+              <Text>Something</Text>
 
-                <TouchableOpacity onPress = {() => this.props.decreaseCounter()}>
-                  <Text>Decrement</Text>
-                </TouchableOpacity>
+              <TouchableOpacity >
+                <Text>Decrement</Text>
+              </TouchableOpacity>
 
           </View>
       )
   }
 }
 
+export default LoginPage;
 
-
-function mapStateToProps (state) {
-  return {
-    counter: state.counter
-  }
-}
-
-function  mapDispatchToProps (dispatch) {
-  return {
-    increaseCounter: () =>   dispatch({type:'INCREASE_COUNTER'}),
-    decreaseCounter: () => dispatch({type:'DECREASE_COUNTER'}),
-    
-  }
-}
-
-
-
-export default connect(mapStateToProps,mapDispatchToProps)(LoginPage)

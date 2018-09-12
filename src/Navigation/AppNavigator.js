@@ -67,13 +67,9 @@ const AppStackNavigator = createStackNavigator(
     //Problem with this page
     Login: {
       screen: LoginPage,
-      navigationOptions: ({ navigation }) => ({
-        title: "Home",
-        headerStyle: styles.headerStyle,
-        headerTitle: <Text>Home</Text>,
-        headerLeft: null,
-        headerRight: null
-      })
+      navigationOptions: {
+        header: null
+      }
     },
 
     TestPageUI: {
@@ -81,7 +77,7 @@ const AppStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "PetRegistrationForm"
+    initialRouteName: "Login"
   }
 );
 
