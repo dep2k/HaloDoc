@@ -10,6 +10,8 @@ import WelcomePage from '../components/LoginAndSignup/WelcomePage'
 import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
+
+import VetListPage from '../components/VetList/VetListPage'
 // import TextInputUI from '../components/TextInputUI'
 
 // import ButtonUI from '../components/ButtonUI'
@@ -30,7 +32,12 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
-
+    VetListPage: {
+      screen: VetListPage,
+      navigationOptions: {
+        header: null
+    }
+  },
     MainMenuPage: {
       screen: MainMenuPage,
       navigationOptions: {
@@ -71,13 +78,13 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
-
+    
     TestPageUI: {
       screen: TestPageUI
     }
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "VetListPage"
   }
 );
 
