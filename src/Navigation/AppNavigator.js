@@ -5,6 +5,7 @@ import TestLoginPage from '../components/TestLoginPage'
 import PetCategories from '../components/PetRegistration/PetCategories'
 import { createStackNavigator } from 'react-navigation'
 import TestPageUI from '../components/TestPageUI'
+import Demo from '../components/Demo'
 
 // import  TestPage from '../components/TestPage'
 // import TextInputUI from '../components/TextInputUI'
@@ -14,6 +15,13 @@ import TestPageUI from '../components/TestPageUI'
 
 const AppStackNavigator = createStackNavigator(
   {
+    Demo: {
+        screen: Demo,
+        navigationOptions: {
+          header: null
+        }
+    },
+
     PetCategories: {
       screen: PetCategories,
       navigationOptions: {
@@ -47,7 +55,7 @@ const AppStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "TestPageUI"
+    initialRouteName: "Demo"
   }
 );
 
