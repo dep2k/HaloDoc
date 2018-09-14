@@ -21,50 +21,29 @@ const AppStackNavigator = createStackNavigator(
   {
     PetRegistrationForm: {
       screen: PetRegistrationForm,
-      navigationOptions: {
-        header: null
-      }
     },
 
     SuccesfulLogin: {
       screen: SuccesfulLogin,
-      navigationOptions: {
-        header: null
-      }
     },
     VetListPage: {
       screen: VetListPage,
-      navigationOptions: {
-        header: null
-    }
   },
     MainMenuPage: {
       screen: MainMenuPage,
-      navigationOptions: {
-        header: null
-      }
     },
 
     RegistrationPage: {
       screen: RegistrationPage,
-      navigationOptions: {
-        header: null
-      }
     },
 
     //Problem with this page
     WelcomePage: {
       screen: WelcomePage,
-      navigationOptions: {
-        header: null
-      }
     },
 
     PetCategories: {
       screen: PetCategories,
-      navigationOptions: {
-        header: null
-      }
     },
 
     TestLoginPage: {
@@ -72,11 +51,8 @@ const AppStackNavigator = createStackNavigator(
     },
 
     //Problem with this page
-    Login: {
+    LoginPage: {
       screen: LoginPage,
-      navigationOptions: {
-        header: null
-      }
     },
     
     TestPageUI: {
@@ -84,7 +60,7 @@ const AppStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "VetListPage"
+    initialRouteName: "RegistrationPage"
   }
 );
 

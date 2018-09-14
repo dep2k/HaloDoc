@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import SVGImage from "react-native-svg-image";
 
 class MainMenuPage extends React.Component {
-
+    static navigationOptions =  ({ navigation}) => ({
+      headerTitle: (
+        <SVGImage style = {StyleSheet.absoluteFill}
+              source = {require ('./images/header.svg')}>
+        </SVGImage>
+      )
+    })
     render() {
         return <View style={styles.mainContainer}>
-            <Text style={{ fontSize: 25, color: "white", marginTop: "30%", fontWeight: "bold", marginBottom: "15%" }}>
+            <Text style={{ fontSize: 25, color: "white", marginTop: "15%", fontWeight: "bold", marginBottom: "15%" }}>
               MENU
             </Text>
             <View style={styles.buttonsMainContainer}>

@@ -3,7 +3,23 @@ import { View, Image, StyleSheet, Text ,ImageBackground} from "react-native";
 
 
 class Welcomepage extends React.Component {
-  render() {
+ 
+
+  constructor(props){
+    super(props)
+    this.navigation = props.navigation;
+  }
+   
+  componentDidMount () {
+    setTimeout(function(){
+        this.navigation.navigate('LoginPage');
+        console.log("Hello")
+      }, 2000);
+  }
+  
+
+  render() 
+  {  
     return (
       <View style={styles.mainContainer}>
         <Image
