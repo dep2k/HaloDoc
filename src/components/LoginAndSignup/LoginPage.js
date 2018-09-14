@@ -1,6 +1,7 @@
 
 import React from "react";
-import {
+import { 
+  StyleSheet,
   View,
   TextInput,
   Text,
@@ -26,26 +27,26 @@ class LoginPage extends React.Component {
       this.props.navigation.navigate('RegistrationPage');  
  }
   render() {
-    return <View style={{ flex: 1, flexDirection: "column", backgroundColor: "white" }}>
-        <Image source={require("../images/ImageLogo.jpg")} style={{ height: 80, width: 100, marginTop: 20, marginLeft: 240, backgroundColor: "transparent" }} />
-        <View style={{ flexDirection: "column", justifyContent: "flex-start", backgroundColor: "transparent", width: "100%", height: 400, alignItems: "center", paddingTop: 80 }}>
-          <Text style={{ fontSize: 15, fontWeight: "normal", color: "#7C7B7B", marginRight: 220, marginBottom: 5 }}>
+    return <View style = {styles.mainContainer}>
+        <Image source={require("../images/ImageLogo.jpg")} 
+               style= { styles.topImage } />
+        <View style = { styles.middleContainer}>
+          <Text style = {styles.loginText}>
             Usuario
           </Text>
-          <TextInput style={{ height: 40, width: 300, borderRadius: 20, backgroundColor: "#F8F8F8", marginBottom: 30, paddingHorizontal: 10 }} placeholder="Enter your Email!" />
-          <Text style={{ fontSize: 15, fontWeight: "normal", color: "#7C7B7B", marginRight: 185, marginBottom: 5 }}>
+          <TextInput style={ styles.textInput}
+                     placeholder="Enter your Email!" />
+          <Text style = {styles.passwordText}>
             Contrasena
           </Text>
-          <TextInput style={{ height: 40, width: 300, borderRadius: 20, backgroundColor: "#F8F8F8", marginBottom: 40, paddingHorizontal: 10 }} placeholder="Password" />
+          <TextInput style={ styles.textInput} 
+                     placeholder="Password" />
           <TouchableOpacity onPress={()=>{this.LogInButtonClick();}}
-                             style={{  height: 40, width: 300, backgroundColor:'mediumseagreen', justifyContent:'center',
-                                      alignItems:'center', borderRadius: 20}}>
+                             style = {styles.loginButton }>
                        <Text style={{ color: "white", fontSize: 20 }}>
                            INICIO DE SESION
                         </Text>
          </TouchableOpacity>
-            
-            
           <Text
             style={{
               fontSize: 17,
@@ -87,6 +88,58 @@ class LoginPage extends React.Component {
 //       )
 //   }
 // }
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1, 
+        flexDirection: "column", 
+        backgroundColor: "white"
+    },
+    topImage:{
+      height: 80, 
+      width: 100, 
+      marginTop: 20, 
+      marginLeft: 240, 
+      backgroundColor: "transparent"
+    },
+    loginButton: {
+      height: 40,
+      width: 300,
+      backgroundColor:'mediumseagreen', 
+      justifyContent:'center',
+      alignItems:'center', borderRadius: 20
+    },
+    middleContainer: {
+      flexDirection: "column", 
+      justifyContent: "flex-start", 
+      backgroundColor: "transparent", 
+      width: "100%", height: 400, 
+      alignItems: "center", 
+      paddingTop: 80
+    },
+    textInput: {
+      height: 40, 
+      width: 300, 
+      borderRadius: 20, 
+      backgroundColor: "#F8F8F8", 
+      marginBottom: 40,
+      paddingHorizontal: 10
+    },
+    loginText: {
+      fontSize: 15, 
+      fontWeight: "normal", 
+      color: "#7C7B7B",  
+      marginBottom: 5,
+       marginRight: 190
+    },
+    passwordText:{
+       fontSize: 15, 
+      fontWeight: "normal", 
+      color: "#7C7B7B",  
+      marginBottom: 5,
+       marginRight: 180
+    }
+})
 
 export default LoginPage;
 

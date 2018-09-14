@@ -20,12 +20,7 @@ class MainMenuPage extends React.Component {
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                    style = {styles.touchableOpacityText} >
                     CONSULTAR
                   </Text>
                 </TouchableOpacity>
@@ -33,13 +28,7 @@ class MainMenuPage extends React.Component {
               <View style={styles.singleButtonContainer}>
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                  <Text style = {styles.touchableOpacityText} >
                     MI PERFIL
                   </Text>
                 </TouchableOpacity>
@@ -47,13 +36,7 @@ class MainMenuPage extends React.Component {
               <View style={styles.singleButtonContainer}>
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                  <Text style = {styles.touchableOpacityText} >
                     DIRECTORIO VETERINARIO
                   </Text>
                 </TouchableOpacity>
@@ -61,13 +44,7 @@ class MainMenuPage extends React.Component {
                 <View style={styles.singleButtonContainer}>
                     <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                     <TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                color: "white",
-                                fontWeight: "bold"
-                            }}
-                        >
+                        <Text style = {styles.touchableOpacityText} >
                             HISTORIAL DE CONSULTAS
                   </Text>
                     </TouchableOpacity>
@@ -75,13 +52,7 @@ class MainMenuPage extends React.Component {
                 <View style={styles.singleButtonContainer}>
                     <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                     <TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                color: "white",
-                                fontWeight: "bold"
-                            }}
-                        >
+                        <Text style = {styles.touchableOpacityText}>
                             HISTORIAL DE PAGOS
                   </Text>
                     </TouchableOpacity>
@@ -113,9 +84,11 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'flex-start',
       alignItems:'center',
-      
-      
-     
+  },
+  touchableOpacityText: {
+     fontSize: 18,
+     color: "white",
+     fontWeight: "bold"
   }
 });
 export default MainMenuPage;
