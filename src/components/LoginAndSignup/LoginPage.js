@@ -4,6 +4,7 @@
 import { Auth } from 'aws-amplify';
 import React from "react";
 import NavigationService from '../../NavigationService';
+import { I18n } from 'aws-amplify';
 
 
 import { 
@@ -73,7 +74,7 @@ class LoginPage extends React.Component {
           <TouchableOpacity onPress= { this._onSignInClick }
                              style = {styles.loginButton }>
                        <Text style={{ color: "white", fontSize: 20 }}>
-                           INICIO DE SESION
+                           {I18n.get('Sign In')}
                         </Text>
          </TouchableOpacity>
           <Text

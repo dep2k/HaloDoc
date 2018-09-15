@@ -1,11 +1,12 @@
 
 import React from 'react';
 //import { Provider } from "react-redux";
-import AppStackNavigator from './src/Navigation/AppNavigator'
 //import store from './src/store'
+
+import AppStackNavigator from './src/Navigation/AppNavigator'
 import Amplify, { Auth } from 'aws-amplify';
 import NavigationService from './src/NavigationService';
-
+import { setUpLanguage } from './Locale';
 
 Amplify.configure({
 
@@ -26,7 +27,7 @@ Amplify.configure({
 });
 
 const TopLevelNavigator =  AppStackNavigator;
-
+setUpLanguage();   // for I18n
 
 export default class App extends React.Component {
 
