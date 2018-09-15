@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import SVGImage from "react-native-svg-image";
 
 class MainMenuPage extends React.Component {
-
+    static navigationOptions =  ({ navigation}) => ({
+      headerTitle: (
+        <SVGImage style = {StyleSheet.absoluteFill}
+              source = {require ('./images/header.svg')}>
+        </SVGImage>
+      )
+    })
     render() {
         return <View style={styles.mainContainer}>
-            <Text style={{ fontSize: 25, color: "white", marginTop: "30%", fontWeight: "bold", marginBottom: "15%" }}>
+            <Text style={{ fontSize: 25, color: "white", marginTop: "15%", fontWeight: "bold", marginBottom: "15%" }}>
               MENU
             </Text>
             <View style={styles.buttonsMainContainer}>
@@ -13,12 +20,7 @@ class MainMenuPage extends React.Component {
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                    style = {styles.touchableOpacityText} >
                     CONSULTAR
                   </Text>
                 </TouchableOpacity>
@@ -26,13 +28,7 @@ class MainMenuPage extends React.Component {
               <View style={styles.singleButtonContainer}>
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                  <Text style = {styles.touchableOpacityText} >
                     MI PERFIL
                   </Text>
                 </TouchableOpacity>
@@ -40,13 +36,7 @@ class MainMenuPage extends React.Component {
               <View style={styles.singleButtonContainer}>
                 <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                 <TouchableOpacity>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: "white",
-                      fontWeight: "bold"
-                    }}
-                  >
+                  <Text style = {styles.touchableOpacityText} >
                     DIRECTORIO VETERINARIO
                   </Text>
                 </TouchableOpacity>
@@ -54,13 +44,7 @@ class MainMenuPage extends React.Component {
                 <View style={styles.singleButtonContainer}>
                     <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                     <TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                color: "white",
-                                fontWeight: "bold"
-                            }}
-                        >
+                        <Text style = {styles.touchableOpacityText} >
                             HISTORIAL DE CONSULTAS
                   </Text>
                     </TouchableOpacity>
@@ -68,13 +52,7 @@ class MainMenuPage extends React.Component {
                 <View style={styles.singleButtonContainer}>
                     <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
                     <TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                color: "white",
-                                fontWeight: "bold"
-                            }}
-                        >
+                        <Text style = {styles.touchableOpacityText}>
                             HISTORIAL DE PAGOS
                   </Text>
                     </TouchableOpacity>
@@ -106,9 +84,11 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'flex-start',
       alignItems:'center',
-      
-      
-     
+  },
+  touchableOpacityText: {
+     fontSize: 18,
+     color: "white",
+     fontWeight: "bold"
   }
 });
 export default MainMenuPage;

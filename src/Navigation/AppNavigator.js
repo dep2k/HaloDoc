@@ -10,6 +10,7 @@ import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
 import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
+import VetListPage from '../components/VetList/VetListPage'
 
 const AppStackNavigator = createStackNavigator({
 
@@ -19,45 +20,33 @@ const AppStackNavigator = createStackNavigator({
 
     PetRegistrationFormPage: {
       screen: PetRegistrationForm,
-      navigationOptions: {
-        header: null
-      }
     },
 
     SuccesfulLoginPage: {
       screen: SuccesfulLogin,
-      navigationOptions: {
-        header: null
-      }
     },
-
+    VetListPage: {
+      screen: VetListPage,
+  },
     MainMenuPage: {
       screen: MainMenuPage,
-      navigationOptions: {
-        header: null
-      }
     },
 
     RegistrationPage: {
       screen: RegistrationPage,
-      navigationOptions: {
+       navigationOptions: {
         header: null
       }
+
     },
 
     //Problem with this page
     WelcomePage: {
       screen: WelcomePage,
-      navigationOptions: {
-        header: null
-      }
     },
 
     PetCategoriesPage: {
       screen: PetCategories,
-      navigationOptions: {
-        header: null
-      }
     },
 
    
@@ -69,7 +58,6 @@ const AppStackNavigator = createStackNavigator({
       }
     }
 
-   
   },
   {
     initialRouteName: "WelcomePage"

@@ -1,7 +1,6 @@
 import React from "react";
 import {View, Image, StyleSheet, ScrollView, Text, TextInput, TouchableOpacity} from "react-native";
-import { CheckBox } from "react-native-elements"
-;
+
 class PetRegistrationForm extends React.Component {
 
     render() {
@@ -178,7 +177,8 @@ class PetRegistrationForm extends React.Component {
               </View>
           </ScrollView>;
     }
-} const styles = StyleSheet.create({
+} 
+const styles = StyleSheet.create({
     contentContainer: {
       flexDirection: "column",
       backgroundColor: "white",

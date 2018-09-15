@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Provider } from "react-redux";
+//import { Provider } from "react-redux";
 import AppStackNavigator from './src/Navigation/AppNavigator'
-import store from './src/store'
+//import store from './src/store'
 import Amplify, { Auth } from 'aws-amplify';
 import NavigationService from './src/NavigationService';
 
@@ -39,33 +39,4 @@ export default class App extends React.Component {
       />
     );
   }
-
-
-  // render() {
-  //   return (
-  //     <Provider store={store}>
-  //       <AppStackNavigator />
-  //     </Provider>
-  //   );
-  // }
-
-
 }
-
-/*
-export default class App extends React.Component {
-
-  render() {
-    return (
-      <ApolloProvider client={client}> 
-        <Rehydrated>
-          <AppStackNavigator />
-        </Rehydrated>
-      </ApolloProvider>
-
-    );
-     
-  }
-}
-
-*/
