@@ -2,7 +2,9 @@ import { createStore } from "redux";
 
 
 const initialState = {
-    counter: 0
+    counter:0,
+    username:"",
+    password: ""
 };
 
 const rootReducer = (state = initialState, action) => {

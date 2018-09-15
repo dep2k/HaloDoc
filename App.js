@@ -3,57 +3,61 @@ import React from 'react';
 import { Provider } from "react-redux";
 import AppStackNavigator from './src/Navigation/AppNavigator'
 import store from './src/store'
-
-import AWSAppSyncClient from "aws-appsync";
-import { Rehydrated } from "aws-appsync-react";
-import { AUTH_TYPE } from "aws-appsync/lib/link/auth-link";
-import { graphql, ApolloProvider, compose } from "react-apollo";
-import * as AWS from "aws-sdk";
-import AppSync from "./AppSync.js";
+import Amplify, { Auth } from 'aws-amplify';
+import NavigationService from './src/NavigationService';
 
 
+Amplify.configure({
 
-// const client = new AWSAppSyncClient({
-//   url: awsconfig.graphqlEndpoint,
-//   region: awsconfig.region,
-//   auth: { type: AUTH_TYPE.API_KEY, apiKey: awsconfig.apiKey }
-// });
-
-
-//import AppSync from "./AppSync.js";
-// import AllPostsQuery from "./Queries/AllPostsQuery";
-// import NewPostMutation from "./Queries/NewPostMutation";
-// import DeletePostMutation from "./Queries/DeletePostMutation";
-// import UpdatePostMutation from "./Queries/UpdatePostMutation";
-
-const client = new AWSAppSyncClient({
-  url: AppSync.graphqlEndpoint,
-  region: AppSync.region,
-  auth: {
-    type: AUTH_TYPE.API_KEY,
-    apiKey: AppSync.apiKey,
-
-    //type: AUTH_TYPE.AWS_IAM,
-    //Note - Testing purposes only
-    /*credentials: new AWS.Credentials({
-        accessKeyId: AWS_ACCESS_KEY_ID,
-        secretAccessKey: AWS_SECRET_ACCESS_KEY
-    })*/
-
-    //IAM Cognito Identity using AWS Amplify
-    //credentials: () => Auth.currentCredentials(),
-
-    //Cognito User Pools using AWS Amplify
-    // type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
-    // jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
+  "graphqlEndpoint": "https://5c2vacmlljfhdebtdyf44hlcku.appsync-api.us-west-2.amazonaws.com/graphql",
+  "region": "us-west-2",
+  "authenticationType": "API_KEY",
+  "apiKey": "da2-esr2gjlaqzcwvekzbehk67domi",
+  Auth: {
+      // REQUIRED - Amazon Cognito Identity Pool ID
+      identityPoolId: 'us-west-2:b4a6ebbf-2360-4228-b730-774c255575f1', 
+      // REQUIRED - Amazon Cognito Region
+      region: 'us-west-2', 
+      // OPTIONAL - Amazon Cognito User Pool ID
+      userPoolId: 'us-west-2_jtrBQQgdp',
+      // OPTIONAL - Amazon Cognito Web Client ID
+      userPoolWebClientId: '1co0k4249dv2f3mhmsvt1rjr2u', 
   },
 });
+
+const TopLevelNavigator =  AppStackNavigator;
+
 
 export default class App extends React.Component {
 
   render() {
     return (
-      <ApolloProvider client={client}>
+      <TopLevelNavigator
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    );
+  }
+
+
+  // render() {
+  //   return (
+  //     <Provider store={store}>
+  //       <AppStackNavigator />
+  //     </Provider>
+  //   );
+  // }
+
+
+}
+
+/*
+export default class App extends React.Component {
+
+  render() {
+    return (
+      <ApolloProvider client={client}> 
         <Rehydrated>
           <AppStackNavigator />
         </Rehydrated>
@@ -64,4 +68,4 @@ export default class App extends React.Component {
   }
 }
 
-
+*/

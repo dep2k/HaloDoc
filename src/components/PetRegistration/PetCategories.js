@@ -1,9 +1,17 @@
 import React from "react";
 import {
-    View, Image, StyleSheet, Text, TouchableOpacity
+     View, Image, StyleSheet, Text, TouchableOpacity
 } from "react-native";
 
+import { Button } from 'react-native-elements'
+
 class PetCategories extends React.Component {
+
+
+    _onClickButton ()  {
+
+    } 
+
     render() {
         return (
             <View
@@ -14,22 +22,22 @@ class PetCategories extends React.Component {
                     style={{
                         height: 80,
                         width: 100,
-                        marginTop: 20,
-                        marginLeft: 240,
+                        marginTop: '35%',
+                        marginLeft: '62%',
                         backgroundColor: "transparent"
                     }}
                 />
                 <View style = {styles.middleContainer}>
+                
                    <Text style = {{ fontSize : 25, width:180, fontWeight: 'bold',
-                        color: "#BED885", textAlign: 'center', marginTop: '20%' }}>
+                        color: "#BED885", textAlign: 'center', marginTop: '18%' }}>
                      INSCRIPCION DE MASCOTAS
                    </Text>
-                   <TouchableOpacity style = {{backgroundColor: "#BED885" , borderRadius: 20,marginTop: '20%', width: '80%', height :40,
-                   justifyContent: 'center', alignItems:'center'}}>
-                        <Text style={{ fontSize: 17, color: 'white'}}>
-                            FELINO
-                        </Text>
-                   </TouchableOpacity>
+                                    
+                   <Button buttonStyle={{width:"100%"}}
+                         title = 'BUTTON' backgroundColor = "#ff0000" borderRadius = {20}  />
+
+                    
                    <TouchableOpacity style = {{backgroundColor: "#BED885" , borderRadius: 20,marginTop: '7%', width: '80%', height :40,
                    justifyContent: 'center', alignItems:'center'}}>
                         <Text style={{ fontSize: 17, color: 'white'}}>
