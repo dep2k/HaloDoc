@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Image, Button, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  KeyboardAvoidingView,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import { Auth } from 'aws-amplify';
 
 class RegistrationPage extends React.Component {
@@ -30,7 +38,8 @@ class RegistrationPage extends React.Component {
         return (
         <View style={styles.mainContainer}>
              
-                <View style={styles.registrationFormContainer}>
+                <KeyboardAvoidingView style={styles.registrationFormContainer}
+                                      behavior="padding">
                     <Text style={{ fontSize: 25, color: 'white', marginTop:"10%" }}>
                         REGISTERATE
                     </Text>
@@ -66,7 +75,7 @@ class RegistrationPage extends React.Component {
                         placeholderTextColor='white' >
                     </TextInput>
                     
-             </View>
+             </KeyboardAvoidingView>
              <View style= {styles.buttonContainer}>
                     <Button color="white"
                         title="REGISTRARME"
