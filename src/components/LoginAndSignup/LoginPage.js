@@ -53,24 +53,23 @@ class LoginPage extends React.Component {
   render() {
 
     return <View style = {styles.mainContainer}>
-        <Image source={require("../images/ImageLogo.jpg")} 
-               style= { styles.topImage } />
-        <View style = { styles.middleContainer}>
+                   <Image source={require("../images/ImageLogo.jpg")} 
+                          style= { styles.topImage } />
+                   <View style = { styles.middleContainer}>
+                         <Text style = {styles.loginText}>
+                               Usuario
+                        </Text>
+                       <TextInput style={ styles.textInput}
+                                  placeholder="Enter your Email!">
+                       </TextInput>
 
-          <Text style = {styles.loginText}>
-            Usuario
-          </Text>
-
-          <TextInput style={ styles.textInput}
-                     placeholder="Enter your Email!">
-          </TextInput>
-
-          <Text style = {styles.passwordText}>
-            Contrasena
-          </Text>
-
-          <TextInput style={ styles.textInput} 
-                     placeholder="Password" />
+                       <Text  style = {styles.passwordText}>
+                               Contrasena
+                       </Text>
+                       <TextInput secureTextEntry={true}
+                                  style={ styles.textInput} 
+                                  placeholder="Password">
+                       </TextInput>
           <TouchableOpacity onPress= { this._onSignInClick }
                              style = {styles.loginButton }>
                        <Text style={{ color: "white", fontSize: 20 }}>

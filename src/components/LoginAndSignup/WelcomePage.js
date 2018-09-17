@@ -17,7 +17,8 @@ class Welcomepage extends React.Component {
   }
 
   componentWillUnmount(){
-   // clearTimeout(this.timeoutHandle); // This is just necessary in the case that the screen is closed before the timeout fires, otherwise it would cause a memory leak that would trigger the transition regardless, breaking the user experience.
+   // clearTimeout(this.timeoutHandle); 
+   // This is just necessary in the case that the screen is closed before the timeout fires, otherwise it would cause a memory leak that would trigger the transition regardless, breaking the user experience.
   }
 
 
@@ -26,40 +27,23 @@ class Welcomepage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image
-          source={require("../images/ImageLogo.jpg")}
-          style={{
-            height: 250,
-            width:300,
-            marginTop: "35%",
-            marginHorizontal: '10%',
-            backgroundColor: "transparent"
-          }}
-        />
-            <ImageBackground
-                source={require("../images/landscape.png")}
-                style={{
-                    justifyContent: 'center',
-                    alignItems:'center',
-                    marginTop: '50%',
-                    height: 180,
-                    width: '100%',
-                    backgroundColor: "transparent"
-                }}>
-                <Text style = {{fontSize:20, color: 'white', }}>
-                   TU VETERINARIO A UN CLICK
-                </Text>
-            </ImageBackground>
+          source={require("../images/WelcomeScreen.png")}
+          style={styles.backgroundImage}
+        />    
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        backgroundColor: "white"
-    }
-
-})
+  mainContainer: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover", // or 'stretch'
+    width: undefined,
+    height: undefined
+  }
+});
 export default Welcomepage;

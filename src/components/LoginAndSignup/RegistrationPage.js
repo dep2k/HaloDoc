@@ -1,17 +1,16 @@
+
 import React from "react";
-<<<<<<< HEAD
-import { Alert, View, Image, Button, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-=======
+
 import {
+  Alert,
   View,
   KeyboardAvoidingView,
   Button,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity
+  TextInput
 } from "react-native";
->>>>>>> registrationPage
+
 import { Auth } from 'aws-amplify';
 import NavigationService from '../../NavigationService';
 import { Cache } from 'aws-amplify';
@@ -108,86 +107,6 @@ class RegistrationPage extends React.Component {
     render() {
         return (
         <View style={styles.mainContainer}>
-<<<<<<< HEAD
-
-             
-                
-                <Text style={{ fontSize: 25,color: 'white', marginTop: '15%' }}>
-                     REGISTERATE
-                </Text>
-
-                <TextInput style= {{ height:35, width:'80%', marginTop:40, borderBottomColor:'white', 
-                                  borderBottomWidth:1, color:'white', alignContent: "flex-end"}}
-                           placeholder= "Nombre"
-                           placeholderTextColor= 'white'
-                           onChangeText={(text) => this.setState({firstName:text})}
-                            >
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"}}
-                    placeholder="Apellidos"
-                    placeholderTextColor='white' 
-                    onChangeText={(text) => this.setState({lastName:text})}
-                     >
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"}}
-                    placeholder="Cedula"
-                    placeholderTextColor='white' 
-                    onChangeText={(text) => this.setState({userName:text})}
-                     >
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
-                    placeholder="Telefono"
-                    placeholderTextColor='white' 
-                    onChangeText={(text) => this.setState({phoneNo:text})} 
-                    >
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
-                    placeholder="Email"
-                    placeholderTextColor='white'
-                    onChangeText={(text) => this.setState({email:text})} 
-                    > 
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
-                    placeholder="Crear Contrasena"
-                    placeholderTextColor='white'
-                    onChangeText={(text) => this.setState({password:text})}
-                     > 
-                </TextInput>
-
-                <TextInput style={{
-                    height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
-                    placeholder="Confirmar Contra-"
-                    placeholderTextColor='white' 
-                    onChangeText={(text) => this.setState({confirmPassword:text})}
-                     >
-                </TextInput>
-
-                <Text style ={{color:'white', marginTop:40, marginLeft:'5%'}}>
-                    Acepto terminos y condiciones
-                </Text>
-
-
-                <Button  color = "darkgrey"
-                        title = "REGISTRARME"
-                        onPress =  { this._registerBtnClick } >
-                </Button>
-=======
              
                 <KeyboardAvoidingView style={styles.registrationFormContainer}
                                       behavior="padding">
@@ -237,7 +156,6 @@ class RegistrationPage extends React.Component {
                        Acepto terminos y condiciones
                     </Text> 
                   
->>>>>>> registrationPage
         </View>
     );
  }
