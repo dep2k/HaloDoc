@@ -13,7 +13,7 @@ class Welcomepage extends React.Component {
     //this.props.initializeApp()
     setTimeout(() => {
       NavigationService.navigate('LoginPage');
-    }, 3000);
+    }, 1000);
   }
 
   componentWillUnmount(){

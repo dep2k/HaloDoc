@@ -20,9 +20,9 @@ Amplify.configure({
       // REQUIRED - Amazon Cognito Region
       region: 'us-west-2', 
       // OPTIONAL - Amazon Cognito User Pool ID
-      userPoolId: 'us-west-2_jtrBQQgdp',
+      userPoolId: 'us-west-2_sqQD8B5HZ',
       // OPTIONAL - Amazon Cognito Web Client ID
-      userPoolWebClientId: '1co0k4249dv2f3mhmsvt1rjr2u', 
+      userPoolWebClientId: '7lg83g328rjlcsqkdsopbjsjhf', 
   },
 });
 
@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <TopLevelNavigator
+      <TopLevelNavigator 
         ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }}

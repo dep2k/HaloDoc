@@ -27,7 +27,7 @@ const AppStackNavigator = createStackNavigator({
     },
     VetListPage: {
       screen: VetListPage,
-  },
+    },
     MainMenuPage: {
       screen: MainMenuPage,
     },

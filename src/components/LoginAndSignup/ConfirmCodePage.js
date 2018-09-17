@@ -7,24 +7,32 @@ import {
   Button
 } from "react-native";
 
-
+import { Cache } from 'aws-amplify';
 
 class ConfirmCodePage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {registrationCode: ""};
+        this.onContinueClick = this.onContinueClick.bind(this);
        
     }
 
-    _OnContinueClick() {
+    onContinueClick() {
 
         console.log("Continue Button Clicked")
-        Auth.confirmSignUp("Priya", this.state.registrationCode, {
-            // Optional. Force user confirmation irrespective of existing alias. By default set to True.
-            forceAliasCreation: true    
-        }).then(data => console.log(data))
-        .catch(err => console.log(err));
+        Cache.getItem("User").then(user => {
+            if(user) {
+              Auth.confirmSignUp(user.userName, this.state.registrationCode, {
+                // Optional. Force user confirmation irrespective of existing alias. By default set to True.
+                forceAliasCreation: true    
+                
+            }).then(data => console.log(data))
+            .catch(err => console.log(err));
+            }
+        })
+
+  
     }
 
 
@@ -49,12 +57,12 @@ class ConfirmCodePage extends React.Component {
               paddingHorizontal: 10
             }}
             placeholder="Code"
-            onChangeText={(text) => this.state.registrationCode = text}
+            onChangeText={(text) => this.setState({registrationCode:text})} 
         />
        
         <Button  color = "darkgrey"
                 title = "Continue"
-                onPress= {this._OnContinueClick} >
+                onPress= {this.onContinueClick} >
         </Button>
         
       </View>

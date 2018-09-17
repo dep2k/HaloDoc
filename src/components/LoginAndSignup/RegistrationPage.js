@@ -1,103 +1,179 @@
 import React from "react";
-import { View, Image, Button, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { Alert, View, Image, Button, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { Auth } from 'aws-amplify';
-
+import NavigationService from '../../NavigationService';
+import { Cache } from 'aws-amplify';
 class RegistrationPage extends React.Component {
 
     constructor(props) {
         super(props);
-    }
 
-    _onSignUp() {
+        this.state = {
+
+            firstName:"",
+            lastName:"",
+            userName:"",
+            phoneNo:"",
+            email:"",
+            password:"",
+            confirmPassword:"",
+
+        }
+
+        // PlaceHodlers
 
         /*
-        Auth.signUp({
-            username: "Priya",
-            password: 'Priya2018',
-            attributes: {
-            email:"priya.mobdev@gmail.com"       
-            // other custom attributes 
-            },
-        })
-        .then(data => {
-            console.log(data)
-            this.props.navigation.navigate('CodeConfirmationPage');
-        })
-        .catch(err => console.log(err));*/
+        this.state = {
+
+            firstName:"Nombre",
+            lastName:"Apellidos",
+            userName:"Cedula",
+            phoneNo:"Telefono",
+            email:"deep.mobdev@gmail.com",
+            password:"Crear Contrasena",
+            confirmPassword:"Confirmar Contra-",
+
+        }
+        */
+        this._registerBtnClick = this._registerBtnClick.bind(this);
+    }
+
+    // registerBtnClick = () => {
+    //     console.log(this.state.firstName)
+    // }
+
+       _registerBtnClick() {
+    
+        if (this.state.firstName && this.state.lastName && this.state.userName
+            && this.state.email && this.state.phoneNo  && this.state.password
+             && this.state.confirmPassword) {
+
+                if (this.state.password == this.state.confirmPassword) {
+
+                    Auth.signUp({
+                        username: this.state.userName,
+                        password: this.state.password,
+                        attributes: {
+                            email: this.state.email,
+                            phone_number: this.state.phoneNo,
+                            given_name: this.state.firstName,
+                            family_name: this.state.lastName
+
+                        // other custom attributes 
+                        },
+                    })
+                    .then(data => {
+                        console.log(data)
+                        Cache.setItem("User",this.state);
+                        this.props.navigation.navigate('CodeConfirmationPage');
+                    })
+                    .catch(err => console.log(err));
+                } else{
+                    Alert.alert(
+                        'Error',
+                        'Passwords dont match',
+                        [
+                          {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        { cancelable: false }
+                    )
+                }
+        
+        } else {
+            Alert.alert(
+                'Error',
+                'All fields are mandatory',
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+            )
+        }
+        
+      
     }
 
     render() {
         return (
         <View style={styles.mainContainer}>
-             <View style = {styles.registerbuttonContainer}>
-                  <TouchableOpacity onPress={()=>{this.RegisterButtonClick();}}
-                             style={{ marginLeft: '70%', height: 25, width: 60, backgroundColor:'white', justifyContent:'center',
-                                      alignItems:'center', borderRadius: 20}}>
-                       <Text style={{ color: "black", fontSize: 10 }}>
-                           Register
-                        </Text>
-                </TouchableOpacity> 
-             </View>
+
+             
                 
-                 <Text style={{ fontSize: 25,color: 'white', marginTop: '5%' }}>
-                 REGISTERATE
+                <Text style={{ fontSize: 25,color: 'white', marginTop: '15%' }}>
+                     REGISTERATE
                 </Text>
+
                 <TextInput style= {{ height:35, width:'80%', marginTop:40, borderBottomColor:'white', 
                                   borderBottomWidth:1, color:'white', alignContent: "flex-end"}}
                            placeholder= "Nombre"
-                           placeholderTextColor= 'white' >
+                           placeholderTextColor= 'white'
+                           onChangeText={(text) => this.setState({firstName:text})}
+                            >
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"}}
                     placeholder="Apellidos"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white' 
+                    onChangeText={(text) => this.setState({lastName:text})}
+                     >
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"}}
                     placeholder="Cedula"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white' 
+                    onChangeText={(text) => this.setState({userName:text})}
+                     >
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
                     placeholder="Telefono"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white' 
+                    onChangeText={(text) => this.setState({phoneNo:text})} 
+                    >
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
                     placeholder="Email"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white'
+                    onChangeText={(text) => this.setState({email:text})} 
+                    > 
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
                     placeholder="Crear Contrasena"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white'
+                    onChangeText={(text) => this.setState({password:text})}
+                     > 
                 </TextInput>
+
                 <TextInput style={{
                     height: 35, width: '80%', marginTop: 30, borderBottomColor: 'white',
-                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                }}
+                    borderBottomWidth: 1, color: 'white', alignContent: "flex-end" }}
                     placeholder="Confirmar Contra-"
-                    placeholderTextColor='white' >
+                    placeholderTextColor='white' 
+                    onChangeText={(text) => this.setState({confirmPassword:text})}
+                     >
                 </TextInput>
+
                 <Text style ={{color:'white', marginTop:40, marginLeft:'5%'}}>
                     Acepto terminos y condiciones
                 </Text>
 
 
-          <Button  color = "darkgrey"
-                   title = "REGISTRARME"
-                   onPress =  {() => this.props.navigation.navigate('CodeConfirmationPage')}> >
-          </Button>
+                <Button  color = "darkgrey"
+                        title = "REGISTRARME"
+                        onPress =  { this._registerBtnClick } >
+                </Button>
         </View>
     );
  }
