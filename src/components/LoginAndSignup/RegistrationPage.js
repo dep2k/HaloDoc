@@ -1,5 +1,17 @@
 import React from "react";
+<<<<<<< HEAD
 import { Alert, View, Image, Button, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+=======
+import {
+  View,
+  KeyboardAvoidingView,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
+>>>>>>> registrationPage
 import { Auth } from 'aws-amplify';
 import NavigationService from '../../NavigationService';
 import { Cache } from 'aws-amplify';
@@ -96,6 +108,7 @@ class RegistrationPage extends React.Component {
     render() {
         return (
         <View style={styles.mainContainer}>
+<<<<<<< HEAD
 
              
                 
@@ -174,6 +187,57 @@ class RegistrationPage extends React.Component {
                         title = "REGISTRARME"
                         onPress =  { this._registerBtnClick } >
                 </Button>
+=======
+             
+                <KeyboardAvoidingView style={styles.registrationFormContainer}
+                                      behavior="padding">
+                    <Text style={{ fontSize: 25, color: 'white', marginTop:"10%" }}>
+                        REGISTERATE
+                    </Text>
+                    <TextInput style={{
+                        height: 35, width: '80%', marginTop: 40, borderBottomColor: 'white',
+                        borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
+                    }}
+                        placeholder="Nombre"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style={styles.textInput}
+                        placeholder="Apellidos"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style={styles.textInput}
+                        placeholder="Cedula"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style={styles.textInput}
+                        placeholder="Telefono"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style={styles.textInput}
+                        placeholder="Email"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style={styles.textInput}
+                        placeholder="Crear Contrasena"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    <TextInput style= {styles.textInput}
+                        placeholder="Confirmar Contra-"
+                        placeholderTextColor='white' >
+                    </TextInput>
+                    
+             </KeyboardAvoidingView>
+             <View style= {styles.buttonContainer}>
+                    <Button color="white"
+                        title="REGISTRARME"
+                        onPress={() => this.props.navigation.navigate('CodeConfirmationPage')}> >
+                    </Button>
+             </View>
+                    <Text style={{ color: 'white', marginLeft: '5%', marginTop: 20 }}>
+                       Acepto terminos y condiciones
+                    </Text> 
+                  
+>>>>>>> registrationPage
         </View>
     );
  }
@@ -187,14 +251,39 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#BED885",
     },
-    registerbuttonContainer:{
-         flexDirection: "row",
-         height: "7%",
-         width: "100%",
-         justifyContent: "flex-end",
-         alignItems: "flex-end",
-         backgroundColor:'transparent',
-         marginRight: "10%"
+    // registerbuttonContainer:{
+    //      flexDirection: "row",
+    //      height: "7%",
+    //      width: "100%",
+    //      justifyContent: "flex-end",
+    //      alignItems: "flex-end",
+    //      backgroundColor:'transparent',
+    //      marginRight: "10%",
+    // },
+    registrationFormContainer: {
+        flex: 0.85,
+        flexDirection: "column",
+       // backgroundColor:'black',
+        width: "100%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '20%'
+        
+        
+    },
+    textInput: {
+        height: 35, 
+        width: '80%', 
+        marginTop: 30, 
+        borderBottomColor: 'white',
+        borderBottomWidth: 1, 
+        color: 'white', 
+        alignContent: "flex-end"
+    },
+    buttonContainer: {
+        height: 30,
+        marginTop: 10,
+       
     }
 
 })
