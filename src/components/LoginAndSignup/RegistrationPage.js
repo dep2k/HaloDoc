@@ -1,5 +1,6 @@
 
 import React from "react";
+import { I18n } from "aws-amplify";
 
 import {
   Alert,
@@ -9,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   ActivityIndicator
 } from "react-native";
 
@@ -35,10 +37,12 @@ class RegistrationPage extends React.Component {
 
         }
        
- 
+        this.backButtonClick = this.backButtonClick.bind(this);
         this._registerBtnClick = this._registerBtnClick.bind(this);
     }
-
+       backButtonClick(){
+           this.props.navigation.goBack(null);
+       }
 
        _registerBtnClick() {
     
@@ -93,50 +97,62 @@ class RegistrationPage extends React.Component {
     }
 
     render() {
-        return <View style={styles.mainContainer}>
-
+        
+return <View style={styles.mainContainer}>
+            <View style={styles.topContainer}>
+             <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 30, justifyContent: 'center',
+                                          alignItems:'center'}}
+                               onPress={this.backButtonClick}>
+                              <Text style={{ color: "white", fontSize: 20}}>
+                                 Back
+                              </Text>
+                     
+             </TouchableOpacity>
+              
+            </View>
           
             <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
               <Text
-                style={{
+                  style={{
+                  backgroundColor:"transparent",
                   fontSize: 25,
-                  color: "white",
-                  marginTop: "10%"
-                }} >
-                REGISTERATE
+                  color: "white"
+                   }} >
+                {I18n.get('Sign Up')}
               </Text>
-              <TextInput style={{ height: 35, width: "80%", marginTop: 40, borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
-                         placeholder="Nombre" 
+              <TextInput style={{ height: 35, width: "80%", marginTop: 30, borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
+                    placeholder= {I18n.get('Firstname')} 
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.firstName = text, state))} />
               <TextInput style={styles.textInput}
-                         placeholder="Apellidos" 
+                         placeholder={I18n.get('Lastname')} 
                          placeholderTextColor="white" 
                          onChangeText = {(text) => this.setState(state => (state.user.lastName = text, state ))}/>
               <TextInput style={styles.textInput} 
-                         placeholder="Cedula" 
+                         placeholder={I18n.get('UserId')}  
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.userName = text, state))} />
               <TextInput style={styles.textInput} 
-                         placeholder="Telefono" 
+                         placeholder={I18n.get('PhoneNo')} 
                          placeholderTextColor="white"
                           onChangeText={(text) => this.setState(state => (state.user.phoneNo = text, state))} />
               <TextInput style={styles.textInput} 
-                         placeholder="Email" 
+                         placeholder={I18n.get('Email')}  
                          placeholderTextColor="white"
                         onChangeText={(text) => this.setState(state => (state.user.email = text, state))} />
               <TextInput style={styles.textInput} 
-                         placeholder="Crear Contrasena" 
+                         placeholder={I18n.get('Create password')}  
                          placeholderTextColor="white"
                          onChangeText={(text) => this.setState(state => (state.user.password = text, state))} />
               <TextInput style={styles.textInput} 
-                         placeholder="Confirmar Contra-" 
+                         placeholder={I18n.get('Confirm password')} 
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.confirmPassword = text, state))} />
             </KeyboardAvoidingView>
 
             <View style={styles.buttonContainer}>
-              <Button color="white" title="REGISTRARME" onPress={this._registerBtnClick}>
+                <Button color="white" title="Register Me"
+                        onPress={this._registerBtnClick}>
               </Button>
             </View>
             <Text
@@ -146,60 +162,58 @@ class RegistrationPage extends React.Component {
                 marginTop: 20
               }}
             >
-            Acepto terminos y condiciones
+                {I18n.get('Accept terms and conditions')}
             </Text>
           </View>;
  }
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        backgroundColor: "#BED885",
-    },
-    // registerbuttonContainer:{
-    //      flexDirection: "row",
-    //      height: "7%",
-    //      width: "100%",
-    //      justifyContent: "flex-end",
-    //      alignItems: "flex-end",
-    //      backgroundColor:'transparent',
-    //      marginRight: "10%",
-    // },
-    registrationFormContainer: {
-        flex: 0.85,
-        flexDirection: "column",
-       // backgroundColor:'black',
-        width: "100%",
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '20%'
-        
-        
-    },
-    textInput: {
-        height: 35, 
-        width: '80%', 
-        marginTop: 30, 
-        borderBottomColor: 'white',
-        borderBottomWidth: 1, 
-        color: 'white', 
-        alignContent: "flex-end"
-    },
-    buttonContainer: {
-        height: 30,
-        marginTop: 10,
-       
-    },
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    }
+  mainContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#BED885"
+  },
+  topContainer: {
+    height: 40,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    //backgroundColor: "green",
+    marginTop: "13%",
 
-})
+   
+  },
+  registrationFormContainer: {
+    flex: 0.85,
+    flexDirection: "column",
+//    / backgroundColor:'black',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "5%"
+  },
+  textInput: {
+    height: 35,
+    width: "80%",
+    marginTop: 30,
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    color: "white",
+    alignContent: "flex-end"
+  },
+  buttonContainer: {
+    height: 30,
+    marginTop: 10
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 80
+  }
+});
 export default RegistrationPage;

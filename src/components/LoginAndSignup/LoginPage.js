@@ -70,15 +70,15 @@ class LoginPage extends React.Component {
                           style= { styles.topImage } />
                    <View style = { styles.middleContainer}>
                          <Text style = {styles.loginText}>
-                               Usuario
+                               {I18n.get('Username')}
                         </Text>
                        <TextInput style={ styles.textInput}
-                                  placeholder="Enter your Email!"
+                                  placeholder={I18n.get('Username')}
                                   onChangeText={(text) => this.setState(state => (state.username = text, state))}>
                        </TextInput>
 
                        <Text  style = {styles.passwordText}>
-                               Contrasena
+                               {I18n.get('Password')}
                        </Text>
                        <TextInput secureTextEntry={true}
                                   style={ styles.textInput} 
@@ -89,7 +89,7 @@ class LoginPage extends React.Component {
                              style = {styles.loginButton }>
                        <ImageBackground source = {require('../images/loginButtonImage.png')}
                                         style= {{width:"100%", height:"100%", borderRadius:20, justifyContent:'center',
-                                          alignItems: 'center'}}
+                                                 alignItems: 'center'}}
                                         imageStyle={{borderRadius:20}}>
                                <Text style={{ color: "white", fontSize: 20}}>
                                   {I18n.get('Sign In')}
@@ -103,9 +103,11 @@ class LoginPage extends React.Component {
               marginTop: 10,
               marginBottom: 60
             }}>
-            Olvide me contracena?
+                {I18n.get('Forgot Password')}
           </Text>
-          <Button color="darkgrey" title="REGISTRARME" onPress={this._onRegisterClick} />
+          <Button color="darkgrey"   
+                  title={I18n.get('RegisterMe')} 
+                  onPress={this._onRegisterClick} />
         </View>
       </View>;
   }
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
       fontWeight: "normal", 
       color: "#7C7B7B",  
       marginBottom: 5,
-      marginRight: 180
+      marginRight: 190
     }
 })
 
