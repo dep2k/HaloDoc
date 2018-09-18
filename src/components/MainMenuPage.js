@@ -5,8 +5,8 @@ import SVGImage from "react-native-svg-image";
 class MainMenuPage extends React.Component {
     static navigationOptions =  ({ navigation}) => ({
       headerTitle: (
-        <SVGImage style = {StyleSheet.absoluteFill}
-              source = {require ('./images/header.svg')}>
+        <SVGImage style = {StyleSheet.absoluteFill}>
+             
         </SVGImage>
       )
     })

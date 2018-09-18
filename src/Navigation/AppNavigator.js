@@ -43,6 +43,9 @@ const AppStackNavigator = createStackNavigator({
     //Problem with this page
     WelcomePage: {
       screen: WelcomePage,
+      navigationOptions: {
+        header: null
+      },
     },
 
     PetCategoriesPage: {
@@ -55,7 +58,8 @@ const AppStackNavigator = createStackNavigator({
       screen: LoginPage,
       navigationOptions: {
         header: null
-      }
+        },
+       
     }
 
   },

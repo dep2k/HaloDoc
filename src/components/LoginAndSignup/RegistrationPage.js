@@ -8,7 +8,8 @@ import {
   Button,
   StyleSheet,
   Text,
-  TextInput
+  TextInput,
+  ActivityIndicator
 } from "react-native";
 
 import { Auth } from 'aws-amplify';
@@ -21,61 +22,48 @@ class RegistrationPage extends React.Component {
 
         this.state = {
 
-            firstName:"",
-            lastName:"",
-            userName:"",
-            phoneNo:"",
-            email:"",
-            password:"",
-            confirmPassword:"",
+            user: {
+                firstName: "",
+                lastName: "",
+                userName: "",
+                phoneNo: "",
+                email: "",
+                password: "",
+                confirmPassword: ""
+            },
+            animating: true,
 
         }
-
-        // PlaceHodlers
-
-        /*
-        this.state = {
-
-            firstName:"Nombre",
-            lastName:"Apellidos",
-            userName:"Cedula",
-            phoneNo:"Telefono",
-            email:"deep.mobdev@gmail.com",
-            password:"Crear Contrasena",
-            confirmPassword:"Confirmar Contra-",
-
-        }
-        */
+       
+ 
         this._registerBtnClick = this._registerBtnClick.bind(this);
     }
 
-    // registerBtnClick = () => {
-    //     console.log(this.state.firstName)
-    // }
 
        _registerBtnClick() {
     
-        if (this.state.firstName && this.state.lastName && this.state.userName
-            && this.state.email && this.state.phoneNo  && this.state.password
-             && this.state.confirmPassword) {
+        const user = this.state.user;
+        if (user.firstName && user.lastName && user.userName
+            && user.email && user.phoneNo  && user.password
+             && user.confirmPassword) {
 
-                if (this.state.password == this.state.confirmPassword) {
+                if (user.password == user.confirmPassword) {
 
                     Auth.signUp({
-                        username: this.state.userName,
-                        password: this.state.password,
+                        username: user.userName,
+                        password: user.password,
                         attributes: {
-                            email: this.state.email,
-                            phone_number: this.state.phoneNo,
-                            given_name: this.state.firstName,
-                            family_name: this.state.lastName
+                            email: user.email,
+                            phone_number: user.phoneNo,
+                            given_name: user.firstName,
+                            family_name: user.lastName
 
                         // other custom attributes 
                         },
                     })
                     .then(data => {
                         console.log(data)
-                        Cache.setItem("User",this.state);
+                        Cache.setItem("User",this.state.user);
                         this.props.navigation.navigate('CodeConfirmationPage');
                     })
                     .catch(err => console.log(err));
@@ -105,59 +93,62 @@ class RegistrationPage extends React.Component {
     }
 
     render() {
-        return (
-        <View style={styles.mainContainer}>
-             
-                <KeyboardAvoidingView style={styles.registrationFormContainer}
-                                      behavior="padding">
-                    <Text style={{ fontSize: 25, color: 'white', marginTop:"10%" }}>
-                        REGISTERATE
-                    </Text>
-                    <TextInput style={{
-                        height: 35, width: '80%', marginTop: 40, borderBottomColor: 'white',
-                        borderBottomWidth: 1, color: 'white', alignContent: "flex-end"
-                    }}
-                        placeholder="Nombre"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style={styles.textInput}
-                        placeholder="Apellidos"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style={styles.textInput}
-                        placeholder="Cedula"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style={styles.textInput}
-                        placeholder="Telefono"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style={styles.textInput}
-                        placeholder="Email"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style={styles.textInput}
-                        placeholder="Crear Contrasena"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    <TextInput style= {styles.textInput}
-                        placeholder="Confirmar Contra-"
-                        placeholderTextColor='white' >
-                    </TextInput>
-                    
-             </KeyboardAvoidingView>
-             <View style= {styles.buttonContainer}>
-                    <Button color="white"
-                        title="REGISTRARME"
-                        onPress={() => this.props.navigation.navigate('CodeConfirmationPage')}> >
-                    </Button>
-             </View>
-                    <Text style={{ color: 'white', marginLeft: '5%', marginTop: 20 }}>
-                       Acepto terminos y condiciones
-                    </Text> 
-                  
-        </View>
-    );
+        return <View style={styles.mainContainer}>
+
+          
+            <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: "white",
+                  marginTop: "10%"
+                }} >
+                REGISTERATE
+              </Text>
+              <TextInput style={{ height: 35, width: "80%", marginTop: 40, borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
+                         placeholder="Nombre" 
+                         placeholderTextColor="white" 
+                         onChangeText={(text) => this.setState(state => (state.user.firstName = text, state))} />
+              <TextInput style={styles.textInput}
+                         placeholder="Apellidos" 
+                         placeholderTextColor="white" 
+                         onChangeText = {(text) => this.setState(state => (state.user.lastName = text, state ))}/>
+              <TextInput style={styles.textInput} 
+                         placeholder="Cedula" 
+                         placeholderTextColor="white" 
+                         onChangeText={(text) => this.setState(state => (state.user.userName = text, state))} />
+              <TextInput style={styles.textInput} 
+                         placeholder="Telefono" 
+                         placeholderTextColor="white"
+                          onChangeText={(text) => this.setState(state => (state.user.phoneNo = text, state))} />
+              <TextInput style={styles.textInput} 
+                         placeholder="Email" 
+                         placeholderTextColor="white"
+                        onChangeText={(text) => this.setState(state => (state.user.email = text, state))} />
+              <TextInput style={styles.textInput} 
+                         placeholder="Crear Contrasena" 
+                         placeholderTextColor="white"
+                         onChangeText={(text) => this.setState(state => (state.user.password = text, state))} />
+              <TextInput style={styles.textInput} 
+                         placeholder="Confirmar Contra-" 
+                         placeholderTextColor="white" 
+                         onChangeText={(text) => this.setState(state => (state.user.confirmPassword = text, state))} />
+            </KeyboardAvoidingView>
+
+            <View style={styles.buttonContainer}>
+              <Button color="white" title="REGISTRARME" onPress={this._registerBtnClick}>
+              </Button>
+            </View>
+            <Text
+              style={{
+                color: "white",
+                marginLeft: "5%",
+                marginTop: 20
+              }}
+            >
+            Acepto terminos y condiciones
+            </Text>
+          </View>;
  }
 }
 
@@ -202,6 +193,12 @@ const styles = StyleSheet.create({
         height: 30,
         marginTop: 10,
        
+    },
+    activityIndicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 80
     }
 
 })

@@ -7,7 +7,7 @@ import NavigationService from '../../NavigationService';
 import { I18n } from 'aws-amplify';
 
 
-import { 
+import {
   StyleSheet,
   View,
   TextInput,
@@ -16,17 +16,22 @@ import {
   TouchableOpacity,
   Alert,
   Button,
-  ImageBackground
+  ImageBackground,
+  ActivityIndicator
 } from "react-native";
 
-import SVGImageBackground from 'react-native-svg-image';
-
 class LoginPage extends React.Component {
-
-
   constructor(props) {
     super(props);
+    this.state = {
+      username: "",
+      password: "",
+    }
+    this._onSignInClick = this._onSignInClick.bind(this);
+    this._onRegisterClick = this._onRegisterClick.bind(this);
   }
+
+   
 
   componentDidMount() {
     //this.props.initializeApp()
@@ -38,29 +43,45 @@ class LoginPage extends React.Component {
 
   _onSignInClick() {
 
-    console.log("Login Button Clicked")
-    Auth.signIn("Priya", "Priya2018")
-      .then(user => console.log(user))
-      .catch(err => console.log(err));
+    console.log("Login Button Clicked");
+    <ActivityIndicator size="large" color="#000" />
+    Auth.signIn({
+      username: this.state.username,
+      password: this.state.password,
+    })
+      .then(user => {
+        console.log(user);
+        this.props.navigation.navigate('MainMenuPage');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   _onRegisterClick() {
     console.log("RegisterBtnClick")
-    // this.props.navigation.navigate('RegistrationPage');
-    NavigationService.navigate('RegistrationPage', { userName: 'Lucy' });
+    this.props.navigation.navigate('RegistrationPage');
+   // NavigationService.navigate('RegistrationPage', { userName: 'Lucy' });
   }
 
   render() {
 
     return <View style = {styles.mainContainer}>
-                   <Image source={require("../images/ImageLogo.jpg")} 
+                   <View style = {styles.headerContainer}>
+                        <Image source={require("../images/navbarImage.png")}
+                               style={styles.headerImage}>
+                        </Image>
+                   </View>
+                        
+                   <Image source={require("../images/logoImage.png")} 
                           style= { styles.topImage } />
                    <View style = { styles.middleContainer}>
                          <Text style = {styles.loginText}>
                                Usuario
                         </Text>
                        <TextInput style={ styles.textInput}
-                                  placeholder="Enter your Email!">
+                                  placeholder="Enter your Email!"
+                                  onChangeText={(text) => this.setState(state => (state.username = text, state))}>
                        </TextInput>
 
                        <Text  style = {styles.passwordText}>
@@ -68,13 +89,19 @@ class LoginPage extends React.Component {
                        </Text>
                        <TextInput secureTextEntry={true}
                                   style={ styles.textInput} 
-                                  placeholder="Password">
+                                  placeholder="Password"
+                                  onChangeText={(text) => this.setState(state => (state.password = text, state))}>
                        </TextInput>
           <TouchableOpacity onPress= { this._onSignInClick }
                              style = {styles.loginButton }>
-                       <Text style={{ color: "white", fontSize: 20 }}>
-                           {I18n.get('Sign In')}
-                        </Text>
+                       <ImageBackground source = {require('../images/loginButtonImage.png')}
+                                        style= {{width:"100%", height:"100%", borderRadius:20, justifyContent:'center',
+                                          alignItems: 'center'}}
+                                        imageStyle={{borderRadius:20}}>
+                               <Text style={{ color: "white", fontSize: 20}}>
+                                  {I18n.get('Sign In')}
+                              </Text> 
+                      </ImageBackground>     
          </TouchableOpacity>
           <Text
             style={{
@@ -98,9 +125,21 @@ const styles = StyleSheet.create({
         flexDirection: "column", 
         backgroundColor: "white"
     },
+    headerContainer: {
+        height: 60,
+        marginTop:30,
+        width: "100%",
+        backgroundColor:"transparent",
+        justifyContent: "center",
+        alignItems:"center"
+       },
+      headerImage: {
+         width:"100%",
+         height: "100%" 
+      },
     topImage:{
       height: 80, 
-      width: 100, 
+      width: 105, 
       marginTop: 20, 
       marginLeft: 240, 
       backgroundColor: "transparent"
@@ -110,7 +149,8 @@ const styles = StyleSheet.create({
       width: 300,
       backgroundColor:'mediumseagreen', 
       justifyContent:'center',
-      alignItems:'center', borderRadius: 20
+      alignItems:'center', 
+      borderRadius: 20
     },
     middleContainer: {
       flexDirection: "column", 
