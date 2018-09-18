@@ -43,19 +43,12 @@ class LoginPage extends React.Component {
 
   _onSignInClick() {
 
-    console.log("Login Button Clicked");
-    <ActivityIndicator size="large" color="#000" />
-    Auth.signIn({
-      username: this.state.username,
-      password: this.state.password,
-    })
-      .then(user => {
-        console.log(user);
-        this.props.navigation.navigate('MainMenuPage');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    Auth.signIn(this.state.username, this.state.password).then(user => {
+      console.log(user);
+      this.props.navigation.navigate('MainMenuPage');
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   _onRegisterClick() {
