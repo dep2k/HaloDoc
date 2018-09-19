@@ -18,7 +18,7 @@ class MainMenuPage extends React.Component {
             </Text>
             <View style={styles.buttonsMainContainer}>
               <View style={styles.singleButtonContainer}>
-                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
+                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("../images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text
                     style = {styles.touchableOpacityText} >
@@ -27,7 +27,7 @@ class MainMenuPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.singleButtonContainer}>
-                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
+                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("../images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text style = {styles.touchableOpacityText} >
                    {I18n.get('MyProfile')} 
@@ -35,7 +35,7 @@ class MainMenuPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.singleButtonContainer}>
-                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
+                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("../images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text style = {styles.touchableOpacityText} >
                    {I18n.get('VeterinaryDirectory')}
@@ -43,7 +43,7 @@ class MainMenuPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.singleButtonContainer}>
-                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
+                <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("../images/ImageLogo.jpg")} />
                 <TouchableOpacity>
                   <Text style = {styles.touchableOpacityText} >
                            {I18n.get('HistoryOfConsultaions')}
@@ -51,7 +51,7 @@ class MainMenuPage extends React.Component {
                 </TouchableOpacity>
                 </View>
                 <View style={styles.singleButtonContainer}>
-                  <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("./images/ImageLogo.jpg")} />
+                  <Image style={{ width: 30, height: 30, marginLeft: "10%", marginRight: "5%" }} source={require("../images/ImageLogo.jpg")} />
                   <TouchableOpacity>
                     <Text style = {styles.touchableOpacityText}>
                             {I18n.get('PaymentHistory')}

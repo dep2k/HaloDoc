@@ -5,7 +5,7 @@ class PetRegistrationForm extends React.Component {
 
     render() {
         return <ScrollView contentContainerStyle={styles.contentContainer}>
-            <Image style={{ marginTop: "15%", height: 80, width: 80, marginBottom: "10%", marginHorizontal: "36%" }} source={require("../images/ImageLogo.jpg")} />
+            <Image style={{ marginTop: "15%", height: 80, width: 80, marginBottom: "10%", marginHorizontal: "36%" }} source={require("../../images/ImageLogo.jpg")} />
             <Text style={{ fontWeight: "bold", fontSize: 20, color: "#BED885", width: "80%", marginBottom: "5%", marginHorizontal: "10%", textAlign: "center" }}>
               HISTORIA CLINICA
             </Text>

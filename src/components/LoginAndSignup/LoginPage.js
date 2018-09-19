@@ -63,12 +63,12 @@ class LoginPage extends React.Component {
     return <SafeAreaView style={{flex: 1}}>
                 <View style = {styles.mainContainer}>
                    <View style = {styles.headerContainer}>
-                        <Image source={require("../images/navbarImage.png")}
+                        <Image source={require("../../images/navbarImage.png")}
                                style={styles.headerImage}>
                         </Image>
                    </View>
                         
-                   <Image source={require("../images/logoImage.png")} 
+                   <Image source={require("../../images/logoImage.png")} 
                           style= { styles.topImage } />
                    <View style = { styles.middleContainer}>
                          <Text style = {styles.loginText}>
@@ -93,7 +93,7 @@ class LoginPage extends React.Component {
                        </TextInput>
           <TouchableOpacity onPress= { this._onSignInClick }
                              style = {styles.loginButton }>
-                       <ImageBackground source = {require('../images/loginButtonImage.png')}
+                       <ImageBackground source = {require('../../images/loginButtonImage.png')}
                                         style= {{width:"100%", height:"100%", borderRadius:20, justifyContent:'center',
                                                  alignItems: 'center'}}
                                         imageStyle={{borderRadius:20}}>

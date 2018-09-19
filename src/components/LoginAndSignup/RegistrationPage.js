@@ -45,7 +45,7 @@ class RegistrationPage extends React.Component {
         this.checkBoxClick = this.checkBoxClick.bind(this);
     }
        checkBoxClick() {
-            this.props.navigation.navigate('MainMenuPage');
+            this.props.navigation.navigate('SuccesfulLoginPage');
             this.setState({checked: !this.state.checked});
        }
 
@@ -107,7 +107,7 @@ class RegistrationPage extends React.Component {
     render() {
         
 return <View style={styles.mainContainer}>
-        <ImageBackground source = {require("../images/newBackground.png")} 
+        <ImageBackground source = {require("../../images/newBackground.png")} 
                          style = {styles.backgroundImage}
                          imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
@@ -118,7 +118,7 @@ return <View style={styles.mainContainer}>
                   <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
                                     onPress={this.backButtonClick}>
-                         <Image source = {require('../images/backButton.png')}
+                         <Image source = {require('../../images/backButton.png')}
                                         style= {{width:"40%", height:"90%", justifyContent:'center',
                                                  alignItems: 'center'}}>
                        </Image>  
@@ -193,11 +193,11 @@ return <View style={styles.mainContainer}>
                        />
             </KeyboardAvoidingView>
 
-            <View style={styles.buttonContainer}>
+            {/* <View style={styles.buttonContainer}>
                 <Button color="white" title="Register Me"
                         onPress={this._registerBtnClick}>
               </Button>
-            </View>
+            </View> */}
             {/* <Text
               style={{
                 color: "white",

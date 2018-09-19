@@ -27,7 +27,7 @@ class Welcomepage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Image
-          source={require("../images/WelcomeScreen.png")}
+          source={require("../../images/WelcomeScreen.png")}
           style={styles.backgroundImage}
         />    
       </View>
