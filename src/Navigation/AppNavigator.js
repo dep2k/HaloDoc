@@ -15,21 +15,36 @@ import VetListPage from '../components/VetList/VetListPage'
 const AppStackNavigator = createStackNavigator({
 
     CodeConfirmationPage: {
-        screen: CodeConfirmationPage
+        screen: CodeConfirmationPage,
+         navigationOptions: {
+        header: null
+      }
     },
 
     PetRegistrationFormPage: {
       screen: PetRegistrationForm,
+       navigationOptions: {
+        header: null
+      }
     },
 
     SuccesfulLoginPage: {
       screen: SuccesfulLogin,
+       navigationOptions: {
+        header: null
+      }
     },
     VetListPage: {
       screen: VetListPage,
+       navigationOptions: {
+        header: null
+      }
     },
     MainMenuPage: {
       screen: MainMenuPage,
+       navigationOptions: {
+        header: null
+      }
     },
 
     RegistrationPage: {
@@ -50,6 +65,9 @@ const AppStackNavigator = createStackNavigator({
 
     PetCategoriesPage: {
       screen: PetCategories,
+       navigationOptions: {
+        header: null
+      }
     },
 
    

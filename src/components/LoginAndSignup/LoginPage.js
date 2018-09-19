@@ -74,7 +74,10 @@ class LoginPage extends React.Component {
                          <Text style = {styles.loginText}>
                                {I18n.get('Username')}
                         </Text>
-                       <TextInput style={ styles.textInput}
+                       <TextInput returnKeyType = {"next"}
+                                  onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                                  blurOnSubmit={false}
+                                  style={ styles.textInput}
                                   placeholder={I18n.get('Username')}
                                   onChangeText={(text) => this.setState(state => (state.username = text, state))}>
                        </TextInput>
@@ -82,7 +85,8 @@ class LoginPage extends React.Component {
                        <Text  style = {styles.passwordText}>
                                {I18n.get('Password')}
                        </Text>
-                       <TextInput secureTextEntry={true}
+                       <TextInput ref={(input) => { this.secondTextInput = input; }}
+                                  secureTextEntry={true}
                                   style={ styles.textInput} 
                                   placeholder="Password"
                                   onChangeText={(text) => this.setState(state => (state.password = text, state))}>

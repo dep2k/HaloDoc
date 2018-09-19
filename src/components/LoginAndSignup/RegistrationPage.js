@@ -1,6 +1,7 @@
 
 import React from "react";
 import { I18n } from "aws-amplify";
+import { CheckBox } from 'react-native-elements'
 
 import {
   Alert,
@@ -41,13 +42,18 @@ class RegistrationPage extends React.Component {
        
         this.backButtonClick = this.backButtonClick.bind(this);
         this._registerBtnClick = this._registerBtnClick.bind(this);
+        this.checkBoxClick = this.checkBoxClick.bind(this);
     }
+       checkBoxClick() {
+            this.props.navigation.navigate('MainMenuPage');
+            this.setState({checked: !this.state.checked});
+       }
+
        backButtonClick(){
            this.props.navigation.goBack(null);
        }
 
        _registerBtnClick() {
-    
         const user = this.state.user;
         if (user.firstName && user.lastName && user.userName
             && user.email && user.phoneNo  && user.password
@@ -106,20 +112,19 @@ return <View style={styles.mainContainer}>
                          imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
                                          alignItems: "center", backgroundColor: "transparent"}}>
-            <View style={styles.topContainer}>
-             <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
+           
+            <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
+             <View style={styles.topContainer}>
+                  <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
-                               onPress={this.backButtonClick}>
-                               <Image source = {require('../images/backButton.png')}
+                                    onPress={this.backButtonClick}>
+                         <Image source = {require('../images/backButton.png')}
                                         style= {{width:"40%", height:"90%", justifyContent:'center',
                                                  alignItems: 'center'}}>
-                               </Image>  
-             </TouchableOpacity>
-              
-            </View>
-          
-            <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
-              <Text
+                       </Image>  
+                  </TouchableOpacity> 
+             </View>
+             <Text
                   style={{
                   backgroundColor:"transparent",
                   fontSize: 25,
@@ -193,7 +198,7 @@ return <View style={styles.mainContainer}>
                         onPress={this._registerBtnClick}>
               </Button>
             </View>
-            <Text
+            {/* <Text
               style={{
                 color: "white",
                 marginLeft: "5%",
@@ -201,7 +206,18 @@ return <View style={styles.mainContainer}>
                 marginLeft: 90
               }} >
                 {I18n.get('Accept terms and conditions')}
-            </Text>
+            </Text> */}
+            <CheckBox
+                 center
+                 containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent'}}
+                 checkedIcon = 'check-square-o'
+                 checkedColor= 'green'
+                 uncheckedColor='white'
+                 uncheckedIcon = 'square-o'
+                 title= {I18n.get('Accept terms and conditions')}
+                 checked={this.state.checked}
+                 onPress={this.checkBoxClick}>
+            </CheckBox>
           </ImageBackground>
         </View>;
  }
