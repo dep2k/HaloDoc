@@ -19,8 +19,12 @@ export const  setUpLanguage = () => {
         'Email' : "Email",
         'Create password': "Create Password",
         'Confirm password': "Confirm Password",
-        'Accept terms and conditions': " Accept terms and conditions"
-
+        'Accept terms and conditions': " Accept terms and conditions",
+        'Consult': "CONSULT",
+        'MyProfile': "MY PROFILE",
+        'VeterinaryDirectory': "VETERINARY DIRECTORY",
+        'HistoryOfConsultaions': "HISTORY OF CONSULTATIONS",
+        'PaymentHistory': "PAYMENT HISTORY"
 
     },
     'es': {
@@ -37,8 +41,12 @@ export const  setUpLanguage = () => {
         'Email': "Email",
         'Create password' : "Crear contracena",
         'Confirm password': "Confirmar contra-",
-        'Accept terms and conditions': "Accepto terminos y condiciones"
-
+        'Accept terms and conditions': "Accepto terminos y condiciones",
+        'Consult': "CONSULTAR",
+        'MyProfile': "MI PERFIL",
+        'VeterinaryDirectory': "DIRECTORIO VETERINARIO",
+        'HistoryOfConsultaions':"HISTORIAL DE CONSULTAS",
+        'PaymentHistory': "HISTORIAL DE PAGOS"
 
 
 
