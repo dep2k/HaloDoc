@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
   ActivityIndicator
 } from "react-native";
 
@@ -100,13 +101,13 @@ class RegistrationPage extends React.Component {
         
 return <View style={styles.mainContainer}>
             <View style={styles.topContainer}>
-             <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 30, justifyContent: 'center',
+             <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
                                onPress={this.backButtonClick}>
-                              <Text style={{ color: "white", fontSize: 20}}>
-                                 Back
-                              </Text>
-                     
+                               <Image source = {require('../images/backButton.png')}
+                                        style= {{width:"40%", height:"90%", justifyContent:'center',
+                                                 alignItems: 'center'}}>
+                               </Image>  
              </TouchableOpacity>
               
             </View>
@@ -140,14 +141,21 @@ return <View style={styles.mainContainer}>
                          placeholder={I18n.get('Email')}  
                          placeholderTextColor="white"
                         onChangeText={(text) => this.setState(state => (state.user.email = text, state))} />
-              <TextInput style={styles.textInput} 
+              <TextInput secureTextEntry={true}
+                         style={styles.textInput} 
                          placeholder={I18n.get('Create password')}  
                          placeholderTextColor="white"
                          onChangeText={(text) => this.setState(state => (state.user.password = text, state))} />
-              <TextInput style={styles.textInput} 
+              <TextInput secureTextEntry={true}
+                         style={styles.textInput} 
                          placeholder={I18n.get('Confirm password')} 
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.confirmPassword = text, state))} />
+             <TextInput style={{height: 35,width: "80%", marginTop: 30, alignContent: "flex-end"} }
+                         placeholder={I18n.get('')}  
+                         placeholderTextColor="white"
+                       // onChangeText={(text) => this.setState(state => (state.user.email = text, state))} 
+                       />
             </KeyboardAvoidingView>
 
             <View style={styles.buttonContainer}>
