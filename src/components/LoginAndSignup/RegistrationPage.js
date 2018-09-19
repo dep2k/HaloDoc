@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ImageBackground,
   Image,
   ActivityIndicator
 } from "react-native";
@@ -100,6 +101,11 @@ class RegistrationPage extends React.Component {
     render() {
         
 return <View style={styles.mainContainer}>
+        <ImageBackground source = {require("../images/newBackground.png")} 
+                         style = {styles.backgroundImage}
+                         imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
+                                        backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
+                                         alignItems: "center", backgroundColor: "transparent"}}>
             <View style={styles.topContainer}>
              <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
@@ -122,31 +128,55 @@ return <View style={styles.mainContainer}>
                 {I18n.get('Sign Up')}
               </Text>
               <TextInput style={{ height: 35, width: "80%", marginTop: 30, borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
-                    placeholder= {I18n.get('Firstname')} 
+                         placeholder= {I18n.get('Firstname')} 
                          placeholderTextColor="white" 
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                         blurOnSubmit={false}
                          onChangeText={(text) => this.setState(state => (state.user.firstName = text, state))} />
-              <TextInput style={styles.textInput}
+              <TextInput ref={(input) => { this.secondTextInput = input; }}
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                         blurOnSubmit={false}
+                         style={styles.textInput}
                          placeholder={I18n.get('Lastname')} 
                          placeholderTextColor="white" 
                          onChangeText = {(text) => this.setState(state => (state.user.lastName = text, state ))}/>
-              <TextInput style={styles.textInput} 
+              <TextInput ref={(input) => { this.thirdTextInput = input; }}
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+                         blurOnSubmit={false}
+                         style={styles.textInput} 
                          placeholder={I18n.get('UserId')}  
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.userName = text, state))} />
-              <TextInput style={styles.textInput} 
+              <TextInput ref={(input) => { this.fourthTextInput = input; }}
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.fifithTextInput.focus(); }}
+                         blurOnSubmit={false}
+                         style={styles.textInput} 
                          placeholder={I18n.get('PhoneNo')} 
                          placeholderTextColor="white"
                           onChangeText={(text) => this.setState(state => (state.user.phoneNo = text, state))} />
-              <TextInput style={styles.textInput} 
+              <TextInput ref={(input) => { this.fifth = input; }}
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.sixthTextInput.focus(); }}
+                         blurOnSubmit={false}
+                         style={styles.textInput} 
                          placeholder={I18n.get('Email')}  
                          placeholderTextColor="white"
                         onChangeText={(text) => this.setState(state => (state.user.email = text, state))} />
-              <TextInput secureTextEntry={true}
+              <TextInput ref={(input) => { this.sixthTextInput = input; }}
+                         secureTextEntry={true}
+                         returnKeyType = {"next"}
+                         onSubmitEditing={() => { this.seventhTextInput.focus(); }}
+                         blurOnSubmit={false}
                          style={styles.textInput} 
                          placeholder={I18n.get('Create password')}  
                          placeholderTextColor="white"
                          onChangeText={(text) => this.setState(state => (state.user.password = text, state))} />
-              <TextInput secureTextEntry={true}
+              <TextInput ref={(input) => { this.seventhTextInput = input; }}
+                         secureTextEntry={true}
                          style={styles.textInput} 
                          placeholder={I18n.get('Confirm password')} 
                          placeholderTextColor="white" 
@@ -167,22 +197,19 @@ return <View style={styles.mainContainer}>
               style={{
                 color: "white",
                 marginLeft: "5%",
-                marginTop: 20
-              }}
-            >
+                marginTop: 20, 
+                marginLeft: 90
+              }} >
                 {I18n.get('Accept terms and conditions')}
             </Text>
-          </View>;
+          </ImageBackground>
+        </View>;
  }
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "#BED885"
   },
   topContainer: {
     height: 40,
@@ -215,13 +242,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     height: 30,
-    marginTop: 10
+    
   },
   activityIndicator: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     height: 80
+  },
+  backgroundImage: {
+    flex: 1,
+   
   }
 });
 export default RegistrationPage;

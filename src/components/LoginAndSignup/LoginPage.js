@@ -15,6 +15,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  SafeAreaView,
   Button,
   ImageBackground,
   ActivityIndicator
@@ -59,7 +60,8 @@ class LoginPage extends React.Component {
 
   render() {
 
-    return <View style = {styles.mainContainer}>
+    return <SafeAreaView style={{flex: 1}}>
+                <View style = {styles.mainContainer}>
                    <View style = {styles.headerContainer}>
                         <Image source={require("../images/navbarImage.png")}
                                style={styles.headerImage}>
@@ -109,7 +111,8 @@ class LoginPage extends React.Component {
                   title={I18n.get('RegisterMe')} 
                   onPress={this._onRegisterClick} />
         </View>
-      </View>;
+      </View>
+    </SafeAreaView>;
   }
 }
 
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         height: 60,
-        marginTop:30,
+        marginTop: 30,
         width: "100%",
         backgroundColor:"transparent",
         justifyContent: "center",
