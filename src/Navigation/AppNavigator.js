@@ -11,12 +11,19 @@ import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
 import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
+import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 
 const AppStackNavigator = createStackNavigator({
 
     CodeConfirmationPage: {
         screen: CodeConfirmationPage,
          navigationOptions: {
+        header: null
+      }
+    },
+    TermsPage: {
+      screen: TermsAndConditions, 
+      navigationOptions: {
         header: null
       }
     },
@@ -82,7 +89,7 @@ const AppStackNavigator = createStackNavigator({
 
   },
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "CodeConfirmationPage"
   }
 );
 

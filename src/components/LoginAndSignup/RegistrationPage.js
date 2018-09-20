@@ -44,7 +44,11 @@ class RegistrationPage extends React.Component {
         this.backButtonClick = this.backButtonClick.bind(this);
         this._registerBtnClick = this._registerBtnClick.bind(this);
         this.checkBoxClick = this.checkBoxClick.bind(this);
+        this.termsButtonClick = this.termsButtonClick.bind(this);
     }
+       termsButtonClick() {
+           this.props.navigation.navigate('TermsPage')
+       }
        checkBoxClick() {
            // this.props.navigation.navigate('SuccesfulLoginPage');
             this.setState({checked: !this.state.checked});
@@ -221,8 +225,8 @@ return <View style={styles.mainContainer}>
                           checked={this.state.checked}
                           onPress={this.checkBoxClick}>
                   </CheckBox>
-                  <TouchableOpacity onPress= { this._onSignInClick }
-                                     style = {styles.termsButton }>
+                  <TouchableOpacity onPress= {this.termsButtonClick }
+                                     style = {styles.termsButton}>
                              <Text style={{ color: "white", fontSize: 12}}>
                                   {I18n.get('Accept terms and conditions')}
                              </Text> 
