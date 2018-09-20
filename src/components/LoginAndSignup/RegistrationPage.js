@@ -37,6 +37,7 @@ class RegistrationPage extends React.Component {
                 confirmPassword: ""
             },
             animating: true,
+            checked: true,
 
         }
        
@@ -45,7 +46,7 @@ class RegistrationPage extends React.Component {
         this.checkBoxClick = this.checkBoxClick.bind(this);
     }
        checkBoxClick() {
-            this.props.navigation.navigate('SuccesfulLoginPage');
+           // this.props.navigation.navigate('SuccesfulLoginPage');
             this.setState({checked: !this.state.checked});
        }
 
@@ -113,26 +114,27 @@ return <View style={styles.mainContainer}>
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
                                          alignItems: "center", backgroundColor: "transparent"}}>
            
-            <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
-             <View style={styles.topContainer}>
-                  <TouchableOpacity style = {{marginTop:40,backgroundColor:"transparent",width:60, height:40,marginLeft: 10, justifyContent: 'center',
+             <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
+               <View style={styles.topContainer}>
+                  <TouchableOpacity style = {{backgroundColor:"transparent",width:"10%", height:"70%",marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
                                     onPress={this.backButtonClick}>
                          <Image source = {require('../../images/backButton.png')}
-                                        style= {{width:"40%", height:"90%", justifyContent:'center',
+                                        style= {{width:"50%", height:"100%", justifyContent:'center',
                                                  alignItems: 'center'}}>
                        </Image>  
                   </TouchableOpacity> 
-             </View>
+               </View>
              <Text
                   style={{
+                  marginTop: "2%",
                   backgroundColor:"transparent",
                   fontSize: 25,
                   color: "white"
                    }} >
                 {I18n.get('Sign Up')}
               </Text>
-              <TextInput style={{ height: 35, width: "80%", marginTop: 30, borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
+              <TextInput style={{ height: "10%", width: "80%", marginTop: "3%", borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
                          placeholder= {I18n.get('Firstname')} 
                          placeholderTextColor="white" 
                          returnKeyType = {"next"}
@@ -163,7 +165,7 @@ return <View style={styles.mainContainer}>
                          placeholder={I18n.get('PhoneNo')} 
                          placeholderTextColor="white"
                           onChangeText={(text) => this.setState(state => (state.user.phoneNo = text, state))} />
-              <TextInput ref={(input) => { this.fifth = input; }}
+              <TextInput ref={(input) => { this.fifithTextInput = input; }}
                          returnKeyType = {"next"}
                          onSubmitEditing={() => { this.sixthTextInput.focus(); }}
                          blurOnSubmit={false}
@@ -186,19 +188,19 @@ return <View style={styles.mainContainer}>
                          placeholder={I18n.get('Confirm password')} 
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.confirmPassword = text, state))} />
-             <TextInput style={{height: 35,width: "80%", marginTop: 30, alignContent: "flex-end"} }
+             <TextInput style={{height: "10%",width: "80%", marginTop: "7%", alignContent: "flex-end"} }
                          placeholder={I18n.get('')}  
                          placeholderTextColor="white"
                        // onChangeText={(text) => this.setState(state => (state.user.email = text, state))} 
                        />
             </KeyboardAvoidingView>
 
-            {/* <View style={styles.buttonContainer}>
-                <Button color="white" title="Register Me"
+             <View style={styles.buttonContainer}>
+                <Button color="white" title={I18n.get('RegisterMe')}
                         onPress={this._registerBtnClick}>
               </Button>
-            </View> */}
-            {/* <Text
+            </View> 
+              {/* <Text
               style={{
                 color: "white",
                 marginLeft: "5%",
@@ -207,17 +209,25 @@ return <View style={styles.mainContainer}>
               }} >
                 {I18n.get('Accept terms and conditions')}
             </Text> */}
-            <CheckBox
-                 center
-                 containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent'}}
-                 checkedIcon = 'check-square-o'
-                 checkedColor= 'green'
-                 uncheckedColor='white'
-                 uncheckedIcon = 'square-o'
-                 title= {I18n.get('Accept terms and conditions')}
-                 checked={this.state.checked}
-                 onPress={this.checkBoxClick}>
-            </CheckBox>
+            <View style = {styles.checkboxContainer}>
+                  <CheckBox
+                          center
+                          containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent', width:"15%"}}
+                          checkedIcon = 'check-square-o'
+                          checkedColor= 'green'
+                          uncheckedColor='white'
+                          uncheckedIcon = 'square-o'
+                       // title= {I18n.get('Accept terms and conditions')}
+                          checked={this.state.checked}
+                          onPress={this.checkBoxClick}>
+                  </CheckBox>
+                  <TouchableOpacity onPress= { this._onSignInClick }
+                                     style = {styles.termsButton }>
+                             <Text style={{ color: "white", fontSize: 12}}>
+                                  {I18n.get('Accept terms and conditions')}
+                             </Text> 
+                  </TouchableOpacity>
+            </View>
           </ImageBackground>
         </View>;
  }
@@ -228,36 +238,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topContainer: {
-    height: 40,
+    height: "12%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    //backgroundColor: "green",
-    marginTop: "13%",
+  //  backgroundColor: "green",
+    marginTop: "20%",
 
    
   },
   registrationFormContainer: {
     flex: 0.85,
     flexDirection: "column",
-//    / backgroundColor:'black',
+   // backgroundColor:'black',
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "5%"
+    marginTop: "15%"
   },
   textInput: {
-    height: 35,
+    height: "10%",
     width: "80%",
-    marginTop: 30,
+    marginTop: "3%",
     borderBottomColor: "white",
     borderBottomWidth: 1,
     color: "white",
     alignContent: "flex-end"
   },
   buttonContainer: {
-    height: 30,
+    height: "5%",
+   // backgroundColor: 'yellow',
+    justifyContent: 'center',
+    alignItems: 'center',
+   
     
   },
   activityIndicator: {
@@ -268,7 +282,21 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-   
+ },
+  checkboxContainer: {
+      flexDirection: "row",
+     // backgroundColor: 'black',
+      height: "10%",
+      justifyContent: 'center',
+      alignItems: 'center'
+  },
+  termsButton: {
+      height: "30%",
+      width: "60%",
+     // backgroundColor:'black', 
+      justifyContent:'center',
+      alignItems:'flex-start', 
+     // marginRight: "20%"
   }
 });
 export default RegistrationPage;

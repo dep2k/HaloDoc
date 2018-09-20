@@ -60,8 +60,7 @@ class LoginPage extends React.Component {
 
   render() {
 
-    return <SafeAreaView style={{flex: 1}}>
-                <View style = {styles.mainContainer}>
+    return   <View style = {styles.mainContainer}>
                    <View style = {styles.headerContainer}>
                         <Image source={require("../../images/navbarImage.png")}
                                style={styles.headerImage}>
@@ -78,7 +77,7 @@ class LoginPage extends React.Component {
                                   onSubmitEditing={() => { this.secondTextInput.focus(); }}
                                   blurOnSubmit={false}
                                   style={ styles.textInput}
-                                  placeholder={I18n.get('Username')}
+                                 // placeholder={I18n.get('Username')}
                                   onChangeText={(text) => this.setState(state => (state.username = text, state))}>
                        </TextInput>
 
@@ -88,7 +87,7 @@ class LoginPage extends React.Component {
                        <TextInput ref={(input) => { this.secondTextInput = input; }}
                                   secureTextEntry={true}
                                   style={ styles.textInput} 
-                                  placeholder="Password"
+                                  //placeholder="Password"
                                   onChangeText={(text) => this.setState(state => (state.password = text, state))}>
                        </TextInput>
           <TouchableOpacity onPress= { this._onSignInClick }
@@ -106,8 +105,8 @@ class LoginPage extends React.Component {
             style={{
               fontSize: 17,
               color: "grey",
-              marginTop: 10,
-              marginBottom: 60
+              marginTop: "5%",
+              marginBottom: "8%"
             }}>
                 {I18n.get('Forgot Password')}
           </Text>
@@ -115,8 +114,7 @@ class LoginPage extends React.Component {
                   title={I18n.get('RegisterMe')} 
                   onPress={this._onRegisterClick} />
         </View>
-      </View>
-    </SafeAreaView>;
+      </View>;
   }
 }
 
@@ -128,8 +126,8 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     headerContainer: {
-        height: 60,
-        marginTop: 30,
+        height: "10%",
+        marginTop: 0,
         width: "100%",
         backgroundColor:"transparent",
         justifyContent: "center",
@@ -137,19 +135,21 @@ const styles = StyleSheet.create({
        },
       headerImage: {
          width:"100%",
-         height: "100%" 
+         height: "100%" ,
+         
       },
     topImage:{
-      height: 80, 
-      width: 105, 
-      marginTop: 20, 
-      marginLeft: 240, 
-      backgroundColor: "transparent"
+      height: "20%", 
+      width: "25%", 
+     // marginTop: "2%", 
+      marginLeft: "70%", 
+      backgroundColor: "transparent",
+      resizeMode: 'contain'
     },
     loginButton: {
-      height: 40,
-      width: 300,
-      backgroundColor:'mediumseagreen', 
+      height: "15%",
+      width: "90%",
+     // backgroundColor:'mediumseagreen', 
       justifyContent:'center',
       alignItems:'center', 
       borderRadius: 20
@@ -157,32 +157,33 @@ const styles = StyleSheet.create({
     middleContainer: {
       flexDirection: "column", 
       justifyContent: "flex-start", 
-      backgroundColor: "transparent", 
-      width: "100%", height: 400, 
+      //backgroundColor: "pink", 
+      width: "100%",
+      height: "50%", 
       alignItems: "center", 
-      paddingTop: 80
+      paddingTop: "10%"
     },
     textInput: {
-      height: 40, 
-      width: 300, 
+      height: "14%", 
+      width: "90%", 
       borderRadius: 20, 
       backgroundColor: "#F8F8F8", 
-      marginBottom: 40,
-      paddingHorizontal: 10
+      marginBottom: "10%",
+      paddingHorizontal: "5%"
     },
     loginText: {
       fontSize: 15, 
       fontWeight: "normal", 
       color: "#7C7B7B",  
       marginBottom: 5,
-      marginRight: 190
+      marginRight: "66%"
     },
     passwordText:{
       fontSize: 15, 
       fontWeight: "normal", 
       color: "#7C7B7B",  
       marginBottom: 5,
-      marginRight: 190
+      marginRight: "60%"
     }
 })
 
