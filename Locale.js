@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('es');
+    I18n.setLanguage('en');
     const dict = {
     'en': {
         'Sign In': "Sign In",
@@ -25,7 +25,8 @@ export const  setUpLanguage = () => {
         'VeterinaryDirectory': "VETERINARY DIRECTORY",
         'HistoryOfConsultaions': "HISTORY OF CONSULTATIONS",
         'PaymentHistory': "PAYMENT HISTORY",
-        'Continue' :"CONTINUE"
+        'Continue' :"CONTINUE",
+        'CodeSent': "Your code has sent to your email"
 
     },
     'es': {
@@ -48,7 +49,8 @@ export const  setUpLanguage = () => {
         'VeterinaryDirectory': "DIRECTORIO VETERINARIO",
         'HistoryOfConsultaions':"HISTORIAL DE CONSULTAS",
         'PaymentHistory': "HISTORIAL DE PAGOS",
-        'Continue' : "CONTINUAR"
+        'Continue' : "CONTINUAR",
+        'CodeSent': "su código ha enviado a su correo electrónico"
 
 
 

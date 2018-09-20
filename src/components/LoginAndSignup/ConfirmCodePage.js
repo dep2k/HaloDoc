@@ -11,7 +11,7 @@ import {
   Image,
   ImageBackground
 } from "react-native";
-
+import { I18n } from "aws-amplify";
 import { Cache } from 'aws-amplify';
 
 class ConfirmCodePage extends React.Component {
@@ -56,17 +56,15 @@ class ConfirmCodePage extends React.Component {
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
                                          alignItems: "center", backgroundColor: "transparent"}}> 
                <View style={styles.headerContainer}>
-                     <TouchableOpacity style = {{backgroundColor:"transparent",width:"15%", height:"80%",marginLeft: 8, justifyContent: 'center',
-                                          alignItems:'center'}}
+                     <TouchableOpacity style = {styles.backButtonStyle}
                                     onPress={this.backButtonClick}>
                          <Image source = {require('../../images/backButton.png')}
-                                        style= {{width:"40%", height:"50%", justifyContent:'center',
-                                                 alignItems: 'center'}}>
+                                        style= {styles.backButtonImage}>
                        </Image>  
                      </TouchableOpacity> 
                </View>
                <Text style = {styles.textStyle}>
-                 Your Code has sent to your email 
+                      {I18n.get('CodeSent')}
                </Text>
                <TextInput
                     style={styles.textInput }
@@ -121,7 +119,22 @@ const styles = StyleSheet.create({
     width: "90%",
     marginTop: "20%",
 
+  },
+  backButtonStyle: {
+    backgroundColor: "transparent", 
+    width: "15%", 
+    height: "80%", 
+    marginLeft: 8, 
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  backButtonImage: {
+    width: "40%", 
+    height: "50%", 
+    justifyContent: 'center',
+    alignItems: 'center'
   }
+  
 });
 
 export default ConfirmCodePage;
