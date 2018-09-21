@@ -14,25 +14,35 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
   Alert,
   SafeAreaView,
   Button,
   ImageBackground,
-  ActivityIndicator
 } from "react-native";
+import ActivityIndicatorExample from "../../ActivityIndicator";
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      user: {
+        username: "",
+        password: ""
+      },
+      animating: false,
     }
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
   }
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
 
-   
+  closeActivityIndicator() {
+      this.setState({ animating: false });
+  }
 
   componentDidMount() {
     //this.props.initializeApp()
@@ -43,14 +53,27 @@ class LoginPage extends React.Component {
   }
 
   _onSignInClick() {
-
-    Auth.signIn(this.state.username, this.state.password).then(user => {
+    const user = this.state.user;
+         this.startActivityIndicator();
+    //if (user.username == Auth.signIn.username && user.password == Auth.signIn.password){
+    Auth.signIn(user.username, user.password)
+    .then(user => {
       console.log(user);
       this.props.navigation.navigate('MainMenuPage');
-    }).catch(err => {
-      console.log(err);
-    });
-  }
+    })
+    .catch(err => 
+      console.log(err));
+    }
+  // }else {
+  //     Alert.alert(
+  //       'Error',
+  //       'Username and password do not match ',
+  //       [
+  //         { text: 'OK', onPress: () => console.log('OK Pressed') },
+  //       ],
+  //       { cancelable: false }
+  //     )
+  // }
 
   _onRegisterClick() {
     console.log("RegisterBtnClick")
@@ -60,16 +83,19 @@ class LoginPage extends React.Component {
 
   render() {
 
-    return   <View style = {styles.mainContainer}>
-                   <View style = {styles.headerContainer}>
-                        <Image source={require("../../images/navbarImage.png")}
+    return  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style = {styles.mainContainer}>
+                       
+                        <View style = {styles.headerContainer}>
+                            <Image source={require("../../images/navbarImage.png")}
                                style={styles.headerImage}>
-                        </Image>
-                   </View>
+                             </Image>
+                        </View>
                         
-                   <Image source={require("../../images/logoImage.png")} 
-                          style= { styles.topImage } />
-                   <View style = { styles.middleContainer}>
+                         <Image source={require("../../images/logoImage.png")} 
+                          style= { styles.topImage } >
+                         </Image>
+                    <View style = { styles.middleContainer}>
                          <Text style = {styles.loginText}>
                                {I18n.get('Username')}
                         </Text>
@@ -78,9 +104,9 @@ class LoginPage extends React.Component {
                                   blurOnSubmit={false}
                                   style={ styles.textInput}
                                  // placeholder={I18n.get('Username')}
-                                  onChangeText={(text) => this.setState(state => (state.username = text, state))}>
+                                  onChangeText={(text) => this.setState(state => (state.user.username = text, state))}>
                        </TextInput>
-
+                        
                        <Text  style = {styles.passwordText}>
                                {I18n.get('Password')}
                        </Text>
@@ -88,9 +114,9 @@ class LoginPage extends React.Component {
                                   secureTextEntry={true}
                                   style={ styles.textInput} 
                                   //placeholder="Password"
-                                  onChangeText={(text) => this.setState(state => (state.password = text, state))}>
+                                  onChangeText={(text) => this.setState(state => (state.user.password = text, state))}>
                        </TextInput>
-          <TouchableOpacity onPress= { this._onSignInClick }
+                       <TouchableOpacity onPress= { this._onSignInClick }
                              style = {styles.loginButton }>
                        <ImageBackground source = {require('../../images/loginButtonImage.png')}
                                         style= {{width:"100%", height:"100%", borderRadius:20, justifyContent:'center',
@@ -100,21 +126,24 @@ class LoginPage extends React.Component {
                                   {I18n.get('Sign In')}
                               </Text> 
                       </ImageBackground>     
-         </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 17,
-              color: "grey",
-              marginTop: "5%",
-              marginBottom: "8%"
-            }}>
-                {I18n.get('Forgot Password')}
-          </Text>
-          <Button color="darkgrey"   
-                  title={I18n.get('RegisterMe')} 
-                  onPress={this._onRegisterClick} />
-        </View>
-      </View>;
+                      </TouchableOpacity>
+                      <Text
+                          style={{
+                             fontSize: 17,
+                             color: "grey",
+                             marginTop: "5%",
+                             marginBottom: "8%" }}>
+                            {I18n.get('Forgot Password')}
+                     </Text>
+                     <Button color="darkgrey"   
+                             title={I18n.get('RegisterMe')} 
+                             onPress={this._onRegisterClick} >
+                     </Button> 
+                            < ActivityIndicatorExample animating={this.state.animating} />  
+                   </View>   
+              </View>      
+      </TouchableWithoutFeedback>;
+      
   }
 }
 

@@ -2,9 +2,12 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 import { CheckBox } from 'react-native-elements'
+import ActivityIndicatorExample from "../../ActivityIndicator";
 
 import {
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
   View,
   KeyboardAvoidingView,
   Button,
@@ -14,7 +17,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  ActivityIndicator
 } from "react-native";
 
 import { Auth } from 'aws-amplify';
@@ -36,7 +38,7 @@ class RegistrationPage extends React.Component {
                 password: "",
                 confirmPassword: ""
             },
-            animating: true,
+            animating: false,
             checked: true,
 
         }
@@ -45,6 +47,13 @@ class RegistrationPage extends React.Component {
         this._registerBtnClick = this._registerBtnClick.bind(this);
         this.checkBoxClick = this.checkBoxClick.bind(this);
         this.termsButtonClick = this.termsButtonClick.bind(this);
+    }
+    startActivityIndicator() {
+        this.setState({ animating: true });
+    }
+
+    closeActivityIndicator() {
+        this.setState({ animating: false });
     }
        termsButtonClick() {
            this.props.navigation.navigate('TermsPage')
@@ -112,13 +121,13 @@ class RegistrationPage extends React.Component {
     render() {
         
 return <View style={styles.mainContainer}>
-        <ImageBackground source = {require("../../images/newBackground.png")} 
+    <ImageBackground source = {require("../../images/newBackground.png")} 
                          style = {styles.backgroundImage}
                          imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
                                          alignItems: "center", backgroundColor: "transparent"}}>
-           
-             <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
+       
+            <KeyboardAvoidingView style={styles.registrationFormContainer} behavior="padding">
                <View style={styles.topContainer}>
                   <TouchableOpacity style = {{backgroundColor:"transparent",width:"10%", height:"70%",marginLeft: 10, justifyContent: 'center',
                                           alignItems:'center'}}
@@ -129,7 +138,7 @@ return <View style={styles.mainContainer}>
                        </Image>  
                   </TouchableOpacity> 
                </View>
-             <Text
+               <Text
                   style={{
                   marginTop: "2%",
                   backgroundColor:"transparent",
@@ -137,15 +146,15 @@ return <View style={styles.mainContainer}>
                   color: "white"
                    }} >
                 {I18n.get('Sign Up')}
-              </Text>
-              <TextInput style={{ height: "10%", width: "80%", marginTop: "3%", borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
+               </Text>
+               <TextInput style={{ height: "10%", width: "80%", marginTop: "3%", borderBottomColor: "white", borderBottomWidth: 1, color: "white", alignContent: "flex-end" }}
                          placeholder= {I18n.get('Firstname')} 
                          placeholderTextColor="white" 
                          returnKeyType = {"next"}
                          onSubmitEditing={() => { this.secondTextInput.focus(); }}
                          blurOnSubmit={false}
                          onChangeText={(text) => this.setState(state => (state.user.firstName = text, state))} />
-              <TextInput ref={(input) => { this.secondTextInput = input; }}
+               <TextInput ref={(input) => { this.secondTextInput = input; }}
                          returnKeyType = {"next"}
                          onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                          blurOnSubmit={false}
@@ -153,7 +162,7 @@ return <View style={styles.mainContainer}>
                          placeholder={I18n.get('Lastname')} 
                          placeholderTextColor="white" 
                          onChangeText = {(text) => this.setState(state => (state.user.lastName = text, state ))}/>
-              <TextInput ref={(input) => { this.thirdTextInput = input; }}
+               <TextInput ref={(input) => { this.thirdTextInput = input; }}
                          returnKeyType = {"next"}
                          onSubmitEditing={() => { this.fourthTextInput.focus(); }}
                          blurOnSubmit={false}
@@ -192,14 +201,13 @@ return <View style={styles.mainContainer}>
                          placeholder={I18n.get('Confirm password')} 
                          placeholderTextColor="white" 
                          onChangeText={(text) => this.setState(state => (state.user.confirmPassword = text, state))} />
-             <TextInput style={{height: "10%",width: "80%", marginTop: "7%", alignContent: "flex-end"} }
+              <TextInput style={{height: "10%",width: "80%", marginTop: "7%", alignContent: "flex-end"} }
                          placeholder={I18n.get('')}  
                          placeholderTextColor="white"
                        // onChangeText={(text) => this.setState(state => (state.user.email = text, state))} 
-                       />
+                       />     
             </KeyboardAvoidingView>
-
-             <View style={styles.buttonContainer}>
+            <View style={styles.buttonContainer}>
                 <Button color="white" title={I18n.get('RegisterMe')}
                         onPress={this._registerBtnClick}>
               </Button>
@@ -232,8 +240,9 @@ return <View style={styles.mainContainer}>
                              </Text> 
                   </TouchableOpacity>
             </View>
-          </ImageBackground>
-        </View>;
+     </ImageBackground>
+     
+  </View>;
  }
 }
 

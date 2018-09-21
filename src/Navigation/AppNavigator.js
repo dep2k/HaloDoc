@@ -89,7 +89,7 @@ const AppStackNavigator = createStackNavigator({
 
   },
   {
-    initialRouteName: "CodeConfirmationPage"
+    initialRouteName: "WelcomePage"
   }
 );
 
