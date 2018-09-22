@@ -1,8 +1,31 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import SVGImage from "react-native-svg-image";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 class MainMenuPage extends React.Component {
+
+      
+  constructor(props) {
+
+    super(props);
+    this.testGapi = this.testGapi.bind(this);
+    this.testGapi();
+
+  }
+
+  testGapi() {
+   
+     API.graphql(graphqlOperation(AllMessages)).then(response => {
+      const messages = response.data.allMessages;
+      messages.map(function(message){
+        console.log(message.conversationId);
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
     static navigationOptions =  ({ navigation}) => ({
       headerTitle: (
         <SVGImage style = {StyleSheet.absoluteFill}>
