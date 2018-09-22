@@ -68,12 +68,12 @@ class ConfirmCodePage extends React.Component {
                </Text>
                <TextInput
                     style={styles.textInput }
-                    placeholder="Confirm code"
+                    placeholder={I18n.get('Confirm Code')}
                     onChangeText={(text) => this.setState({registrationCode:text})} >
                </TextInput>
                <Button  color = "white"
-                title = "Continue"
-                onPress= {this.onContinueClick} >
+                 title={I18n.get('Continue')}
+                 onPress= {this.onContinueClick} >
                </Button>
            </ImageBackground>
       </View>

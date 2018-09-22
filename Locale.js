@@ -26,8 +26,14 @@ export const  setUpLanguage = () => {
         'HistoryOfConsultaions': "HISTORY OF CONSULTATIONS",
         'PaymentHistory': "PAYMENT HISTORY",
         'Continue' :"CONTINUE",
-        'CodeSent': "Your code has sent to your email"
-
+        'CodeSent': "Your code has sent to your email",
+        'Confirm Code': "Confirm Code",
+        'Passwords dont match': "Password and Confirm Paswword Don't Match",
+        'Username and Password are not correct': "Username and Password are not Valid",
+        'All Fields are mandatory': "All fields are mandatory",
+        'Both Fields are mandatory': "Both Fields are mandatory",
+        'OK' : "OK",
+        'EnterEmail': 'Enter username to change the password'
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -50,10 +56,14 @@ export const  setUpLanguage = () => {
         'HistoryOfConsultaions':"HISTORIAL DE CONSULTAS",
         'PaymentHistory': "HISTORIAL DE PAGOS",
         'Continue' : "CONTINUAR",
-        'CodeSent': "su código ha enviado a su correo electrónico"
-
-
-
+        'CodeSent': "su código ha enviado a su correo electrónico",
+        'Confirm Code': "Confirma código",
+        'Passwords dont match': "La contraseña y la contraseña no coinciden",
+        'Username and Password are not correct': "El nombre de usuario y la contraseña no son válidos",
+        'All Fields are mandatory': "Todos los campos son obligatorios",
+        'OK':"OK",
+        'Both Fields are mandatory': "Ambos campos son obligatorios",
+        'EnterEmail': "Ingrese el nombre de usuario para cambiar la contraseña"
     },
 
     };

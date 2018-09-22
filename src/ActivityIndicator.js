@@ -9,29 +9,17 @@ export default Loader = (props) => {
 
     return (
         
-        <View style={styles.container}>
-            <ActivityIndicator animating={props.animating}
-                size="large"
-                color="black"
-            />
-        </View>
-     
+        <ActivityIndicator animating={props.animating}
+                            style={styles.activityIndicator}
+                            size="large"
+                            color = "black"
+        />
     );
 
 
 }
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'black',
-        opacity: 0.5,
-    },
+    
     activityIndicator: {
         position: 'absolute',
         left: 0,
@@ -40,8 +28,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'black',
-        opacity: 0.5,
+        // backgroundColor: 'black',
+        // opacity: 0.5,
   
     }
 });
