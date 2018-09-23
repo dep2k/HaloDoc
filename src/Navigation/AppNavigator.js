@@ -12,17 +12,19 @@ import PetRegistrationForm from '../components/PetRegistration/PetRegistrationFo
 import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
+import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
 
-const AppStackNavigator = createStackNavigator({
 
+const AppStackNavigator = createStackNavigator(
+  {
     CodeConfirmationPage: {
-        screen: CodeConfirmationPage,
-         navigationOptions: {
+      screen: CodeConfirmationPage,
+      navigationOptions: {
         header: null
       }
     },
     TermsPage: {
-      screen: TermsAndConditions, 
+      screen: TermsAndConditions,
       navigationOptions: {
         header: null
       }
@@ -30,36 +32,35 @@ const AppStackNavigator = createStackNavigator({
 
     PetRegistrationFormPage: {
       screen: PetRegistrationForm,
-       navigationOptions: {
+      navigationOptions: {
         header: null
       }
     },
 
     SuccesfulLoginPage: {
       screen: SuccesfulLogin,
-       navigationOptions: {
+      navigationOptions: {
         header: null
       }
     },
     VetListPage: {
       screen: VetListPage,
-       navigationOptions: {
+      navigationOptions: {
         header: null
       }
     },
     MainMenuPage: {
       screen: MainMenuPage,
-       navigationOptions: {
+      navigationOptions: {
         header: null
       }
     },
 
     RegistrationPage: {
       screen: RegistrationPage,
-       navigationOptions: {
+      navigationOptions: {
         header: null
       }
-
     },
 
     //Problem with this page
@@ -67,26 +68,29 @@ const AppStackNavigator = createStackNavigator({
       screen: WelcomePage,
       navigationOptions: {
         header: null
-      },
+      }
     },
 
     PetCategoriesPage: {
       screen: PetCategories,
-       navigationOptions: {
+      navigationOptions: {
+        header: null
+      }
+    },
+    ForgotPasswordPage: {
+      screen: ForgotPasswordPage,
+      navigationOptions: {
         header: null
       }
     },
 
-   
     //Problem with this page
     LoginPage: {
       screen: LoginPage,
       navigationOptions: {
         header: null
-        },
-       
+      }
     }
-
   },
   {
     initialRouteName: "WelcomePage"

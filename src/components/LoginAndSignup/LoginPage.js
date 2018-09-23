@@ -2,7 +2,6 @@
 
 import { Auth } from "aws-amplify";
 import React from "react";
-import NavigationService from "../../NavigationService";
 import { I18n } from "aws-amplify";
 
 import {
@@ -15,10 +14,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-  SafeAreaView,
   Button,
   ImageBackground
 } from "react-native";
+
 import Loader from "../../ActivityIndicator";
 
 class LoginPage extends React.Component {
@@ -34,6 +33,7 @@ class LoginPage extends React.Component {
 
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
+    this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
   }
   startActivityIndicator() {
     this.setState({ animating: true });
@@ -51,32 +51,43 @@ class LoginPage extends React.Component {
     // clearTimeout(this.timeoutHandle); // This is just necessary in the case that the screen is closed before the timeout fires, otherwise it would cause a memory leak that would trigger the transition regardless, breaking the user experience.
   }
 
+  forgotPasswordButtonClick() {
+    this.props.navigation.navigate("ForgotPasswordPage");
+  }
+
   _onSignInClick() {
     const user = this.state.user;
     this.startActivityIndicator();
-   
-    Auth.signIn(user.username, user.password)
-      .then(user => {
-        console.log(user);
-        this.props.navigation.navigate("MainMenuPage");
-      })
-      .catch(err => console.log(err));
+    if (user.username && user.password && user.password.length >= 8) {
+      Auth.signIn(user.username, user.password)
+        .then(user => {
+          console.log(user);
+          this.props.navigation.navigate("MainMenuPage");
+        })
+        .catch(err => {
+          console.log(err);
+          Alert.alert(
+            "Error",
+            I18n.get("Username and Password are not correct"),
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            { cancelable: false }
+          );
+          this.closeActivityIndicator();
+        });
+    } else {
+      Alert.alert(
+        "Error",
+        I18n.get("Both Fields are mandatory"),
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+      this.closeActivityIndicator();
+    }
   }
-  // }else {
-  //     Alert.alert(
-  //       'Error',
-  //       'Username and password do not match ',
-  //       [
-  //         { text: 'OK', onPress: () => console.log('OK Pressed') },
-  //       ],
-  //       { cancelable: false }
-  //     )
-  // }
 
   _onRegisterClick() {
     console.log("RegisterBtnClick");
     this.props.navigation.navigate("RegistrationPage");
-    // NavigationService.navigate('RegistrationPage', { userName: 'Lucy' });
   }
 
   render() {
@@ -85,35 +96,39 @@ class LoginPage extends React.Component {
           <View style={styles.headerContainer}>
             <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
           </View>
-
           <Image source={require("../../images/logoImage.png")} style={styles.topImage} />
+          // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
+            // Username Field
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
-            <TextInput returnKeyType={"next"} onSubmitEditing={() => {
+            <TextInput autoCapitalize={"none"} returnKeyType={"next"} onSubmitEditing={() => {
                 this.secondTextInput.focus();
-              }} blurOnSubmit={false} style={styles.textInput} // placeholder={I18n.get('Username')}
-              onChangeText={text => this.setState(state => ((state.user.username = text), state))} />
-
+              }} blurOnSubmit={false} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
+              } />
+            // Password Field
             <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
             <TextInput ref={input => {
                 this.secondTextInput = input;
-              }} secureTextEntry={true} style={styles.textInput} //placeholder="Password"
-              onChangeText={text => this.setState(state => ((state.user.password = text), state))} />
+              }} secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
+              } />
+            //SignINButton
             <TouchableOpacity onPress={this._onSignInClick} style={styles.loginButton}>
-              <ImageBackground source={require("../../images/loginButtonImage.png")} style={{ width: "100%", height: "100%", borderRadius: 20, justifyContent: "center", alignItems: "center" }} imageStyle={{ borderRadius: 20 }}>
-                <Text style={{ color: "white", fontSize: 20 }}>
+              <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundStyle} imageStyle={styles.imageBackgroundImageStyle}>
+                <Text style={styles.imageBackgroundTextStyle}>
                   {I18n.get("Sign In")}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
-            <Text style={{ fontSize: 17, color: "grey", marginTop: "5%", marginBottom: "8%" }}>
-              {I18n.get("Forgot Password")}
-            </Text>
+            // Forgot Password Field
+            <Button style={styles.forgotPasswordButton}
+                    color="grey" 
+                    title={I18n.get("Forgot Password")}
+                    onPress= {this.forgotPasswordButtonClick}>
+            </Button>
+            // Register Button
             <Button color="darkgrey" title={I18n.get("RegisterMe")} onPress={this._onRegisterClick} />
           </View>
-        {this.state.animating &&
-           <Loader animating = {this.state.animating}/>
-         }
+          {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
       </TouchableWithoutFeedback>;
   }
@@ -183,6 +198,25 @@ const styles = StyleSheet.create({
     color: "#7C7B7B",
     marginBottom: 5,
     marginRight: "60%"
+  },
+  imageBackgroundStyle: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  imageBackgroundTextStyle: {
+    color: "white",
+    fontSize: 20
+  },
+  imageBackgroundImageStyle: {
+    borderRadius: 20
+  },
+  forgotPasswordButton: {
+    fontSize: 17,
+    marginTop: "5%",
+    marginBottom: "8%"
   }
 });
 
