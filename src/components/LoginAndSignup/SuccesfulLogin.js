@@ -1,25 +1,47 @@
 import React from "react";
-import { View, Image, StyleSheet, Text,ImageBackground } from "react-native";
+import { I18n } from 'aws-amplify';
+import { View, 
+     Image,
+     StyleSheet, 
+     Text,
+     ImageBackground,
+     TouchableOpacity } from "react-native";
 
 class SuccesfulLogin extends React.Component {
+
+constructor(props) {
+    super(props);
+    this._onSignInClick = this.continueButtonClick.bind(this);
+  }
+ continueButtonClick() {
+     this.props.navigation.navigate('MainMenuPage');
+ }
     render() {
         return (
             <View style={styles.mainContainer}>
+                   <View style = {styles.headerContainer}>
+                        <Image source={require("../../images/navbarImage.png")}
+                               style={styles.headerImage}>
+                        </Image>
+                   </View>
               <View style = {styles.upperImageContainer}>
                <Image
-                    source={require("../images/ImageLogo.jpg")}
-                    style={ styles.upperImageStyle}
-                />
+                    source={require("../../images/SucessfulLoginMiddle.png")}
+                    style = { styles.upperImageStyle}>
+               </Image>
               </View>
               <View style = {styles.lowerimageContainer}>
-                    <ImageBackground
-                    source={require("../images/landscape.png")}
+                <ImageBackground
+                    source={require("../../images/landscape.png")}
                     style={ styles.lowerImageBackground}>
-                    <Text style={{marginLeft:"5%", textAlign:'center', marginBottom:"10%",
-                        alignItems: 'center',fontSize: 20, color: 'white', height:40, width:'50%', justifyContent:'center',
-                    alignItems:'center'}}>
-                        CONTINUAR
-                </Text>
+                    <TouchableOpacity onPress= { this._onSignInClick }
+                                    style={{marginLeft:"5%", marginBottom:"10%",
+                                             alignItems: 'center', height:40, width:'50%', justifyContent:'center',
+                                             alignItems:'center'}}>
+                        <Text style={{ color: "white", fontSize: 20}}>
+                                  {I18n.get('Continue')}
+                        </Text> 
+                    </TouchableOpacity>
                 </ImageBackground>
                 </View>
             </View>
@@ -38,10 +60,12 @@ const styles = StyleSheet.create({
        
    },
    upperImageStyle: {
-        height: 250,
-        width: 300,
+        height: 225,
+        width: "80%",
+        resizeMode: 'contain',
         marginTop: "35%",
-        marginHorizontal: '10%'
+        marginHorizontal: "10%",
+        
    },
    lowerimageContainer: {
        flex:0.7,
@@ -53,7 +77,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: '100%',
     backgroundColor: "transparent"
-  }
+  },
+   headerContainer: {
+        height: 60,
+        marginTop: 30,
+        width: "100%",
+        backgroundColor:"transparent",
+        justifyContent: "center",
+        alignItems:"center"
+       },
+      headerImage: {
+         width:"100%",
+         height: "100%" 
+      },
 
 })
 export default SuccesfulLogin;

@@ -14,7 +14,7 @@ class PetCategories extends React.Component {
 
     render() {
         return <View style={styles.mainContainer}>
-            <Image source={require("../images/ImageLogo.jpg")} style={{ height: 80, width: 100, marginTop: "35%", marginLeft: "62%", backgroundColor: "transparent" }} />
+            <Image source={require("../../images/ImageLogo.jpg")} style={{ height: 80, width: 100, marginTop: "35%", marginLeft: "62%", backgroundColor: "transparent" }} />
             <View style={styles.middleContainer}>
               <Text style={{ fontSize: 25, width: 180, fontWeight: "bold", color: "#BED885", textAlign: "center", marginTop: "18%" }}>
                 INSCRIPCION DE MASCOTAS

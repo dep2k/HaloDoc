@@ -1,23 +1,24 @@
 
-export  const AllMessages = `query AllMessages {
-        allMessages {
-            conversationId
-            createdAt
-        }
-}`;
 
 export const GetPets = `query GetPets($userId: String! $nextToken: String) {
-    getEvent(id: $id) {
-        id
-        name
-        description
-        comments(nextToken: $nextToken) {
-            items {
-                content
-            }
-        }
+    getPets {
+        petId
+        petName
+        petDescription
+        PetImage
+        
     }
 }`;
+
+const addPet = `mutation addPet($name: String!, $regNo: String!, $where: String!, $description: String!) {
+    addPet(name: $name, when: $when, where: $where, description: $description) {
+      id
+      name
+      where
+      when
+      description
+    }
+  }`;
 // User:
 // Add user in the users table on Sign Up, pets
 // Get Pets of a user
@@ -25,10 +26,28 @@ export const GetPets = `query GetPets($userId: String! $nextToken: String) {
 
 // Vets:
 // All doctors
+
+export const GetDoctors = `query GetDoctors($nextToken: String) {
+    getDoctors(id: $id) {
+        id
+        name
+        regNo
+        speciality
+        image
+        
+    
+    }
+}`;
+
 // Register a new Vet
 
-// Consulations:
-// All Consultations
+const addDoctor = `mutation AddDoctor($name: String!, $regNo: String!, $where: String!, $description: String!) {
+    addDoctor(name: $name, when: $when, where: $where, description: $description) {
+      id
+      name
+      where
+      when
+      description
+    }
+  }`;
 
-// Messages:
-// All messages belonding to a conversation
