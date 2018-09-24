@@ -33,7 +33,10 @@ export const  setUpLanguage = () => {
         'All Fields are mandatory': "All fields are mandatory",
         'Both Fields are mandatory': "Both Fields are mandatory",
         'OK' : "OK",
-        'EnterEmail': 'Enter username to change the password'
+        'EnterEmail': 'Enter username to change the password',
+        'PasswordLength':"Password should be greater than  Eight characters",
+        'RegistrationUnsuccessful' : "Registration Unsucessfull",
+        'WrongCode' : "Code is wrong"
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -63,7 +66,10 @@ export const  setUpLanguage = () => {
         'All Fields are mandatory': "Todos los campos son obligatorios",
         'OK':"OK",
         'Both Fields are mandatory': "Ambos campos son obligatorios",
-        'EnterEmail': "Ingrese el nombre de usuario para cambiar la contraseña"
+        'EnterEmail': "Ingrese el nombre de usuario para cambiar la contraseña",
+        'PasswordLength': "La contraseña debe tener más de ocho caracteres",
+        'RegistrationUnsuccessful': "Registro no exitoso",
+        'WrongCode': "codigo erroneo"
     },
 
     };
