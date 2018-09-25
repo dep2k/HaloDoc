@@ -36,7 +36,11 @@ export const  setUpLanguage = () => {
         'EnterEmail': 'Enter username to change the password',
         'PasswordLength':"Password should be greater than  Eight characters",
         'RegistrationUnsuccessful' : "Registration Unsucessfull",
-        'WrongCode' : "Code is wrong"
+        'WrongCode' : "Code is wrong",
+        'RegistrationOfPets': "REGISTRATION OF PETS",
+        'FelineCat': "FELINE",
+        'CanineDog': "CANINE",
+        'EquineHorse': "EQUINE"
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -69,7 +73,11 @@ export const  setUpLanguage = () => {
         'EnterEmail': "Ingrese el nombre de usuario para cambiar la contraseña",
         'PasswordLength': "La contraseña debe tener más de ocho caracteres",
         'RegistrationUnsuccessful': "Registro no exitoso",
-        'WrongCode': "codigo erroneo"
+        'WrongCode': "codigo erroneo",
+        'RegistrationOfPets' :"INSCRIPCION DE MASCOTAS",
+        'FelineCat': "FELINO",
+        'CanineDog': "CANINO",
+        'EquineHorse': "EQUINO"
     },
 
     };
