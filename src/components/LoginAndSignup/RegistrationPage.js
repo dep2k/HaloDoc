@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     height: "10%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "5%"
+    //marginTop: "5%"
   },
   termsButton: {
     height: "30%",
