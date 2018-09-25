@@ -2,10 +2,15 @@ import React from "react";
 import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { Button } from "react-native-elements";
-
 class PetCategories extends React.Component {
-  _onClickButton() {}
+  constructor(props) {
+    super(props);
+    this.categoryButtonClick = this.categoryButtonClick.bind(this);
+  }
+
+  categoryButtonClick(){
+    this.props.navigation.navigate("PetRegistrationFormPage");
+  }
 
   render() {
     return (
@@ -28,16 +33,19 @@ class PetCategories extends React.Component {
           </Text>
           <TouchableOpacity
             style={styles.felineCatStyle}
+            onPress={this.categoryButtonClick}
           >
             <Text style={styles.buttonTextStyle}>{I18n.get("FelineCat")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonStyle}
+            onPress={this.categoryButtonClick}
           >
             <Text style={styles.buttonTextStyle}>{I18n.get("CanineDog")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonStyle}
+            onPress={this.categoryButtonClick}
           >
             <Text style={styles.buttonTextStyle}>{I18n.get("EquineHorse")}</Text>
           </TouchableOpacity>
