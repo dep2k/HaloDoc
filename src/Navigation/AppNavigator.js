@@ -93,7 +93,7 @@ const AppStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "PetCategoriesPage"
   }
 );
 
