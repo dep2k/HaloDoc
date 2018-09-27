@@ -1,6 +1,7 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
+import PhoneInput from "react-native-phone-input";
 import ActivityIndicatorExample from "../../ActivityIndicator";
 
 import {
@@ -25,7 +26,8 @@ import Loader from "../../ActivityIndicator";
 class RegistrationPage extends React.Component {
   constructor(props) {
     super(props);
-
+     
+   // const styles_phnTextInput = StyleSheet.flatten(styles.phoneTextInput);
     this.state = {
       user: {
         firstName: "",
@@ -41,12 +43,14 @@ class RegistrationPage extends React.Component {
       // email: '',
       // validated: false,
     };
+   
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this._registerBtnClick = this._registerBtnClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.termsButtonClick = this.termsButtonClick.bind(this);
   }
+  
   // validate = (text) => {
   //   console.log(text);
   //   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -215,7 +219,7 @@ class RegistrationPage extends React.Component {
               }}
               returnKeyType={"next"}
               onSubmitEditing={() => {
-                this.fourthTextInput.focus();
+                this.phone.focus();
               }}
               blurOnSubmit={false}
               style={styles.textInput}
@@ -227,7 +231,7 @@ class RegistrationPage extends React.Component {
                 this.setState(state => ((state.user.userName = text), state))
               }
             />
-            <TextInput
+            {/* <TextInput
               ref={input => {
                 this.fourthTextInput = input;
               }}
@@ -244,7 +248,26 @@ class RegistrationPage extends React.Component {
               onChangeText={text =>
                 this.setState(state => ((state.user.phoneNo = text), state))
               }
-            />
+            /> */}
+             <TouchableWithoutFeedback>
+              <PhoneInput style={styles.phoneTextInput}
+                   ref={ref => {
+                         this.phone = ref;
+                   }}
+                   returnKeyType={"next"}
+                   onSubmitEditing={() => {
+                       this.fifithTextInput.focus();
+                   }}
+                  //  keyboardType="phone-pad"
+                   blurOnSubmit={false}
+                   textStyle= {{color: "white"}}
+                  // textProps={{ placeholder: "Phone Number" }}
+                   onChangePhoneNumber={number =>
+                  this.setState(state => ((state.user.phoneNo = number), state))
+                }>
+              </PhoneInput>
+             </TouchableWithoutFeedback>
+            
             <TextInput
               ref={input => {
                 this.fifithTextInput = input;
@@ -424,6 +447,14 @@ const styles = StyleSheet.create({
     color: "white",
     alignContent: "flex-end"
   },
+  phoneTextInput: {
+    height: "10%",
+    width: "80%",
+    marginTop: "3%",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    alignContent: "flex-end"
+  },
   lastTextInputStyle: {
     height: "10%",
     width: "80%",
@@ -451,7 +482,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'black',
     height: "10%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
     //marginTop: "5%"
   },
   termsButton: {

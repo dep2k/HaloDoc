@@ -14,7 +14,7 @@ constructor(props) {
     this._onSignInClick = this.continueButtonClick.bind(this);
   }
  continueButtonClick() {
-     this.props.navigation.navigate('MainMenuPage');
+     this.props.navigation.navigate('WelcomeMessage');
  }
     render() {
         return (
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
    headerContainer: {
-        height: 60,
-        marginTop: 30,
+        height: "10%",
+       // marginTop: 30,
         width: "100%",
         backgroundColor:"transparent",
         justifyContent: "center",

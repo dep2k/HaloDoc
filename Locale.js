@@ -59,7 +59,9 @@ export const  setUpLanguage = () => {
         'Product': "PRODUCT",
         'Save': "SAVE",
         'Feeding': "FEEDING",
-        'SaveAndRegister': "SAVE AND REGISTER ANOTHER MASCOT"
+        'SaveAndRegister': "SAVE AND REGISTER ANOTHER MASCOT",
+        'Welcome': "Welcome to Holavet",
+        'Enter': "ENTER",
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -115,7 +117,9 @@ export const  setUpLanguage = () => {
         'Product': "PRODUCTO",
         'Save': "GUARDAR",
         'Feeding': "ALIMENTACION",
-        'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA"
+        'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA",
+        'Welcome': "Bienvenido a Holavet",
+        'Enter' : "INGRESAR"
     },
 
     };

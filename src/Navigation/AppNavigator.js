@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation'
 //import Demo from '../components/Demo'
 
 import WelcomePage from '../components/LoginAndSignup/WelcomePage'
+import WelcomeMessage from '../components/LoginAndSignup/WelcomeMessage'
 import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
@@ -83,6 +84,12 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+    WelcomeMessage: {
+      screen: WelcomeMessage,
+      navigationOptions: {
+        header: null
+      }
+    },
 
     //Problem with this page
     LoginPage: {
@@ -93,7 +100,7 @@ const AppStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "PetCategoriesPage"
+    initialRouteName: "SuccesfulLoginPage"
   }
 );
 
