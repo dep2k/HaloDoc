@@ -3,6 +3,7 @@
 import { Auth } from "aws-amplify";
 import React from "react";
 import { I18n } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import {
   StyleSheet,
@@ -19,6 +20,8 @@ import {
 } from "react-native";
 
 import Loader from "../../ActivityIndicator";
+import { CreateDoctor } from "../../Queries/DoctorAPI";
+import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -34,6 +37,19 @@ class LoginPage extends React.Component {
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
     this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
+
+    // Test Subscription
+    const subscription = API.graphql(
+      graphqlOperation(SubscribeToCreateDoctor)
+    ).subscribe({
+        next: (eventData) => { 
+
+          console.log("Subscription event triggered");
+          console.log(eventData)
+          
+        }
+    });
+  
   }
   startActivityIndicator() {
     this.setState({ animating: true });
@@ -58,11 +74,13 @@ class LoginPage extends React.Component {
   _onSignInClick() {
     const user = this.state.user;
     this.startActivityIndicator();
+
     if (user.username && user.password && user.password.length >= 8) {
       Auth.signIn(user.username, user.password)
         .then(user => {
           console.log(user);
-          this.props.navigation.navigate("MainMenuPage");
+          this._addDoctor();
+          //this.props.navigation.navigate("MainMenuPage");
         })
         .catch(err => {
           console.log(err);
@@ -83,6 +101,35 @@ class LoginPage extends React.Component {
       );
       this.closeActivityIndicator();
     }
+  }
+
+  _addDoctor(){
+
+    const doctorDetail = {
+
+        input : {
+          name: "Sanju",
+          speciality :"Dog Specialist",
+          profilePic : "some url",
+          registrationNo: "19191",
+          placeOfResidence: "India",
+          medicalCenter: "Mother Hood",
+          direction: "Sarjapura",
+          municipality: "some value"
+        }
+
+    };
+
+    API.graphql(graphqlOperation(CreateDoctor, doctorDetail)).then(data => {
+      console.log("Doctor Added");
+      console.log(data);
+      this.closeActivityIndicator();
+    }).catch(err => {
+      console.log("Failed to add doctor");
+      console.log(err);
+      this.closeActivityIndicator();
+    });
+
   }
 
   _onRegisterClick() {
