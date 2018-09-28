@@ -17,7 +17,15 @@ import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage"
 
 
 const AppStackNavigator = createStackNavigator(
+
+  
   {
+    LoginPage: {
+      screen: LoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
     CodeConfirmationPage: {
       screen: CodeConfirmationPage,
       navigationOptions: {
@@ -92,15 +100,10 @@ const AppStackNavigator = createStackNavigator(
     },
 
     //Problem with this page
-    LoginPage: {
-      screen: LoginPage,
-      navigationOptions: {
-        header: null
-      }
-    }
+   
   },
   {
-    initialRouteName: "SuccesfulLoginPage"
+    initialRouteName: "LoginPage"
   }
 );
 

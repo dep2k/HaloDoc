@@ -161,8 +161,8 @@ class RegistrationPage extends React.Component {
       <View style={styles.mainContainer}>
         <ImageBackground
           source={require("../../images/newBackground.png")}
-          style={styles.backgroundImage}
-          imageStyle={styles.imagebackgroundImageStyle}
+          style={styles.fullBackgroundImage}
+          imageStyle={styles.fullbackgroundImageStyle}
         >
           <KeyboardAvoidingView
             style={styles.registrationFormContainer}
@@ -337,8 +337,8 @@ class RegistrationPage extends React.Component {
             >
               <ImageBackground
                 source={require("../../images/loginButtonImage.png")}
-                style={styles.imageBackgroundStyle}
-                imageStyle={styles.imageBackgroundImageStyle}
+                style={styles.imageBackgroundRegisterButtonStyle}
+                imageStyle={styles.imageStyleRegisterButtonImageBackground}
               >
                 <Text style={styles.imageBackgroundTextStyle}>
                   {I18n.get("RegisterMe")}
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   //   height: 80
   // },
-  backgroundImage: {
+  fullBackgroundImage: {
     flex: 1
   },
   checkboxContainer: {
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
     // marginRight: "20%",
   },
-  imagebackgroundImageStyle: {
+  fullbackgroundImageStyle: {
     position: "absolute",
     resizeMode: "cover",
     width: "100%",
@@ -504,14 +504,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent"
   },
-  imageBackgroundStyle: {
+  imageBackgroundRegisterButtonStyle: {
     width: "100%",
     height: "100%",
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center"
   },
-  imageBackgroundImageStyle: {
+  imageStyleRegisterButtonImageBackground: {
     borderRadius: 20
   },
   imageBackgroundTextStyle: {
