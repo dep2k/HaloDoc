@@ -20,7 +20,13 @@ class PetRegistrationForm extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
+    this.saveButtonClick = this.saveButtonClick.bind(this);
   }
+  
+  saveButtonClick() {
+    this.props.navigation.navigate("MainMenuPage");
+  }
+
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
@@ -231,7 +237,8 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.vaccinationLastLine} />
         </View>
         <View style={styles.saveButtonContainer}>
-          <TouchableOpacity style={styles.saveButtonStyle}>
+          <TouchableOpacity style={styles.saveButtonStyle}
+                            onPress={this.saveButtonClick}>
             <Text style={styles.saveButtonTextStyle}>{I18n.get("Save")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.saveAndRegisterButton}>

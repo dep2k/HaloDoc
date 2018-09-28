@@ -59,7 +59,10 @@ export const  setUpLanguage = () => {
         'Product': "PRODUCT",
         'Save': "SAVE",
         'Feeding': "FEEDING",
-        'SaveAndRegister': "SAVE AND REGISTER ANOTHER MASCOT"
+        'SaveAndRegister': "SAVE AND REGISTER ANOTHER MASCOT",
+        'Welcome': "Welcome to Holavet",
+        'Enter': "ENTER",
+        'WelcomeMessage': "From now on you have at your disposal a group of veterinarians who will accompany you 24 hours a day, every day of the year"
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -115,7 +118,10 @@ export const  setUpLanguage = () => {
         'Product': "PRODUCTO",
         'Save': "GUARDAR",
         'Feeding': "ALIMENTACION",
-        'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA"
+        'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA",
+        'Welcome': "Bienvenido a Holavet",
+        'Enter' : "INGRESAR",
+        'WelcomeMessage': "A partir de ahora tienes a tu disposicion un grupo de  veterinarios que te acompanaran las 24 horas del dia, todos los dias del ano"
     },
 
     };

@@ -91,46 +91,82 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
+            <Image
+              source={require("../../images/navbarImage.png")}
+              style={styles.headerImage}
+            />
           </View>
-          <Image source={require("../../images/logoImage.png")} style={styles.topImage} />
+          <Image
+            source={require("../../images/logoImage.png")}
+            style={styles.topImageLogo}
+          />
           // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
             // Username Field
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
-            <TextInput autoCapitalize={"none"} returnKeyType={"next"} onSubmitEditing={() => {
+            <TextInput
+              autoCapitalize={"none"}
+              returnKeyType={"next"}
+              onSubmitEditing={() => {
                 this.secondTextInput.focus();
-              }} blurOnSubmit={false} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
-              } />
+              }}
+              blurOnSubmit={false}
+              style={styles.textInput}
+              onChangeText={
+                text =>
+                  this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
+              }
+            />
             // Password Field
             <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
-            <TextInput ref={input => {
+            <TextInput
+              ref={input => {
                 this.secondTextInput = input;
-              }} secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
-              } />
+              }}
+              secureTextEntry={true}
+              style={styles.textInput}
+              onChangeText={
+                text =>
+                  this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
+              }
+            />
             //SignINButton
-            <TouchableOpacity onPress={this._onSignInClick} style={styles.loginButton}>
-              <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundStyle} imageStyle={styles.imageBackgroundImageStyle}>
+            <TouchableOpacity
+              onPress={this._onSignInClick}
+              style={styles.loginButton}
+            >
+              <ImageBackground
+                source={require("../../images/loginButtonImage.png")}
+                style={styles.imageBackgroundStyle}
+                imageStyle={styles.imageBackgroundImageStyle}
+              >
                 <Text style={styles.imageBackgroundTextStyle}>
                   {I18n.get("Sign In")}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
             // Forgot Password Field
-            <Button style={styles.forgotPasswordButton}
-                    color="grey" 
-                    title={I18n.get("Forgot Password")}
-                    onPress= {this.forgotPasswordButtonClick}>
-            </Button>
+            <Button
+              style={styles.forgotPasswordButton}
+              color="grey"
+              title={I18n.get("Forgot Password")}
+              onPress={this.forgotPasswordButtonClick}
+            />
             // Register Button
-            <Button color="darkgrey" title={I18n.get("RegisterMe")} onPress={this._onRegisterClick} />
+            <Button
+              color="darkgrey"
+              title={I18n.get("RegisterMe")}
+              onPress={this._onRegisterClick}
+            />
           </View>
           {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
-      </TouchableWithoutFeedback>;
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
@@ -152,7 +188,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  topImage: {
+  topImageLogo: {
     height: "20%",
     width: "25%",
     // marginTop: "2%",
