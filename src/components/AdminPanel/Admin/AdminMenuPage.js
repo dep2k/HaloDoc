@@ -10,81 +10,132 @@ import {
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 
-class MainMenuPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.logOutButtonClick = this.logOutButtonClick.bind(this);
-    }
+const base = "../../../images/"
+const backgroundImage = require(base + "newBackground.png")
 
-    logOutButtonClick() {
-        // this.props.navigation.dispatch(
-        //   this.props.NavigationActions.reset({
-        //     index: 1,
-        //     actions: [
-        //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-        //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-        //     ],
-        //   }),
-        // )
-    }
+class AdminMenuPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logOutButtonClick = this.logOutButtonClick.bind(this);
+    this.backButtonClick = this.backButtonClick.bind(this);
+    this.helperButtonClick = this.helperButtonClick.bind(this);
+    this.doctorButtonClick = this.doctorButtonClick.bind(this);
+  }
+  backButtonClick() {
+    this.props.navigation.goBack(null);
+  }
+  helperButtonClick() {
+      this.props.navigation.navigate("HelperLoginPage");
+  }
+  doctorButtonClick() {
+      this.props.navigation.navigate("DoctorLoginPage");
+  }
 
-    static navigationOptions = ({ navigation }) => ({
-        headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-    });
-    render() {
-        return (
-            <View style={styles.mainContainer}>
-                <ImageBackground
-                    source={require("../../../images/newBackground.png")}
-                    style={styles.fullBackgroundImage}
-                    imageStyle={styles.fullbackgroundImageStyle}
-                >
-                    <Text style={styles.menuText}>MENU</Text>
-                    <View style={styles.buttonsMainContainer}>
-                        <View style={styles.singleButtonContainer}>
-                            <Image
-                                style={styles.iconImagesStyle}
-                                source={require("../../../images/ImageLogo.jpg")}
-                            />
-                            <TouchableOpacity>
-                                <Text style={styles.touchableOpacityText}>
-                                    {I18n.get("Helper")}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.singleButtonContainer}>
-                            <Image
-                                style={styles.iconImagesStyle}
-                                source={require("../../../images/ImageLogo.jpg")}
-                            />
-                            <TouchableOpacity>
-                                <Text style={styles.touchableOpacityText}>
-                                    {I18n.get("Doctor")}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.singleButtonContainer}>
-                            <Image
-                                style={styles.iconImagesStyle}
-                                source={require("../../../images/ImageLogo.jpg")}
-                            />
-                            <TouchableOpacity>
-                                <Text style={styles.touchableOpacityText}>
-                                    {I18n.get("ADMINISTRATOR")}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ImageBackground>
+  logOutButtonClick() {
+    // this.props.navigation.dispatch(
+    //   this.props.NavigationActions.reset({
+    //     index: 1,
+    //     actions: [
+    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
+    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
+    //     ],
+    //   }),
+    // )
+  }
+
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
+  });
+  render() {
+    return (
+      <View style={styles.mainContainer}>
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.fullBackgroundImage}
+          imageStyle={styles.fullbackgroundImageStyle}
+        >
+          <View style={styles.topContainer}>
+            <TouchableOpacity
+              style={styles.backButtonStyle}
+              onPress={this.backButtonClick}
+            >
+              <Image
+                source={require("../../../images/backButton.png")}
+                style={styles.backButtonImageStyle}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.menuText}>MENU</Text>
+          <View style={styles.buttonsMainContainer}>
+            <View style={styles.singleButtonContainer}>
+              <Image
+                style={styles.iconImagesStyle}
+                source={require("../../../images/ImageLogo.jpg")}
+              />
+              <TouchableOpacity onPress={this.helperButtonClick}>
+                <Text style={styles.touchableOpacityText}>
+                  {I18n.get("Helper")}
+                </Text>
+              </TouchableOpacity>
             </View>
-        );
-    }
+            <View style={styles.singleButtonContainer}>
+              <Image
+                style={styles.iconImagesStyle}
+                source={require("../../../images/ImageLogo.jpg")}
+              />
+             <TouchableOpacity onPress={this.doctorButtonClick}>
+                <Text style={styles.touchableOpacityText}>
+                  {I18n.get("Doctor")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.singleButtonContainer}>
+              <Image
+                style={styles.iconImagesStyle}
+                source={require("../../../images/ImageLogo.jpg")}
+              />
+              <TouchableOpacity>
+                <Text style={styles.touchableOpacityText}>
+                  {I18n.get("ADMINISTRATOR")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
 
         // backgroundColor: "#BED885"
+    },
+    topContainer: {
+        height: "7%",
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        //backgroundColor: "green",
+       // marginTop: "10%"
+    },
+    backButtonStyle: {
+        backgroundColor: "transparent",
+        width: "10%",
+        height: "50%",
+        marginLeft: "5%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "10%"
+    },
+    backButtonImageStyle: {
+        width: "100%",
+        height: "70%",
+        justifyContent: "center",
+        alignItems: "center",
+        resizeMode: 'contain'
     },
     fullBackgroundImage: {
         flex: 1,
@@ -106,7 +157,7 @@ const styles = StyleSheet.create({
     menuText: {
         fontSize: 25,
         color: "white",
-        marginTop: "15%",
+       // marginTop: "15%",
         fontWeight: "bold",
         marginBottom: "15%"
     },
@@ -138,4 +189,4 @@ const styles = StyleSheet.create({
         fontWeight: "normal"
     }
 });
-export default MainMenuPage;
+export default AdminMenuPage;

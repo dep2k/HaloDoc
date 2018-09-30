@@ -71,7 +71,10 @@ export const  setUpLanguage = () => {
         'WriteAge': "Write your age",
         'Helper': "HELPER",
         'Doctor': "DOCTOR",
-        'ADMINISTRATOR': "ADMINISTRATOR"
+        'ADMINISTRATOR': "ADMINISTRATOR",
+        'Services':"SERVICES",
+        'DoctorsDirectory': "VETERINARY DIRECTORY",
+        'SeeHistory': "SEE HISTORY"
 
 
     },
@@ -141,7 +144,10 @@ export const  setUpLanguage = () => {
         'WriteAge': "Escribe su Edad",
         'Helper': "AUXILIAR",
         'Doctor': "VETERINARIO",
-        'ADMINISTRATOR': "ADMINISTRADOR"
+        'ADMINISTRATOR': "ADMINISTRADOR",
+        'Services': "SERVICIOS",
+        'DoctorsDirectory': "DIRECTORIO VETERINARIO",
+        'SeeHistory': "VER HISTORIAL"
        
 
     },
