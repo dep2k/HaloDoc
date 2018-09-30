@@ -1,0 +1,299 @@
+/*
+type Conversation {
+	createdAt: String
+	id: ID!
+	messages(after: String, first: Int): MessageConnection
+	name: String!
+}
+
+input CreateDoctorInput {
+	name: String
+	speciality: String
+	profilePic: String
+	registrationNo: String
+	placeOfResidence: String
+	medicalCenter: String
+	direction: String
+	municipality: String
+	isAvailable: Boolean
+}
+
+input CreateHelperInput {
+	name: String
+	phoneNo: String
+	email: String
+	address: String
+	password: String
+	isAvailable: Boolean
+}
+
+input CreatePetInput {
+	username: String!
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+}
+
+input CreateTestingInput {
+	nextToken: String
+}
+
+input DeleteDoctorInput {
+	id: ID!
+	name: String!
+}
+
+input DeleteHelperInput {
+	id: ID!
+	name: String
+}
+
+type Doctor {
+	id: ID
+	name: String!
+	speciality: String
+	profilePic: String
+	registrationNo: String
+	placeOfResidence: String
+	medicalCenter: String
+	direction: String
+	municipality: String
+	isAvailable: Boolean
+}
+
+type DoctorConnection {
+	items: [Doctor]
+	nextToken: String
+}
+
+type Helper {
+	id: ID!
+	name: String
+	phoneNo: String
+	email: String
+	address: String
+	password: String
+	isAvailable: Boolean
+}
+
+type HelperConnection {
+	items: [Doctor]
+	nextToken: String
+}
+
+type Message {
+	author: User
+	content: String!
+	conversationId: ID!
+	createdAt: String
+	id: ID!
+	isSent: Boolean
+	recipient: User
+	sender: String
+}
+
+type MessageConnection {
+	messages: [Message]
+	nextToken: String
+}
+
+type Mutation {
+	createConversation(createdAt: String, id: ID!, name: String!): Conversation
+	createMessage(
+		content: String,
+		conversationId: ID!,
+		createdAt: String!,
+		id: ID!
+	): Message
+	createUser(username: String!): User
+	createUserConversations(conversationId: ID!, userId: ID!): UserConversations
+	createDoctor(input: CreateDoctorInput!): Doctor
+	updateDoctor(input: UpdateDoctorInput!): Doctor
+	deleteDoctor(input: DeleteDoctorInput!): Doctor
+	createHelper(input: CreateHelperInput!): Helper
+	updateHelper(input: UpdateHelperInput!): Helper
+	deleteHelper(input: DeleteHelperInput!): Helper
+	createPet(input: CreatePetInput!): Pet
+	updatePet(input: UpdatePetInput!): Pet
+}
+
+type Pet {
+	username: String!
+	petId: ID!
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+	vaccinations: [Vaccination]
+}
+
+type Query {
+	allMessages: [Message]
+	allMessage(after: String, conversationId: ID!, first: Int): [Message]
+	allMessageConnection(after: String, conversationId: ID!, first: Int): MessageConnection
+	allMessageFrom(
+		after: String,
+		conversationId: ID!,
+		first: Int,
+		sender: String!
+	): [Message]
+	allUser(after: String, first: Int): [User]
+	me: User
+	getDoctor(id: ID!, name: String!): Doctor
+	listDoctors(limit: Int, nextToken: String): DoctorConnection
+	listHelpers(filter: TableHelperFilterInput, limit: Int, nextToken: String): HelperConnection
+}
+
+type Subscription {
+	subscribeToNewMessage(conversationId: ID!): Message
+		@aws_subscribe(mutations: ["createMessage"])
+	subscribeToNewUCs(userId: ID!): UserConversations
+		@aws_subscribe(mutations: ["createUserConversations"])
+	subscribeToNewUsers: User
+		@aws_subscribe(mutations: ["createUser"])
+	subscribeToCreateDoctor: Doctor
+		@aws_subscribe(mutations: ["createDoctor"])
+}
+
+input TableBooleanFilterInput {
+	ne: Boolean
+	eq: Boolean
+}
+
+input TableFloatFilterInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	contains: Float
+	notContains: Float
+	between: [Float]
+}
+
+input TableHelperFilterInput {
+	isAvailable: TableBooleanFilterInput
+}
+
+input TableIDFilterInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notContains: ID
+	between: [ID]
+	beginsWith: ID
+}
+
+input TableIntFilterInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	contains: Int
+	notContains: Int
+	between: [Int]
+}
+
+input TableStringFilterInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+}
+
+input UpdateDoctorInput {
+	id: ID!
+	name: String!
+	speciality: String
+	profilePic: String
+	registrationNo: String
+	placeOfResidence: String
+	medicalCenter: String
+	direction: String
+	municipality: String
+	isAvailable: Boolean
+}
+
+input UpdateHelperInput {
+	id: ID!
+	name: String
+	isAvailable: Boolean
+	phoneNo: String
+	email: String
+	address: String
+	password: String
+}
+
+input UpdatePetInput {
+	username: String!
+	petId: String
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+}
+
+type User {
+	cognitoId: ID!
+	conversations(after: String, first: Int): UserConverstationsConnection
+	id: ID!
+	messages(after: String, first: Int): MessageConnection
+	username: String!
+	registered: Boolean
+	pets: [Pet]
+}
+
+type UserConversations {
+	associated: [UserConversations]
+	conversation: Conversation
+	conversationId: ID!
+	user: User
+	userId: ID!
+}
+
+type UserConverstationsConnection {
+	nextToken: String
+	userConversations: [UserConversations]
+}
+
+type Vaccination {
+	name: String
+	date: String
+}
+
+type schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
+
+*/

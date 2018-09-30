@@ -1,0 +1,145 @@
+
+
+/*  
+
+// Scan Table General Template
+{
+  "version": "2017-02-28",
+  "operation": "Scan",
+  "filter": #if($context.args.filter) $util.transform.toDynamoDBFilterExpression($ctx.args.filter) #else null #end,
+  "limit": $util.defaultIfNull($ctx.args.limit, 20),
+  "nextToken": $util.toJson($util.defaultIfNullOrEmpty($ctx.args.nextToken, null)),
+}
+
+// Put Item General Template
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        
+    },
+    "attributeValues" : $util.dynamodb.toMapValuesJson($ctx.args.input)
+}
+
+// CreateDoct 
+## Below example shows how to create an object from all provided GraphQL arguments
+## The primary key of the obejct is a randomly generated UUD using the $util.autoId() utility
+## Other utilities include $util.matches() for regular expressions, $util.time.nowISO8601() or
+##   $util.time.nowEpochMilliSeconds() for timestamps, and even List or Map helpers like
+##   $util.list.copyAndRetainAll() $util.map.copyAndRemoveAllKeys() for shallow copies
+## Read more: https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html#utility-helpers-in-util
+
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        "id": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        "name": {"S": "${context.arguments.input.name}" }
+    },
+    
+    "attributeValues" : {
+   	
+         "registrationNo": {"S": "${context.arguments.input.registrationNo}" },
+         "speciality": {"S": "${context.arguments.input.speciality}" },
+         "profilePic": {"S": "${context.arguments.input.profilePic}" },
+         "placeOfResidence": {"S": "${context.arguments.input.placeOfResidence}" },
+         "medicalCenter": {"S": "${context.arguments.input.medicalCenter}" },
+         "direction": {"S" :  "${context.arguments.input.direction}" },
+         "municipality": {"S" : "${context.arguments.input.municipality}" },
+         "isAvailable" : {"S" :  "${context.arguments.input.isAvailable}" }
+         
+    }
+}
+
+
+{
+    "version" : "2017-02-28",
+    "operation" : "UpdateItem",
+    "key" : {
+        "id" : $util.dynamodb.toDynamoDBJson($ctx.args.id)
+    },
+
+    ## Set up some space to keep track of things we're updating **
+    #set( $expNames  = {} )
+    #set( $expValues = {} )
+    #set( $expSet = {} )
+    #set( $expAdd = {} )
+    #set( $expRemove = [] )
+
+    ## Increment "version" by 1 **
+    $!{expAdd.put("version", ":one")}
+    $!{expValues.put(":one", $util.dynamodb.toDynamoDB(1))}
+
+    ## Iterate through each argument, skipping "id" and "expectedVersion" **
+    #foreach( $entry in $util.map.copyAndRemoveAllKeys($ctx.args, ["id","expectedVersion"]).entrySet() )
+        #if( $util.isNull($entry.value) )
+            ## If the argument is set to "null", then remove that attribute from the item in DynamoDB **
+
+            #set( $discard = ${expRemove.add("#${entry.key}")} )
+            $!{expNames.put("#${entry.key}", "${entry.key}")}
+        #else
+            ## Otherwise set (or update) the attribute on the item in DynamoDB **
+
+            $!{expSet.put("#${entry.key}", ":${entry.key}")}
+            $!{expNames.put("#${entry.key}", "${entry.key}")}
+            $!{expValues.put(":${entry.key}", $util.dynamodb.toDynamoDB($entry.value))}
+        #end
+    #end
+
+    ## Start building the update expression, starting with attributes we're going to SET **
+    #set( $expression = "" )
+    #if( !${expSet.isEmpty()} )
+        #set( $expression = "SET" )
+        #foreach( $entry in $expSet.entrySet() )
+            #set( $expression = "${expression} ${entry.key} = ${entry.value}" )
+            #if ( $foreach.hasNext )
+                #set( $expression = "${expression}," )
+            #end
+        #end
+    #end
+
+    ## Continue building the update expression, adding attributes we're going to ADD **
+    #if( !${expAdd.isEmpty()} )
+        #set( $expression = "${expression} ADD" )
+        #foreach( $entry in $expAdd.entrySet() )
+            #set( $expression = "${expression} ${entry.key} ${entry.value}" )
+            #if ( $foreach.hasNext )
+                #set( $expression = "${expression}," )
+            #end
+        #end
+    #end
+
+    ## Continue building the update expression, adding attributes we're going to REMOVE **
+    #if( !${expRemove.isEmpty()} )
+        #set( $expression = "${expression} REMOVE" )
+
+        #foreach( $entry in $expRemove )
+            #set( $expression = "${expression} ${entry}" )
+            #if ( $foreach.hasNext )
+                #set( $expression = "${expression}," )
+            #end
+        #end
+    #end
+
+    ## Finally, write the update expression into the document, along with any expressionNames and expressionValues **
+    "update" : {
+        "expression" : "${expression}",
+        #if( !${expNames.isEmpty()} )
+            "expressionNames" : $utils.toJson($expNames),
+        #end
+        #if( !${expValues.isEmpty()} )
+            "expressionValues" : $utils.toJson($expValues),
+        #end
+    },
+
+    "condition" : {
+        "expression"       : "version = :expectedVersion",
+        "expressionValues" : {
+            ":expectedVersion" : $util.dynamodb.toDynamoDBJson($ctx.args.expectedVersion)
+        }
+    }
+}
+*/
