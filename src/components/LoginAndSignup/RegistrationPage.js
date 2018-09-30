@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topContainer: {
-    height: "12%",
+    height: "20%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -401,16 +401,17 @@ const styles = StyleSheet.create({
   backButtonStyle: {
     backgroundColor: "transparent",
     width: "10%",
-    height: "70%",
-    marginLeft: 10,
+    height: "50%",
+    marginLeft: "5%",
     justifyContent: "center",
     alignItems: "center"
   },
   backButtonImageStyle: {
-    width: "50%",
+    width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    resizeMode: 'contain'
   },
   registrationFormContainer: {
     flex: 0.85,

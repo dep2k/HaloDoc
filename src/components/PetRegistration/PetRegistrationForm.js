@@ -61,41 +61,51 @@ class PetRegistrationForm extends React.Component {
           {I18n.get("ClinicHistory")}
         </Text>
         <View style={styles.clinicHistoryContainer}>
-          <View style={styles.clinicTextInputContainer}>
+          <View style={styles.clinicLastTextInputContainer}>
+            <Text style={styles.originText}>{I18n.get("Firstname")}</Text>
             <TextInput
-              style={styles.clinicTextInputStyle}
-              placeholder={I18n.get("Firstname")}
-              placeholderColor="grey"
-            />
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("NameOfPet")}
+              placeholderColor="grey">
+            </TextInput>
           </View>
-          <View style={styles.clinicTextInputContainer}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.clinicLastTextInputContainer}>
+            <Text style={styles.originText}>{I18n.get("Race")}</Text>
             <TextInput
-              style={styles.clinicTextInputStyle}
-              placeholder={I18n.get("Race")}
-              placeholderColor="grey"
-            />
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("SelectRace")}
+              placeholderColor="grey">
+            </TextInput>
           </View>
-          <View style={styles.clinicTextInputContainer}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.clinicLastTextInputContainer}>
+            <Text style={styles.originText}>{I18n.get("Color")}</Text>
             <TextInput
-              style={styles.clinicTextInputStyle}
-              placeholder={I18n.get("Color")}
-              placeholderColor="grey"
-            />
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("SelectColor")}
+              placeholderColor="grey">
+            </TextInput>
           </View>
-          <View style={styles.clinicTextInputContainer}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.clinicLastTextInputContainer}>
+            <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TextInput
-              style={styles.clinicTextInputStyle}
-              placeholder={I18n.get("Sex")}
-              placeholderColor="grey"
-            />
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("SelectSex")}
+              placeholderColor="grey">
+            </TextInput>
           </View>
-          <View style={styles.clinicTextInputContainer}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.clinicLastTextInputContainer}>
+            <Text style={styles.originText}>{I18n.get("Age")}</Text>
             <TextInput
-              style={styles.clinicTextInputStyle}
-              placeholder={I18n.get("Age")}
-              placeholderColor="grey"
-            />
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("WriteAge")}
+              placeholderColor="grey">
+            </TextInput>
           </View>
+          <View style={styles.lastLineStyle} />
           <View style={styles.clinicLastTextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Origin")}</Text>
           </View>
@@ -295,30 +305,34 @@ const styles = StyleSheet.create({
     //backgroundColor: "black",
     height: 220,
     width: "90%",
-    marginHorizontal: "5%"
+    marginHorizontal: "5%",
+ //   backgroundColor: 'yellow'
   },
   clinicTextInputContainer: {
     flexDirection: "row",
-    height: 30,
-    width: "100%",
-    marginBottom: 5
+    height: "14%",
+    width: "80%",
+    marginBottom: 5,
+  //  backgroundColor: 'green'
   },
   clinicLastTextInputContainer: {
     flexDirection: "row",
-    height: 30,
-    width: "100%"
+    height: "14%",
+    width: "100%",
+    
+  //  backgroundColor: 'pink'
   },
   clinicTextInputStyle: {
     width: "100%",
-    height: 30,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "darkgrey",
+    height: "14%",
+    marginLeft: "5%",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "flex-end",
+  //  backgroundColor: 'black'
   },
   originText: {
-    width: "100%",
-    height: 30,
+    width: "30%",
+    height: 40,
     color: "#8BE0DE"
   },
   lastLineStyle: {
@@ -479,6 +493,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 13,
     fontWeight: "bold"
+  },
+  originTextInputStyle: {
+    width: "70%",
+    height:30,
+    justifyContent:'center',
+   // alignItems:
+   // backgroundColor:"pink"
+
   }
 });
 export default PetRegistrationForm;

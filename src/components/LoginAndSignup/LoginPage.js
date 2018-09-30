@@ -34,6 +34,7 @@ class LoginPage extends React.Component {
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
     this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
+    this.goToAdminPanel = this.goToAdminPanel.bind(this);
   }
   startActivityIndicator() {
     this.setState({ animating: true });
@@ -85,6 +86,10 @@ class LoginPage extends React.Component {
     }
   }
 
+  goToAdminPanel() {
+    this.props.navigation.navigate("AdminMenuPage");
+  }
+
   _onRegisterClick() {
     console.log("RegisterBtnClick");
     this.props.navigation.navigate("RegistrationPage");
@@ -100,10 +105,18 @@ class LoginPage extends React.Component {
               style={styles.headerImage}
             />
           </View>
-          <Image
-            source={require("../../images/logoImage.png")}
-            style={styles.topImageLogo}
-          />
+          
+            <TouchableOpacity 
+                 onPress= {this.goToAdminPanel}
+                 style = {styles.logoButton}>
+            <ImageBackground
+              source={require("../../images/logoImage.png")}
+              style= {styles.logoImage}
+              imageStyle= {styles.logoImageimageStyle}
+            >
+            </ImageBackground>
+            </TouchableOpacity>
+         
           // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
             // Username Field
@@ -188,14 +201,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  topImageLogo: {
+  logoButton: {
     height: "20%",
     width: "25%",
     // marginTop: "2%",
     marginLeft: "70%",
-    backgroundColor: "transparent",
-    resizeMode: "contain"
+    backgroundColor: "transparent"
   },
+  logoImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  logoImageimageStyle: {
+    resizeMode: 'contain'
+  },
+  
   loginButton: {
     height: "15%",
     width: "90%",

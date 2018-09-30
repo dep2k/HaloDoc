@@ -62,7 +62,21 @@ export const  setUpLanguage = () => {
         'SaveAndRegister': "SAVE AND REGISTER ANOTHER MASCOT",
         'Welcome': "Welcome to Holavet",
         'Enter': "ENTER",
-        'WelcomeMessage': "From now on you have at your disposal a group of veterinarians who will accompany you 24 hours a day, every day of the year"
+        'WelcomeMessage': "From now on you have at your disposal a group of veterinarians who will accompany you 24 hours a day, every day of the year",
+        'LogOut': "Log Out",
+        'NameOfPet': "Name of your pet",
+        'SelectRace': "Select the Race",
+        'SelectColor': "Select the Color",
+        'SelectSex': "Select the Sex",
+        'WriteAge': "Write your age",
+        'Helper': "HELPER",
+        'Doctor': "DOCTOR",
+        'ADMINISTRATOR': "ADMINISTRATOR",
+        'Services':"SERVICES",
+        'DoctorsDirectory': "VETERINARY DIRECTORY",
+        'SeeHistory': "SEE HISTORY"
+
+
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -121,7 +135,21 @@ export const  setUpLanguage = () => {
         'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA",
         'Welcome': "Bienvenido a Holavet",
         'Enter' : "INGRESAR",
-        'WelcomeMessage': "A partir de ahora tienes a tu disposicion un grupo de  veterinarios que te acompanaran las 24 horas del dia, todos los dias del ano"
+        'WelcomeMessage': "A partir de ahora tienes a tu disposicion un grupo de  veterinarios que te acompanaran las 24 horas del dia, todos los dias del ano",
+        'LogOut': "cerrar sesión",
+        'NameOfPet': "Nombre de tu mascota",
+        'SelectRace': "Selecciona la raza",
+        'SelectColor': "Selecciona el Color",
+        'SelectSex': "Selecciona el Sexo",
+        'WriteAge': "Escribe su Edad",
+        'Helper': "AUXILIAR",
+        'Doctor': "VETERINARIO",
+        'ADMINISTRATOR': "ADMINISTRADOR",
+        'Services': "SERVICIOS",
+        'DoctorsDirectory': "DIRECTORIO VETERINARIO",
+        'SeeHistory': "VER HISTORIAL"
+       
+
     },
 
     };

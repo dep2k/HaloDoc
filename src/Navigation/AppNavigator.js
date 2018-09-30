@@ -14,11 +14,12 @@ import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
-
+import AdminMenuPage from "../components/AdminPanel/Admin/AdminMenuPage";
+import HelperLoginPage from "../components/AdminPanel/Helper/HelperLoginPage";
+import DoctorLoginPage from "../components/AdminPanel/Doctors/DoctorLoginPage";
+import HelperServicesPage from "../components/AdminPanel/Helper/HelperServicesPage"
 
 const AppStackNavigator = createStackNavigator(
-
-  
   {
     LoginPage: {
       screen: LoginPage,
@@ -32,6 +33,7 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+
     TermsPage: {
       screen: TermsAndConditions,
       navigationOptions: {
@@ -92,15 +94,41 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
-    WelcomeMessage: {
-      screen: WelcomeMessage,
+    AdminMenuPage: {
+      screen: AdminMenuPage,
       navigationOptions: {
         header: null
       }
     },
 
+    HelperLoginPage: {
+      screen: HelperLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    HelperServicesPage : {
+      screen: HelperServicesPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    DoctorLoginPage: {
+      screen: DoctorLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    WelcomeMessage: {
+      screen: WelcomeMessage,
+      navigationOptions: {
+        header: null
+      }
+    }
+
     //Problem with this page
-   
   },
   {
     initialRouteName: "LoginPage"
