@@ -20,7 +20,9 @@ import {
 } from "react-native";
 
 import Loader from "../../ActivityIndicator";
-import { CreateDoctor } from "../../Queries/Gapi";
+
+import { CreateDoctor } from "../../Queries/DoctorAPI";
+import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -36,7 +38,17 @@ class LoginPage extends React.Component {
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
     this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
-  }
+
+  //   const subscription = API.graphql(
+  //     graphqlOperation(SubscribeToCreateDoctor)
+  // ).subscribe({
+  //     next: (eventData) => {
+  //       console.log("Subscription Event triggered");
+  //       console.log(eventData);
+  //     }
+  // });
+
+}
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -65,7 +77,7 @@ class LoginPage extends React.Component {
         .then(user => {
           console.log(user);
           this._addDoctor();
-          //this.props.navigation.navigate("MainMenuPage");
+         // this.props.navigation.navigate("MainMenuPage");
         })
         .catch(err => {
           console.log(err);
@@ -90,22 +102,21 @@ class LoginPage extends React.Component {
 
   _addDoctor(){
 
-    const doctorDetail = {
+    const createDoctorInput = {
 
-        input : {
-          name: "Sanju",
+          name: "jadeja",
           speciality :"Dog Specialist",
           profilePic : "some url",
           registrationNo: "19191",
           placeOfResidence: "India",
           medicalCenter: "Mother Hood",
           direction: "Sarjapura",
-          municipality: "some value"
-        }
-
+          municipality: "some value",
+          isAvailable: "No"
+        
     };
 
-    API.graphql(graphqlOperation(CreateDoctor, doctorDetail)).then(data => {
+    API.graphql(graphqlOperation(CreateDoctor, createDoctorInput)).then(data => {
       console.log("Doctor Added");
       console.log(data);
       this.closeActivityIndicator();
@@ -114,6 +125,17 @@ class LoginPage extends React.Component {
       console.log(err);
       this.closeActivityIndicator();
     });
+
+
+
+    const updateDoctorInput = {
+
+      id: ""
+      name: "jadeja",
+      isAvailable: "No"
+    
+  };
+
 
   }
 

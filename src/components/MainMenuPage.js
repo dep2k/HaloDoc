@@ -17,6 +17,7 @@ class MainMenuPage extends React.Component {
 
   testGapi() {
    
+    return;
      API.graphql(graphqlOperation(AllMessages)).then(response => {
       const messages = response.data.allMessages;
       messages.map(function(message){
