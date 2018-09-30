@@ -14,11 +14,9 @@ import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
-
+import AdminMenuPage from "../components/AdminPanel/Admin/AdminMenuPage";
 
 const AppStackNavigator = createStackNavigator(
-
-  
   {
     LoginPage: {
       screen: LoginPage,
@@ -92,18 +90,23 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+    AdminMenuPage: {
+       screen: AdminMenuPage,
+       navigationOptions: {
+         header: null
+       }
+    },
     WelcomeMessage: {
       screen: WelcomeMessage,
       navigationOptions: {
         header: null
-      }
-    },
+      },
+    }
 
     //Problem with this page
-   
   },
   {
-    initialRouteName: "LoginPage"
+    initialRouteName: "AdminMenuPage"
   }
 );
 
