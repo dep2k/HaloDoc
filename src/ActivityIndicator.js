@@ -16,7 +16,6 @@ export default Loader = (props) => {
         /> 
     );
 
-
 }
 const styles = StyleSheet.create({
    
