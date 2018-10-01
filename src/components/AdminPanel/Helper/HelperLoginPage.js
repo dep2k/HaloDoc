@@ -67,7 +67,7 @@ class HelperLoginPage extends React.Component {
                                 onPress={this.backButtonClick}
                             >
                                 <Image
-                                    source={require("../../../images/backButton.png")}
+                                    source={require("../../../images/BackButtonShape.png")}
                                     style={styles.backButtonImageStyle}
                                 />
                             </TouchableOpacity>
@@ -139,118 +139,118 @@ class HelperLoginPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        backgroundColor: "white"
-    },
-    headerContainer: {
-        height: "10%",
-        marginTop: 0,
-        width: "100%",
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    headerImage: {
-        width: "100%",
-        height: "100%"
-    },
-    backButtonStyle: {
-        backgroundColor: "transparent",
-        width: "12%",
-        height: "50%",
-        marginLeft: 10,
-        marginTop: "5%",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    backButtonImageStyle: {
-        width: "50%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        resizeMode: "contain"
-    },
-    logoImageContainer : {
-        width: "100%",
-        height: "15%", 
-       // backgroundColor: 'green', 
-        flexDirection: 'row'
-    },
-    helperText: {
-        fontSize: 12, 
-        color: "grey", 
-        marginLeft: "10%",
-        marginTop: "12%"
-    },
-    logoImage: {
-        width: "25%",
-        height: "60%",
-        justifyContent: "center",
-        alignItems: "center",
-        resizeMode: 'contain',
-        marginLeft: "40%",
-        marginTop:"5%"
-    },
-    loginButton: {
-        height: "15%",
-        width: "90%",
-        // backgroundColor:'mediumseagreen',
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 20
-    },
-    middleContainer: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        //backgroundColor: "pink",
-        width: "100%",
-        height: "50%",
-        alignItems: "center",
-        paddingTop: "10%"
-    },
-    textInput: {
-        height: "14%",
-        width: "90%",
-        borderRadius: 20,
-        backgroundColor: "#F8F8F8",
-        marginBottom: "10%",
-        paddingHorizontal: "5%"
-    },
-    loginText: {
-        fontSize: 15,
-        fontWeight: "normal",
-        color: "#7C7B7B",
-        marginBottom: 5,
-        marginRight: "60%"
-    },
-    passwordText: {
-        fontSize: 15,
-        fontWeight: "normal",
-        color: "#7C7B7B",
-        marginBottom: 5,
-        marginRight: "60%"
-    },
-    imageBackgroundStyle: {
-        width: "100%",
-        height: "100%",
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    imageBackgroundTextStyle: {
-        color: "white",
-        fontSize: 20
-    },
-    imageBackgroundImageStyle: {
-        borderRadius: 20
-    },
-    forgotPasswordButton: {
-        fontSize: 17,
-        marginTop: "5%",
-        marginBottom: "8%"
-    }
+  mainContainer: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "white"
+  },
+  headerContainer: {
+    height: "10%",
+    marginTop: 0,
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  headerImage: {
+    width: "100%",
+    height: "100%"
+  },
+  backButtonStyle: {
+    backgroundColor: "transparent",
+    width: "12%",
+    height: "20%",
+    marginLeft: "5%",
+    marginTop: "7%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  backButtonImageStyle: {
+    width: "50%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain"
+  },
+  logoImageContainer: {
+    width: "100%",
+    height: "15%",
+    // backgroundColor: 'green',
+    flexDirection: "row"
+  },
+  helperText: {
+    fontSize: 12,
+    color: "grey",
+    marginLeft: "10%",
+    marginTop: "12%"
+  },
+  logoImage: {
+    width: "25%",
+    height: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "contain",
+    marginLeft: "40%",
+    marginTop: "5%"
+  },
+  loginButton: {
+    height: "15%",
+    width: "90%",
+    // backgroundColor:'mediumseagreen',
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20
+  },
+  middleContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    //backgroundColor: "pink",
+    width: "100%",
+    height: "50%",
+    alignItems: "center",
+    paddingTop: "10%"
+  },
+  textInput: {
+    height: "14%",
+    width: "90%",
+    borderRadius: 20,
+    backgroundColor: "#F8F8F8",
+    marginBottom: "10%",
+    paddingHorizontal: "5%"
+  },
+  loginText: {
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "#7C7B7B",
+    marginBottom: 5,
+    marginRight: "60%"
+  },
+  passwordText: {
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "#7C7B7B",
+    marginBottom: 5,
+    marginRight: "60%"
+  },
+  imageBackgroundStyle: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  imageBackgroundTextStyle: {
+    color: "white",
+    fontSize: 20
+  },
+  imageBackgroundImageStyle: {
+    borderRadius: 20
+  },
+  forgotPasswordButton: {
+    fontSize: 17,
+    marginTop: "5%",
+    marginBottom: "8%"
+  }
 });
 
 export default HelperLoginPage;

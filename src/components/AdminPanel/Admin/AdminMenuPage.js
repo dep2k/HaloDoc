@@ -20,6 +20,10 @@ class AdminMenuPage extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this.helperButtonClick = this.helperButtonClick.bind(this);
     this.doctorButtonClick = this.doctorButtonClick.bind(this);
+    this.adminButtonClick = this.adminButtonClick.bind(this);
+  }
+  adminButtonClick() {
+    this.props.navigation.navigate("AdminCreateHelperDoctorPage")
   }
   backButtonClick() {
     this.props.navigation.goBack(null);
@@ -60,7 +64,7 @@ class AdminMenuPage extends React.Component {
               onPress={this.backButtonClick}
             >
               <Image
-                source={require("../../../images/backButton.png")}
+                source={require("../../../images/BackButtonShape.png")}
                 style={styles.backButtonImageStyle}
               />
             </TouchableOpacity>
@@ -94,7 +98,7 @@ class AdminMenuPage extends React.Component {
                 style={styles.iconImagesStyle}
                 source={require("../../../images/ImageLogo.jpg")}
               />
-              <TouchableOpacity>
+              <TouchableOpacity onPress= {this.adminButtonClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("ADMINISTRATOR")}
                 </Text>
@@ -121,18 +125,18 @@ const styles = StyleSheet.create({
         //backgroundColor: "green",
        // marginTop: "10%"
     },
-    backButtonStyle: {
-        backgroundColor: "transparent",
-        width: "10%",
-        height: "50%",
-        marginLeft: "5%",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "10%"
-    },
+  backButtonStyle: {
+    backgroundColor: "transparent",
+    width: "20%",
+    height: "25%",
+    marginLeft: "1%",
+    marginTop: "7%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
     backButtonImageStyle: {
         width: "100%",
-        height: "70%",
+        height: "100%",
         justifyContent: "center",
         alignItems: "center",
         resizeMode: 'contain'
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
     menuText: {
         fontSize: 25,
         color: "white",
-       // marginTop: "15%",
+        marginTop: "10%",
         fontWeight: "bold",
         marginBottom: "15%"
     },

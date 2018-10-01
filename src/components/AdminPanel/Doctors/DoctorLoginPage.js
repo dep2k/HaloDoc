@@ -66,7 +66,7 @@ class DoctorLoginPage extends React.Component {
                                 onPress={this.backButtonClick}
                             >
                                 <Image
-                                    source={require("../../../images/backButton.png")}
+                                    source={require("../../../images/BackButtonShape.png")}
                                     style={styles.backButtonImageStyle}
                                 />
                             </TouchableOpacity>
@@ -158,9 +158,9 @@ const styles = StyleSheet.create({
     backButtonStyle: {
         backgroundColor: "transparent",
         width: "12%",
-        height: "50%",
-        marginLeft: 10,
-        marginTop: "5%",
+        height: "20%",
+        marginLeft: "5%",
+        marginTop: "7%",
         justifyContent: "center",
         alignItems: "center"
     },

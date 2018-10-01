@@ -12,11 +12,23 @@ import { I18n } from "aws-amplify";
 class HelperServicesPage extends React.Component {
   constructor(props) {
     super(props);
-   this.backButtonClick = this.backButtonClick.bind(this);
+    this.backButtonClick = this.backButtonClick.bind(this);
+    this.historyButtonClick = this.historyButtonClick.bind(this);
+    this.doctorButtonClick = this.doctorButtonClick.bind(this);
+    this.servicesButtonClick = this.servicesButtonClick.bind(this);
+  }
+  historyButtonClick() {
+    this.props.navigation.navigate("HelperHistoryPage")
+  }
+  servicesButtonClick() {
+    this.props.navigation.navigate("HelperShowServicesPage");
+  }
+  doctorButtonClick() {
+    this.props.navigation.navigate("HelperDoctorsListPage");
   }
 
-  backButtonClick(){
-      this.props.navigation.goBack(null);
+  backButtonClick() {
+    this.props.navigation.goBack(null);
   }
   render() {
     return (
@@ -31,7 +43,7 @@ class HelperServicesPage extends React.Component {
               onPress={this.backButtonClick}
             >
               <Image
-                source={require("../../../images/backButton.png")}
+                source={require("../../../images/BackButtonShape.png")}
                 style={styles.backButtonImageStyle}
               />
             </TouchableOpacity>
@@ -44,31 +56,27 @@ class HelperServicesPage extends React.Component {
         <View style={styles.middleContainer}>
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={this.categoryButtonClick}
+            onPress={this.servicesButtonClick}
           >
             <ImageBackground
               source={require("../../../images/loginButtonImage.png")}
               style={styles.imageBackgroundStyle}
               imageStyle={styles.imageBackgroundImageStyle}
             >
-              <Image
-                style={styles.iconStyle}
-              />
+              <Image style={styles.iconStyle} />
               <Text style={styles.buttonTextStyle}>{I18n.get("Services")}</Text>
             </ImageBackground>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={this.categoryButtonClick}
+            onPress={this.doctorButtonClick}
           >
             <ImageBackground
               source={require("../../../images/loginButtonImage.png")}
               style={styles.imageBackgroundStyle}
               imageStyle={styles.imageBackgroundImageStyle}
             >
-              <Image
-                style={styles.iconStyle}
-              />
+              <Image style={styles.iconStyle} />
               <Text style={styles.buttonTextStyle}>
                 {I18n.get("DoctorsDirectory")}
               </Text>
@@ -76,16 +84,14 @@ class HelperServicesPage extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonStyle}
-           // onPress={this.categoryButtonClick}
+            onPress={this.historyButtonClick}
           >
             <ImageBackground
               source={require("../../../images/loginButtonImage.png")}
               style={styles.imageBackgroundStyle}
               imageStyle={styles.imageBackgroundImageStyle}
             >
-              <Image
-                style={styles.iconStyle}
-              />
+              <Image style={styles.iconStyle} />
               <Text style={styles.buttonTextStyle}>
                 {I18n.get("SeeHistory")}
               </Text>
@@ -171,15 +177,15 @@ const styles = StyleSheet.create({
   imageBackgroundImageStyle: {
     borderRadius: 20
   },
-  backButtonStyle: {
-    backgroundColor: "transparent",
-    width: "12%",
-    height: "50%",
-    marginLeft: 10,
-    marginTop: "5%",
-    justifyContent: "center",
-    alignItems: "center"
-  },
+    backButtonStyle: {
+      backgroundColor: "transparent",
+      width: "12%",
+      height: "20%",
+      marginLeft: "5%",
+      marginTop: "7%",
+      justifyContent: "center",
+      alignItems: "center"
+    },
   backButtonImageStyle: {
     width: "50%",
     height: "100%",
