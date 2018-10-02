@@ -1,16 +1,17 @@
 
+
 export const GetPets = `query GetPets($userId: String! $nextToken: String) {
     getPets {
         petId
         petName
         petDescription
-        PetImage
+        petImage
         
     }
 }`;
 
-export const CreatePet = `mutation CreatePet($name: String!, $regNo: String!, $where: String!, $description: String!) {
-    createPet(name: $name, when: $when, where: $where, description: $description) {
+export const CreatePet = `mutation CreatePet($username: String!,  String, $name: String, $type: String, $petImage: String) {
+    createPet(username: $username, name: $name, type:  $type, petImage: $petImage) {
       id
       name
       where
@@ -28,3 +29,5 @@ export const CreatePet = `mutation CreatePet($name: String!, $regNo: String!, $w
       description
     }
   }`;
+
+  
