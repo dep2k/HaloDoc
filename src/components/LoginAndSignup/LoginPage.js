@@ -37,19 +37,7 @@ class LoginPage extends React.Component {
     this._onSignInClick = this._onSignInClick.bind(this);
     this._onRegisterClick = this._onRegisterClick.bind(this);
     this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
-
-    // Test Subscription
-    const subscription = API.graphql(
-      graphqlOperation(SubscribeToCreateDoctor)
-    ).subscribe({
-        next: (eventData) => { 
-
-          console.log("Subscription event triggered");
-          console.log(eventData)
-          
-        }
-    });
-  
+    this.goToAdminPanel = this.goToAdminPanel.bind(this);
   }
   startActivityIndicator() {
     this.setState({ animating: true });
@@ -103,33 +91,8 @@ class LoginPage extends React.Component {
     }
   }
 
-  _addDoctor(){
-
-    const doctorDetail = {
-
-        input : {
-          name: "Sanju",
-          speciality :"Dog Specialist",
-          profilePic : "some url",
-          registrationNo: "19191",
-          placeOfResidence: "India",
-          medicalCenter: "Mother Hood",
-          direction: "Sarjapura",
-          municipality: "some value"
-        }
-
-    };
-
-    API.graphql(graphqlOperation(CreateDoctor, doctorDetail)).then(data => {
-      console.log("Doctor Added");
-      console.log(data);
-      this.closeActivityIndicator();
-    }).catch(err => {
-      console.log("Failed to add doctor");
-      console.log(err);
-      this.closeActivityIndicator();
-    });
-
+  goToAdminPanel() {
+    this.props.navigation.navigate("AdminMenuPage");
   }
 
   _onRegisterClick() {
@@ -138,46 +101,90 @@ class LoginPage extends React.Component {
   }
 
   render() {
-    return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
+            <Image
+              source={require("../../images/navbarImage.png")}
+              style={styles.headerImage}
+            />
           </View>
-          <Image source={require("../../images/logoImage.png")} style={styles.topImage} />
+          
+            <TouchableOpacity 
+                 onPress= {this.goToAdminPanel}
+                 style = {styles.logoButton}>
+            <ImageBackground
+              source={require("../../images/logoImage.png")}
+              style= {styles.logoImage}
+              imageStyle= {styles.logoImageimageStyle}
+            >
+            </ImageBackground>
+            </TouchableOpacity>
+         
           // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
             // Username Field
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
-            <TextInput autoCapitalize={"none"} returnKeyType={"next"} onSubmitEditing={() => {
+            <TextInput
+              autoCapitalize={"none"}
+              returnKeyType={"next"}
+              onSubmitEditing={() => {
                 this.secondTextInput.focus();
-              }} blurOnSubmit={false} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
-              } />
+              }}
+              blurOnSubmit={false}
+              style={styles.textInput}
+              onChangeText={
+                text =>
+                  this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
+              }
+            />
             // Password Field
             <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
-            <TextInput ref={input => {
+            <TextInput
+              ref={input => {
                 this.secondTextInput = input;
-              }} secureTextEntry={true} style={styles.textInput} onChangeText={text => this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
-              } />
+              }}
+              secureTextEntry={true}
+              style={styles.textInput}
+              onChangeText={
+                text =>
+                  this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
+              }
+            />
             //SignINButton
-            <TouchableOpacity onPress={this._onSignInClick} style={styles.loginButton}>
-              <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundStyle} imageStyle={styles.imageBackgroundImageStyle}>
+            <TouchableOpacity
+              onPress={this._onSignInClick}
+              style={styles.loginButton}
+            >
+              <ImageBackground
+                source={require("../../images/loginButtonImage.png")}
+                style={styles.imageBackgroundStyle}
+                imageStyle={styles.imageBackgroundImageStyle}
+              >
                 <Text style={styles.imageBackgroundTextStyle}>
                   {I18n.get("Sign In")}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
             // Forgot Password Field
-            <Button style={styles.forgotPasswordButton}
-                    color="grey" 
-                    title={I18n.get("Forgot Password")}
-                    onPress= {this.forgotPasswordButtonClick}>
-            </Button>
+            <Button
+              style={styles.forgotPasswordButton}
+              color="grey"
+              title={I18n.get("Forgot Password")}
+              onPress={this.forgotPasswordButtonClick}
+            />
             // Register Button
-            <Button color="darkgrey" title={I18n.get("RegisterMe")} onPress={this._onRegisterClick} />
+            <Button
+              color="darkgrey"
+              title={I18n.get("RegisterMe")}
+              onPress={this._onRegisterClick}
+            />
           </View>
           {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
-      </TouchableWithoutFeedback>;
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
@@ -199,14 +206,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  topImage: {
+  logoButton: {
     height: "20%",
     width: "25%",
     // marginTop: "2%",
     marginLeft: "70%",
-    backgroundColor: "transparent",
-    resizeMode: "contain"
+    backgroundColor: "transparent"
   },
+  logoImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  logoImageimageStyle: {
+    resizeMode: 'contain'
+  },
+  
   loginButton: {
     height: "15%",
     width: "90%",

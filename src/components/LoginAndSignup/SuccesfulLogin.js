@@ -14,7 +14,7 @@ constructor(props) {
     this._onSignInClick = this.continueButtonClick.bind(this);
   }
  continueButtonClick() {
-     this.props.navigation.navigate('MainMenuPage');
+     this.props.navigation.navigate('WelcomeMessage');
  }
     render() {
         return (
@@ -35,15 +35,13 @@ constructor(props) {
                     source={require("../../images/landscape.png")}
                     style={ styles.lowerImageBackground}>
                     <TouchableOpacity onPress= { this._onSignInClick }
-                                    style={{marginLeft:"5%", marginBottom:"10%",
-                                             alignItems: 'center', height:40, width:'50%', justifyContent:'center',
-                                             alignItems:'center'}}>
+                                    style={styles.continueButtonStyle}>
                         <Text style={{ color: "white", fontSize: 20}}>
                                   {I18n.get('Continue')}
                         </Text> 
                     </TouchableOpacity>
                 </ImageBackground>
-                </View>
+              </View>
             </View>
         );
     }
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     },
     upperImageContainer: {
         flex:2.3,
+       // backgroundColor: "pink"
        
    },
    upperImageStyle: {
@@ -68,8 +67,8 @@ const styles = StyleSheet.create({
         
    },
    lowerimageContainer: {
-       flex:0.7,
-       backgroundColor: "transparent"
+       height: "20%",
+       backgroundColor: "pink",
   },
   lowerImageBackground: {
     justifyContent: 'flex-end',
@@ -79,8 +78,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
    headerContainer: {
-        height: 60,
-        marginTop: 30,
+        height: "10%",
+       // marginTop: 30,
         width: "100%",
         backgroundColor:"transparent",
         justifyContent: "center",
@@ -90,6 +89,15 @@ const styles = StyleSheet.create({
          width:"100%",
          height: "100%" 
       },
+      continueButtonStyle: {
+          marginLeft: "5%", 
+          marginBottom: "10%",
+          alignItems: 'center',
+          height: 40,
+          width: '50%', 
+          justifyContent: 'center',
+          alignItems: 'center'
+      }
 
 })
 export default SuccesfulLogin;

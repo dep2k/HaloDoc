@@ -1,6 +1,7 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
+import PhoneInput from "react-native-phone-input";
 import ActivityIndicatorExample from "../../ActivityIndicator";
 
 import {
@@ -21,10 +22,12 @@ import {
 import { Auth } from "aws-amplify";
 import NavigationService from "../../NavigationService";
 import { Cache } from "aws-amplify";
+import Loader from "../../ActivityIndicator";
 class RegistrationPage extends React.Component {
   constructor(props) {
     super(props);
-
+     
+   // const styles_phnTextInput = StyleSheet.flatten(styles.phoneTextInput);
     this.state = {
       user: {
         firstName: "",
@@ -35,14 +38,32 @@ class RegistrationPage extends React.Component {
         password: "",
         confirmPassword: ""
       },
-      checked: true
+      checked: true,
+      animating: false
+      // email: '',
+      // validated: false,
     };
+   
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this._registerBtnClick = this._registerBtnClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.termsButtonClick = this.termsButtonClick.bind(this);
   }
+  
+  // validate = (text) => {
+  //   console.log(text);
+  //   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   if (reg.test(text) === false) {
+  //     console.log("Email is Not Correct");
+  //     this.setState({ email: text })
+  //     return false;
+  //   }
+  //   else {
+  //     this.setState({ email: text })
+  //     console.log("Email is Correct");
+  //   }
+  // }
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -64,6 +85,7 @@ class RegistrationPage extends React.Component {
 
   _registerBtnClick() {
     const user = this.state.user;
+    this.startActivityIndicator();
     if (
       user.firstName &&
       user.lastName &&
@@ -73,50 +95,74 @@ class RegistrationPage extends React.Component {
       user.password &&
       user.confirmPassword
     ) {
-      if (user.password == user.confirmPassword) {
-        Auth.signUp({
-          username: user.userName,
-          password: user.password,
-          attributes: {
-            email: user.email,
-            phone_number: user.phoneNo,
-            given_name: user.firstName,
-            family_name: user.lastName
+      if (user.password.length >= 8) {
+        if (user.password == user.confirmPassword) {
+          Auth.signUp({
+            username: user.userName,
+            password: user.password,
+            attributes: {
+              email: user.email,
+              phone_number: user.phoneNo,
+              given_name: user.firstName,
+              family_name: user.lastName
 
-            // other custom attributes
-          }
-        })
-          .then(data => {
-            console.log(data);
-            Cache.setItem("User", this.state.user);
-            this.props.navigation.navigate("CodeConfirmationPage");
+              // other custom attributes
+            }
           })
-          .catch(err => console.log(err));
+            .then(data => {
+              console.log(data);
+              Cache.setItem("User", this.state.user);
+              this.props.navigation.navigate("CodeConfirmationPage");
+              this.closeActivityIndicator();
+            })
+            .catch(err => {console.log(err);
+               this.closeActivityIndicator();
+               Alert.alert(
+                "Error",
+                 I18n.get("RegistrationUnsuccessful"),
+                [
+                   { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                      { cancelable: false }
+                  );
+            })
+        } else {
+          Alert.alert(
+            "Error",
+            I18n.get("Passwords dont match"),
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            { cancelable: false }
+          );
+          this.closeActivityIndicator();
+        }
       } else {
         Alert.alert(
           "Error",
-          "Passwords dont match",
+          I18n.get("PasswordLength"),
           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: false }
         );
+        this.closeActivityIndicator();
       }
     } else {
       Alert.alert(
         "Error",
-        "All fields are mandatory",
+        I18n.get("All Fields are mandatory"),
         [{ text: "OK", onPress: () => console.log("OK Pressed") }],
         { cancelable: false }
       );
+      this.closeActivityIndicator();
     }
   }
 
   render() {
-    return (
+    return ( 
+ <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
       <View style={styles.mainContainer}>
         <ImageBackground
           source={require("../../images/newBackground.png")}
-          style={styles.backgroundImage}
-          imageStyle={styles.imagebackgroundImageStyle}
+          style={styles.fullBackgroundImage}
+          imageStyle={styles.fullbackgroundImageStyle}
         >
           <KeyboardAvoidingView
             style={styles.registrationFormContainer}
@@ -136,9 +182,11 @@ class RegistrationPage extends React.Component {
             <Text style={styles.registerTextStyle}>{I18n.get("Sign Up")}</Text>
             <TextInput
               style={styles.firstTextInputStyle}
+              autoCapitalize={"none"}
               placeholder={I18n.get("Firstname")}
               placeholderTextColor="white"
               returnKeyType={"next"}
+              autoCorrect= {false}
               onSubmitEditing={() => {
                 this.secondTextInput.focus();
               }}
@@ -157,31 +205,33 @@ class RegistrationPage extends React.Component {
               }}
               blurOnSubmit={false}
               style={styles.textInput}
+              autoCapitalize={"none"}
+              autoCorrect={false}
               placeholder={I18n.get("Lastname")}
               placeholderTextColor="white"
               onChangeText={text =>
                 this.setState(state => ((state.user.lastName = text), state))
               }
             />
-
             <TextInput
               ref={input => {
                 this.thirdTextInput = input;
               }}
               returnKeyType={"next"}
               onSubmitEditing={() => {
-                this.fourthTextInput.focus();
+                this.phone.focus();
               }}
               blurOnSubmit={false}
               style={styles.textInput}
+              autoCapitalize={"none"}
               placeholder={I18n.get("UserId")}
+              autoCorrect={false}
               placeholderTextColor="white"
               onChangeText={text =>
                 this.setState(state => ((state.user.userName = text), state))
               }
             />
-
-            <TextInput
+            {/* <TextInput
               ref={input => {
                 this.fourthTextInput = input;
               }}
@@ -191,12 +241,33 @@ class RegistrationPage extends React.Component {
               }}
               blurOnSubmit={false}
               style={styles.textInput}
+              autoCapitalize={"none"}
+             // keyboardType="numeric"
               placeholder={I18n.get("PhoneNo")}
               placeholderTextColor="white"
               onChangeText={text =>
                 this.setState(state => ((state.user.phoneNo = text), state))
               }
-            />
+            /> */}
+             <TouchableWithoutFeedback>
+              <PhoneInput style={styles.phoneTextInput}
+                   ref={ref => {
+                         this.phone = ref;
+                   }}
+                   returnKeyType={"next"}
+                   onSubmitEditing={() => {
+                       this.fifithTextInput.focus();
+                   }}
+                  //  keyboardType="phone-pad"
+                   blurOnSubmit={false}
+                   textStyle= {{color: "white"}}
+                  // textProps={{ placeholder: "Phone Number" }}
+                   onChangePhoneNumber={number =>
+                  this.setState(state => ((state.user.phoneNo = number), state))
+                }>
+              </PhoneInput>
+             </TouchableWithoutFeedback>
+            
             <TextInput
               ref={input => {
                 this.fifithTextInput = input;
@@ -207,8 +278,12 @@ class RegistrationPage extends React.Component {
               }}
               blurOnSubmit={false}
               style={styles.textInput}
+              autoCapitalize={"none"}
+              autoCorrect={false}
+              keyboardType={"email-address"}
               placeholder={I18n.get("Email")}
-              placeholderTextColor="white"
+              autoCorrect={false}
+              placeholderTextColor="white" // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
               onChangeText={text =>
                 this.setState(state => ((state.user.email = text), state))
               }
@@ -224,6 +299,8 @@ class RegistrationPage extends React.Component {
               }}
               blurOnSubmit={false}
               style={styles.textInput}
+              autoCapitalize={"none"}
+              autoCorrect={false}
               placeholder={I18n.get("Create password")}
               placeholderTextColor="white"
               onChangeText={text =>
@@ -236,6 +313,8 @@ class RegistrationPage extends React.Component {
               }}
               secureTextEntry={true}
               style={styles.textInput}
+              autoCapitalize={"none"}
+              autoCorrect={false}
               placeholder={I18n.get("Confirm password")}
               placeholderTextColor="white"
               onChangeText={text =>
@@ -248,15 +327,24 @@ class RegistrationPage extends React.Component {
               style={styles.lastTextInputStyle}
               placeholder={I18n.get("")}
               placeholderTextColor="white"
-              // onChangeText={(text) => this.setState(state => (state.user.email = text, state))}
-            />
+              onChangeText={text => this.setState(state => ((state.user.email = text), state))} />
+            
           </KeyboardAvoidingView>
           <View style={styles.buttonContainer}>
-            <Button
-              color="white"
-              title={I18n.get("RegisterMe")}
+            <TouchableOpacity
               onPress={this._registerBtnClick}
-            />
+              style={styles.registerButton}
+            >
+              <ImageBackground
+                source={require("../../images/loginButtonImage.png")}
+                style={styles.imageBackgroundRegisterButtonStyle}
+                imageStyle={styles.imageStyleRegisterButtonImageBackground}
+              >
+                <Text style={styles.imageBackgroundTextStyle}>
+                  {I18n.get("RegisterMe")}
+                </Text>
+              </ImageBackground>
+            </TouchableOpacity>
           </View>
           {/* <Text
               style={{
@@ -275,8 +363,9 @@ class RegistrationPage extends React.Component {
               checkedColor="green"
               uncheckedColor="white"
               uncheckedIcon="square-o"
-              // title= {I18n.get('Accept terms and conditions')}
-              checked={this.state.checked}
+              checked={
+                this.state.checked // title= {I18n.get('Accept terms and conditions')}
+              }
               onPress={this.checkBoxClick}
             />
             <TouchableOpacity
@@ -288,8 +377,10 @@ class RegistrationPage extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
+          {this.state.animating && <Loader animating={this.state.animating} />}
         </ImageBackground>
       </View>
+ </TouchableWithoutFeedback>
     );
   }
 }
@@ -299,7 +390,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topContainer: {
-    height: "12%",
+    height: "20%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -310,16 +401,17 @@ const styles = StyleSheet.create({
   backButtonStyle: {
     backgroundColor: "transparent",
     width: "10%",
-    height: "70%",
-    marginLeft: 10,
+    height: "50%",
+    marginLeft: "5%",
     justifyContent: "center",
     alignItems: "center"
   },
   backButtonImageStyle: {
-    width: "50%",
+    width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    resizeMode: 'contain'
   },
   registrationFormContainer: {
     flex: 0.85,
@@ -329,6 +421,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: "15%"
+  },
+  registerButton: {
+    //height: "15%",
+    width: "90%",
+    // backgroundColor:'mediumseagreen',
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20
   },
   firstTextInputStyle: {
     height: "10%",
@@ -348,6 +448,14 @@ const styles = StyleSheet.create({
     color: "white",
     alignContent: "flex-end"
   },
+  phoneTextInput: {
+    height: "10%",
+    width: "80%",
+    marginTop: "3%",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    alignContent: "flex-end"
+  },
   lastTextInputStyle: {
     height: "10%",
     width: "80%",
@@ -355,18 +463,19 @@ const styles = StyleSheet.create({
     alignContent: "flex-end"
   },
   buttonContainer: {
-    height: "5%",
+    height: "8%",
     // backgroundColor: 'yellow',
     justifyContent: "center",
-    alignItems: "center"
-  },
-  activityIndicator: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    height: 80
+    marginTop: "5%"
   },
-  backgroundImage: {
+  // activityIndicator: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   height: 80
+  // },
+  fullBackgroundImage: {
     flex: 1
   },
   checkboxContainer: {
@@ -375,6 +484,7 @@ const styles = StyleSheet.create({
     height: "10%",
     justifyContent: "center",
     alignItems: "center"
+    //marginTop: "5%"
   },
   termsButton: {
     height: "30%",
@@ -382,9 +492,9 @@ const styles = StyleSheet.create({
     // backgroundColor:'black',
     justifyContent: "center",
     alignItems: "flex-start"
-    // marginRight: "20%"
+    // marginRight: "20%",
   },
-  imagebackgroundImageStyle: {
+  fullbackgroundImageStyle: {
     position: "absolute",
     resizeMode: "cover",
     width: "100%",
@@ -395,6 +505,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent"
   },
+  imageBackgroundRegisterButtonStyle: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  imageStyleRegisterButtonImageBackground: {
+    borderRadius: 20
+  },
+  imageBackgroundTextStyle: {
+    color: "white",
+    fontSize: 20
+  },
   registerTextStyle: {
     marginTop: "2%",
     backgroundColor: "transparent",
@@ -402,9 +526,9 @@ const styles = StyleSheet.create({
     color: "white"
   },
   checkboxContainerStyle: {
-      backgroundColor: "transparent",
-      borderColor: "transparent",
-      width: "15%"
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    width: "15%"
   }
 });
 export default RegistrationPage;

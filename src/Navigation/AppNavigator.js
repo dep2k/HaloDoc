@@ -6,6 +6,7 @@ import { createStackNavigator } from 'react-navigation'
 //import Demo from '../components/Demo'
 
 import WelcomePage from '../components/LoginAndSignup/WelcomePage'
+import WelcomeMessage from '../components/LoginAndSignup/WelcomeMessage'
 import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
@@ -13,16 +14,26 @@ import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
-
+import AdminMenuPage from "../components/AdminPanel/Admin/AdminMenuPage";
+import HelperLoginPage from "../components/AdminPanel/Helper/HelperLoginPage";
+import DoctorLoginPage from "../components/AdminPanel/Doctors/DoctorLoginPage";
+import HelperServicesPage from "../components/AdminPanel/Helper/HelperServicesPage"
 
 const AppStackNavigator = createStackNavigator(
   {
+    LoginPage: {
+      screen: LoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
     CodeConfirmationPage: {
       screen: CodeConfirmationPage,
       navigationOptions: {
         header: null
       }
     },
+
     TermsPage: {
       screen: TermsAndConditions,
       navigationOptions: {
@@ -83,17 +94,44 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+    AdminMenuPage: {
+      screen: AdminMenuPage,
+      navigationOptions: {
+        header: null
+      }
+    },
 
-    //Problem with this page
-    LoginPage: {
-      screen: LoginPage,
+    HelperLoginPage: {
+      screen: HelperLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    HelperServicesPage : {
+      screen: HelperServicesPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    DoctorLoginPage: {
+      screen: DoctorLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    WelcomeMessage: {
+      screen: WelcomeMessage,
       navigationOptions: {
         header: null
       }
     }
+
+    //Problem with this page
   },
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "LoginPage"
   }
 );
 
