@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     //backgroundColor: "pink",
     width: "100%",
-    height: "50%",
+    height: "30%",
     alignItems: "center",
     paddingTop: "10%"
   },

@@ -8,9 +8,11 @@ export const  setUpLanguage = () => {
     'en': {
         'Sign In': "Sign In",
         'RegisterMe': "Register Me",
+        'Register': "REGISTER",
         'Sign Up': "SignUp",
         'Username': "Username",
         'Password' : "Password",
+        'CreatePassword': "Create Password",
         'Forgot Password': "Forgot Password?",
         'Firstname': "Firstname",
         'Lastname': "Lastname",
@@ -74,16 +76,27 @@ export const  setUpLanguage = () => {
         'ADMINISTRATOR': "ADMINISTRATOR",
         'Services':"SERVICES",
         'DoctorsDirectory': "VETERINARY DIRECTORY",
-        'SeeHistory': "SEE HISTORY"
-
+        'SeeHistory': "SEE HISTORY",
+        'HistoryOfConsultations' : "HISTORY OF CONSULTATIONS",
+        'AddDoctor': "ADD VETERINARY",
+        'AddHelper': "ADD HELPER",
+        'SeePaymentReports': "SEE PAYMENT REPORTS",
+        'DoctorsId': "Doctors ID",
+        'HomeTown': "Home town",
+        'Work': "Work",
+        'MedicalCenter': "Medical Center",
+        'Address': "Address",
+        'Department': "Department"
 
     },
     'es': {
         'Sign In': "INICIO DE SESION",
         'RegisterMe': "REGISTRARME",
+        'Register':"REGISTRAR",
         'Sign Up': "REGISTRATE",
         'Username': "Usuario",
         'Password': "Contracena",
+        'CreatePassword': "Crear Contracena",
         'Forgot Password': "Olvide me contacena?",
         'Firstname': "Nombre",
         'Lastname': "Apellidos",
@@ -147,8 +160,17 @@ export const  setUpLanguage = () => {
         'ADMINISTRATOR': "ADMINISTRADOR",
         'Services': "SERVICIOS",
         'DoctorsDirectory': "DIRECTORIO VETERINARIO",
-        'SeeHistory': "VER HISTORIAL"
-       
+        'SeeHistory': "VER HISTORIAL",
+        'HistoryOfConsultations': "HISTORIAL DE CONSULTAS",
+        'AddDoctor': "AGREGAR VETERINARIO",
+        'AddHelper': "AGREGAR AUXILIAR",
+        'SeePaymentReports':"VER REPORTES DE PAGOS",
+        'DoctorsId': "Registro medico",
+        'HomeTown': "Lugar de residencia",
+        'MedicalCenter': "Centro medico",
+        'Address': "Direccion",
+        'Department': "Muncipio"
+
 
     },
 
