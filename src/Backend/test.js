@@ -15,6 +15,13 @@ mutation CreateDoctor {
   }
 }
 
+mutation CreatePet {
+  createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", sex: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
+    petId
+    username
+  }
+}
+
 mutation UpdateHelper {
   updateHelper(input: {id: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", name: "deep", isAvailable: false}) {
     id
@@ -49,6 +56,12 @@ query ListHelpers {
       isAvailable
     }
     nextToken
+  }
+}
+
+query getUserPets {
+  getPets(username: "deep") {
+    petId
   }
 }
 

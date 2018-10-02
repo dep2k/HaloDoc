@@ -1,0 +1,30 @@
+## Below example shows how to create an object from all provided GraphQL arguments
+## The primary key of the obejct is a randomly generated UUD using the $util.autoId() utility
+## Other utilities include $util.matches() for regular expressions, $util.time.nowISO8601() or 
+##   $util.time.nowEpochMilliSeconds() for timestamps, and even List or Map helpers like
+##   $util.list.copyAndRetainAll() $util.map.copyAndRemoveAllKeys() for shallow copies
+## Read more: https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html#utility-helpers-in-util
+
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        "petId": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        "username": {"S": "${context.arguments.input.username}" }
+    },
+    
+    "attributeValues" : {
+    
+         "category": {"S": "${context.arguments.input.category}" },
+         "name": {"S": "${context.arguments.input.name}" },
+         "race": {"S": "${context.arguments.input.race}" },
+         "sex": {"S": "${context.arguments.input.sex}" },
+         "age": {"S": "${context.arguments.input.age}" },
+         "origin": {"S" :  "${context.arguments.input.origin}" },
+         "use": {"S" : "${context.arguments.input.use}" },
+         "background" : {"S" :  "${context.arguments.input.background}"},
+         "weight" : {"S" :  "${context.arguments.input.weight}"}
+         
+    }
+}
