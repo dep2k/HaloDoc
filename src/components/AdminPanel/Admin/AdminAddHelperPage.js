@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "50%",
         alignItems: "center",
-        paddingTop: "10%",
-        marginTop: "20%"
+        paddingTop: "5%",
+        marginTop: "5%"
     },
     textInput: {
         height: "28%",
