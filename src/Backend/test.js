@@ -7,7 +7,7 @@ subscription SubscribeToCreateDoctor {
   }
 }
 
-subscription SubscribeToCreateConversation{
+subscription SubscribeToCreateConversation {
   subscribeToCreateConversation {
     username
     createdAt
@@ -17,37 +17,15 @@ subscription SubscribeToCreateConversation{
     }
   }
 }
-mutation CreateConversation{
-  createConversation(input: 
-    {
-      user: {
-        username: "3482340923849023",
-        userType: "Patient",
-        fullName: "Deep A"
-      },
-			questionsAndAnsers: [
-        {
-          question: "Question 1",
-          answer: "Answer 1"
-        },
-        {
-          question: "Question 2",
-          answer: "Answer 2"
-        }
-      ],
-      pet: {
-        username: "deep39303903",
-			  petId: "238280340932",
-	      category: "Canine"
-      }
-			
-    }) {
+
+mutation CreateConversation {
+  createConversation(input: {user: {username: "3482340923849023", userType: "Patient", fullName: "Deep A"}, questionsAndAnsers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}], pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}}) {
     username
     createdAt
-	  user {
-	    fullName
-	    type
-	  }
+    user {
+      fullName
+      type
+    }
     pet {
       category
       name
@@ -63,9 +41,20 @@ mutation CreateConversation{
 }
 
 mutation CreateDoctor {
-  createDoctor(input: {name: "Sanju", registrationNo: "Deep", speciality: "Deep", profilePic: "Deep", placeOfResidence: "Deep", medicalCenter: "Deep", direction: "Deep", municipality: "Deep"}) {
+  createDoctor(input: {name: "Doctor Name", speciality: "dog spe", profilePic: "http:somthing", registrationId: "3423df", phoneNo: "3838838383", email: "xyz@gmail.com", homeTown: "patiala", medicalCenter: "columbia", department: "child", address: "anand"}) {
     id
-
+    name
+    createdAt
+    speciality
+    profilePic
+    registrationId
+    phoneNo
+    email
+    homeTown
+    medicalCenter
+    department
+    address
+    isAvailable
   }
 }
 
@@ -73,6 +62,12 @@ mutation CreatePet {
   createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", sex: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
     petId
     username
+  }
+}
+
+mutation CreateMessage {
+  createMessage(input: {content: "A message", conversationId: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", receiver: {username: "DoctorId3939393", userType: "Doctor", fullName: "Some Doctor"}, sender: {username: "PatientId3939393", userType: "Patient", fullName: "Deep A"}}) {
+    conversationId
   }
 }
 
@@ -113,31 +108,30 @@ query ListHelpers {
   }
 }
 
-query getUserPets {
+query GetPets {
   getPets(username: "deep") {
-		pets {
-        petId
+    items {
+      petId
     }
-
   }
 }
 
-query getConversations {
-  
-   getConversations(username: "3482340923849023") {
-		items {
-        username
+query GetConversations {
+  getConversations(username: "3482340923849023") {
+    items {
+      username
     }
-
   }
 }
 
-
-
-
-
-
-
+query ListConversations {
+  listConversations {
+    items {
+      username
+    }
+    nextToken
+  }
+}
 
 
 
