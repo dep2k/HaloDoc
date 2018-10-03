@@ -1,21 +1,50 @@
-/*
 type Conversation {
+	#composite key
 	createdAt: String
-	id: ID!
-	messages(after: String, first: Int): MessageConnection
-	name: String!
+	username: String
+	#attributes
+	user: User
+	doctor: User
+	helper: User
+	status: String
+	payment: String
+	questionsAndAnswers: [ConversationQA]
+	pet: Pet
+}
+
+type ConversationConnection {
+	items: [Conversation]
+	nextToken: String
+}
+
+type ConversationQA {
+	question: String
+	answer: String
+}
+
+input ConversationQAInput {
+	question: String
+	answer: String
+}
+
+input CreateConversationInput {
+	user: UserInput
+	helper: UserInput
+	questionsAndAnsers: [ConversationQAInput]
+	pet: UpdatePetInput
 }
 
 input CreateDoctorInput {
 	name: String
 	speciality: String
 	profilePic: String
-	registrationNo: String
-	placeOfResidence: String
+	registrationId: String
+	phoneNo: String
+	email: String
+	homeTown: String
 	medicalCenter: String
-	direction: String
-	municipality: String
-	isAvailable: Boolean
+	department: String
+	address: String
 }
 
 input CreateHelperInput {
@@ -25,6 +54,13 @@ input CreateHelperInput {
 	address: String
 	password: String
 	isAvailable: Boolean
+}
+
+input CreateMessageInput {
+	content: String
+	conversationId: ID!
+	receiver: UserInput
+	sender: UserInput
 }
 
 input CreatePetInput {
@@ -38,10 +74,7 @@ input CreatePetInput {
 	use: String
 	background: String
 	weight: String
-}
-
-input CreateTestingInput {
-	nextToken: String
+	vaccinations: [VaccinationInput]
 }
 
 input DeleteDoctorInput {
@@ -56,14 +89,17 @@ input DeleteHelperInput {
 
 type Doctor {
 	id: ID
-	name: String!
+	name: String
 	speciality: String
 	profilePic: String
-	registrationNo: String
-	placeOfResidence: String
+	registrationId: String
+	phoneNo: String
+	email: String
+	homeTown: String
 	medicalCenter: String
-	direction: String
-	municipality: String
+	department: String
+	address: String
+    createdAt: String
 	isAvailable: Boolean
 }
 
@@ -88,37 +124,35 @@ type HelperConnection {
 }
 
 type Message {
-	author: User
-	content: String!
+	# composite Key
 	conversationId: ID!
 	createdAt: String
-	id: ID!
-	isSent: Boolean
-	recipient: User
-	sender: String
+	#attributes
+	content: String!
+	receiver: User
+	sender: User
 }
 
 type MessageConnection {
-	messages: [Message]
+	items: [Message]
 	nextToken: String
 }
 
 type Mutation {
-	createConversation(createdAt: String, id: ID!, name: String!): Conversation
-	createMessage(
-		content: String,
-		conversationId: ID!,
-		createdAt: String!,
-		id: ID!
-	): Message
-	createUser(username: String!): User
-	createUserConversations(conversationId: ID!, userId: ID!): UserConversations
+	# Conversations
+	createConversation(input: CreateConversationInput!): Conversation
+	updateConversation(input: UpdateConversationInput!): Conversation
+	# Message
+	createMessage(input: CreateMessageInput!): Message
+	# Doctor
 	createDoctor(input: CreateDoctorInput!): Doctor
 	updateDoctor(input: UpdateDoctorInput!): Doctor
 	deleteDoctor(input: DeleteDoctorInput!): Doctor
+	# Helper
 	createHelper(input: CreateHelperInput!): Helper
 	updateHelper(input: UpdateHelperInput!): Helper
 	deleteHelper(input: DeleteHelperInput!): Helper
+	# Pet
 	createPet(input: CreatePetInput!): Pet
 	updatePet(input: UpdatePetInput!): Pet
 }
@@ -138,32 +172,28 @@ type Pet {
 	vaccinations: [Vaccination]
 }
 
+type PetsConnection {
+	items: [Pet]
+}
+
 type Query {
-	allMessages: [Message]
-	allMessage(after: String, conversationId: ID!, first: Int): [Message]
-	allMessageConnection(after: String, conversationId: ID!, first: Int): MessageConnection
-	allMessageFrom(
-		after: String,
-		conversationId: ID!,
-		first: Int,
-		sender: String!
-	): [Message]
-	allUser(after: String, first: Int): [User]
-	me: User
+	## Doctor
 	getDoctor(id: ID!, name: String!): Doctor
 	listDoctors(limit: Int, nextToken: String): DoctorConnection
 	listHelpers(filter: TableHelperFilterInput, limit: Int, nextToken: String): HelperConnection
+	getPets(username: String): PetsConnection
+	## Conversations
+	getConversations(username: String): ConversationConnection
+	listConversations(limit: Int, nextToken: String): ConversationConnection
 }
 
 type Subscription {
+	subscribeToCreateConversation: Conversation
+		@aws_subscribe(mutations: ["createConversation"])
 	subscribeToNewMessage(conversationId: ID!): Message
 		@aws_subscribe(mutations: ["createMessage"])
-	subscribeToNewUCs(userId: ID!): UserConversations
-		@aws_subscribe(mutations: ["createUserConversations"])
-	subscribeToNewUsers: User
-		@aws_subscribe(mutations: ["createUser"])
 	subscribeToCreateDoctor: Doctor
-		@aws_subscribe(mutations: ["createDoctor"])
+		@aws_subscribe(mutations: ["updateDoctor"])
 }
 
 input TableBooleanFilterInput {
@@ -225,16 +255,29 @@ input TableStringFilterInput {
 	beginsWith: String
 }
 
+input UpdateConversationInput {
+	# composite key
+	username: String
+	createdAt: String
+	# attributes
+	doctor: UserInput
+	helper: UserInput
+	status: String
+	payment: String
+}
+
 input UpdateDoctorInput {
 	id: ID!
-	name: String!
+	name: String
 	speciality: String
 	profilePic: String
-	registrationNo: String
-	placeOfResidence: String
+	registrationId: String
+	phoneNo: String
+	email: String
+	homeTown: String
 	medicalCenter: String
-	direction: String
-	municipality: String
+	department: String
+	address: String
 	isAvailable: Boolean
 }
 
@@ -260,32 +303,27 @@ input UpdatePetInput {
 	use: String
 	background: String
 	weight: String
+	vaccinations: [VaccinationInput]
 }
 
 type User {
-	cognitoId: ID!
-	conversations(after: String, first: Int): UserConverstationsConnection
-	id: ID!
-	messages(after: String, first: Int): MessageConnection
-	username: String!
-	registered: Boolean
-	pets: [Pet]
+	username: ID!
+	fullName: String
+	type: String
 }
 
-type UserConversations {
-	associated: [UserConversations]
-	conversation: Conversation
-	conversationId: ID!
-	user: User
-	userId: ID!
-}
-
-type UserConverstationsConnection {
-	nextToken: String
-	userConversations: [UserConversations]
+input UserInput {
+	username: ID!
+	fullName: String
+	userType: String
 }
 
 type Vaccination {
+	name: String
+	date: String
+}
+
+input VaccinationInput {
 	name: String
 	date: String
 }
@@ -295,5 +333,3 @@ type schema {
 	mutation: Mutation
 	subscription: Subscription
 }
-
-*/

@@ -7,11 +7,54 @@ subscription SubscribeToCreateDoctor {
   }
 }
 
+subscription SubscribeToCreateConversation {
+  subscribeToCreateConversation {
+    username
+    createdAt
+    user {
+      fullName
+      type
+    }
+  }
+}
+
+mutation CreateConversation {
+  createConversation(input: {user: {username: "3482340923849023", userType: "Patient", fullName: "Deep A"}, questionsAndAnsers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}], pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}}) {
+    username
+    createdAt
+    user {
+      fullName
+      type
+    }
+    pet {
+      category
+      name
+      race
+      sex
+      age
+      origin
+      use
+      background
+      weight
+    }
+  }
+}
+
 mutation CreateDoctor {
-  createDoctor(input: {name: "Sanju", registrationNo: "Deep", speciality: "Deep", profilePic: "Deep", placeOfResidence: "Deep", medicalCenter: "Deep", direction: "Deep", municipality: "Deep", isAvailable: false}) {
+  createDoctor(input: {name: "Doctor Name", speciality: "dog spe", profilepic: "http:somthing", registrationid: "3423df", phoneno: "3838838383", email: "xyz@gmail.com", hometown: "patiala", medicalcenter: "columbia", department: "child", address: "anand"}) {
     id
     name
-    isAvailable
+    createdat
+    speciality
+    profilepic
+    registrationid
+    phoneno
+    email
+    hometown
+    medicalcenter
+    department
+    address
+    isavailable
   }
 }
 
@@ -19,6 +62,12 @@ mutation CreatePet {
   createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", sex: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
     petId
     username
+  }
+}
+
+mutation CreateMessage {
+  createMessage(input: {content: "A message", conversationId: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", receiver: {username: "DoctorId3939393", userType: "Doctor", fullName: "Some Doctor"}, sender: {username: "PatientId3939393", userType: "Patient", fullName: "Deep A"}}) {
+    conversationId
   }
 }
 
@@ -59,33 +108,30 @@ query ListHelpers {
   }
 }
 
-query getUserPets {
+query GetPets {
   getPets(username: "deep") {
-    petId
+    items {
+      petId
+    }
   }
 }
 
+query GetConversations {
+  getConversations(username: "3482340923849023") {
+    items {
+      username
+    }
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+query ListConversations {
+  listConversations {
+    items {
+      username
+    }
+    nextToken
+  }
+}
 
 
 
