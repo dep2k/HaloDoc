@@ -67,8 +67,7 @@ class LoginPage extends React.Component {
       Auth.signIn(user.username, user.password)
         .then(user => {
           console.log(user);
-          this._addDoctor();
-          //this.props.navigation.navigate("MainMenuPage");
+          this.props.navigation.navigate("MainMenuPage");
         })
         .catch(err => {
           console.log(err);
@@ -90,9 +89,11 @@ class LoginPage extends React.Component {
       this.closeActivityIndicator();
     }
   }
+  
+
 
   goToAdminPanel() {
-    this.props.navigation.navigate("AdminMenuPage");
+    this.props.navigation.navigate("AdminLoginPage");
   }
 
   _onRegisterClick() {
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     //backgroundColor: "pink",
     width: "100%",
-    height: "30%",
+    height: "50%",
     alignItems: "center",
     paddingTop: "10%"
   },

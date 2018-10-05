@@ -1,5 +1,10 @@
 import React from "react";
 import { I18n } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { Auth } from "aws-amplify";
+import { Cache } from "aws-amplify";
+
+
 
 import {
   StyleSheet,
@@ -8,17 +13,157 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Alert
 } from "react-native";
+import { CreateDoctor } from "../../../Queries/DoctorAPI";
+//import { SSL_OP_NO_TLSv1_2 } from "constants";
+import Loader from "../../../ActivityIndicator";
 
 class AdminAddDoctorPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      doctor: {
+        name:"",
+        speciality: "",
+        profilePic: "",
+        registrationId: "",
+        phoneNo: "",
+        email: "",
+        homeTown:"",
+        medicalCenter: "",
+        department:"",
+        address: "",
+        password: "",
+        adminEmail: ""
+      },
+      animating: false
+    };
     this.backButtonClick = this.backButtonClick.bind(this);
+    this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
+
+    // const listInput = {nextToken:null};
+    // API.graphql(graphqlOperation(ListDoctors, listInput))
+    //   .then(data => {
+    //     console.log("List shown");
+    //     console.log(data);
+    //     this.closeActivityIndicator();
+    //   })
+    //   .catch(err => {
+    //     console.log("Failed to show list");
+    //     console.log(err);
+    //     this.closeActivityIndicator();
+    //   });
+  }
+
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
+
+  closeActivityIndicator() {
+    this.setState({ animating: false });
   }
 
   backButtonClick() {
     this.props.navigation.goBack(null);
+  }
+
+  onRegisterButtonClick() {
+    this._addDoctor();
+  }
+
+  _addDoctor() {
+    const doc = this.state.doctor;
+    const createDoctorInput = {
+      name: this.state.doctor.name,
+      speciality: this.state.doctor.speciality,
+      profilePic: "profilePic",
+      registrationId: this.state.doctor.registrationId,
+      phoneNo: this.state.doctor.phoneNo,
+      email: this.state.doctor.email,
+      adminEmail: this.state.doctor.adminEmail,
+      homeTown: this.state.doctor.homeTown,
+      medicalCenter: this.state.doctor.medicalCenter,
+      department: this.state.doctor.department,
+      address: this.state.doctor.address
+
+    };
+    this.startActivityIndicator();
+    if (doc.name && 
+        doc.adminEmail && 
+        doc.password &&
+        doc.phoneNo) 
+    {
+      if (doc.password.length >= 8) 
+      {
+        Auth.signUp({
+          username: doc.name,
+          password: doc.password,
+          attributes: {
+            phone_number: doc.phoneNo,
+            email: doc.adminEmail,
+            given_name: "abcd",
+            family_name: "efgf"
+
+
+          }
+        })
+          .then(data => {
+            console.log(data);
+            Cache.setItem("Doctor", this.state.doctor);
+            this.props.navigation.navigate("CodeConfirmationPage");
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log(err);
+            this.closeActivityIndicator();
+            Alert.alert(
+              "Error",
+              I18n.get("RegistrationUnsuccessful"),
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
+          });
+      } else {
+        Alert.alert(
+          "Error",
+          I18n.get("PasswordLength"),
+          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+          { cancelable: false }
+        );
+        this.closeActivityIndicator();
+      }
+    } else {
+      Alert.alert(
+        "Error",
+        I18n.get("All Fields are mandatory"),
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+      this.closeActivityIndicator();
+    }    
+    // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
+    //   .then(data => {
+    //     console.log("Doctor Added");
+    //     console.log(data);
+    //     this.closeActivityIndicator();
+    //     Alert.alert(
+    //       "Success",
+    //       I18n.get("RegistrationSuccessful"),
+    //       [
+    //         { text: "OK", onPress: () => console.log("OK Pressed") }
+    //       ],
+    //       { cancelable: false }
+    //     );
+    //   })
+    //   .catch(err => {
+    //     console.log("Failed to add doctor");
+    //     console.log(err);
+    //     this.closeActivityIndicator();
+    //   });
   }
 
   render() {
@@ -43,39 +188,114 @@ class AdminAddDoctorPage extends React.Component {
         <Image style={styles.profilePic} />
         <Text style={styles.drNameText}>DRA. ALINA PEREZ GONZALES</Text>
         <View style={styles.formContainer}>
+          
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.adminEmail = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("DoctorsId")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <Text style={styles.formText}>{I18n.get("Name")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.name = text), state))
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("MedicalCenter")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.speciality = text), state))
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Address")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.address = text), state))
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Departmant")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.registrationId = text), state))
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <Text style={styles.formText}>Phone No</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.doctor.phoneNo = text), state)
+                )
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Email")}</Text>
-            <TextInput style={styles.formTextInputStyle} />
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.doctor.email = text), state)
+                )
+              }
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.textInputContainer}>
+            <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.doctor.homeTown = text), state)
+                )
+              }
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.textInputContainer}>
+            <Text style={styles.formText}>{I18n.get("MedicalCenter")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.medicalCenter = text), state))
+              }
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.textInputContainer}>
+            <Text style={styles.formText}>{I18n.get("Department")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.department = text), state))
+              }
+            />
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.buttonsContainer}>
@@ -83,11 +303,15 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
                 style={styles.textInput}
             /> */}
-                    <Text style={styles.passwordText}>{I18n.get("CreatePassword")}</Text>
-                    <TextInput
-                        style={styles.textInput}/>
+            <Text style={styles.passwordText}>
+              {I18n.get("CreatePassword")}
+            </Text>
+            <TextInput style={styles.textInput}
+              onChangeText={text =>
+                this.setState(state => ((state.doctor.password = text), state))
+              }  />
             <TouchableOpacity
-              onPress={this.registerButtonClick}
+              onPress={this.onRegisterButtonClick}
               style={styles.registerButton}
             >
               <ImageBackground
@@ -102,6 +326,7 @@ class AdminAddDoctorPage extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }
@@ -157,27 +382,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#A3C852",
-    marginTop: "10%"
+    marginTop: "5%"
   },
   profilePic: {
-    width: "25%",
-    height: "10%",
+    width: "18%",
+    height: "7%",
     backgroundColor: "green"
   },
 
   textInputContainer: {
     flexDirection: "row",
-    height: "12%",
+    height: "10%",
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "flex-end"
   },
   formContainer: {
-    height: "50%",
+    height: "55%",
     width: "90%",
     marginHorizontal: "5%",
-    marginTop: "2%"
-    //backgroundColor: 'yellow'
+    marginTop: "5%",
+   // backgroundColor: 'yellow'
   },
   formText: {
     width: "35%",
@@ -201,7 +426,7 @@ const styles = StyleSheet.create({
     backgroundColor: "darkgrey"
   },
   registerButton: {
-    height: "32%",
+    height: "25%",
     width: "90%",
     // backgroundColor:'mediumseagreen',
     justifyContent: "center",
@@ -229,11 +454,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     alignItems: "center",
-    paddingTop: "5%",
-    marginTop: "5%"
+    paddingTop: "2%",
+    marginTop: "2%"
   },
     textInput: {
-        height: "28%",
+        height: "25%",
         width: "90%",
         borderRadius: 20,
         backgroundColor: "#F8F8F8",
