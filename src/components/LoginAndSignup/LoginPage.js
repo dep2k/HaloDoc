@@ -3,6 +3,7 @@
 import { Auth } from "aws-amplify";
 import React from "react";
 import { I18n } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import {
   StyleSheet,
@@ -19,6 +20,8 @@ import {
 } from "react-native";
 
 import Loader from "../../ActivityIndicator";
+import { CreateDoctor } from "../../Queries/DoctorAPI";
+import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -59,6 +62,7 @@ class LoginPage extends React.Component {
   _onSignInClick() {
     const user = this.state.user;
     this.startActivityIndicator();
+
     if (user.username && user.password && user.password.length >= 8) {
       Auth.signIn(user.username, user.password)
         .then(user => {
@@ -85,9 +89,11 @@ class LoginPage extends React.Component {
       this.closeActivityIndicator();
     }
   }
+  
+
 
   goToAdminPanel() {
-    this.props.navigation.navigate("AdminMenuPage");
+    this.props.navigation.navigate("AdminLoginPage");
   }
 
   _onRegisterClick() {
@@ -231,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     //backgroundColor: "pink",
     width: "100%",
-    height: "30%",
+    height: "50%",
     alignItems: "center",
     paddingTop: "10%"
   },

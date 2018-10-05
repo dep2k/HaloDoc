@@ -14,6 +14,7 @@ import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
+import AdminLoginPage from "../components/AdminPanel/Admin/AdminLoginPage";
 import AdminMenuPage from "../components/AdminPanel/Admin/AdminMenuPage";
 import AdminCreateHelperDoctorPage from "../components/AdminPanel/Admin/AdminCreateHelperDoctorPage";
 import AdminAddDoctorPage from "../components/AdminPanel/Admin/AdminAddDoctorPage";
@@ -108,6 +109,12 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+    AdminLoginPage:{
+      screen: AdminLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
     AdminCreateHelperDoctorPage: {
       screen: AdminCreateHelperDoctorPage,
       navigationOptions: {
@@ -143,14 +150,14 @@ const AppStackNavigator = createStackNavigator(
     HelperShowServicesPage: {
       screen: HelperShowServicesPage,
       navigationOptions: {
-         header:null
+        header: null
       }
     },
     HelperDoctorsListPage: {
-       screen: HelperDoctorsListPage,
-       navigationOptions: {
-         header:null
-       } 
+      screen: HelperDoctorsListPage,
+      navigationOptions: {
+        header: null
+      }
     },
     DoctorLoginPage: {
       screen: DoctorLoginPage,
@@ -174,7 +181,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "AdminMenuPage"
+    initialRouteName: "LoginPage"
   }
 );
 

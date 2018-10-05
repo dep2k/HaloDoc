@@ -8,7 +8,6 @@ import {
 export default Loader = (props) => {
 
     return (
-        
         <ActivityIndicator animating={props.animating}
                             style={styles.activityIndicator}
                             size="large"
@@ -16,10 +15,10 @@ export default Loader = (props) => {
         />
     );
 
-
 }
 const styles = StyleSheet.create({
     
+   
     activityIndicator: {
         position: 'absolute',
         left: 0,

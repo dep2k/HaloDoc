@@ -1,0 +1,336 @@
+type Conversation {
+	#composite key
+	createdat: String
+	username: String
+	#attributes
+	user: User
+	doctor: User
+	helper: User
+	status: String
+	payment: String
+	questionsanswers: [ConversationQA]
+	pet: Pet
+}
+
+type ConversationConnection {
+	items: [Conversation]
+	nexttoken: String
+}
+
+type ConversationQA {
+	question: String
+	answer: String
+}
+
+input ConversationQAInput {
+	question: String
+	answer: String
+}
+
+input CreateConversationInput {
+	user: UserInput
+	helper: UserInput
+	questionsanswers: [ConversationQAInput]
+	pet: UpdatePetInput
+}
+
+input CreateDoctorInput {
+	name: String
+	speciality: String
+	profilepic: String
+	registrationid: String
+	phoneno: String
+	email: String
+	hometown: String
+	medicalcenter: String
+	department: String
+	address: String
+}
+
+input CreateHelperInput {
+	name: String
+	phoneNo: String
+	email: String
+	address: String
+	password: String
+	isavailable: Boolean
+}
+
+input CreateMessageInput {
+	content: String
+	conversationid: ID!
+	receiver: UserInput
+	sender: UserInput
+}
+
+input CreatePetInput {
+	username: String!
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+	vaccinations: [VaccinationInput]
+}
+
+input DeleteDoctorInput {
+	id: ID!
+	name: String!
+}
+
+input DeleteHelperInput {
+	id: ID!
+	name: String
+}
+
+type Doctor {
+	id: ID
+	name: String
+	createdat: String
+	speciality: String
+	profilepic: String
+	registrationid: String
+	phoneno: String
+	email: String
+	hometown: String
+	medicalcenter: String
+	department: String
+	address: String
+	isavailable: Boolean
+}
+
+type DoctorConnection {
+	items: [Doctor]
+	nexttoken: String
+}
+
+type Helper {
+	id: ID!
+	name: String
+	phoneno: String
+	email: String
+	address: String
+	password: String
+	isavailable: Boolean
+}
+
+type HelperConnection {
+	items: [Doctor]
+	nexttoken: String
+}
+
+type Message {
+	# composite Key
+	conversationid: ID!
+	createdat: String
+	#attributes
+	content: String!
+	receiver: User
+	sender: User
+}
+
+type MessageConnection {
+	items: [Message]
+	nexttoken: String
+}
+
+type Mutation {
+	# Conversations
+	createConversation(input: CreateConversationInput!): Conversation
+	updateConversation(input: UpdateConversationInput!): Conversation
+	# Message
+	createMessage(input: CreateMessageInput!): Message
+	# Doctor
+	createDoctor(input: CreateDoctorInput!): Doctor
+	updateDoctor(input: UpdateDoctorInput!): Doctor
+	deleteDoctor(input: DeleteDoctorInput!): Doctor
+	# Helper
+	createHelper(input: CreateHelperInput!): Helper
+	updateHelper(input: UpdateHelperInput!): Helper
+	deleteHelper(input: DeleteHelperInput!): Helper
+	# Pet
+	createPet(input: CreatePetInput!): Pet
+	updatePet(input: UpdatePetInput!): Pet
+}
+
+type Pet {
+	username: String!
+	petid: ID!
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+	vaccinations: [Vaccination]
+}
+
+type PetsConnection {
+	items: [Pet]
+}
+
+type Query {
+	## Doctor
+	getDoctor(id: ID!, name: String!): Doctor
+	listDoctors(limit: Int, nextToken: String): DoctorConnection
+	listHelpers(filter: TableHelperFilterInput, limit: Int, nextToken: String): HelperConnection
+	getPets(username: String): PetsConnection
+	## Conversations
+	getConversations(username: String): ConversationConnection
+	listConversations(limit: Int, nextToken: String): ConversationConnection
+}
+
+type Subscription {
+	subscribeToCreateConversation: Conversation
+		@aws_subscribe(mutations: ["createConversation"])
+	subscribeToNewMessage(conversationId: ID!): Message
+		@aws_subscribe(mutations: ["createMessage"])
+	subscribeToCreateDoctor: Doctor
+		@aws_subscribe(mutations: ["updateDoctor"])
+}
+
+input TableBooleanFilterInput {
+	ne: Boolean
+	eq: Boolean
+}
+
+input TableFloatFilterInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	contains: Float
+	notcontains: Float
+	between: [Float]
+}
+
+input TableHelperFilterInput {
+	isavailable: TableBooleanFilterInput
+}
+
+input TableIDFilterInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notcontains: ID
+	between: [ID]
+	beginsWith: ID
+}
+
+input TableIntFilterInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	contains: Int
+	notContains: Int
+	between: [Int]
+}
+
+input TableStringFilterInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+}
+
+input UpdateConversationInput {
+	# composite key
+	username: String
+	createdat: String
+	# attributes
+	doctor: UserInput
+	helper: UserInput
+	status: String
+	payment: String
+}
+
+input UpdateDoctorInput {
+	id: ID!
+	name: String!
+	createdat: String
+	speciality: String
+	profilepic: String
+	registrationid: String
+	phoneno: String
+	email: String
+	hometown: String
+	medicalcenter: String
+	department: String
+	address: String
+	isavailable: Boolean
+}
+
+input UpdateHelperInput {
+	id: ID!
+	name: String
+	isavailable: Boolean
+	phoneNo: String
+	email: String
+	address: String
+	password: String
+}
+
+input UpdatePetInput {
+	username: String!
+	petId: String
+	category: String
+	name: String
+	race: String
+	sex: String
+	age: String
+	origin: String
+	use: String
+	background: String
+	weight: String
+	vaccinations: [VaccinationInput]
+}
+
+type User {
+	username: ID!
+	fullName: String
+	type: String
+}
+
+input UserInput {
+	username: ID!
+	fullname: String
+	usertype: String
+}
+
+type Vaccination {
+	name: String
+	date: String
+}
+
+input VaccinationInput {
+	name: String
+	date: String
+}
+
+type schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}

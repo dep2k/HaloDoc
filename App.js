@@ -10,10 +10,7 @@ import { setUpLanguage } from './Locale';
 
 Amplify.configure({
 
-  "graphqlEndpoint": "https://5c2vacmlljfhdebtdyf44hlcku.appsync-api.us-west-2.amazonaws.com/graphql",
-  "region": "us-west-2",
-  "authenticationType": "API_KEY",
-  "apiKey": "da2-esr2gjlaqzcwvekzbehk67domi",
+  
   Auth: {
       // REQUIRED - Amazon Cognito Identity Pool ID
       identityPoolId: 'us-west-2:b4a6ebbf-2360-4228-b730-774c255575f1', 
@@ -24,6 +21,12 @@ Amplify.configure({
       // OPTIONAL - Amazon Cognito Web Client ID
       userPoolWebClientId: '7lg83g328rjlcsqkdsopbjsjhf', 
   },
+  aws_appsync_graphqlEndpoint: 'https://5c2vacmlljfhdebtdyf44hlcku.appsync-api.us-west-2.amazonaws.com/graphql',
+  aws_appsync_region: 'us-west-2',
+  aws_appsync_authenticationType: 'AMAZON_COGNITO_USER_POOLS',
+ 
+ 
+
 });
 
 const TopLevelNavigator =  AppStackNavigator;

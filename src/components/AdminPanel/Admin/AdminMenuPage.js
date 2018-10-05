@@ -10,6 +10,7 @@ import {
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 
+
 const base = "../../../images/"
 const backgroundImage = require(base + "newBackground.png")
 
@@ -25,7 +26,7 @@ class AdminMenuPage extends React.Component {
   adminButtonClick() {
     this.props.navigation.navigate("AdminCreateHelperDoctorPage")
   }
-  backButtonClick() {
+  backButtonClick() { 
     this.props.navigation.goBack(null);
   }
   helperButtonClick() {

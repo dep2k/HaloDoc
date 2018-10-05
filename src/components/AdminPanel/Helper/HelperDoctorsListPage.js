@@ -11,13 +11,28 @@ import {
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 import doctorsListdata from "../../../data/doctorsListdata";
-
+import { Cache } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { ListDoctors } from "../../../Queries/DoctorAPI";
 
 const base = "../../../images/"
 const backgroundImage = require(base + "newBackground.png")
 const backButtonImage = require(base + "BackButtonShape.png");
 
+// const listInput = {nextToken:null};
+  // API.graphql(graphqlOperation(ListDoctors, listInput))
+  //   .then(data => {
+  //     console.log("List shown");
+  //     console.log(data);
+  //     this.closeActivityIndicator();
+  //   })
+  //   .catch(err => {
+  //     console.log("Failed to show list");
+  //     console.log(err);
+  //     this.closeActivityIndicator();
+  //   });
 class DataListItem extends React.Component {
+   
     render() {
         return (
             <View style = {styles.listCell}>
@@ -30,7 +45,7 @@ class DataListItem extends React.Component {
                         {this.props.item.name}
                     </Text>
                     <Text style={styles.categoryText}>
-                        {this.props.item.category}
+                        {this.props.item.id}
                     </Text>
                  </View>
                 
@@ -40,72 +55,95 @@ class DataListItem extends React.Component {
 }
 
 class HelperDoctorsListPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.backButtonClick = this.backButtonClick.bind(this);
-        
-    }
-    backButtonClick() {
-        this.props.navigation.goBack(null);
-    }
-   
+  constructor(props) {
+    super(props);
+      this.state = {   
+          doctorsListData : [],
+          animating: false
+        };
 
-    logOutButtonClick() {
-        // this.props.navigation.dispatch(
-        //   this.props.NavigationActions.reset({
-        //     index: 1,
-        //     actions: [
-        //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-        //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-        //     ],
-        //   }),
-        // )
+
+    this.backButtonClick = this.backButtonClick.bind(this);
+     
+
+     const listInput = {nextToken:null};
+         API.graphql(graphqlOperation(ListDoctors, listInput))
+          .then(response => {
+           console.log("List shown");
+            console.log(response);
+            this.setState({
+                doctorsListData: response.data.listDoctors.items
+            })
+            
+           this.closeActivityIndicator();
+          })
+           .catch(err => {
+             console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+           });
+  }
+    startActivityIndicator() {
+        this.setState({ animating: true });
     }
 
-    static navigationOptions = ({ navigation }) => ({
-        headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-    });
-    render() {
-        return (
-            <View style={styles.mainContainer}>
-                <ImageBackground
-                    source={backgroundImage}
-                    style={styles.fullBackgroundImage}
-                    imageStyle={styles.fullbackgroundImageStyle}
-                >
-                    <View style={styles.topContainer}>
-                        <TouchableOpacity
-                            style={styles.backButtonStyle}
-                            onPress={this.backButtonClick}
-                        >
-                            <Image
-                                source={backButtonImage}
-                                style={styles.backButtonImageStyle}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={styles.doctorsDirectoryText}>
-                        {I18n.get("DoctorsDirectory")}
-                    </Text>
-                    <View style={styles.flatList}>
-                        <FlatList 
-                            data={doctorsListdata}
-                            renderItem={({ item, index }) => {
-                                return (
-                                    <DataListItem item={item} index={index}>
-
-                                    </DataListItem>
-                                );
-                            }}
-                        >
-
-                        </FlatList>
-                    </View>
-                   
-                </ImageBackground>
-            </View>
-        );
+    closeActivityIndicator() {
+        this.setState({ animating: false });
     }
+  backButtonClick() {
+    this.props.navigation.goBack(null);
+  }
+  
+
+  logOutButtonClick() {
+    // this.props.navigation.dispatch(
+    //   this.props.NavigationActions.reset({
+    //     index: 1,
+    //     actions: [
+    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
+    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
+    //     ],
+    //   }),
+    // )
+  }
+
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
+  });
+  render() {
+    return (
+      <View style={styles.mainContainer}>
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.fullBackgroundImage}
+          imageStyle={styles.fullbackgroundImageStyle}
+        >
+          <View style={styles.topContainer}>
+            <TouchableOpacity
+              style={styles.backButtonStyle}
+              onPress={this.backButtonClick}
+            >
+              <Image
+                source={backButtonImage}
+                style={styles.backButtonImageStyle}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.doctorsDirectoryText}>
+            {I18n.get("DoctorsDirectory")}
+          </Text>
+          <View style={styles.flatList}>
+            <FlatList
+              data={this.state.doctorsListData}
+              renderItem={({ item, index }) => {
+                return <DataListItem item={item} index={index} />;
+              }}
+            />
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
   mainContainer: {
