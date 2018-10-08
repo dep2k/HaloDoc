@@ -1,6 +1,7 @@
 import { Auth } from "aws-amplify";
 import React from "react";
 import { I18n } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import {
     StyleSheet,
@@ -17,16 +18,24 @@ import {
 } from "react-native";
 
 import Loader from "../../../ActivityIndicator";
+//import { CreateDoctor } from "../../Queries/DoctorAPI";
+////import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 
-class DoctorLoginPage extends React.Component {
+class AdminLoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            user: {
+                username: "Admin2018",
+                password: "Admin2018"
+            },
             animating: false
         };
 
         this._onSignInClick = this._onSignInClick.bind(this);
-        this.backButtonClick = this.backButtonClick.bind(this);
+        this._onRegisterClick = this._onRegisterClick.bind(this);
+        this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
+       // this.goToAdminPanel = this.goToAdminPanel.bind(this);
     }
     startActivityIndicator() {
         this.setState({ animating: true });
@@ -34,9 +43,6 @@ class DoctorLoginPage extends React.Component {
 
     closeActivityIndicator() {
         this.setState({ animating: false });
-    }
-    backButtonClick() {
-        this.props.navigation.goBack(null);
     }
 
     componentDidMount() {
@@ -47,43 +53,71 @@ class DoctorLoginPage extends React.Component {
         // clearTimeout(this.timeoutHandle); // This is just necessary in the case that the screen is closed before the timeout fires, otherwise it would cause a memory leak that would trigger the transition regardless, breaking the user experience.
     }
 
+    forgotPasswordButtonClick() {
+        this.props.navigation.navigate("ForgotPasswordPage");
+    }
 
     _onSignInClick() {
-    }
-  
+        const user = this.state.user;
+        this.startActivityIndicator();
 
-       
+        if (user.username && user.password && user.password.length >= 8) {
+            Auth.signIn(user.username, user.password)
+                .then(user => {
+                    console.log(user);
+                    this.props.navigation.navigate("AdminMenuPage");
+                })
+                .catch(err => {
+                    console.log(err);
+                    Alert.alert(
+                        "Error",
+                        I18n.get("Username and Password are not correct"),
+                        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+                        { cancelable: false }
+                    );
+                    this.closeActivityIndicator();
+                });
+        } else {
+            Alert.alert(
+                "Error",
+                I18n.get("Both Fields are mandatory"),
+                [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+                { cancelable: false }
+            );
+            this.closeActivityIndicator();
+        }
+    }
+
+
+    // goToAdminPanel() {
+    //     this.props.navigation.navigate("AdminMenuPage");
+    // }
+
+    _onRegisterClick() {
+        console.log("RegisterBtnClick");
+        this.props.navigation.navigate("RegistrationPage");
+    }
+
     render() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.mainContainer}>
                     <View style={styles.headerContainer}>
-                        <ImageBackground
+                        <Image
                             source={require("../../../images/navbarImage.png")}
                             style={styles.headerImage}
-                        >
-                            <TouchableOpacity
-                                style={styles.backButtonStyle}
-                                onPress={this.backButtonClick}
-                            >
-                                <Image
-                                    source={require("../../../images/BackButtonShape.png")}
-                                    style={styles.backButtonImageStyle}
-                                />
-                            </TouchableOpacity>
-                        </ImageBackground>
+                        />
                     </View>
-                    <View style={styles.logoImageContainer}>
-                        <Text style={styles.helperText}>
-                            {I18n.get('Doctor')}
-                        </Text>
-                        <Image
+
+                    <TouchableOpacity
+                        style={styles.logoButton}>
+                        <ImageBackground
                             source={require("../../../images/logoImage.png")}
                             style={styles.logoImage}
-                        //imageStyle={styles.logoImageimageStyle}
+                            imageStyle={styles.logoImageimageStyle}
                         >
-                        </Image>
-                    </View>
+                        </ImageBackground>
+                    </TouchableOpacity>
 
                     // Contains Input Filds and Login Button
                     <View style={styles.middleContainer}>
@@ -126,10 +160,23 @@ class DoctorLoginPage extends React.Component {
                                 imageStyle={styles.imageBackgroundImageStyle}
                             >
                                 <Text style={styles.imageBackgroundTextStyle}>
-                                    {I18n.get("Enter")}
+                                    {I18n.get("Sign In")}
                                 </Text>
                             </ImageBackground>
                         </TouchableOpacity>
+                        // Forgot Password Field
+                        <Button
+                            style={styles.forgotPasswordButton}
+                            color="grey"
+                            title={I18n.get("Forgot Password")}
+                            onPress={this.forgotPasswordButtonClick}
+                        />
+                        // Register Button
+                        <Button
+                            color="darkgrey"
+                            title={I18n.get("RegisterMe")}
+                            onPress={this._onRegisterClick}
+                        />
                     </View>
                     {this.state.animating && <Loader animating={this.state.animating} />}
                 </View>
@@ -156,43 +203,23 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
-    backButtonStyle: {
-        backgroundColor: "transparent",
-        width: "12%",
+    logoButton: {
         height: "20%",
-        marginLeft: "5%",
-        marginTop: "7%",
+        width: "25%",
+        // marginTop: "2%",
+        marginLeft: "70%",
+        backgroundColor: "transparent"
+    },
+    logoImage: {
+        width: "100%",
+        height: "100%",
         justifyContent: "center",
         alignItems: "center"
     },
-    backButtonImageStyle: {
-        width: "50%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        resizeMode: "contain"
+    logoImageimageStyle: {
+        resizeMode: 'contain'
     },
-    logoImageContainer: {
-        width: "100%",
-        height: "15%",
-        // backgroundColor: 'green', 
-        flexDirection: 'row'
-    },
-    helperText: {
-        fontSize: 12,
-        color: "grey",
-        marginLeft: "10%",
-        marginTop: "12%"
-    },
-    logoImage: {
-        width: "25%",
-        height: "60%",
-        justifyContent: "center",
-        alignItems: "center",
-        resizeMode: 'contain',
-        marginLeft: "40%",
-        marginTop: "5%"
-    },
+
     loginButton: {
         height: "15%",
         width: "90%",
@@ -223,7 +250,7 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: "#7C7B7B",
         marginBottom: 5,
-        marginRight: "60%"
+        marginRight: "66%"
     },
     passwordText: {
         fontSize: 15,
@@ -253,4 +280,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DoctorLoginPage;
+export default AdminLoginPage;

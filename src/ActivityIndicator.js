@@ -18,7 +18,6 @@ export default Loader = (props) => {
 
 }
 const styles = StyleSheet.create({
-   
     activityIndicator: {
         position: 'absolute',
         left: 0,

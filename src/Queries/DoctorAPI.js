@@ -1,34 +1,35 @@
 
-
-
-export const CreateDoctor = `mutation CreateDoctor($name: String, $registrationNo: String, 
-        $speciality: String, $profilePic: String, $placeOfResidence: String, $medicalCenter: String,
-        $direction: String, $municipality: String, $isAvailable: String) {
+export const CreateDoctor = `mutation CreateDoctor($name: String, $speciality: String, 
+        $profilePic: String, $registrationId: String, $phoneNo: String, $email: String,
+        $homeTown: String, $medicalCenter: String, $department: String, $address: String ) {
     
          createDoctor(
   
           input : {
             name: $name, 
-            registrationNo: $registrationNo,
             speciality: $speciality,
             profilePic: $profilePic,
-            placeOfResidence: $placeOfResidence, 
+            registrationId: $registrationId, 
+            phoneNo: $phoneNo,
+            email: $email,
+            homeTown: $homeTown,
             medicalCenter: $medicalCenter,
-            direction: $direction,
-            municipality: $municipality,
-            isAvailable: $isAvailable
+            department: $department,
+            address: $address,
+            
+
           }) {
             
-            id
             name
             speciality
             profilePic
-            registrationNo
-            placeOfResidence
+            registrationId
+            phoneNo
+            email
+            homeTown
             medicalCenter
-            direction
-            municipality
-            isAvailable
+            department
+            address
         }
     
       }`;
@@ -45,18 +46,13 @@ export const UpdateDoctorAvailability = `query UpdateDoctorAvailability($id: Str
 
 // All doctors
 
-export const GetDoctors = `query GetDoctors($nextToken: String) {
-    getDoctors(id: $id) {
-        id
-	    name
-    	speciality
-    	profilePic
-	    registrationNo
-    	placeOfResidence
-	    medicalCenter
-	    direction
-        municipality
-        isAvailable
+export const ListDoctors = `query ListDoctors($nextToken: String) {
+    listDoctors(limit: 20, nextToken: $nextToken) {
+        items {
+            id
+            name
+        }
+        nextToken
     }
 }`;
 
