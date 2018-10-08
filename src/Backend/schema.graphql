@@ -313,11 +313,7 @@ input TableStringFilterInput {
 input UpdateConversationInput {
 	# composite key
 	username: String
-<<<<<<< HEAD
 	createdAt: String
-=======
-	createdat: String
->>>>>>> RegisterationPage
 	# attributes
 	doctor: UserInput
 	helper: UserInput
@@ -327,7 +323,6 @@ input UpdateConversationInput {
 
 input UpdateDoctorInput {
 	id: ID!
-<<<<<<< HEAD
 	name: String
 	speciality: String
 	profilePic: String
@@ -339,20 +334,6 @@ input UpdateDoctorInput {
 	department: String
 	address: String
 	isAvailable: Boolean
-=======
-	name: String!
-	createdat: String
-	speciality: String
-	profilepic: String
-	registrationid: String
-	phoneno: String
-	email: String
-	hometown: String
-	medicalcenter: String
-	department: String
-	address: String
-	isavailable: Boolean
->>>>>>> RegisterationPage
 }
 
 input UpdateHelperInput {
@@ -388,13 +369,8 @@ type User {
 
 input UserInput {
 	username: ID!
-<<<<<<< HEAD
 	fullName: String
 	userType: String
-=======
-	fullname: String
-	usertype: String
->>>>>>> RegisterationPage
 }
 
 type Vaccination {
@@ -411,8 +387,4 @@ type schema {
 	query: Query
 	mutation: Mutation
 	subscription: Subscription
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> RegisterationPage
