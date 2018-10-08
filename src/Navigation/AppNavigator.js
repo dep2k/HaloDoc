@@ -25,7 +25,8 @@ import HelperShowServicesPage  from "../components/AdminPanel/Helper/HelperShowS
 import HelperDoctorsListPage from "../components/AdminPanel/Helper/HelperDoctorsListPage";
 import AdminAddHelperPage from '../components/AdminPanel/Admin/AdminAddHelperPage';
 
-
+// Consult Module
+import PetChooserPage from '../components/Consultation/PetChooserPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -167,6 +168,12 @@ const AppStackNavigator = createStackNavigator(
     },
     HelperHistoryPage: {
       screen: HelperHistoryPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    PetChooserPage: {
+      screen: PetChooserPage,
       navigationOptions: {
         header: null
       }

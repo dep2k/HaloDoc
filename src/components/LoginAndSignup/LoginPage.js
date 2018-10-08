@@ -23,7 +23,9 @@ import Loader from "../../ActivityIndicator";
 import { CreateDoctor } from "../../Queries/DoctorAPI";
 import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 
+
 class LoginPage extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -67,8 +69,7 @@ class LoginPage extends React.Component {
       Auth.signIn(user.username, user.password)
         .then(user => {
           console.log(user);
-          this._addDoctor();
-          //this.props.navigation.navigate("MainMenuPage");
+          this.props.navigation.navigate("MainMenuPage");
         })
         .catch(err => {
           console.log(err);
@@ -276,6 +277,7 @@ const styles = StyleSheet.create({
   imageBackgroundImageStyle: {
     borderRadius: 20
   },
+  
   forgotPasswordButton: {
     fontSize: 17,
     marginTop: "5%",

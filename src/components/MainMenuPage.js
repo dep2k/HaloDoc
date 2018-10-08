@@ -9,11 +9,16 @@ import {
 } from "react-native";
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
+import { imageLogo } from "../images/resource";
+
 
 class MainMenuPage extends React.Component {
+
   constructor(props) {
+
     super(props);
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
+    this.consultBtnClick = this.consultBtnClick.bind(this);
   }
 
   logOutButtonClick() {
@@ -26,6 +31,10 @@ class MainMenuPage extends React.Component {
     //     ],
     //   }),
     // )
+  }
+
+  consultBtnClick() {
+    this.props.navigation.navigate("PetChooserPage");
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -44,9 +53,9 @@ class MainMenuPage extends React.Component {
             <View style={styles.singleButtonContainer}>
               <Image
                 style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
+                source={imageLogo}
               />
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.consultBtnClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("Consult")}
                 </Text>

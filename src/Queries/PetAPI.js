@@ -1,11 +1,22 @@
 
 
-export const GetPets = `query GetPets($userId: String! $nextToken: String) {
-    getPets {
-        petId
-        petName
-        petDescription
-        petImage
+export const GetPets = `query GetPets($username: String!) {
+    getPets(username: $username) {
+      items {
+        category
+        name
+        race
+        sex
+        age
+        origin
+        use
+        background
+        weight
+        vaccinations {
+          name
+          date
+        }
+      }
         
     }
 }`;
