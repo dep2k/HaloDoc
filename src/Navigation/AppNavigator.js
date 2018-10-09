@@ -202,7 +202,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "ProfilePage"
+    initialRouteName: "WelcomePage"
   }
 );
 
