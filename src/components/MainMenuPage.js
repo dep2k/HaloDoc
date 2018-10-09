@@ -7,18 +7,33 @@ import {
   TouchableOpacity,
   ImageBackground
 } from "react-native";
-import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 import { imageLogo } from "../images/resource";
 
 
+const base = "../images/";
+const consultIcon = require(base + "consultIcon.png");
+const myProfileIcon = require(base + "myProfileIcon.png");
+const doctorListicon = require(base + "listOfDoctorsIcon.png");
+const conHistoryIcon = require(base + "historyOfConsultationsIcon.png");
+const paymentHistoryIcon = require(base + "paymenthistoryIcon.png");
+
+
 class MainMenuPage extends React.Component {
-
   constructor(props) {
-
     super(props);
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
     this.consultBtnClick = this.consultBtnClick.bind(this);
+    this.vetListButtonClick = this.vetListButtonClick.bind(this);
+    this.myProfileButtonClick = this.myProfileButtonClick.bind(this);
+  }
+
+  vetListButtonClick() {
+    this.props.navigation.navigate("HelperDoctorsListPage");
+  }
+
+  myProfileButtonClick() {
+    this.props.navigation.navigate("ProfilePage");
   }
 
   logOutButtonClick() {
@@ -37,9 +52,9 @@ class MainMenuPage extends React.Component {
     this.props.navigation.navigate("PetChooserPage");
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-  });
+  // static navigationOptions = ({ navigation }) => ({
+  //   headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
+  // });
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -51,10 +66,7 @@ class MainMenuPage extends React.Component {
           <Text style={styles.menuText}>MENU</Text>
           <View style={styles.buttonsMainContainer}>
             <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={imageLogo}
-              />
+              <Image style={styles.iconImagesStyle} source={consultIcon} />
               <TouchableOpacity onPress={this.consultBtnClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("Consult")}
@@ -62,32 +74,26 @@ class MainMenuPage extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
-              />
-              <TouchableOpacity>
+              <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+              <TouchableOpacity onPress={this.myProfileButtonClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("MyProfile")}
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
-              />
+              <Image style={styles.iconImagesStyle} source={doctorListicon} />
               <TouchableOpacity>
-                <Text style={styles.touchableOpacityText}>
+                <Text
+                  style={styles.touchableOpacityText}
+                  onPress={this.vetListButtonClick}
+                >
                   {I18n.get("VeterinaryDirectory")}
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
-              />
+              <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
               <TouchableOpacity>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("HistoryOfConsultaions")}
@@ -97,7 +103,7 @@ class MainMenuPage extends React.Component {
             <View style={styles.singleButtonContainer}>
               <Image
                 style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
+                source={paymentHistoryIcon}
               />
               <TouchableOpacity>
                 <Text style={styles.touchableOpacityText}>
@@ -106,10 +112,7 @@ class MainMenuPage extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../images/ImageLogo.jpg")}
-              />
+              <Image style={styles.iconImagesStyle} source={myProfileIcon} />
               <TouchableOpacity onPress={this.logOutButtonClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("LogOut")}
@@ -154,25 +157,27 @@ const styles = StyleSheet.create({
   },
   buttonsMainContainer: {
     flexDirection: "column",
-    flex: 0.7,
+   // flex: 0.7,
+    height: 380,
     width: "100%",
     justifyContent: "flex-start",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
     // backgroundColor: "pink"
   },
   singleButtonContainer: {
     flexDirection: "row",
-    height: "15%",
+    height: 46,
     width: "100%",
     justifyContent: "flex-start",
-    alignItems: "center"
-    // backgroundColor: "pink"
+    alignItems: "center",
+     //backgroundColor: "pink"
   },
   iconImagesStyle: {
     width: 30,
     height: 30,
     marginLeft: "5%",
-    marginRight: "5%"
+    marginRight: "5%",
+    resizeMode: 'contain'
   },
   touchableOpacityText: {
     fontSize: 16.5,

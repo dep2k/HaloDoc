@@ -11,6 +11,11 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
+import { Avatar } from "react-native-elements";
+
+const base = "../../images/";
+const navBarImage = require(base + "navbarImage.png");
+const backButtonImage = require(base + "BackButtonShape.png");
 
 class PetRegistrationForm extends React.Component {
   constructor(props) {
@@ -22,7 +27,7 @@ class PetRegistrationForm extends React.Component {
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
   }
-  
+
   saveButtonClick() {
     this.props.navigation.navigate("MainMenuPage");
   }
@@ -38,78 +43,81 @@ class PetRegistrationForm extends React.Component {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.headerContainer}>
-          <ImageBackground
-            source={require("../../images/navbarImage.png")}
-            style={styles.headerImage}
-          >
+          <ImageBackground source={navBarImage} style={styles.headerImage}>
             <TouchableOpacity
               style={styles.backButtonStyle}
               onPress={this.backButtonClick}
             >
               <Image
-                source={require("../../images/backButton.png")}
+                source={backButtonImage}
                 style={styles.backButtonImageStyle}
               />
             </TouchableOpacity>
           </ImageBackground>
         </View>
-        <Image
-          style={styles.profilePic}
-          source={require("../../images/logoImage.png")}
+        <Avatar
+          large
+          rounded
+          source={{
+            uri:
+              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+          }}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
         />
         <Text style={styles.clinicHistoryText}>
           {I18n.get("ClinicHistory")}
         </Text>
         <View style={styles.clinicHistoryContainer}>
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Firstname")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("NameOfPet")}
-              placeholderColor="grey">
-            </TextInput>
+              placeholderColor="grey"
+            />
           </View>
           <View style={styles.lastLineStyle} />
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("SelectRace")}
-              placeholderColor="grey">
-            </TextInput>
+              placeholderColor="grey"
+            />
           </View>
           <View style={styles.lastLineStyle} />
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Color")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("SelectColor")}
-              placeholderColor="grey">
-            </TextInput>
+              placeholderColor="grey"
+            />
           </View>
           <View style={styles.lastLineStyle} />
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("SelectSex")}
-              placeholderColor="grey">
-            </TextInput>
+              placeholderColor="grey"
+            />
           </View>
           <View style={styles.lastLineStyle} />
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Age")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("WriteAge")}
-              placeholderColor="grey">
-            </TextInput>
+              placeholderColor="grey"
+            />
           </View>
           <View style={styles.lastLineStyle} />
-          <View style={styles.clinicLastTextInputContainer}>
+          <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Origin")}</Text>
           </View>
-          <View style={styles.lastLineStyle} />
+          <View style={styles.lastLineWithMarginBottom} />
         </View>
         <Text style={styles.vaccinationText}>{I18n.get("Vaccination")}</Text>
         <View style={styles.yesNoContainer}>
@@ -137,7 +145,7 @@ class PetRegistrationForm extends React.Component {
           />
         </View>
         <View style={styles.vaccinationContainer}>
-          <View style={styles.vaccinationFirstRowStyle}>
+          <View style={styles.firstTextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("PVC")}</Text>
             <Image
               style={{
@@ -149,12 +157,12 @@ class PetRegistrationForm extends React.Component {
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
-              style={{ width: 100, height: 28 }}
+              style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
             />
           </View>
-          <View style={styles.vaccinationLastLine} />
-          <View style={styles.vaccinationMidRowsStyle}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Triple")}</Text>
             <Image
               style={{
@@ -166,12 +174,12 @@ class PetRegistrationForm extends React.Component {
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
-              style={{ width: 100, height: 28 }}
+              style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
             />
           </View>
-          <View style={styles.vaccinationLastLine} />
-          <View style={styles.vaccinationMidRowsStyle}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Rage")}</Text>
             <Image
               style={{
@@ -183,12 +191,12 @@ class PetRegistrationForm extends React.Component {
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
-              style={{ width: 100, height: 28 }}
+              style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
             />
           </View>
-          <View style={styles.vaccinationLastLine} />
-          <View style={styles.vaccinationMidRowsStyle}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
             <Image
               style={{
@@ -200,7 +208,7 @@ class PetRegistrationForm extends React.Component {
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
-              style={{ width: 100, height: 28 }}
+              style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
             />
           </View>
@@ -228,27 +236,29 @@ class PetRegistrationForm extends React.Component {
           />
         </View>
         <View style={styles.despaContainer}>
-          <View style={styles.despaRowStyle}>
+          <View style={styles.firstTextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
-            <TextInput style={styles.despaTextInputStyle} />
+            <TextInput style={styles.vaccAndDespatextInputStyle} />
           </View>
-          <View style={styles.vaccinationLastLine} />
-          <View style={styles.despaRowStyle}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
             <Text style={styles.fetchaText}>{I18n.get("Date")}</Text>
             <TextInput
-              style={styles.despaTextInputStyle}
+              style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
             />
           </View>
-          <View style={styles.vaccinationLastLine} />
-          <View style={styles.despaRowStyle}>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Feeding")}</Text>
           </View>
           <View style={styles.vaccinationLastLine} />
         </View>
         <View style={styles.saveButtonContainer}>
-          <TouchableOpacity style={styles.saveButtonStyle}
-                            onPress={this.saveButtonClick}>
+          <TouchableOpacity
+            style={styles.saveButtonStyle}
+            onPress={this.saveButtonClick}
+          >
             <Text style={styles.saveButtonTextStyle}>{I18n.get("Save")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.saveAndRegisterButton}>
@@ -281,64 +291,56 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  profilePic: {
-    height: 60,
-    width: 60,
-    marginBottom: "10%",
-    marginHorizontal: "36%",
-    justifyContent: "center",
-    alignItems: "center",
-    // borderRadius:100,
-    borderColor: "black",
-    borderWidth: 0.5
-  },
+  
   clinicHistoryText: {
     fontWeight: "bold",
     fontSize: 20,
     color: "#BED885",
     width: "80%",
     marginBottom: "5%",
+    marginTop: "10%",
     marginHorizontal: "10%",
     textAlign: "center"
   },
   clinicHistoryContainer: {
     //backgroundColor: "black",
-    height: 220,
+    height: 270,
     width: "90%",
-    marginHorizontal: "5%",
- //   backgroundColor: 'yellow'
+    marginHorizontal: "5%"
+    //   backgroundColor: 'yellow'
   },
-  clinicTextInputContainer: {
+
+  TextInputContainer: {
     flexDirection: "row",
-    height: "14%",
-    width: "80%",
-    marginBottom: 5,
-  //  backgroundColor: 'green'
-  },
-  clinicLastTextInputContainer: {
-    flexDirection: "row",
-    height: "14%",
-    width: "100%",
-    
-  //  backgroundColor: 'pink'
+    height: 40,
+    width: "100%"
+
+    //  backgroundColor: 'pink'
   },
   clinicTextInputStyle: {
     width: "100%",
-    height: "14%",
+    height: 40,
     marginLeft: "5%",
     justifyContent: "flex-end",
-    alignItems: "flex-end",
-  //  backgroundColor: 'black'
+    alignItems: "flex-end"
+    //  backgroundColor: 'black'
   },
   originText: {
     width: "30%",
-    height: 40,
+    fontSize: 16,
+    // height: 40,
     color: "#8BE0DE"
   },
   lastLineStyle: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey"
+  },
+  lastLineWithMarginBottom: {
+    width: "100%",
+    height: 0.5,
+    backgroundColor: "darkgrey",
+    marginBottom: 5
   },
   backButtonStyle: {
     backgroundColor: "transparent",
@@ -385,34 +387,22 @@ const styles = StyleSheet.create({
     width: "5%"
   },
   vaccinationContainer: {
-    height: 150,
+    height: 175,
     width: "90%",
     marginHorizontal: "5%"
   },
-  vaccinationFirstRowStyle: {
+  firstTextInputContainer: {
     flexDirection: "row",
-    height: 30,
+    height: 40,
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
     marginTop: 20
   },
-  vaccinationMidRowsStyle: {
-    flexDirection: "row",
-    height: 30,
-    width: "100%",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  vaccinationLastLine: {
-    width: "100%",
-    height: 0.5,
-    backgroundColor: "darkgrey",
-    marginBottom: 5
-  },
+
   pvcText: {
     width: "16%",
-    height: 28,
+    // height: 28,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
@@ -432,28 +422,21 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "5%"
   },
-  despaRowStyle: {
-    flexDirection: "row",
-    height: 30,
-    width: "100%",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: 20
-  },
-  despaTextInputStyle: {
+
+  vaccAndDespatextInputStyle: {
     width: 100,
-    height: 28
+    height: 30
   },
   productText: {
     width: "35%",
-    height: 28,
+    //height: 28,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
   },
   fetchaText: {
     width: "16%",
-    height: 28,
+    //height: 28,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
@@ -496,11 +479,10 @@ const styles = StyleSheet.create({
   },
   originTextInputStyle: {
     width: "70%",
-    height:30,
-    justifyContent:'center',
-   // alignItems:
-   // backgroundColor:"pink"
-
+    height: 30,
+    justifyContent: "center"
+    // alignItems:
+    // backgroundColor:"pink"
   }
 });
 export default PetRegistrationForm;

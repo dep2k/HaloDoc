@@ -89,7 +89,8 @@ export const  setUpLanguage = () => {
         'MedicalCenter': "Medical Center",
         'Speciality': "Speciality",
         'Address': "Address",
-        'Department': "Department"
+        'Department': "Department",
+        'PhoneNo': "Phone No",
 
     },
     'es': {
@@ -175,6 +176,7 @@ export const  setUpLanguage = () => {
         'MedicalCenter': "Centro medico",
         'Speciality':"Especialidad",
         'Address': "Direccion",
+        'PhoneNo': "Phone No",
         'Department': "Muncipio",
     },
 

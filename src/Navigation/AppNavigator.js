@@ -12,6 +12,8 @@ import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
 import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
+import VetProfile from '../components/VetList/VetProfile'
+import ProfilePage from '../components/Profile/ProfilePage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
 import AdminLoginPage from "../components/AdminPanel/Admin/AdminLoginPage";
@@ -110,7 +112,7 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
-    AdminLoginPage:{
+    AdminLoginPage: {
       screen: AdminLoginPage,
       navigationOptions: {
         header: null
@@ -179,6 +181,18 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+    VetProfile: {
+      screen: VetProfile,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ProfilePage: {
+      screen: ProfilePage,
+      navigationOptions: {
+        header: null
+      }
+    },
     PetChooserPage: {
       screen: PetChooserPage,
       navigationOptions: {
@@ -188,7 +202,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "LoginPage"
+    initialRouteName: "ProfilePage"
   }
 );
 
