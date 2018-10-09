@@ -1,13 +1,13 @@
 import React from "react";
 import {
-    View,
-    StyleSheet,
-    Text,
-    Image,
-    TouchableOpacity,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-    ImageBackground,
-    FlatList
+  ImageBackground,
+  FlatList
 } from "react-native";
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
@@ -16,31 +16,37 @@ import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { ListDoctors } from "../../../Queries/DoctorAPI";
 import Loader from "../../../ActivityIndicator";
+import { Avatar } from "react-native-elements";
 
-const base = "../../../images/"
-const backgroundImage = require(base + "newBackground.png")
+const base = "../../../images/";
+const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 
 // const listInput = {nextToken:null};
-  // API.graphql(graphqlOperation(ListDoctors, listInput))
-  //   .then(data => {
-  //     console.log("List shown");
-  //     console.log(data);
-  //     this.closeActivityIndicator();
-  //   })
-  //   .catch(err => {
-  //     console.log("Failed to show list");
-  //     console.log(err);
-  //     this.closeActivityIndicator();
-  //   });
+// API.graphql(graphqlOperation(ListDoctors, listInput))
+//   .then(data => {
+//     console.log("List shown");
+//     console.log(data);
+//     this.closeActivityIndicator();
+//   })
+//   .catch(err => {
+//     console.log("Failed to show list");
+//     console.log(err);
+//     this.closeActivityIndicator();
+//   });
 class DataListItem extends React.Component {
-  
   render() {
     return (
-      <TouchableOpacity onPress = {this.props.onPress} style={styles.listCell} >
-        <Image
-          style={styles.listProfilePic}
-          // source= {{uri: this.props.item.imageUrl}}
+      <TouchableOpacity onPress={this.props.onPress} style={styles.listCell}>
+        <Avatar
+          medium
+          rounded
+          source={{
+            uri:
+              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+          }}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
         />
         <View style={styles.textsView}>
           <Text style={styles.nameText}>{this.props.item.name}</Text>
@@ -52,8 +58,6 @@ class DataListItem extends React.Component {
 }
 
 class HelperDoctorsListPage extends React.Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -142,7 +146,13 @@ class HelperDoctorsListPage extends React.Component {
               data={this.state.doctorsListData}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => {
-                return <DataListItem onPress = {this._handleRowClick} item={item} index={index} />;
+                return (
+                  <DataListItem
+                    onPress={this._handleRowClick}
+                    item={item}
+                    index={index}
+                  />
+                );
               }}
             />
           </View>
@@ -152,8 +162,6 @@ class HelperDoctorsListPage extends React.Component {
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -213,8 +221,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 40,
-   // backgroundColor: "yellow",
-    marginBottom: "5%"
+    // backgroundColor: "yellow",
+    marginBottom: 25,
+    marginLeft: 10,
+    
   },
   nameText: {
     color: "white",
@@ -224,21 +234,21 @@ const styles = StyleSheet.create({
   categoryText: {
     color: "white",
     fontSize: 13,
-      padding: 2,
-      marginBottom: 10
-      
+    padding: 2,
+    marginBottom: 10
   },
   listProfilePic: {
     height: 30,
     width: "10%",
-    marginTop:"3%",
+    marginTop: "3%",
     marginLeft: "5%",
     marginRight: "5%",
-    backgroundColor: 'black'
+    backgroundColor: "black"
   },
-  textsView:{
-      flexDirection: "column",
-      height: 40
+  textsView: {
+    flexDirection: "column",
+    height: 40,
+    marginLeft: 10
   }
 });
 export default HelperDoctorsListPage;

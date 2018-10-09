@@ -24,7 +24,7 @@ import { NaviBar } from "../Reusable/reusable";
 
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
-const addIcon = require(base + "addIcon.png" )
+const addIcon = require(base + "addIcon.png");
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class ProfilePage extends React.Component {
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
+    this.addButtonClick = this.addButtonClick.bind(this);
 
     const getPetsInput = {
       username: "deep"
@@ -63,13 +64,17 @@ class ProfilePage extends React.Component {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
   }
+  addButtonClick() {
+    this.props.navigation.navigate("PetCategoriesPage");
+  }
 
   listBtnClick(item) {
     console.log("List Btn Click");
     console.log(item);
   }
   render() {
-    return <View style={styles.mainContainer}>
+    return (
+      <View style={styles.mainContainer}>
         <NaviBar showBackBtn="false" onBackPress={this.backButtonClick} />
 
         <Image source={logoImage} style={styles.logoImage} />
@@ -79,14 +84,30 @@ class ProfilePage extends React.Component {
 
           <Text style={styles.myProfileText}>{I18n.get("MyProfile")}</Text>
 
-          <TouchableOpacity style={styles.handSymbol}>
-            <ImageBackground source={addIcon} style={styles.addIconStyle} imageStyle={styles.addIconImageStyle} />
+          <TouchableOpacity
+            style={styles.handSymbol}
+            onPress={this.addButtonClick}
+          >
+            <ImageBackground
+              source={addIcon}
+              style={styles.addIconStyle}
+              imageStyle={styles.addIconImageStyle}
+            />
           </TouchableOpacity>
         </View>
 
-        <FlatList style={styles.petListContainer} data={this.state.dataSource} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => <TouchableOpacity style={styles.listItemCotainer}>
+        <FlatList
+          style={styles.petListContainer}
+          data={this.state.dataSource}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.listItemCotainer}>
               <View style={styles.petButtonContainer}>
-                <ImageBackground source={btnBackgroundImage} style={styles.imageBackgroundStyle} imageStyle={styles.imageBackgroundImageStyle}>
+                <ImageBackground
+                  source={btnBackgroundImage}
+                  style={styles.imageBackgroundStyle}
+                  imageStyle={styles.imageBackgroundImageStyle}
+                >
                   <Text style={styles.imageBackgroundTextStyle}>
                     {item.name}
                   </Text>
@@ -95,10 +116,22 @@ class ProfilePage extends React.Component {
               </View>
 
               <View style={styles.petImageContainer}>
-                <Avatar medium rounded source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" }} onPress={() => console.log("Works!")} activeOpacity={0.7} />
+                <Avatar
+                  medium
+                  rounded
+                  source={{
+                    uri:
+                      "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+                  }}
+                  onPress={() => console.log("Works!")}
+                  activeOpacity={0.7}
+                />
               </View>
-            </TouchableOpacity>} />
-      </View>;
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    );
   }
 }
 
