@@ -23,7 +23,7 @@ import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
 
 
-class QuestionsPage extends React.Component {
+class PostQuestionsPage extends React.Component {
 
     constructor(props) {
 
@@ -33,7 +33,7 @@ class QuestionsPage extends React.Component {
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("PostQuestionsPage");
+         this.props.navigation.navigate("ChatPage");
     }
 
 
@@ -63,13 +63,12 @@ class QuestionsPage extends React.Component {
                     />
 
                     <Text style={styles.descriptionText}
-                        numberOfLines={2}>Questions Page
+                        numberOfLines={2}> Post Questions Page
                     </Text>
 
                 </View>
 
                 <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
-
 
                 />
 
@@ -235,4 +234,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default QuestionsPage;
+export default PostQuestionsPage;

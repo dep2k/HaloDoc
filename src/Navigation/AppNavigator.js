@@ -28,6 +28,11 @@ import AdminAddHelperPage from '../components/AdminPanel/Admin/AdminAddHelperPag
 
 // Consult Module
 import PetChooserPage from '../components/Consultation/PetChooserPage';
+import PaymentInfoPage from '../components/Consultation/PaymentInfoPage';
+import PreQuestionPage from '../components/Consultation/PreQuestionPage';
+import QuestionsPage from '../components/Consultation/QuestionsPage';
+import PostQuestionsPage from '../components/Consultation/PostQuestionsPage';
+import ChatPage from '../components/Consultation/ChatPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -184,7 +189,44 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    }
+    },
+
+    PaymentInfoPage: {
+      screen: PaymentInfoPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    PreQuestionPage: {
+      screen: PreQuestionPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    QuestionsPage: {
+      screen: QuestionsPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    PostQuestionsPage: {
+      screen: PostQuestionsPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    ChatPage: {
+      screen: ChatPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+
   },
 
   {
