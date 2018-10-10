@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
     View,
@@ -10,75 +11,72 @@ import {
     Button,
     ActivityIndicator
 } from "react-native";
-import { I18n } from "aws-amplify";
-
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
-
-import { GetPets } from "../../Queries/PetAPI";
-import { Avatar } from "react-native-elements";
+import { GiftedChat } from 'react-native-gifted-chat'
 import { NaviBar } from "../Reusable/reusable";
 
 
-class QuestionsPage extends React.Component {
+class ChatPage extends React.Component {
 
     constructor(props) {
 
-        super(props);      
-        this.continueBtnClick = this.continueBtnClick.bind(this);
+        super(props);    
+        state = {
+            messages: [],
+        }  
         this.backButtonClick = this.backButtonClick.bind(this);
     }
-
-    continueBtnClick() {
-         this.props.navigation.navigate("PostQuestionsPage");
-    }
-
 
     backButtonClick() {
         this.props.navigation.goBack(null);
     }
 
-  
+
+   
+
+    componentWillMount() {
+        this.setState({
+            messages: [
+                {
+                    _id: 1,
+                    text: 'Hello developer',
+                    createdAt: new Date(),
+                    user: {
+                        _id: 2,
+                        name: 'React Native',
+                        avatar: 'https://placeimg.com/140/140/any',
+                    },
+                },
+            ],
+        })
+    }
+
+    onSend(messages = []) {
+        this.setState(previousState => ({
+            messages: GiftedChat.append(previousState.messages, messages),
+        }))
+    }
 
     render() {
-
         return (
             <View style={styles.mainContainer}>
 
                 <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
             
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
-
-                <View style={styles.descriptionView}>
-
-                    <Image
-                        source={logoImage}
-                        style={styles.handSymbol}
-                    />
-
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}>Questions Page
-                    </Text>
-
-                </View>
-
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
-
-
-                />
+                <GiftedChat
+                messages={this.state.messages}
+                onSend={messages => this.onSend(messages)}
+                user={{
+                    _id: 1,
+                }}
+            />
 
 
             </View>
         );
+       
     }
-
 }
+
 
 const styles = StyleSheet.create({
 
@@ -234,5 +232,4 @@ const styles = StyleSheet.create({
     }
 })
 
-
-export default QuestionsPage;
+export default ChatPage;

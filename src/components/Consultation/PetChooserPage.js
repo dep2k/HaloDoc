@@ -56,7 +56,7 @@ class PetChooserPage extends React.Component {
     }
 
     petButtonClick() {
-        // this.props.navigation.navigate("HelperHistoryPage");
+         this.props.navigation.navigate("PaymentInfoPage");
     }
 
 
@@ -69,12 +69,13 @@ class PetChooserPage extends React.Component {
         console.log("List Btn Click");
         console.log(item);
     }
+
     render() {
 
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar showBackBtn = 'false' onBackPress = {this.backButtonClick}></NaviBar>
+                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
             
                 <Image
                     source={logoImage}
@@ -104,6 +105,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
+                            onPress = {this.petButtonClick}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
