@@ -7,6 +7,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Picker,
+  Item,
   ImageBackground
 } from "react-native";
 import { I18n } from "aws-amplify";
@@ -14,6 +16,7 @@ import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 
 const base = "../../images/";
+const dropDownImage = require(base + "dropDownIcon.png")
 const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 
@@ -21,15 +24,20 @@ class PetRegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false
+      checked: false,
+      pickerValue: ""
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
+    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
   }
 
   saveButtonClick() {
     this.props.navigation.navigate("MainMenuPage");
+  }
+  saveAndRegisterButtonClick() {
+    this.props.navigation.goBack(null);
   }
 
   backButtonClick() {
@@ -80,11 +88,38 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
-            <TextInput
+            {/* <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("SelectRace")}
-              placeholderColor="grey"
-            />
+              placeholderColor="grey"> */}
+            {/* <TouchableOpacity style={styles.originTextInputStyle}
+                         onPress= {console.log("buttonpressed")}>
+              <Text style={styles.dropDownButtonTextStyle}>
+                {I18n.get("SelectRace")}
+              </Text>
+              <Image style={styles.dropDownIconStyle}
+                     source= {dropDownImage}>
+              </Image>
+            </TouchableOpacity> */}
+
+            <Picker
+              style={{
+                backgroundColor: "transparent",
+                height: 30,
+                width: "75%"
+              }}
+              mode="dropdown"
+              placeholder={I18n.get(" SelectRace")}
+              selectedValue={this.state.pickerValue}
+              onValueChange={(itemValue, indexItem) =>
+                this.setState(state => (state.pickerValue = itemValue))
+              }
+            >
+              <Picker.Item label="Html" value="html" />
+              <Picker.Item label="Save" value="save" />
+              <Picker.Item label="Label" value="label" />
+              <Picker.Item label="Javascript" value="javascript" />
+            </Picker>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -98,11 +133,15 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
-            <TextInput
+            <TouchableOpacity
               style={styles.originTextInputStyle}
-              placeholder={I18n.get("SelectSex")}
-              placeholderColor="grey"
-            />
+              onPress={console.log("buttonpressed")}
+            >
+              <Text style={styles.dropDownButtonTextStyle}>
+                {I18n.get("SelectSex")}
+              </Text>
+              <Image style={styles.dropDownIconStyle} source={dropDownImage} />
+            </TouchableOpacity>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -116,6 +155,15 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Origin")}</Text>
+            <TouchableOpacity
+              style={styles.originTextInputStyle}
+              onPress={console.log("buttonpressed")}
+            >
+              <Text style={styles.dropDownButtonTextStyle}>
+                {I18n.get("Origin")}
+              </Text>
+              <Image style={styles.dropDownIconStyle} source={dropDownImage} />
+            </TouchableOpacity>
           </View>
           <View style={styles.lastLineWithMarginBottom} />
         </View>
@@ -261,7 +309,10 @@ class PetRegistrationForm extends React.Component {
           >
             <Text style={styles.saveButtonTextStyle}>{I18n.get("Save")}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.saveAndRegisterButton}>
+          <TouchableOpacity
+            style={styles.saveAndRegisterButton}
+            onPress={this.saveAndRegisterButtonClick}
+          >
             <Text style={styles.saveAndRegisterText}>
               {I18n.get("SaveAndRegister")}
             </Text>
@@ -291,7 +342,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  
+
   clinicHistoryText: {
     fontWeight: "bold",
     fontSize: 20,
@@ -326,7 +377,7 @@ const styles = StyleSheet.create({
     //  backgroundColor: 'black'
   },
   originText: {
-    width: "30%",
+    width: "25%",
     fontSize: 16,
     // height: 40,
     color: "#8BE0DE"
@@ -478,11 +529,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   originTextInputStyle: {
+    flexDirection: "row",
     width: "70%",
     height: 30,
-    justifyContent: "center"
+    justifyContent: "space-between",
+    alignItems: "center"
     // alignItems:
     // backgroundColor:"pink"
+  },
+  dropDownButtonTextStyle: {
+    fontSize: 14,
+    color: "#C7C7CD"
+  },
+  dropDownIconStyle:{
+    
+    height: 10, 
+    width: 10,
+   // position: 'flex-end'
   }
 });
 export default PetRegistrationForm;

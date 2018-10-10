@@ -75,7 +75,6 @@ class RegistrationPage extends React.Component {
     this.props.navigation.navigate("TermsPage");
   }
   checkBoxClick() {
-    // this.props.navigation.navigate('SuccesfulLoginPage');
     this.setState({ checked: !this.state.checked });
   }
 
