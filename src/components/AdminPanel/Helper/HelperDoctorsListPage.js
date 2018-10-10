@@ -1,12 +1,13 @@
 import React from "react";
 import {
-    View,
-    StyleSheet,
-    Text,
-    Image,
-    TouchableOpacity,
-    ImageBackground,
-    FlatList
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  ImageBackground,
+  FlatList
 } from "react-native";
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
@@ -14,86 +15,94 @@ import doctorsListdata from "../../../data/doctorsListdata";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { ListDoctors } from "../../../Queries/DoctorAPI";
+import Loader from "../../../ActivityIndicator";
+import { Avatar } from "react-native-elements";
 
-const base = "../../../images/"
-const backgroundImage = require(base + "newBackground.png")
+const base = "../../../images/";
+const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 
 // const listInput = {nextToken:null};
-  // API.graphql(graphqlOperation(ListDoctors, listInput))
-  //   .then(data => {
-  //     console.log("List shown");
-  //     console.log(data);
-  //     this.closeActivityIndicator();
-  //   })
-  //   .catch(err => {
-  //     console.log("Failed to show list");
-  //     console.log(err);
-  //     this.closeActivityIndicator();
-  //   });
+// API.graphql(graphqlOperation(ListDoctors, listInput))
+//   .then(data => {
+//     console.log("List shown");
+//     console.log(data);
+//     this.closeActivityIndicator();
+//   })
+//   .catch(err => {
+//     console.log("Failed to show list");
+//     console.log(err);
+//     this.closeActivityIndicator();
+//   });
 class DataListItem extends React.Component {
-   
-    render() {
-        return (
-            <View style = {styles.listCell}>
-                 <Image style = {styles.listProfilePic}
-                       // source= {{uri: this.props.item.imageUrl}}
-                       >
-                 </Image>
-                 <View style = {styles.textsView}>
-                    <Text style={styles.nameText}>
-                        {this.props.item.name}
-                    </Text>
-                    <Text style={styles.categoryText}>
-                        {this.props.item.id}
-                    </Text>
-                 </View>
-                
-            </View>
-        );
-    }
+  render() {
+    return (
+      <TouchableOpacity onPress={this.props.onPress} style={styles.listCell}>
+        <Avatar
+          medium
+          rounded
+          source={{
+            uri:
+              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+          }}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
+        />
+        <View style={styles.textsView}>
+          <Text style={styles.nameText}>{this.props.item.name}</Text>
+          <Text style={styles.categoryText}>{this.props.item.speciality}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }
 
 class HelperDoctorsListPage extends React.Component {
   constructor(props) {
     super(props);
-      this.state = {   
-          doctorsListData : [],
-          animating: false
-        };
-
+    this.state = {
+      doctorsListData: [],
+      animating: false
+    };
 
     this.backButtonClick = this.backButtonClick.bind(this);
-     
-
-     const listInput = {nextToken:null};
-         API.graphql(graphqlOperation(ListDoctors, listInput))
-          .then(response => {
-           console.log("List shown");
-            console.log(response);
-            this.setState({
-                doctorsListData: response.data.listDoctors.items
-            })
-            
-           this.closeActivityIndicator();
-          })
-           .catch(err => {
-             console.log("Failed to show list");
-            console.log(err);
-            this.closeActivityIndicator();
-           });
+    this._handleRowClick = this._handleRowClick.bind(this);
   }
-    startActivityIndicator() {
-        this.setState({ animating: true });
-    }
+  componentDidMount() {
+    this.startActivityIndicator();
+    const listInput = { nextToken: null };
 
-    closeActivityIndicator() {
-        this.setState({ animating: false });
-    }
+    API.graphql(graphqlOperation(ListDoctors, listInput))
+      .then(response => {
+        console.log("List shown");
+        console.log(response);
+        this.setState({
+          doctorsListData: response.data.listDoctors.items
+        });
+        this.closeActivityIndicator();
+      })
+      .catch(err => {
+        console.log("Failed to show list");
+        console.log(err);
+        this.closeActivityIndicator();
+      });
+  }
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
+
+  closeActivityIndicator() {
+    this.setState({ animating: false });
+  }
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
-  
+  _handleRowClick() {
+    //this.props.navigation.navigate("VetProfile");
+
+    this.props.navigation.setParams({ itemId: "86" });
+    this.props.navigation.navigate("VetProfile");
+  }
 
   logOutButtonClick() {
     // this.props.navigation.dispatch(
@@ -135,16 +144,25 @@ class HelperDoctorsListPage extends React.Component {
           <View style={styles.flatList}>
             <FlatList
               data={this.state.doctorsListData}
+              keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => {
-                return <DataListItem item={item} index={index} />;
+                return (
+                  <DataListItem
+                    onPress={this._handleRowClick}
+                    item={item}
+                    index={index}
+                  />
+                );
               }}
             />
           </View>
         </ImageBackground>
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1
@@ -203,8 +221,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 40,
-   // backgroundColor: "yellow",
-    marginBottom: "5%"
+    // backgroundColor: "yellow",
+    marginBottom: 25,
+    marginLeft: 10,
+    
   },
   nameText: {
     color: "white",
@@ -214,21 +234,21 @@ const styles = StyleSheet.create({
   categoryText: {
     color: "white",
     fontSize: 13,
-      padding: 2,
-      marginBottom: 10
-      
+    padding: 2,
+    marginBottom: 10
   },
   listProfilePic: {
     height: 30,
     width: "10%",
-    marginTop:"3%",
+    marginTop: "3%",
     marginLeft: "5%",
     marginRight: "5%",
-    backgroundColor: 'black'
+    backgroundColor: "black"
   },
-  textsView:{
-      flexDirection: "column",
-      height: 40
+  textsView: {
+    flexDirection: "column",
+    height: 40,
+    marginLeft: 10
   }
 });
 export default HelperDoctorsListPage;

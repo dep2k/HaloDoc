@@ -1,10 +1,6 @@
 type Conversation {
 	#composite key
-<<<<<<< HEAD
 	createdAt: String
-=======
-	createdat: String
->>>>>>> RegisterationPage
 	username: String
 	#attributes
 	user: User
@@ -12,21 +8,13 @@ type Conversation {
 	helper: User
 	status: String
 	payment: String
-<<<<<<< HEAD
 	questionsAndAnswers: [ConversationQA]
-=======
-	questionsanswers: [ConversationQA]
->>>>>>> RegisterationPage
 	pet: Pet
 }
 
 type ConversationConnection {
 	items: [Conversation]
-<<<<<<< HEAD
 	nextToken: String
-=======
-	nexttoken: String
->>>>>>> RegisterationPage
 }
 
 type ConversationQA {
@@ -42,32 +30,19 @@ input ConversationQAInput {
 input CreateConversationInput {
 	user: UserInput
 	helper: UserInput
-<<<<<<< HEAD
 	questionsAndAnsers: [ConversationQAInput]
-=======
-	questionsanswers: [ConversationQAInput]
->>>>>>> RegisterationPage
 	pet: UpdatePetInput
 }
 
 input CreateDoctorInput {
 	name: String
 	speciality: String
-<<<<<<< HEAD
 	profilePic: String
 	registrationId: String
 	phoneNo: String
 	email: String
 	homeTown: String
 	medicalCenter: String
-=======
-	profilepic: String
-	registrationid: String
-	phoneno: String
-	email: String
-	hometown: String
-	medicalcenter: String
->>>>>>> RegisterationPage
 	department: String
 	address: String
 }
@@ -122,7 +97,6 @@ input DeleteHelperInput {
 type Doctor {
 	id: ID
 	name: String
-<<<<<<< HEAD
 	speciality: String
 	profilePic: String
 	registrationId: String
@@ -134,19 +108,6 @@ type Doctor {
 	address: String
     createdAt: String
 	isAvailable: Boolean
-=======
-	createdat: String
-	speciality: String
-	profilepic: String
-	registrationid: String
-	phoneno: String
-	email: String
-	hometown: String
-	medicalcenter: String
-	department: String
-	address: String
-	isavailable: Boolean
->>>>>>> RegisterationPage
 }
 
 type DoctorConnection {
@@ -171,13 +132,8 @@ type HelperConnection {
 
 type Message {
 	# composite Key
-<<<<<<< HEAD
 	conversationId: ID!
 	createdAt: String
-=======
-	conversationid: ID!
-	createdat: String
->>>>>>> RegisterationPage
 	#attributes
 	content: String!
 	receiver: User
@@ -186,11 +142,7 @@ type Message {
 
 type MessageConnection {
 	items: [Message]
-<<<<<<< HEAD
 	nextToken: String
-=======
-	nexttoken: String
->>>>>>> RegisterationPage
 }
 
 type Mutation {
@@ -313,11 +265,7 @@ input TableStringFilterInput {
 input UpdateConversationInput {
 	# composite key
 	username: String
-<<<<<<< HEAD
 	createdAt: String
-=======
-	createdat: String
->>>>>>> RegisterationPage
 	# attributes
 	doctor: UserInput
 	helper: UserInput
@@ -327,7 +275,6 @@ input UpdateConversationInput {
 
 input UpdateDoctorInput {
 	id: ID!
-<<<<<<< HEAD
 	name: String
 	speciality: String
 	profilePic: String
@@ -339,20 +286,6 @@ input UpdateDoctorInput {
 	department: String
 	address: String
 	isAvailable: Boolean
-=======
-	name: String!
-	createdat: String
-	speciality: String
-	profilepic: String
-	registrationid: String
-	phoneno: String
-	email: String
-	hometown: String
-	medicalcenter: String
-	department: String
-	address: String
-	isavailable: Boolean
->>>>>>> RegisterationPage
 }
 
 input UpdateHelperInput {
@@ -388,13 +321,8 @@ type User {
 
 input UserInput {
 	username: ID!
-<<<<<<< HEAD
 	fullName: String
 	userType: String
-=======
-	fullname: String
-	usertype: String
->>>>>>> RegisterationPage
 }
 
 type Vaccination {
@@ -411,8 +339,4 @@ type schema {
 	query: Query
 	mutation: Mutation
 	subscription: Subscription
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> RegisterationPage

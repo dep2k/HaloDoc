@@ -51,6 +51,14 @@ export const ListDoctors = `query ListDoctors($nextToken: String) {
         items {
             id
             name
+            speciality
+            registrationId
+            phoneNo
+            email
+            homeTown
+            medicalCenter
+            department
+            address
         }
         nextToken
     }
