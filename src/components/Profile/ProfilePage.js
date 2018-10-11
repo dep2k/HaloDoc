@@ -29,7 +29,6 @@ const addIcon = require(base + "addIcon.png");
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
-    //  this.state = { isLoading: false, dataSource: ["1","2","3","1","2","3","1","2","3"] };
     this.state = { isLoading: true, dataSource: [] };
 
     this.backButtonClick = this.backButtonClick.bind(this);

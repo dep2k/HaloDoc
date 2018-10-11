@@ -91,6 +91,9 @@ export const  setUpLanguage = () => {
         'Address': "Address",
         'Department': "Department",
         'PhoneNo': "Phone No",
+        'Open': "Open",
+        'Closed': 'Closed',
+        'Inprogress': "In Progress"
 
     },
     'es': {
@@ -178,6 +181,9 @@ export const  setUpLanguage = () => {
         'Address': "Direccion",
         'PhoneNo': "Phone No",
         'Department': "Muncipio",
+        'Open': "abierto",
+        'Closed': "cerrado",
+        'Inprogress': "en progreso"
     },
 
     };

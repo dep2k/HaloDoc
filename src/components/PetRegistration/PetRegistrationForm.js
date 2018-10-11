@@ -7,16 +7,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Picker,
   Item,
+  Picker,
   ImageBackground
 } from "react-native";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
-
 const base = "../../images/";
-const dropDownImage = require(base + "dropDownIcon.png")
+const dropDownImage = require(base + "dropDownIcon.png");
 const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 
@@ -25,12 +24,16 @@ class PetRegistrationForm extends React.Component {
     super(props);
     this.state = {
       checked: false,
-      pickerValue: ""
+      pickerValue: "",
+    //  showPicker: false
     };
+
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
-    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
+    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(
+      this
+    );
   }
 
   saveButtonClick() {
@@ -88,38 +91,43 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
-            {/* <TextInput
-              style={styles.originTextInputStyle}
-              placeholder={I18n.get("SelectRace")}
-              placeholderColor="grey"> */}
-            {/* <TouchableOpacity style={styles.originTextInputStyle}
-                         onPress= {console.log("buttonpressed")}>
-              <Text style={styles.dropDownButtonTextStyle}>
-                {I18n.get("SelectRace")}
-              </Text>
-              <Image style={styles.dropDownIconStyle}
-                     source= {dropDownImage}>
-              </Image>
-            </TouchableOpacity> */}
-
-            <Picker
-              style={{
-                backgroundColor: "transparent",
-                height: 30,
-                width: "75%"
-              }}
-              mode="dropdown"
-              placeholder={I18n.get(" SelectRace")}
-              selectedValue={this.state.pickerValue}
-              onValueChange={(itemValue, indexItem) =>
-                this.setState(state => (state.pickerValue = itemValue))
-              }
-            >
-              <Picker.Item label="Html" value="html" />
-              <Picker.Item label="Save" value="save" />
-              <Picker.Item label="Label" value="label" />
-              <Picker.Item label="Javascript" value="javascript" />
-            </Picker>
+              <TouchableOpacity
+                style={styles.originTextInputStyle}
+              >
+                <Text style={styles.dropDownButtonTextStyle}>
+                  {I18n.get("SelectRace")}
+                </Text>
+                <Image
+                  style={styles.dropDownIconStyle}
+                  source={dropDownImage}
+                />
+              </TouchableOpacity> */}
+              if({this.state.showPicker}){
+              <Picker
+                style={{
+                  backgroundColor: "transparent",
+                  height: 30,
+                  width: "75%"
+                }}
+                mode="dropdown"
+                placeholder={I18n.get(" SelectRace")}
+                selectedValue={this.state.pickerValue}
+                onValueChange={(itemValue, indexItem) =>
+                  this.setState(
+                    state => (
+                      ((state.pickerValue = itemValue),
+                      (state.showPicker = true)),
+                      state
+                    )
+                  )
+                }
+              >
+                <Picker.Item label="Html" value="html" />
+                <Picker.Item label="Save" value="save" />
+                <Picker.Item label="Label" value="label" />
+                <Picker.Item label="Javascript" value="javascript" />
+              </Picker>
+            } 
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -135,7 +143,7 @@ class PetRegistrationForm extends React.Component {
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TouchableOpacity
               style={styles.originTextInputStyle}
-              onPress={console.log("buttonpressed")}
+              onPress={console.log("sexbuttonpressed")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
                 {I18n.get("SelectSex")}
@@ -157,7 +165,7 @@ class PetRegistrationForm extends React.Component {
             <Text style={styles.originText}>{I18n.get("Origin")}</Text>
             <TouchableOpacity
               style={styles.originTextInputStyle}
-              onPress={console.log("buttonpressed")}
+              onPress={console.log("originbuttonpressed")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
                 {I18n.get("Origin")}
@@ -541,11 +549,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#C7C7CD"
   },
-  dropDownIconStyle:{
-    
-    height: 10, 
-    width: 10,
-   // position: 'flex-end'
+  dropDownIconStyle: {
+    height: 10,
+    width: 10
+    // position: 'flex-end'
   }
 });
 export default PetRegistrationForm;

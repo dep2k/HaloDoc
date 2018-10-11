@@ -35,6 +35,7 @@ import PreQuestionPage from '../components/Consultation/PreQuestionPage';
 import QuestionsPage from '../components/Consultation/QuestionsPage';
 import PostQuestionsPage from '../components/Consultation/PostQuestionsPage';
 import ChatPage from '../components/Consultation/ChatPage';
+import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -119,6 +120,12 @@ const AppStackNavigator = createStackNavigator(
     },
     AdminLoginPage: {
       screen: AdminLoginPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    PaymentHistoryPage: {
+      screen: PaymentHistoryPage,
       navigationOptions: {
         header: null
       }
@@ -238,13 +245,11 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    },
-
-
+    }
   },
 
   {
-    initialRouteName: "PetRegistrationFormPage"
+    initialRouteName: "MainMenuPage"
   }
 );
 
