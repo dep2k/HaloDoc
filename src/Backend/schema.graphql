@@ -3,13 +3,13 @@ type Conversation {
 	createdAt: String
 	username: String
 	#attributes
+	doctorId: String
 	user: User
-	doctor: User
-	helper: User
+	doctor: Doctor
+	pet: Pet
 	status: String
 	payment: String
 	questionsAndAnswers: [ConversationQA]
-	pet: Pet
 }
 
 type ConversationConnection {
@@ -29,7 +29,7 @@ input ConversationQAInput {
 
 input CreateConversationInput {
 	user: UserInput
-	helper: UserInput
+	doctor: DoctorInput
 	questionsAndAnsers: [ConversationQAInput]
 	pet: UpdatePetInput
 }
@@ -53,14 +53,7 @@ input CreateHelperInput {
 	email: String
 	address: String
 	password: String
-	isavailable: Boolean
-}
-
-input CreateMessageInput {
-	content: String
-	conversationid: ID!
-	receiver: UserInput
-	sender: UserInput
+	isAvailable: Boolean
 }
 
 input CreateMessageInput {
@@ -85,7 +78,7 @@ input CreatePetInput {
 }
 
 input DeleteDoctorInput {
-	id: ID!
+	doctorId: ID!
 	name: String!
 }
 
@@ -95,7 +88,7 @@ input DeleteHelperInput {
 }
 
 type Doctor {
-	id: ID
+	doctorId: ID
 	name: String
 	speciality: String
 	profilePic: String
@@ -106,28 +99,35 @@ type Doctor {
 	medicalCenter: String
 	department: String
 	address: String
-    createdAt: String
+	createdAt: String
 	isAvailable: Boolean
+	isOnline: Boolean
 }
 
 type DoctorConnection {
 	items: [Doctor]
-	nexttoken: String
+	nextToken: String
+}
+
+input DoctorInput {
+	name: String
+	doctorId: String
+	speciality: String
 }
 
 type Helper {
 	id: ID!
 	name: String
-	phoneno: String
+	phoneNo: String
 	email: String
 	address: String
 	password: String
-	isavailable: Boolean
+	isAvailable: Boolean
 }
 
 type HelperConnection {
 	items: [Doctor]
-	nexttoken: String
+	nextToken: String
 }
 
 type Message {
@@ -166,7 +166,7 @@ type Mutation {
 
 type Pet {
 	username: String!
-	petid: ID!
+	petId: ID!
 	category: String
 	name: String
 	race: String
@@ -185,8 +185,9 @@ type PetsConnection {
 
 type Query {
 	## Doctor
-	getDoctor(id: ID!, name: String!): Doctor
+	getDoctor(doctorId: ID!, name: String!): Doctor
 	listDoctors(limit: Int, nextToken: String): DoctorConnection
+	listAvailableDoctors(speciality: String, limit: Int, nextToken: String): DoctorConnection
 	listHelpers(filter: TableHelperFilterInput, limit: Int, nextToken: String): HelperConnection
 	getPets(username: String): PetsConnection
 	## Conversations
@@ -195,7 +196,7 @@ type Query {
 }
 
 type Subscription {
-	subscribeToCreateConversation: Conversation
+	subscribeToCreateConversation(doctorId: String): Conversation
 		@aws_subscribe(mutations: ["createConversation"])
 	subscribeToNewMessage(conversationId: ID!): Message
 		@aws_subscribe(mutations: ["createMessage"])
@@ -216,12 +217,12 @@ input TableFloatFilterInput {
 	ge: Float
 	gt: Float
 	contains: Float
-	notcontains: Float
+	notContains: Float
 	between: [Float]
 }
 
 input TableHelperFilterInput {
-	isavailable: TableBooleanFilterInput
+	isAvailable: TableBooleanFilterInput
 }
 
 input TableIDFilterInput {
@@ -232,7 +233,7 @@ input TableIDFilterInput {
 	ge: ID
 	gt: ID
 	contains: ID
-	notcontains: ID
+	notContains: ID
 	between: [ID]
 	beginsWith: ID
 }
@@ -268,13 +269,13 @@ input UpdateConversationInput {
 	createdAt: String
 	# attributes
 	doctor: UserInput
-	helper: UserInput
+	helper: DoctorInput
 	status: String
 	payment: String
 }
 
 input UpdateDoctorInput {
-	id: ID!
+	doctorId: ID!
 	name: String
 	speciality: String
 	profilePic: String
@@ -291,7 +292,7 @@ input UpdateDoctorInput {
 input UpdateHelperInput {
 	id: ID!
 	name: String
-	isavailable: Boolean
+	isAvailable: Boolean
 	phoneNo: String
 	email: String
 	address: String

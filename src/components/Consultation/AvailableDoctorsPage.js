@@ -18,30 +18,90 @@ import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
-import { GetPets } from "../../Queries/PetAPI";
+import { ListAvailableDoctors } from "../../Queries/DoctorAPI";
+import { CreateConversation } from "../../Queries/Chatapi";
 import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
 
 
-class PostQuestionsPage extends React.Component {
+class AvailableDoctorsPage extends React.Component {
 
     constructor(props) {
 
-        super(props);      
-        this.continueBtnClick = this.continueBtnClick.bind(this);
+        super(props);
+        //  this.state = { isLoading: false, dataSource: ["1","2","3","1","2","3","1","2","3"] };
+        this.state = { isLoading: true, dataSource: [] };
+
         this.backButtonClick = this.backButtonClick.bind(this);
+        this.petButtonClick = this.petButtonClick.bind(this);
+
+        const availableDoctorsInput = {
+            speciality: "dog"
+        }
+
+
+
+        // API.graphql(graphqlOperation(ListAvailableDoctors, availableDoctorsInput)).then(response => {
+           
+        //     console.log(response);
+
+        //     this.setState({
+        //         isLoading: false,
+        //         dataSource: response.data.listAvailableDoctors.items
+        //     });
+
+        // }).catch(err => {
+        //     console.log(err);
+        // });
+
+        const createConversationInput = {
+           
+            
+                user: {
+                    username: "deep",
+                    userType: "Patient",
+                    fullName: "Deep A"
+                  },
+                  doctor: {
+                    name: "Raman",
+                    speciality: "dog",
+                    doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+                  },
+                  questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+                  pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
+           
+               
+        }
+
+        API.graphql(graphqlOperation(CreateConversation, createConversationInput)).then(response => {
+           
+            console.log(response);
+
+            // this.setState({
+            //     isLoading: false,
+            //     dataSource: response.data.listAvailableDoctors.items
+            // });
+
+        }).catch(err => {
+            console.log(err);
+        });
+
     }
 
-    continueBtnClick() {
-         this.props.navigation.navigate("AvailableDoctorsPage");
+    petButtonClick() {
+         this.props.navigation.navigate("PaymentInfoPage");
     }
 
 
     backButtonClick() {
+        console.log("BackBtnClick");
         this.props.navigation.goBack(null);
     }
 
-  
+    listBtnClick(item) {
+        console.log("List Btn Click");
+        console.log(item);
+    }
 
     render() {
 
@@ -55,24 +115,43 @@ class PostQuestionsPage extends React.Component {
                     style={styles.logoImage}
                 />
 
-                <View style={styles.descriptionView}>
+                <FlatList
+                    style={styles.petListContainer}
+                    data={this.state.dataSource}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
 
-                    <Image
-                        source={logoImage}
-                        style={styles.handSymbol}
-                    />
+                        <TouchableOpacity
+                            style={styles.listItemCotainer}
+                            onPress = {this.petButtonClick}
+                        >
+                            <View style={styles.petButtonContainer}>
+                                <ImageBackground
+                                    source={btnBackgroundImage}
+                                    style={styles.imageBackgroundStyle}
+                                    imageStyle={styles.imageBackgroundImageStyle}
+                                >
+                                    <Text style={styles.imageBackgroundTextStyle}>
+                                        {item.name}
+                                    </Text>
+                                </ImageBackground>
+                             
 
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}> Post Questions Page
-                    </Text>
+                            </View>
 
-                </View>
+                            <View style={styles.petImageContainer}>
+                                <Avatar
+                                    large
+                                    rounded
+                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" }}
+                                    onPress={() => console.log("Works!")}
+                                    activeOpacity={0.7}
+                                />
+                            </View>
+                        </TouchableOpacity>
 
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
-
+                    )}
                 />
-
-
             </View>
         );
     }
@@ -234,4 +313,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default PostQuestionsPage;
+export default AvailableDoctorsPage;

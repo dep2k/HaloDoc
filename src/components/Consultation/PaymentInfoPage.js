@@ -38,8 +38,8 @@ class PaymentInfoPage extends React.Component {
     }
 
     continueBtnClick() {
-       // this.props.navigation.navigate("PreQuestionPage");
-       this.setState(state => (state.isVisible = !state.isVisible, state))
+        this.props.navigation.navigate("PreQuestionPage");
+       //this.setState(state => (state.isVisible = !state.isVisible, state))
     }
 
 
@@ -72,6 +72,7 @@ class PaymentInfoPage extends React.Component {
 
          <Button onPress={this.continueBtnClick} title="Continue"></Button>;
   
+
         {this.state.isVisible && <Picker
             style={{width: 100}}
             selectedValue={this.state.language}
@@ -81,7 +82,7 @@ class PaymentInfoPage extends React.Component {
           </Picker> }
 
         </View>
-        
+
         );
     }
 
