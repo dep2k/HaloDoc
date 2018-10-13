@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
-import doctorsListdata from "../../../data/doctorsListdata";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { ListDoctors } from "../../../Queries/DoctorAPI";

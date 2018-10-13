@@ -26,6 +26,7 @@ class MainMenuPage extends React.Component {
     this.consultBtnClick = this.consultBtnClick.bind(this);
     this.vetListButtonClick = this.vetListButtonClick.bind(this);
     this.myProfileButtonClick = this.myProfileButtonClick.bind(this);
+    this.historyButtonClick = this.historyButtonClick.bind(this);
   }
 
   vetListButtonClick() {
@@ -35,7 +36,9 @@ class MainMenuPage extends React.Component {
   myProfileButtonClick() {
     this.props.navigation.navigate("ProfilePage");
   }
-
+  historyButtonClick() {
+    this.props.navigation.navigate("PaymentHistoryPage")
+  }
   logOutButtonClick() {
     // this.props.navigation.dispatch(
     //   this.props.NavigationActions.reset({
@@ -106,7 +109,10 @@ class MainMenuPage extends React.Component {
                 source={paymentHistoryIcon}
               />
               <TouchableOpacity>
-                <Text style={styles.touchableOpacityText}>
+                <Text
+                  style={styles.touchableOpacityText}
+                  onPress={this.historyButtonClick}
+                >
                   {I18n.get("PaymentHistory")}
                 </Text>
               </TouchableOpacity>
