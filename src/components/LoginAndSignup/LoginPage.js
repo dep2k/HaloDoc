@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify";
 import React from "react";
 import { I18n } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { Cache } from "aws-amplify";
 
 import {
   StyleSheet,
@@ -67,8 +68,18 @@ class LoginPage extends React.Component {
 
     if (user.username && user.password && user.password.length >= 8) {
       Auth.signIn(user.username, user.password)
-        .then(user => {
-          console.log(user);
+        .then(data => {
+          console.log(data);
+          const payload = data.signInUserSession.idToken.payload;;
+          let cognitoUser = {
+            firstName: payload.given_name,
+            lastName: payload.family_name,
+            userName: user.username,  
+            phoneNo: payload.phone_number,
+            email: payload.email,
+          }
+          console.log(cognitoUser);
+          Cache.setItem("User", cognitoUser);
           this.props.navigation.navigate("MainMenuPage");
         })
         .catch(err => {

@@ -55,7 +55,8 @@ class PetChooserPage extends React.Component {
 
     }
 
-    petButtonClick() {
+    petButtonClick(item) {
+        console.log(item);
          this.props.navigation.navigate("PaymentInfoPage");
     }
 
@@ -105,7 +106,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {this.petButtonClick}
+                            onPress = {this.petButtonClick(item)}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground

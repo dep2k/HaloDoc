@@ -4,6 +4,7 @@ import {
     Image,
     StyleSheet,
     Text,
+    ScrollView,
     TouchableOpacity,
     ImageBackground,
     FlatList,
@@ -11,17 +12,19 @@ import {
     ActivityIndicator,
     Picker
 } from "react-native";
-import { I18n } from "aws-amplify";
 
+import { I18n } from "aws-amplify";
+import { Cache } from "aws-amplify";
 import { navBarImage } from "../../images/resource";
 import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
+
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
+import { NaviBar, Footer } from "../Reusable/reusable";
 
 
 
@@ -32,14 +35,15 @@ class PaymentInfoPage extends React.Component {
         super(props);
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
-        this.state = {
-            isVisible: false
-        }
+        this.state = {};
+        this.setInitialState();
+       
     }
 
     continueBtnClick() {
+        console.log("Hello Continue Click");
         this.props.navigation.navigate("PreQuestionPage");
-       //this.setState(state => (state.isVisible = !state.isVisible, state))
+    
     }
 
 
@@ -47,7 +51,15 @@ class PaymentInfoPage extends React.Component {
         this.props.navigation.goBack(null);
     }
 
-  
+    setInitialState() {
+        Cache.getItem('User').then(user => {
+        if(user) {
+       
+            const firstName = user.firstName;
+            this.setState(state => ((state.userFirstName = firstName), state));
+        
+        } });
+    }
 
     render() {
 
@@ -63,14 +75,22 @@ class PaymentInfoPage extends React.Component {
 
                 <View style={styles.descriptionView}>
 
-
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}>Payment Info Page
+                     <Text style={styles.titleText}
+                        numberOfLines={0}>Hola {this.state.userFirstName},
                     </Text>
+
+                    <ScrollView style = {styles.scrollView}  >
+                        <Text style={styles.descriptionText}
+                            numberOfLines={0}>{ I18n.get("PaymentInfo",{
+                                name: "Deep"
+                            })}
+                        </Text>
+                    </ScrollView>
+
 
                 </View>
 
-         <Button onPress={this.continueBtnClick} title="Continue"></Button>;
+                <Footer showBtn = {true} onPress = {this.continueBtnClick}></Footer>
   
 
         {this.state.isVisible && <Picker
@@ -90,59 +110,17 @@ class PaymentInfoPage extends React.Component {
 
 const styles = StyleSheet.create({
 
+    scrollView: {
+        marginTop: 10,
+        alignSelf: 'stretch',
+        marginBottom: 20
+    },
+
     mainContainer: {
         flex: 1,
         backgroundColor: "white"
     },
 
-    petListContainer: {
-
-        marginTop: 50,
-        flexDirection: "column",
-        backgroundColor: "transparent",
-
-    },
-
-    listItemCotainer: {
-
-        flexDirection: "row",
-        height: 100,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent"
-    },
-
-
-    petButtonContainer: {
-
-        flexDirection: "column",
-        width: "75%",
-        height: 40,
-        marginLeft: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent",
-
-    },
-
-    petImageContainer: {
-        width: "25%",
-        height: 70,
-        marginLeft: 5,
-        marginBottom: 20,
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "flex-start"
-    },
-
-
-    petCategoryText: {
-
-        fontSize: 12,
-        color: "black"
-
-    },
 
     logoButton: {
         height: "20%",
@@ -162,20 +140,6 @@ const styles = StyleSheet.create({
 
     },
 
-    imageBackgroundStyle: {
-        width: "90%",
-        height: "100%",
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    imageBackgroundTextStyle: {
-        color: "white",
-        fontSize: 20
-    },
-    imageBackgroundImageStyle: {
-        borderRadius: 20
-    },
 
 
     headerContainer: {
@@ -210,22 +174,29 @@ const styles = StyleSheet.create({
 
 
     descriptionView: {
-        marginLeft: 20,
+        marginLeft:40,
+        marginRight:40,
         marginTop: 20,
-        flexDirection: "row",
+        flex:1,
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
+        flexDirection: 'column'
     },
 
-    handSymbol: {
-        width: 25,
-        height: 25
-    },
 
     descriptionText: {
-        marginLeft: 15,
-        fontSize: 14,
-        width: "70%",
+        marginLeft: 0,
+        fontSize: 17,
+        width: "100%",
+
+    },
+
+    titleText: {
+        marginLeft: 0,
+        fontSize: 18,
+        width: "100%",
+        color: 'green'
+         
 
     },
 

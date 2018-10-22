@@ -20,6 +20,8 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { ListAvailableDoctors } from "../../Queries/DoctorAPI";
 import { CreateConversation } from "../../Queries/Chatapi";
+import  { SubscriptionToCreateConversation } from "../../Queries/Chatapi";
+
 import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
 
@@ -42,7 +44,7 @@ class AvailableDoctorsPage extends React.Component {
 
 
         // API.graphql(graphqlOperation(ListAvailableDoctors, availableDoctorsInput)).then(response => {
-           
+
         //     console.log(response);
 
         //     this.setState({
@@ -54,42 +56,44 @@ class AvailableDoctorsPage extends React.Component {
         //     console.log(err);
         // });
 
+        const subscription = API.graphql(
+            graphqlOperation(SubscriptionToCreateConversation, { doctorId: '0bd9855e-a3f2-4616-8132-aed490973bf7' })
+        ).subscribe({
+            next: (eventData) => console.log(eventData)
+        });
+
+        
+
         const createConversationInput = {
-           
-            
-                user: {
-                    username: "deep",
-                    userType: "Patient",
-                    fullName: "Deep A"
-                  },
-                  doctor: {
-                    name: "Raman",
-                    speciality: "dog",
-                    doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
-                  },
-                  questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
-                  pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
-           
-               
+
+              user: {
+                username: "deep",
+                userType: "Patient",
+                fullName: "Deep A"
+              },
+              doctor: {
+                name: "Raman",
+                speciality: "dog",
+                doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+              },
+              questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+              pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
+
+
         }
 
         API.graphql(graphqlOperation(CreateConversation, createConversationInput)).then(response => {
-           
             console.log(response);
-
-            // this.setState({
-            //     isLoading: false,
-            //     dataSource: response.data.listAvailableDoctors.items
-            // });
-
         }).catch(err => {
             console.log(err);
         });
 
+
+
     }
 
     petButtonClick() {
-         this.props.navigation.navigate("PaymentInfoPage");
+        this.props.navigation.navigate("PaymentInfoPage");
     }
 
 
@@ -108,8 +112,8 @@ class AvailableDoctorsPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                <NaviBar onBackPress={this.backButtonClick}></NaviBar>
+
                 <Image
                     source={logoImage}
                     style={styles.logoImage}
@@ -123,7 +127,7 @@ class AvailableDoctorsPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {this.petButtonClick}
+                            onPress={this.petButtonClick}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
@@ -135,7 +139,7 @@ class AvailableDoctorsPage extends React.Component {
                                         {item.name}
                                     </Text>
                                 </ImageBackground>
-                             
+
 
                             </View>
 

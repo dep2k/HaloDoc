@@ -1,8 +1,18 @@
 
 
-export const imageLogo = require("./ImageLogo.jpg");
+const imageLogo = require("./ImageLogo.jpg");
+const backBtnImage = require("./BackButtonShape.png");
+const navBarImage = require("./navbarImage.png");
+const logoImage = require( "./logoImage.png");
+const btnBackgroundImage = require("./loginButtonImage.png");
+const nextBtnImage = require("./NextButtonShape.png");
 
-export const backBtnImage = require("./BackButtonShape.png");
-export const navBarImage = require("./navbarImage.png");
-export const logoImage = require( "./logoImage.png");
-export const btnBackgroundImage = require("./loginButtonImage.png");
+
+export {
+    imageLogo,
+    backBtnImage,
+    navBarImage,
+    logoImage,
+    btnBackgroundImage,
+    nextBtnImage,
+}

@@ -1,44 +1,47 @@
 //Create a new conversation
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 
-export const CreateConversation = `mutation CreateConversation( $user: User, 
-    $doctor: Doctor, $questionsAndAnswers: Array, $pet: Pet ) {
+export const CreateConversation = `mutation CreateConversation(  
+    $user: UserInput,
+    $doctor: DoctorInput,
+    $questionsAndAnswers: [ConversationQAInput],
+    $pet: UpdatePetInput) {
 
         createConversation(
 
              input : {
        
-                user: $user
-                doctor: $doctor
+                user: $user,
+                doctor: $doctor,
+                pet: $pet,
                 questionsAndAnswers: $questionsAndAnswers
-                pet: $pet
-            }
-        ){
-            username
-            createdAt
-            user {
-              fullName
-              type
-            }
-            pet {
-              category
-              name
-              race
-              sex
-              age
-              origin
-              use
-              background
-              weight
-            }
-              doctor {
-              name
-              speciality
-              doctorId
-            }
-            doctorId
-          
-          }
+
+            }) {
+                username
+                createdAt
+                user {
+                  fullName
+                  type
+                }
+                pet {
+                  category
+                  name
+                  race
+                  sex
+                  age
+                  origin
+                  use
+                  background
+                  weight
+                }
+                  doctor {
+                  name
+                  speciality
+                  doctorId
+                }
+                doctorId
+        }
 
   }`;
 
@@ -81,3 +84,31 @@ getEvent(id: $id) {
     }
 }
 }`;
+
+
+export const SubscriptionToCreateConversation = `subscription SubscribeToCreateConversation($doctorId: String) {
+  subscribeToCreateConversation(doctorId: $doctorId) {
+    username
+    createdAt
+    user {
+      fullName
+      type
+    }
+    pet {
+      category
+      name
+      race
+      sex
+      age
+      origin
+      use
+      background
+      weight
+    }
+      doctor {
+      name
+      speciality
+      doctorId
+    }
+    doctorId
+  }}`;

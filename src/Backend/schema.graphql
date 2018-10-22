@@ -82,6 +82,7 @@ input DeleteDoctorInput {
 	name: String!
 }
 
+
 input DeleteHelperInput {
 	id: ID!
 	name: String
