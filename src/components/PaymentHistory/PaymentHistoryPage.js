@@ -11,7 +11,9 @@ import {
 import { I18n } from "aws-amplify";
 
 import { navBarImage } from "../../images/resource";
+import Loader from "../../ActivityIndicator";
 import listdata from "../../data/doctorsListdata";
+//import { GetConversation } from "../../Queries/DoctorAPI";
 import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
@@ -22,6 +24,8 @@ import { NaviBar } from "../Reusable/reusable";
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
+
+
 
 class DataListItem extends React.Component {
     render() {
@@ -40,10 +44,37 @@ class DataListItem extends React.Component {
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true };
+    this.state = { isLoading: true,
+    conversationListData: [],
+    animating: false
+    };
 
     this.backButtonClick = this.backButtonClick.bind(this);
   }
+  // componentDidMount() {
+  //   this.startActivityIndicator();
+  //   const getEvent = { id: "0bd9855e-a3f2 - 4616 - 8132 - aed490973bf7" };
+
+  //   API.graphql(graphqlOperation(GetConversation, getEvent))
+  //     .then(response => {
+  //       console.log("got conversation");
+  //       console.log(response);
+  //       this.setState({ conversationListData: response.data.listDoctors.items });
+  //       this.closeActivityIndicator();
+  //     })
+  //     .catch(err => {
+  //       console.log("Failed to show list");
+  //       console.log(err);
+  //       this.closeActivityIndicator();
+  //     });
+  // }
+  // startActivityIndicator() {
+  //   this.setState({ animating: true });
+  // }
+
+  // closeActivityIndicator() {
+  //   this.setState({ animating: false });
+  // }
 
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");

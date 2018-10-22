@@ -2,7 +2,7 @@
 var listdata = [
   {
     key: "abcd",
-    name: Name,
+    name: "Name",
     date: "Date",
     payment: "Payment",
     status: "in process"
@@ -27,7 +27,13 @@ var listdata = [
     date: "Date",
     payment: "Payment",
     status: "open"
-
+  },
+  {
+    key: "hnjm",
+    name: "Name",
+    date: "Date",
+    payment: "Payment",
+    status: "closed"
   }
 ];
 module.exports = listdata;
