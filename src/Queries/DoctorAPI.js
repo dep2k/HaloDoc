@@ -49,7 +49,7 @@ export const UpdateDoctorAvailability = `query UpdateDoctorAvailability($id: Str
 export const ListDoctors = `query ListDoctors($nextToken: String) {
     listDoctors(limit: 20, nextToken: $nextToken) {
         items {
-            id
+            doctorId
             name
             speciality
             registrationId
