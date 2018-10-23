@@ -8,7 +8,8 @@ import {
     ImageBackground,
     FlatList,
     Button,
-    ActivityIndicator
+    ActivityIndicator,
+    Picker
 } from "react-native";
 import { I18n } from "aws-amplify";
 
@@ -23,17 +24,22 @@ import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
 
 
+
 class PaymentInfoPage extends React.Component {
 
     constructor(props) {
 
-        super(props);      
+        super(props);
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
+        this.state = {
+            isVisible: false
+        }
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("PreQuestionPage");
+       // this.props.navigation.navigate("PreQuestionPage");
+       this.setState(state => (state.isVisible = !state.isVisible, state))
     }
 
 
@@ -48,8 +54,8 @@ class PaymentInfoPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                <NaviBar onBackPress={this.backButtonClick}></NaviBar>
+
                 <Image
                     source={logoImage}
                     style={styles.logoImage}
@@ -57,20 +63,25 @@ class PaymentInfoPage extends React.Component {
 
                 <View style={styles.descriptionView}>
 
-                
+
                     <Text style={styles.descriptionText}
                         numberOfLines={2}>Payment Info Page
                     </Text>
 
                 </View>
 
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
+         <Button onPress={this.continueBtnClick} title="Continue"></Button>;
+  
+        {this.state.isVisible && <Picker
+            style={{width: 100}}
+            selectedValue={this.state.language}
+            onValueChange={(lang) => this.setState({language: lang})}>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker> }
 
-
-                />
-
-
-            </View>
+        </View>
+        
         );
     }
 

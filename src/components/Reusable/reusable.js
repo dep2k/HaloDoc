@@ -79,3 +79,12 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     }
 })
+
+
+export default function renderIf(condition, content) {
+    if (condition) {
+        return content;
+    } else {
+        return null;
+    }
+}
