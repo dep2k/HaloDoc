@@ -97,13 +97,14 @@ class MainMenuPage extends React.Component {
             </View>
             <View style={styles.singleButtonContainer}>
               <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.historyButtonClick}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("HistoryOfConsultaions")}
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.singleButtonContainer}>
+            {/* <View style={styles.singleButtonContainer}>
               <Image
                 style={styles.iconImagesStyle}
                 source={paymentHistoryIcon}
@@ -111,12 +112,12 @@ class MainMenuPage extends React.Component {
               <TouchableOpacity>
                 <Text
                   style={styles.touchableOpacityText}
-                  onPress={this.historyButtonClick}
+                  
                 >
                   {I18n.get("PaymentHistory")}
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={styles.singleButtonContainer}>
               <Image style={styles.iconImagesStyle} source={myProfileIcon} />
               <TouchableOpacity onPress={this.logOutButtonClick}>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   buttonsMainContainer: {
     flexDirection: "column",
    // flex: 0.7,
-    height: 380,
+    height: 350,
     width: "100%",
     justifyContent: "flex-start",
     justifyContent: "space-evenly",

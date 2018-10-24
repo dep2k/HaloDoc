@@ -208,14 +208,12 @@ const styles = StyleSheet.create({
   },
   formText: {
     width: "35%",
-    height: "100%",
     color: "#8BE0DE",
-    height: 40,
     marginLeft: "1%",
     // backgroundColor: 'black',
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "flex-start"
+   // flexDirection: "column",
+   // justifyContent: "flex-end",
+    alignSelf: "center"
   },
   formTextInputStyle: {
     width: "70%",
@@ -246,12 +244,8 @@ const styles = StyleSheet.create({
   },
   dataTextStyle: {
     width: "70%",
-    height: "100%",
     color: "darkgrey",
     marginLeft: "1%",
-    // backgroundColor: 'black',
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "flex-start"
+    alignSelf: "center"
   }
 });

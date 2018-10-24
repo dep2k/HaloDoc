@@ -249,7 +249,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "PetRegistrationFormPage"
+    initialRouteName: "MainMenuPage"
   }
 );
 

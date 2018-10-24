@@ -15,11 +15,24 @@ import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
+import felinoRaceListdata from "../../data/FelinoData";
+import sexData from "../../data/FelinoData";
+
 const base = "../../images/";
+var x = TouchableOpacity.id;
 const dropDownImage = require(base + "dropDownIcon.png");
 const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
+//const raceButton = this.props.
 
+class DataListItem extends React.Component {
+  render() {
+    return <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
+        <Text style={styles.nameText}>{this.props.item.name}</Text>
+        <View style={styles.lastLineStyle} />
+      </TouchableOpacity>;
+  }
+}
 
 class PetRegistrationForm extends React.Component {
   constructor(props) {
@@ -32,9 +45,8 @@ class PetRegistrationForm extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
-    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(
-      this
-    );
+    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
+    this.listButtonClick = this.listButtonClick.bind(this);
   }
 
   // _onPress = () => {
@@ -58,25 +70,48 @@ class PetRegistrationForm extends React.Component {
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
-  onRequestClose() {
-    console.log("onRequestClose");
-    this.setModalVisible(false);
+  listButtonClick() {
+    this.setModalVisible(true);
   }
-
+  
 
   render() {
+   
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <TouchableWithoutFeedback onPress= {() => this.setState({modalVisible:false})}>
-          <Modal style={{justifyContent:'center'}}
+         
+          <Modal 
             animationType="slide"
             backdropOpacity={0.5}
             isVisible={this.state.modalVisible} >
-           // onBackdropPress={() => this.setState({ modalVisible: false })}>
-            <FlatList contentContainerStyle = {{marginTop:200,borderRadius:20,backgroundColor: 'white',flex:0.5,justifyContent:'center', alignItems:'center',}}
-              data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }, { key: 'g' }]}
-              renderItem={({ item }) => <Text style = {{fontSize:22, color:'black'}}>{item.key}</Text>}
-            />
+           {/* // onBackdropPress={() => this.setState({ modalVisible: false })}> */}
+         
+            if (x = 1){
+            <FlatList contentContainerStyle = {styles.flatListContentContainerStyle}
+              data={felinoRaceListdata}
+              renderItem={({ item, index }) => {
+                return (
+                  <DataListItem
+                    item={item}
+                    index={index}
+                  />
+                );
+              }}
+            />}
+            {/* else if (x = 2) {
+              <FlatList contentContainerStyle={styles.flatListContentContainerStyle}
+                data={sexData}
+                renderItem={({ item, index }) => {
+                  return (
+                    <DataListItem
+                      item={item}
+                      index={index}
+                    />
+                  );
+                }}
+              />
+            } */}
           </Modal>
         </TouchableWithoutFeedback>
        
@@ -119,10 +154,10 @@ class PetRegistrationForm extends React.Component {
 
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
-            <TouchableOpacity style={styles.originTextInputStyle}
-               onPress={() => {
-                this.setModalVisible(true);
-              }}> 
+            <TouchableOpacity 
+                 id="1"
+                 style={styles.originTextInputStyle}
+                 onPress={this.listButtonClick}> 
               <Text style={styles.dropDownButtonTextStyle}>
                 {I18n.get("SelectRace")}
               </Text>
@@ -140,8 +175,10 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.originText}>{I18n.get("Sex")}</Text>
+            <Text 
+                 style={styles.originText}>{I18n.get("Sex")}</Text>
             <TouchableOpacity
+              id="2"
               style={styles.originTextInputStyle}
               onPress={() => console.log("SexButtonClicked")}
             >
@@ -539,28 +576,28 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "bold"
   },
-  listCell: {
-    flexDirection: "row",
+
+  cellContainer: {
+    height: 30,
     width: "100%",
-    height: 40,
-    // backgroundColor: "yellow",
-    marginBottom: 25,
-    marginLeft: 10
+    flexDirection: "column",
+    marginHorizontal: "5%"
+    // backgroundColor: "black"
   },
   originTextInputStyle: {
     flexDirection: "row",
     width: "70%",
     height: 30,
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "center"
     // alignItems:
     // backgroundColor: "orange"
   },
   dropDownButtonTextStyle: {
     fontSize: 14,
     alignSelf: "center",
-    color: "#C7C7CD",
-   // backgroundColor: "yellow"
+    color: "#C7C7CD"
+    // backgroundColor: "yellow"
   },
   dropDownIconStyle: {
     height: 10,
@@ -570,6 +607,20 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 20,
     marginLeft: 150
+  },
+  nameText: {
+    color: "#8BE0DE",
+    fontSize: 18,
+    padding: 2
+  },
+  flatListContentContainerStyle:{
+    alignSelf: 'center', 
+    width: 280, 
+    marginTop: 200,
+    borderRadius: 20, 
+    backgroundColor: 'white', 
+    justifyContent: 'center', 
+    alignItems: 'center'
   }
 });
 export default PetRegistrationForm;

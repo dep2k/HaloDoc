@@ -12,7 +12,7 @@ import { I18n } from "aws-amplify";
 
 import { navBarImage } from "../../images/resource";
 import Loader from "../../ActivityIndicator";
-import listdata from "../../data/doctorsListdata";
+//import listdata from "../../data/felinoRaceListData";
 import { GetConversation } from "../../Queries/Chatapi";
 import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
