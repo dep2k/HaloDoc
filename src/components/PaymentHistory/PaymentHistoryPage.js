@@ -31,7 +31,7 @@ class DataListItem extends React.Component {
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-                    <Text style={styles.nameText}>{this.props.item.name}</Text>
+                    <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
                     <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
                     <Text style={styles.nameText}>{this.props.item.payment}</Text>
                     <View style={styles.listSeperationLine}></View>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     color: "#8BE0DE",
-    fontSize: 18,
+    fontSize: 16,
     padding: 2
   },
 
@@ -200,8 +200,9 @@ const styles = StyleSheet.create({
   historyText: {
     marginLeft: 15,
     fontSize: 20,
-    width: "80%",
-    color: "#A4C952"
+    width: "85%",
+    color: "#A4C952",
+    fontWeight: 'bold'
   },
 
   backBtn: {

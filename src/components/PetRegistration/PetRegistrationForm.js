@@ -7,14 +7,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Modal,
   FlatList,
-  Picker,
+  TouchableWithoutFeedback,
   ImageBackground
 } from "react-native";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
+import Modal from "react-native-modal";
 const base = "../../images/";
 const dropDownImage = require(base + "dropDownIcon.png");
 const navBarImage = require(base + "navbarImage.png");
@@ -67,18 +67,19 @@ class PetRegistrationForm extends React.Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View>
-          <Modal
+        <TouchableWithoutFeedback onPress= {() => this.setState({modalVisible:false})}>
+          <Modal style={{justifyContent:'center'}}
             animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.onRequestClose()}>
-            <FlatList contentContainerStyle = {{marginTop:200,backgroundColor: 'grey',flex:0.5,justifyContent:'center', alignItems:'center',}}
+            backdropOpacity={0.5}
+            isVisible={this.state.modalVisible} >
+           // onBackdropPress={() => this.setState({ modalVisible: false })}>
+            <FlatList contentContainerStyle = {{marginTop:200,borderRadius:20,backgroundColor: 'white',flex:0.5,justifyContent:'center', alignItems:'center',}}
               data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }, { key: 'g' }]}
               renderItem={({ item }) => <Text style = {{fontSize:22, color:'black'}}>{item.key}</Text>}
             />
           </Modal>
-        </View>
+        </TouchableWithoutFeedback>
+       
         <View style={styles.headerContainer}>
           <ImageBackground source={navBarImage} style={styles.headerImage}>
             <TouchableOpacity

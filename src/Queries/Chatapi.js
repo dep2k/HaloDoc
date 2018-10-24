@@ -28,6 +28,7 @@ export const GetConversation = `query GetConversation($username: String! ) {
 getConversations(username: $username) {
      items {
            username
+           status
            createdAt
            payment
            doctor {

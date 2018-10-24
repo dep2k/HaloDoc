@@ -93,7 +93,11 @@ export const  setUpLanguage = () => {
         'PhoneNo': "Phone No",
         'Open': "Open",
         'Closed': 'Closed',
-        'Inprogress': "In Progress"
+        'Inprogress': "In Progress",
+        //Race
+        'Abisinio': "Abisinio",
+        'American':"American hard-hair"
+
 
     },
     'es': {
@@ -183,7 +187,10 @@ export const  setUpLanguage = () => {
         'Department': "Muncipio",
         'Open': "abierto",
         'Closed': "cerrado",
-        'Inprogress': "en progreso"
+        'Inprogress': "en progreso",
+        //Race
+        'Abisinio': "Abisinio",
+        'American': "Americano de pelo duro"
     },
 
     };
