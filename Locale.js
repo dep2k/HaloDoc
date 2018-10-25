@@ -94,9 +94,14 @@ export const  setUpLanguage = () => {
         'Open': "Open",
         'Closed': 'Closed',
         'Inprogress': "In Progress",
-        //Race
+        // Felino Race
         'Abisinio': "Abisinio",
-        'American':"American hard-hair"
+        'American':"American hard-hair",
+        'Asiático': "Asian",
+        'Angora': "Angora",
+        //Felino Sex
+        'Hembra': "Female",
+        'Macho' : "Male"
 
 
     },
@@ -188,9 +193,15 @@ export const  setUpLanguage = () => {
         'Open': "abierto",
         'Closed': "cerrado",
         'Inprogress': "en progreso",
-        //Race
+        //Felino Race
         'Abisinio': "Abisinio",
-        'American': "Americano de pelo duro"
+        'American': "Americano de pelo duro",
+        'Asiático': "Asiático",
+        'Angora': "Angora",
+        //Felino Sex 
+        'Hembra': "Hembra",
+        'Macho': "Macho"
+
     },
 
     };
