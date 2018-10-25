@@ -16,8 +16,8 @@ import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
-import { felinoRaceListdata} from "../../data/FelinoData";
-import { sexData} from "../../data/FelinoData";
+import { felinoRaceListdata } from "../../data/FelinoData";
+import { sexData } from "../../data/FelinoData";
 
 const base = "../../images/";
 //let data = this.ref.flatList.data;
@@ -27,13 +27,16 @@ const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 //const raceButton = this.props.
 
-
 class DataListItem extends React.Component {
   render() {
-    return <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-               <Text style={styles.nameText}>{this.props.item.name}</Text>
-           </TouchableOpacity>
-          
+    return (
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        style={styles.cellContainer}
+      >
+        <Text style={styles.nameText}>{this.props.item.name}</Text>
+      </TouchableOpacity>
+    );
   }
 }
 
@@ -41,11 +44,17 @@ class PetRegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false,
+      vacYesChecked: false,
+      vacNoChecked: false,
+      otherChecked: false,
+      pvcChecked: false,
+      tripleChecked: false,
+      raceChecked: false,
+      despaYesChecked: false,
+      despaNoChecked: false,
       modalVisible: false,
       dropDownData: [],
-      dataType:"",
-      text: "Select",
+      dataType: "",
       raceText: "Select Race",
       sexText: "Select Gender"
     };
@@ -69,10 +78,25 @@ class PetRegistrationForm extends React.Component {
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
-  checkBoxClick() {
-    this.setState({ checked: !this.state.checked });
+  checkBoxClick(type) {
+    if (type == "vacYesButton") {
+      this.setState({ vacYesChecked: !this.state.vacYesChecked });
+    } else if (type == "vacNoButton") {
+      this.setState({ vacNoChecked: !this.state.vacNoChecked });
+    } else if (type == "otherChecked") {
+      this.setState({ otherChecked: !this.state.otherChecked });
+    } else if (type == "pvcChecked") {
+      this.setState({ pvcChecked: !this.state.pvcChecked });
+    } else if (type == "tripleChecked") {
+      this.setState({ tripleChecked: !this.state.tripleChecked });
+    } else if (type == "raceChecked") {
+      this.setState({ raceChecked: !this.state.raceChecked });
+    } else if (type == "despaYesChecked") {
+      this.setState({ despaYesChecked: !this.state.despaYesChecked });
+    } else if (type == "despaNoChecked") {
+      this.setState({ despaNoChecked: !this.state.despaNoChecked });
+    }
   }
-
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
@@ -80,11 +104,10 @@ class PetRegistrationForm extends React.Component {
   listButtonClick(type) {
     console.log(type);
     if (type == "RaceDD") {
-      this.setState({ dropDownData: felinoRaceListdata});
+      this.setState({ dropDownData: felinoRaceListdata });
       this.setState({ dataType: "raceDropDownData" }, () => {
         console.log(this.state.dataType);
       });
-      
     } else if (type == "SexDD") {
       this.setState({ dropDownData: sexData });
       this.setState({ dataType: "sexDropDowndata" }, () => {
@@ -92,13 +115,12 @@ class PetRegistrationForm extends React.Component {
       });
     }
     this.setModalVisible(true);
-    
   }
   // rowButtonClick(dataType) {
   //   console.log(this.state.dataType);
   //   if (dataType == "raceDropDownData")
   // }
- 
+
   render() {
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -111,7 +133,6 @@ class PetRegistrationForm extends React.Component {
         >
           <Modal backdropOpacity={0.5} isVisible={this.state.modalVisible}>
             <FlatList
-             // ref={(ref) => this.flatList = ref}
               contentContainerStyle={styles.flatListContentContainerStyle}
               ItemSeparatorComponent={this.renderSeparator}
               data={this.state.dropDownData}
@@ -120,28 +141,19 @@ class PetRegistrationForm extends React.Component {
                   <DataListItem
                     item={item}
                     index={index}
-                 
                     onPress={() => {
                       console.log(this.state.dataType);
                       if (this.state.dataType == "raceDropDownData") {
-                        this.setState({
-                          raceText: item.name
-                        });
+                        this.setState({ raceText: item.name });
                       } else if (this.state.dataType == "sexDropDowndata") {
-                               this.setState({
-                                 sexText: item.name
-                               });
-                             }
-                    //  this.setState({text:item.name})
-                      this.setState({
-                        modalVisible: false
-                      })
+                        this.setState({ sexText: item.name });
+                      }
+                      //  this.setState({text:item.name})
+                      this.setState({ modalVisible: false });
                     }}
                   />
-                 
                 );
               }}
-              
             />
             }
           </Modal>
@@ -187,12 +199,10 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
             <TouchableOpacity
-              id="1"
               style={styles.originTextInputStyle}
               onPress={() => this.listButtonClick("RaceDD")}
             >
-              <Text 
-                     style={styles.dropDownButtonTextStyle}>
+              <Text style={styles.dropDownButtonTextStyle}>
                 {this.state.raceText}
               </Text>
               <Image style={styles.dropDownIconStyle} source={dropDownImage} />
@@ -211,13 +221,11 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TouchableOpacity
-              id="2"
               style={styles.originTextInputStyle}
               onPress={() => this.listButtonClick("SexDD")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
-              
-               {this.state.sexText}
+                {this.state.sexText}
               </Text>
               <Image style={styles.dropDownIconStyle} source={dropDownImage} />
             </TouchableOpacity>
@@ -249,39 +257,42 @@ class PetRegistrationForm extends React.Component {
 
         <Text style={styles.vaccinationText}>{I18n.get("Vaccination")}</Text>
         <View style={styles.yesNoContainer}>
-          <Text style={styles.yesNoText}>{I18n.get("Yes")}</Text>
+          <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
           <CheckBox
             center
             containerStyle={styles.checkboxContainerStyle}
-            checkedIcon="check-square-o"
-            checkedColor="green"
-            uncheckedColor="green"
-            uncheckedIcon="square-o"
-            checked={
-              this.state.checked // title= {I18n.get('Accept terms and conditions')}
-            }
-            onPress={this.checkBoxClick}
+            checkedIcon="dot-circle-o"
+            checkedColor="grey"
+            uncheckedColor="grey"
+            uncheckedIcon="circle-o"
+            checked={this.state.vacYesChecked}
+            onPress={() => this.checkBoxClick("vacYesButton")}
           />
-          <Text style={styles.yesNoText}>{I18n.get("No")}</Text>
-          <Image
-            style={{
-              height: 12,
-              width: 12,
-              backgroundColor: "grey",
-              marginRight: 20
-            }}
+
+          <Text style={styles.noText}>{I18n.get("No")}</Text>
+          <CheckBox
+            center
+            containerStyle={styles.checkboxContainerStyle}
+            checkedIcon="dot-circle-o"
+            checkedColor="grey"
+            uncheckedColor="grey"
+            uncheckedIcon="circle-o"
+            checked={this.state.vacNoChecked}
+            onPress={() => this.checkBoxClick("vacNoButton")}
           />
         </View>
         <View style={styles.vaccinationContainer}>
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("PVC")}</Text>
-            <Image
-              style={{
-                height: 12,
-                width: 12,
-                backgroundColor: "grey",
-                marginRight: "15%"
-              }}
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.pvcChecked}
+              onPress={() => this.checkBoxClick("pvcChecked")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -292,13 +303,15 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Triple")}</Text>
-            <Image
-              style={{
-                height: 12,
-                width: 12,
-                backgroundColor: "grey",
-                marginRight: "15%"
-              }}
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.tripleChecked}
+              onPress={() => this.checkBoxClick("tripleChecked")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -309,13 +322,15 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Rage")}</Text>
-            <Image
-              style={{
-                height: 12,
-                width: 12,
-                backgroundColor: "grey",
-                marginRight: "15%"
-              }}
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.raceChecked}
+              onPress={() => this.checkBoxClick("raceChecked")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -326,13 +341,15 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
-            <Image
-              style={{
-                height: 12,
-                width: 12,
-                backgroundColor: "grey",
-                marginRight: "15%"
-              }}
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.otherChecked}
+              onPress={() => this.checkBoxClick("otherChecked")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -344,23 +361,28 @@ class PetRegistrationForm extends React.Component {
         </View>
         <Text style={styles.despaText}>{I18n.get("Despa")}</Text>
         <View style={styles.yesNoContainer}>
-          <Text style={styles.yesNoText}>{I18n.get("Yes")}</Text>
-          <Image
-            style={{
-              height: 12,
-              width: 12,
-              backgroundColor: "grey",
-              marginRight: 20
-            }}
+          <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
+          <CheckBox
+            center
+            containerStyle={styles.checkboxContainerStyle}
+            checkedIcon="dot-circle-o"
+            checkedColor="grey"
+            uncheckedColor="grey"
+            uncheckedIcon="circle-o"
+            checked={this.state.despaYesChecked}
+            onPress={() => this.checkBoxClick("despaYesChecked")}
           />
-          <Text style={styles.yesNoText}>{I18n.get("No")}</Text>
-          <Image
-            style={{
-              height: 12,
-              width: 12,
-              backgroundColor: "grey",
-              marginRight: 20
-            }}
+
+          <Text style={styles.noText}>{I18n.get("No")}</Text>
+          <CheckBox
+            center
+            containerStyle={styles.checkboxContainerStyle}
+            checkedIcon="dot-circle-o"
+            checkedColor="grey"
+            uncheckedColor="grey"
+            uncheckedIcon="circle-o"
+            checked={this.state.despaNoChecked}
+            onPress={() => this.checkBoxClick("despaNoChecked")}
           />
         </View>
         <View style={styles.despaContainer}>
@@ -503,22 +525,43 @@ const styles = StyleSheet.create({
   },
   yesNoContainer: {
     flexDirection: "row",
-    height: 25,
+    height: 40,
     width: "100%",
-    backgroundColor: "transparent",
+    // backgroundColor: "black",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "flex-start"
   },
-  yesNoText: {
+  yesText: {
     fontSize: 15,
     color: "darkgrey",
-    marginRight: 2
+    marginTop: 4
   },
+  noText: {
+    fontSize: 15,
+    color: "darkgrey",
+    marginTop: 4,
+    marginLeft: 0
+  },
+
   checkboxContainerStyle: {
-    backgroundColor: "grey",
+    backgroundColor: "transparent",
     borderColor: "transparent",
-    width: "5%"
+    width: "12%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -10
   },
+  vacCheckboxContainerStyle: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    width: "20%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+
+    marginLeft: -10
+  },
+
   vaccinationContainer: {
     height: 175,
     width: "90%",
@@ -613,7 +656,7 @@ const styles = StyleSheet.create({
 
   cellContainer: {
     height: 30,
-    marginHorizontal: "5%",
+    marginHorizontal: "5%"
   },
   originTextInputStyle: {
     flexDirection: "row",
@@ -642,15 +685,16 @@ const styles = StyleSheet.create({
   nameText: {
     color: "#8BE0DE",
     fontSize: 18,
-    padding: 2,
-   // backgroundColor: 'black'
+    padding: 2
+    // backgroundColor: 'black'
   },
-  flatListContentContainerStyle:{
-    alignSelf: 'center', 
-    width: 300, 
-    backgroundColor: 'white', 
-    justifyContent: 'center', 
-    alignItems: 'center'
+  flatListContentContainerStyle: {
+    alignSelf: "center",
+    width: 300,
+    marginTop: 200,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 export default PetRegistrationForm;
