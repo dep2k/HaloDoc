@@ -6,6 +6,8 @@ const navBarImage = require("./navbarImage.png");
 const logoImage = require( "./logoImage.png");
 const btnBackgroundImage = require("./loginButtonImage.png");
 const nextBtnImage = require("./NextButtonShape.png");
+const handIcon = require("./HandIcon.png");
+
 
 
 export {
@@ -15,4 +17,5 @@ export {
     logoImage,
     btnBackgroundImage,
     nextBtnImage,
+    handIcon
 }

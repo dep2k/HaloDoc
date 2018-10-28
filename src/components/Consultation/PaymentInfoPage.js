@@ -25,6 +25,8 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NaviBar, Footer } from "../Reusable/reusable";
+import { NavBar } from "../Reusable/NavBar";
+
 
 
 
@@ -63,10 +65,17 @@ class PaymentInfoPage extends React.Component {
 
     render() {
 
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        const petName = pet.name;
+        const petCategory = pet.category;
+        const navTitle = petName + " - " + petCategory;
+        console.log(petName + " - " + petCategory);
+
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar onBackPress={this.backButtonClick}></NaviBar>
+                <NavBar onBackPress={this.backButtonClick} title = {navTitle}></NavBar>
 
                 <Image
                     source={logoImage}
@@ -81,9 +90,7 @@ class PaymentInfoPage extends React.Component {
 
                     <ScrollView style = {styles.scrollView}  >
                         <Text style={styles.descriptionText}
-                            numberOfLines={0}>{ I18n.get("PaymentInfo",{
-                                name: "Deep"
-                            })}
+                            numberOfLines={0}>{ I18n.get("PaymentInfo")}
                         </Text>
                     </ScrollView>
 

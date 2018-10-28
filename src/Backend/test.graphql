@@ -73,7 +73,7 @@ mutation CreateConversation {
    			speciality: "dog",
         doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
       },
-      questionsAndAnsers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+      questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
       pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
     }) {
     username
@@ -216,6 +216,8 @@ query ListConversations {
     nextToken
   }
 }
+
+
 
 
 

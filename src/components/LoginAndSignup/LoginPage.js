@@ -28,6 +28,7 @@ import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 class LoginPage extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
       user: {
@@ -41,7 +42,9 @@ class LoginPage extends React.Component {
     this._onRegisterClick = this._onRegisterClick.bind(this);
     this.forgotPasswordButtonClick = this.forgotPasswordButtonClick.bind(this);
     this.goToAdminPanel = this.goToAdminPanel.bind(this);
+
   }
+  
   startActivityIndicator() {
     this.setState({ animating: true });
   }

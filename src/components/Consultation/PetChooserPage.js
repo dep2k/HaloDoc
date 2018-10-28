@@ -12,12 +12,12 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
 
+import { btnBackgroundImage, handIcon } from "../../images/resource";
+import { logoImage } from "../../images/resource";
+
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import Loader from "../../ActivityIndicator";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
@@ -28,9 +28,8 @@ class PetChooserPage extends React.Component {
     constructor(props) {
 
         super(props);
-        //  this.state = { isLoading: false, dataSource: ["1","2","3","1","2","3","1","2","3"] };
-        this.state = { isLoading: true, dataSource: [] };
 
+        this.state = { isLoading: true, dataSource: [] };
         this.backButtonClick = this.backButtonClick.bind(this);
         this.petButtonClick = this.petButtonClick.bind(this);
 
@@ -57,7 +56,9 @@ class PetChooserPage extends React.Component {
 
     petButtonClick(item) {
         console.log(item);
-         this.props.navigation.navigate("PaymentInfoPage");
+        this.props.navigation.navigate("PaymentInfoPage",{
+            petInfo:item,
+        });
     }
 
 
@@ -86,18 +87,17 @@ class PetChooserPage extends React.Component {
                 <View style={styles.descriptionView}>
 
                     <Image
-                        source={logoImage}
+                        source={handIcon}
                         style={styles.handSymbol}
                     />
 
                     <Text style={styles.descriptionText}
-                        numberOfLines={2}>This is 2 lines. This is 2 lines.
-                        This is 2 lines. This is 2 lines.This is 2 lines. This is 2 lines
+                        numberOfLines={2}>{I18n.get('SelectYourPet')}
                     </Text>
 
                 </View>
 
-
+                {this.state.isLoading && <Loader animating={this.state.isLoading} />}
                 <FlatList
                     style={styles.petListContainer}
                     data={this.state.dataSource}
@@ -106,7 +106,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {this.petButtonClick(item)}
+                            onPress = {()=>this.petButtonClick(item)}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
@@ -115,11 +115,11 @@ class PetChooserPage extends React.Component {
                                     imageStyle={styles.imageBackgroundImageStyle}
                                 >
                                     <Text style={styles.imageBackgroundTextStyle}>
-                                        {item.name}
+                                        {item.name.toUpperCase()}
                                     </Text>
                                 </ImageBackground>
                                 <Text style={styles.petCategoryText}>
-                                    {item.category}
+                                    {item.category.toUpperCase()}
                                 </Text>
 
                             </View>
@@ -276,8 +276,8 @@ const styles = StyleSheet.create({
     },
 
     handSymbol: {
-        width: 25,
-        height: 25
+        width: 30,
+        height: 30
     },
 
     descriptionText: {
