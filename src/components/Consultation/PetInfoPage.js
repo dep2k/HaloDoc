@@ -43,7 +43,7 @@ class PetInfoPage extends React.Component {
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("HelperHistoryPage");
+         this.props.navigation.navigate("PreQuestionsPage");
     }
 
 

@@ -1,14 +1,15 @@
-/*
+
 
 subscription SubscribeToCreateDoctor {
   subscribeToCreateDoctor {
-    id
+    doctorId
     name
   }
 }
 
+
 subscription SubscribeToCreateConversation {
-  subscribeToCreateConversation {
+  subscribeToCreateConversation(doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7") {
     username
     createdAt
     user {
@@ -18,8 +19,63 @@ subscription SubscribeToCreateConversation {
   }
 }
 
+subscription SubscribeToNewMessage {
+  subscribeToNewMessage(conversationId: "deep-Raman-1539409150214") {
+    content
+    conversationId
+    createdAt
+    receiver {
+      fullName
+    }
+    sender {
+      fullName
+    }
+  }
+}
+
+
+mutation CreateMessage {
+  createMessage(input: 
+    { content: "A message", 
+      conversationId: "deep-Raman-1539409150214",
+      receiver: 
+      {username: "DoctorId3939393",
+        userType: "Doctor", 
+        fullName: "Some Doctor"},
+      sender: {username: "PatientId3939393", 
+        userType: "Patient",
+        fullName: "Deep A"}})
+  {
+    content
+    conversationId
+    createdAt
+    receiver {
+      fullName
+    }
+    sender {
+      fullName
+    }
+  }
+}
+
+
+
 mutation CreateConversation {
-  createConversation(input: {user: {username: "3482340923849023", userType: "Patient", fullName: "Deep A"}, questionsAndAnsers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}], pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}}) {
+  createConversation(input: 
+    {
+      user: {
+        username: "deep",
+   			userType: "Patient",
+        fullName: "Deep A"
+      },
+      doctor: {
+        name: "Raman",
+   			speciality: "dog",
+        doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+      },
+      questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+      pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
+    }) {
     username
     createdAt
     user {
@@ -37,12 +93,32 @@ mutation CreateConversation {
       background
       weight
     }
+  	doctor {
+      name
+      speciality
+      doctorId
+    }
+    doctorId
+  
   }
+
 }
 
 mutation CreateDoctor {
-  createDoctor(input: {name: "Doctor Name", speciality: "dog spe", profilePic: "http:somthing", registrationId: "3423df", phoneNo: "3838838383", email: "xyz@gmail.com", homeTown: "patiala", medicalCenter: "columbia", department: "child", address: "anand"}) {
-    id
+  createDoctor(input: 
+    {
+    name: "Ajay", 
+    speciality: "dog",
+    profilePic: "http:somthing",
+    registrationId: "3423df", 
+    phoneNo: "3838838383",
+    email: "xyz@gmail.com", 
+    homeTown: "patiala", 
+    medicalCenter: "columbia",
+    department: "child",
+    address: "anand"}) 
+  {
+    doctorId
     name
     createdAt
     speciality
@@ -55,6 +131,7 @@ mutation CreateDoctor {
     department
     address
     isAvailable
+    isOnline
   }
 }
 
@@ -65,11 +142,6 @@ mutation CreatePet {
   }
 }
 
-mutation CreateMessage {
-  createMessage(input: {content: "A message", conversationId: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", receiver: {username: "DoctorId3939393", userType: "Doctor", fullName: "Some Doctor"}, sender: {username: "PatientId3939393", userType: "Patient", fullName: "Deep A"}}) {
-    conversationId
-  }
-}
 
 mutation UpdateHelper {
   updateHelper(input: {id: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", name: "deep", isAvailable: false}) {
@@ -90,8 +162,21 @@ mutation CreateHelper {
 query ListDoctors {
   listDoctors(limit: 2, nextToken: null) {
     items {
-      id
+      doctorId
       name
+    }
+    nextToken
+  }
+}
+
+query ListAvailableDoctors {
+  listAvailableDoctors(speciality: "dog",  limit: 20, nextToken: null) {
+    items {
+      doctorId
+      name
+      speciality
+      isAvailable
+      isOnline
     }
     nextToken
   }
@@ -100,7 +185,6 @@ query ListDoctors {
 query ListHelpers {
   listHelpers(filter: {isAvailable: {eq: true}}, limit: 2, nextToken: null) {
     items {
-      id
       name
       isAvailable
     }
@@ -139,4 +223,7 @@ query ListConversations {
 
 
 
-*/
+
+
+
+

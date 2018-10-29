@@ -20,6 +20,7 @@ export const CreateDoctor = `mutation CreateDoctor($name: String, $speciality: S
 
           }) {
             
+            doctorId
             name
             speciality
             profilePic
@@ -37,8 +38,8 @@ export const CreateDoctor = `mutation CreateDoctor($name: String, $speciality: S
 
 
 export const UpdateDoctorAvailability = `query UpdateDoctorAvailability($id: String, $name: String, $isAvailable: String) {
-    updateDoctorAvailability(id: $id, isAvailable: $isAvailable) {
-        id
+    updateDoctorAvailability(doctorId: $id, isAvailable: $isAvailable) {
+        doctorId
         name
         isAvailable
     }
@@ -46,10 +47,27 @@ export const UpdateDoctorAvailability = `query UpdateDoctorAvailability($id: Str
 
 // All doctors
 
-export const ListDoctors = `query ListDoctors($nextToken: String) {
+
+export const SubscribeToCreateDoctor = `subscription SubscribeToCreateDoctor {
+    subscribeToCreateDoctor {
+        doctorId
+	    name
+    	speciality
+    	profilePic
+	    registrationNo
+    	placeOfResidence
+	    medicalCenter
+	    direction
+        municipality
+        isAvailable
+    }
+  }`;
+  
+
+  export const ListDoctors = `query ListDoctors($nextToken: String) {
     listDoctors(limit: 20, nextToken: $nextToken) {
         items {
-            id
+            doctorId
             name
             speciality
             registrationId
@@ -65,22 +83,24 @@ export const ListDoctors = `query ListDoctors($nextToken: String) {
 }`;
 
 
-export const SubscribeToCreateDoctor = `subscription SubscribeToCreateDoctor {
-    subscribeToCreateDoctor {
-        id
-	    name
-    	speciality
-    	profilePic
-	    registrationNo
-    	placeOfResidence
-	    medicalCenter
-	    direction
-        municipality
-        isAvailable
-    }
-  }`;
-  
 
+export const ListAvailableDoctors = `query ListAvailableDoctors($speciality: String) {
+    listAvailableDoctors(speciality: $speciality, limit: 20, nextToken: "null") {
+        items {
+            doctorId
+            name
+            speciality
+            registrationId
+            phoneNo
+            email
+            homeTown
+            medicalCenter
+            department
+            address
+        }
+        nextToken
+    }
+}`;
 // Register a new Vet
 
 

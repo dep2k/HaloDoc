@@ -2,7 +2,7 @@
 var listdata = [
   {
     key: "abcd",
-    name: Name,
+    name: "Name",
     date: "Date",
     payment: "Payment",
     status: "in process"

@@ -12,53 +12,88 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-
-import { btnBackgroundImage, handIcon } from "../../images/resource";
+import { navBarImage } from "../../images/resource";
+import { backBtnImage } from "../../images/resource";
+import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
-
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import Loader from "../../ActivityIndicator";
-import { GetPets } from "../../Queries/PetAPI";
+
+import { ListAvailableDoctors } from "../../Queries/DoctorAPI";
+import { CreateConversation } from "../../Queries/Chatapi";
+import  { SubscriptionToCreateConversation } from "../../Queries/Chatapi";
+
 import { Avatar } from "react-native-elements";
 import { NaviBar } from "../Reusable/reusable";
 
 
-class PetChooserPage extends React.Component {
+class AvailableDoctorsPage extends React.Component {
 
     constructor(props) {
 
         super(props);
-
+        //  this.state = { isLoading: false, dataSource: ["1","2","3","1","2","3","1","2","3"] };
         this.state = { isLoading: true, dataSource: [] };
+
         this.backButtonClick = this.backButtonClick.bind(this);
         this.petButtonClick = this.petButtonClick.bind(this);
 
-        const getPetsInput = {
-            username: "deep"
+        const availableDoctorsInput = {
+            speciality: "dog"
         }
 
-        API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {
-            console.log("Pets Received");
-            console.log(response);
 
-            this.setState({
-                isLoading: false,
-                dataSource: response.data.getPets.items
-            });
 
-        }).catch(err => {
-            console.log("Failed to add doctor");
-            console.log(err);
+        // API.graphql(graphqlOperation(ListAvailableDoctors, availableDoctorsInput)).then(response => {
 
+        //     console.log(response);
+
+        //     this.setState({
+        //         isLoading: false,
+        //         dataSource: response.data.listAvailableDoctors.items
+        //     });
+
+        // }).catch(err => {
+        //     console.log(err);
+        // });
+
+        const subscription = API.graphql(
+            graphqlOperation(SubscriptionToCreateConversation, { doctorId: '0bd9855e-a3f2-4616-8132-aed490973bf7' })
+        ).subscribe({
+            next: (eventData) => console.log(eventData)
         });
+
+        
+
+        const createConversationInput = {
+
+              user: {
+                username: "deep",
+                userType: "Patient",
+                fullName: "Deep A"
+              },
+              doctor: {
+                name: "Raman",
+                speciality: "dog",
+                doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+              },
+              questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+              pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
+
+
+        }
+
+        API.graphql(graphqlOperation(CreateConversation, createConversationInput)).then(response => {
+            console.log(response);
+        }).catch(err => {
+            console.log(err);
+        });
+
+
 
     }
 
-    petButtonClick(item) {
-        console.log(item);
-        this.props.navigation.navigate("PaymentInfoPage",{
-            petInfo:item,
-        });
+    petButtonClick() {
+        this.props.navigation.navigate("PaymentInfoPage");
     }
 
 
@@ -77,27 +112,13 @@ class PetChooserPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                <NaviBar onBackPress={this.backButtonClick}></NaviBar>
+
                 <Image
                     source={logoImage}
                     style={styles.logoImage}
                 />
 
-                <View style={styles.descriptionView}>
-
-                    <Image
-                        source={handIcon}
-                        style={styles.handSymbol}
-                    />
-
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}>{I18n.get('SelectYourPet')}
-                    </Text>
-
-                </View>
-
-                {this.state.isLoading && <Loader animating={this.state.isLoading} />}
                 <FlatList
                     style={styles.petListContainer}
                     data={this.state.dataSource}
@@ -106,7 +127,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {()=>this.petButtonClick(item)}
+                            onPress={this.petButtonClick}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
@@ -115,12 +136,10 @@ class PetChooserPage extends React.Component {
                                     imageStyle={styles.imageBackgroundImageStyle}
                                 >
                                     <Text style={styles.imageBackgroundTextStyle}>
-                                        {item.name.toUpperCase()}
+                                        {item.name}
                                     </Text>
                                 </ImageBackground>
-                                <Text style={styles.petCategoryText}>
-                                    {item.category.toUpperCase()}
-                                </Text>
+
 
                             </View>
 
@@ -136,10 +155,7 @@ class PetChooserPage extends React.Component {
                         </TouchableOpacity>
 
                     )}
-
                 />
-
-
             </View>
         );
     }
@@ -276,8 +292,8 @@ const styles = StyleSheet.create({
     },
 
     handSymbol: {
-        width: 30,
-        height: 30
+        width: 25,
+        height: 25
     },
 
     descriptionText: {
@@ -301,4 +317,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default PetChooserPage;
+export default AvailableDoctorsPage;
