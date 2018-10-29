@@ -28,6 +28,7 @@ class ChatPage extends React.Component {
 
     backButtonClick() {
         this.props.navigation.goBack(null);
+       // this.props.navigation.popToTop();
     }
 
 

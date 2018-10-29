@@ -33,7 +33,7 @@ class PostQuestionsPage extends React.Component {
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("ChatPage");
+         this.props.navigation.navigate("AvailableDoctorsPage");
     }
 
 

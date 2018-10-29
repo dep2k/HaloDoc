@@ -37,6 +37,8 @@ import PostQuestionsPage from '../components/Consultation/PostQuestionsPage';
 import ChatPage from '../components/Consultation/ChatPage';
 import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage';
 
+import AvailableDoctorsPage from '../components/Consultation/AvailableDoctorsPage';
+
 const AppStackNavigator = createStackNavigator(
   {
     LoginPage: {
@@ -240,6 +242,13 @@ const AppStackNavigator = createStackNavigator(
       }
     },
 
+    AvailableDoctorsPage: {
+      screen: AvailableDoctorsPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
     ChatPage: {
       screen: ChatPage,
       navigationOptions: {
@@ -249,7 +258,11 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
+<<<<<<< HEAD
     initialRouteName: "AdminAddDoctorPage"
+=======
+    initialRouteName: "MainMenuPage"
+>>>>>>> master
   }
 );
 

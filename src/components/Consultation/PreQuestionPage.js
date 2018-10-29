@@ -20,7 +20,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
+import { NaviBar, Footer } from "../Reusable/reusable";
 
 
 class PreQuestionPage extends React.Component {
@@ -48,8 +48,8 @@ class PreQuestionPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                <NaviBar onBackPress={this.backButtonClick}></NaviBar>
+
                 <Image
                     source={logoImage}
                     style={styles.logoImage}
@@ -57,24 +57,26 @@ class PreQuestionPage extends React.Component {
 
                 <View style={styles.descriptionView}>
 
-                   
+                    
 
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}>Pre Questions Page
-                    </Text>
+                        <Text style={styles.descriptionText}
+                            numberOfLines={0}>{ I18n.get("PaymentInfo",{
+                                name: "Deep"
+                            })}
+                        </Text>
+                  
+
 
                 </View>
 
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
+                <Footer showBtn = {true} onPress = {this.continueBtnClick}></Footer>
+  
 
+        </View>
 
-                />
-
-
-            </View>
         );
-    }
-
+                        }
+           
 }
 
 const styles = StyleSheet.create({
@@ -212,9 +214,11 @@ const styles = StyleSheet.create({
     },
 
     descriptionText: {
+        marginBottom:'20%',
         marginLeft: 15,
         fontSize: 14,
         width: "70%",
+
 
     },
 

@@ -1,0 +1,229 @@
+
+
+subscription SubscribeToCreateDoctor {
+  subscribeToCreateDoctor {
+    doctorId
+    name
+  }
+}
+
+
+subscription SubscribeToCreateConversation {
+  subscribeToCreateConversation(doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7") {
+    username
+    createdAt
+    user {
+      fullName
+      type
+    }
+  }
+}
+
+subscription SubscribeToNewMessage {
+  subscribeToNewMessage(conversationId: "deep-Raman-1539409150214") {
+    content
+    conversationId
+    createdAt
+    receiver {
+      fullName
+    }
+    sender {
+      fullName
+    }
+  }
+}
+
+
+mutation CreateMessage {
+  createMessage(input: 
+    { content: "A message", 
+      conversationId: "deep-Raman-1539409150214",
+      receiver: 
+      {username: "DoctorId3939393",
+        userType: "Doctor", 
+        fullName: "Some Doctor"},
+      sender: {username: "PatientId3939393", 
+        userType: "Patient",
+        fullName: "Deep A"}})
+  {
+    content
+    conversationId
+    createdAt
+    receiver {
+      fullName
+    }
+    sender {
+      fullName
+    }
+  }
+}
+
+
+
+mutation CreateConversation {
+  createConversation(input: 
+    {
+      user: {
+        username: "deep",
+   			userType: "Patient",
+        fullName: "Deep A"
+      },
+      doctor: {
+        name: "Raman",
+   			speciality: "dog",
+        doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+      },
+      questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+      pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
+    }) {
+    username
+    createdAt
+    user {
+      fullName
+      type
+    }
+    pet {
+      category
+      name
+      race
+      sex
+      age
+      origin
+      use
+      background
+      weight
+    }
+  	doctor {
+      name
+      speciality
+      doctorId
+    }
+    doctorId
+  
+  }
+
+}
+
+mutation CreateDoctor {
+  createDoctor(input: 
+    {
+    name: "Ajay", 
+    speciality: "dog",
+    profilePic: "http:somthing",
+    registrationId: "3423df", 
+    phoneNo: "3838838383",
+    email: "xyz@gmail.com", 
+    homeTown: "patiala", 
+    medicalCenter: "columbia",
+    department: "child",
+    address: "anand"}) 
+  {
+    doctorId
+    name
+    createdAt
+    speciality
+    profilePic
+    registrationId
+    phoneNo
+    email
+    homeTown
+    medicalCenter
+    department
+    address
+    isAvailable
+    isOnline
+  }
+}
+
+mutation CreatePet {
+  createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", sex: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
+    petId
+    username
+  }
+}
+
+
+mutation UpdateHelper {
+  updateHelper(input: {id: "2e4b9aca-25cc-4d14-b15c-afd123703bf7", name: "deep", isAvailable: false}) {
+    id
+    name
+    isAvailable
+  }
+}
+
+mutation CreateHelper {
+  createHelper(input: {name: "fdfads", phoneNo: "afdfad", email: "Adfad", address: "Afdads", password: "Fadfa", isAvailable: true}) {
+    id
+    name
+    isAvailable
+  }
+}
+
+query ListDoctors {
+  listDoctors(limit: 2, nextToken: null) {
+    items {
+      doctorId
+      name
+    }
+    nextToken
+  }
+}
+
+query ListAvailableDoctors {
+  listAvailableDoctors(speciality: "dog",  limit: 20, nextToken: null) {
+    items {
+      doctorId
+      name
+      speciality
+      isAvailable
+      isOnline
+    }
+    nextToken
+  }
+}
+
+query ListHelpers {
+  listHelpers(filter: {isAvailable: {eq: true}}, limit: 2, nextToken: null) {
+    items {
+      name
+      isAvailable
+    }
+    nextToken
+  }
+}
+
+query GetPets {
+  getPets(username: "deep") {
+    items {
+      petId
+    }
+  }
+}
+
+query GetConversations {
+  getConversations(username: "3482340923849023") {
+    items {
+      username
+    }
+  }
+}
+
+query ListConversations {
+  listConversations {
+    items {
+      username
+    }
+    nextToken
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
