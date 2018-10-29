@@ -1,7 +1,8 @@
-import { I18n } from "aws-amplify";
+
 import React from "react";
 
 const felinoRaceListdata = [
+ 
   {
     key: "abcd",
     name: "Abisinio"
@@ -54,8 +55,8 @@ const felinoRaceListdata = [
 
 const sexData = [
   {
-    key:"1",
-    name:"Hembra"
+    key: "1",
+    name: "Hembra"
   },
   {
     key: "2",
@@ -64,3 +65,4 @@ const sexData = [
 ];
 
 export { sexData,felinoRaceListdata};
+  

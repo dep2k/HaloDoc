@@ -97,8 +97,9 @@ export const  setUpLanguage = () => {
         // Felino Race
         'Abisinio': "Abisinio",
         'American':"American hard-hair",
-        'Asiático': "Asian",
+        'Asian': "Asian",
         'Angora': "Angora",
+        'Turkish': "Turkish",
         //Felino Sex
         'Hembra': "Female",
         'Macho' : "Male"
@@ -196,8 +197,9 @@ export const  setUpLanguage = () => {
         //Felino Race
         'Abisinio': "Abisinio",
         'American': "Americano de pelo duro",
-        'Asiático': "Asiático",
+        'Asian': "Asiático",
         'Angora': "Angora",
+        'Turkish': "Turco",
         //Felino Sex 
         'Hembra': "Hembra",
         'Macho': "Macho"
