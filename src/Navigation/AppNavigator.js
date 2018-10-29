@@ -258,11 +258,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-<<<<<<< HEAD
-    initialRouteName: "AdminAddDoctorPage"
-=======
     initialRouteName: "MainMenuPage"
->>>>>>> master
   }
 );
 

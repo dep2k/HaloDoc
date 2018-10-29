@@ -17,6 +17,11 @@ import {
 import { CreateDoctor } from "../../../Queries/DoctorAPI";
 //import { SSL_OP_NO_TLSv1_2 } from "constants";
 import Loader from "../../../ActivityIndicator";
+import { Avatar } from "react-native-elements";
+
+const base = "../../../images/";
+const backgroundImage = require(base + "loginButtonImage.png");
+
 
 class AdminAddDoctorPage extends React.Component {
   constructor(props) {
@@ -40,19 +45,6 @@ class AdminAddDoctorPage extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
-
-    // const listInput = {nextToken:null};
-    // API.graphql(graphqlOperation(ListDoctors, listInput))
-    //   .then(data => {
-    //     console.log("List shown");
-    //     console.log(data);
-    //     this.closeActivityIndicator();
-    //   })
-    //   .catch(err => {
-    //     console.log("Failed to show list");
-    //     console.log(err);
-    //     this.closeActivityIndicator();
-    //   });
   }
 
   startActivityIndicator() {
@@ -102,18 +94,6 @@ class AdminAddDoctorPage extends React.Component {
           .then(data => {
             console.log(data);
             Cache.setItem("Doctor", this.state.doctor);
-            // const createDoctor = {
-            //   name: doc.name,
-            //   speciality: doc.speciality,
-            //   profilePic: doc.profilePic,
-            //   registrationId: doc.registrationId,
-            //   phoneNo: doc.phoneNo,
-            //   email: doc.email,
-            //   homeTown: doc.homeTown,
-            //   medicalCenter: doc.medicalCenter,
-            //   department: doc.department,
-            //   address: doc.address
-            // };
             API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
               .then(response => {
                 console.log(response);
@@ -153,25 +133,6 @@ class AdminAddDoctorPage extends React.Component {
       );
       this.closeActivityIndicator();
     }
-    // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
-    //   .then(data => {
-    //     console.log("Doctor Added");
-    //     console.log(data);
-    //     this.closeActivityIndicator();
-    //     Alert.alert(
-    //       "Success",
-    //       I18n.get("RegistrationSuccessful"),
-    //       [
-    //         { text: "OK", onPress: () => console.log("OK Pressed") }
-    //       ],
-    //       { cancelable: false }
-    //     );
-    //   })
-    //   .catch(err => {
-    //     console.log("Failed to add doctor");
-    //     console.log(err);
-    //     this.closeActivityIndicator();
-    //   });
   }
 
   render() {
@@ -193,7 +154,16 @@ class AdminAddDoctorPage extends React.Component {
             </TouchableOpacity>
           </ImageBackground>
         </View>
-        <Image style={styles.profilePic} />
+        <Avatar
+          large
+          rounded
+          source={{
+            uri:
+              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+          }}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
+        />
         <Text style={styles.drNameText}>{I18n.get("AddDoctorDetailes")}</Text>
         <View style={styles.formContainer}>
           <View style={styles.textInputContainer}>
@@ -326,7 +296,7 @@ class AdminAddDoctorPage extends React.Component {
               style={styles.registerButton}
             >
               <ImageBackground
-                source={require("../../../images/loginButtonImage.png")}
+                source={backgroundImage}
                 style={styles.buttonImageBackgroundStyle}
                 imageStyle={styles.buttonImageBackgroundImageStyle}
               >
@@ -438,7 +408,7 @@ const styles = StyleSheet.create({
     backgroundColor: "darkgrey"
   },
   registerButton: {
-    height: "25%",
+    height: 40,
     width: "90%",
     // backgroundColor:'mediumseagreen',
     justifyContent: "center",
@@ -470,11 +440,11 @@ const styles = StyleSheet.create({
     marginTop: "2%"
   },
   textInput: {
-    height: "25%",
+    height: 40,
     width: "90%",
     borderRadius: 20,
     backgroundColor: "#F8F8F8",
-    marginBottom: "4%",
+    marginBottom: 4,
     paddingHorizontal: "5%"
   },
   passwordText: {

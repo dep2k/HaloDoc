@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('es');
+    I18n.setLanguage('en');
     const dict = {
     'en': {
         'Sign In': "Sign In",
@@ -171,7 +171,7 @@ export const  setUpLanguage = () => {
         'Welcome': "Bienvenido a Holavet",
         'Enter' : "INGRESAR",
         'WelcomeMessage': "A partir de ahora tienes a tu disposicion un grupo de  veterinarios que te acompanaran las 24 horas del dia, todos los dias del ano",
-        'LogOut': "cerrar sesión",
+        'LogOut': "Cerrar Sesión",
         'NameOfPet': "Nombre de tu mascota",
         'SelectRace': "Selecciona la raza",
         'SelectColor': "Selecciona el Color",
