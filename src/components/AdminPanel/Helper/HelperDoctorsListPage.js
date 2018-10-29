@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     marginTop: "10%"
   },
   flatList: {
+   // backgroundColor: 'black',
     width: "100%",
     marginTop: "13%"
     // backgroundColor: 'green',

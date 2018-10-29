@@ -72,16 +72,17 @@ export  const AllMessages = `query AllMessages($nextToken: String) {
 }`;
 
 // Get Detail of a single conversation
-export const GetConversation = `query GetConversation($conversationId: String! ) {
-getEvent(id: $id) {
-    id
-    name
-    description
-    comments(nextToken: $nextToken) {
-        items {
-            content
+export const GetConversation = `query GetConversation($username: String! ) {
+getConversations(username: $username) {
+     items {
+           username
+           status
+           createdAt
+           payment
+           doctor {
+               name
+           }
         }
-    }
 }
 }`;
 

@@ -242,7 +242,6 @@ const AppStackNavigator = createStackNavigator(
       }
     },
 
-    
     AvailableDoctorsPage: {
       screen: AvailableDoctorsPage,
       navigationOptions: {
@@ -255,11 +254,11 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    },
+    }
   },
 
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "MainMenuPage"
   }
 );
 

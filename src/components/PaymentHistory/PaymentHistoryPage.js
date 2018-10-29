@@ -11,7 +11,9 @@ import {
 import { I18n } from "aws-amplify";
 
 import { navBarImage } from "../../images/resource";
-import listdata from "../../data/doctorsListdata";
+import Loader from "../../ActivityIndicator";
+//import listdata from "../../data/felinoRaceListData";
+import { GetConversation } from "../../Queries/Chatapi";
 import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
@@ -23,12 +25,14 @@ const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
 
+
+
 class DataListItem extends React.Component {
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-                    <Text style={styles.nameText}>{this.props.item.name}</Text>
-                    <Text style={styles.nameText}>{this.props.item.date}</Text>
+                    <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
+                    <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
                     <Text style={styles.nameText}>{this.props.item.payment}</Text>
                     <View style={styles.listSeperationLine}></View>
                 <Text style={styles.statusText}>{this.props.item.status}</Text>
@@ -40,10 +44,41 @@ class DataListItem extends React.Component {
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true };
+    this.state = { isLoading: true,
+    conversationListData: [],
+    animating: false
+    };
 
     this.backButtonClick = this.backButtonClick.bind(this);
   }
+
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
+
+  closeActivityIndicator() {
+    this.setState({ animating: false });
+  }
+  componentDidMount() {
+    this.startActivityIndicator();
+    const getConversations = { username: "deep" };
+
+    API.graphql(graphqlOperation(GetConversation, getConversations))
+      .then(response => {
+        console.log("got conversation");
+        console.log(response);
+        this.setState({
+          conversationListData: response.data.getConversations.items
+        });
+        this.closeActivityIndicator();
+      })
+      .catch(err => {
+        console.log("Failed to show list");
+        console.log(err);
+        this.closeActivityIndicator();
+      });
+  }
+
 
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");
@@ -76,7 +111,7 @@ class PaymentHistoryPage extends React.Component {
 
         <FlatList
           style={styles.listContainer}
-          data={listdata}
+          data={this.state.conversationListData}
           keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => {
                     return (
@@ -128,7 +163,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     color: "#8BE0DE",
-    fontSize: 18,
+    fontSize: 16,
     padding: 2
   },
 
@@ -165,8 +200,9 @@ const styles = StyleSheet.create({
   historyText: {
     marginLeft: 15,
     fontSize: 20,
-    width: "80%",
-    color: "#A4C952"
+    width: "85%",
+    color: "#A4C952",
+    fontWeight: 'bold'
   },
 
   backBtn: {
