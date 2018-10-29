@@ -4,8 +4,6 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
 
-
-
 import {
   StyleSheet,
   View,
@@ -25,15 +23,15 @@ class AdminAddDoctorPage extends React.Component {
     super(props);
     this.state = {
       doctor: {
-        name:"",
+        name: "",
         speciality: "",
         profilePic: "",
         registrationId: "",
         phoneNo: "",
         email: "",
-        homeTown:"",
+        homeTown: "",
         medicalCenter: "",
-        department:"",
+        department: "",
         address: "",
         password: "",
         adminEmail: ""
@@ -87,16 +85,10 @@ class AdminAddDoctorPage extends React.Component {
       medicalCenter: this.state.doctor.medicalCenter,
       department: this.state.doctor.department,
       address: this.state.doctor.address
-
     };
     this.startActivityIndicator();
-    if (doc.name && 
-        doc.adminEmail && 
-        doc.password &&
-        doc.phoneNo) 
-    {
-      if (doc.password.length >= 8) 
-      {
+    if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
+      if (doc.password.length >= 8) {
         Auth.signUp({
           username: doc.name,
           password: doc.password,
@@ -105,13 +97,31 @@ class AdminAddDoctorPage extends React.Component {
             email: doc.adminEmail,
             given_name: "abcd",
             family_name: "efgf"
-
-
           }
         })
           .then(data => {
             console.log(data);
             Cache.setItem("Doctor", this.state.doctor);
+            // const createDoctor = {
+            //   name: doc.name,
+            //   speciality: doc.speciality,
+            //   profilePic: doc.profilePic,
+            //   registrationId: doc.registrationId,
+            //   phoneNo: doc.phoneNo,
+            //   email: doc.email,
+            //   homeTown: doc.homeTown,
+            //   medicalCenter: doc.medicalCenter,
+            //   department: doc.department,
+            //   address: doc.address
+            // };
+            API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
+              .then(response => {
+                console.log(response);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+
             this.props.navigation.navigate("CodeConfirmationPage");
             this.closeActivityIndicator();
           })
@@ -121,9 +131,7 @@ class AdminAddDoctorPage extends React.Component {
             Alert.alert(
               "Error",
               I18n.get("RegistrationUnsuccessful"),
-              [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-              ],
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
               { cancelable: false }
             );
           });
@@ -144,7 +152,7 @@ class AdminAddDoctorPage extends React.Component {
         { cancelable: false }
       );
       this.closeActivityIndicator();
-    }    
+    }
     // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
     //   .then(data => {
     //     console.log("Doctor Added");
@@ -186,21 +194,20 @@ class AdminAddDoctorPage extends React.Component {
           </ImageBackground>
         </View>
         <Image style={styles.profilePic} />
-        <Text style={styles.drNameText}>DRA. ALINA PEREZ GONZALES</Text>
+        <Text style={styles.drNameText}>{I18n.get("AddDoctorDetailes")}</Text>
         <View style={styles.formContainer}>
-          
-            <View style={styles.textInputContainer}>
-              <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
-              <TextInput
-                style={styles.formTextInputStyle}
-                onChangeText={text =>
-                  this.setState(
-                    state => ((state.doctor.adminEmail = text), state)
-                  )
-                }
-              />
-            </View>
-            <View style={styles.lastLineStyle} />
+          <View style={styles.textInputContainer}>
+            <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
+            <TextInput
+              style={styles.formTextInputStyle}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.doctor.adminEmail = text), state)
+                )
+              }
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Name")}</Text>
             <TextInput
@@ -216,7 +223,9 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(state => ((state.doctor.speciality = text), state))
+                this.setState(
+                  state => ((state.doctor.speciality = text), state)
+                )
               }
             />
           </View>
@@ -236,7 +245,9 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(state => ((state.doctor.registrationId = text), state))
+                this.setState(
+                  state => ((state.doctor.registrationId = text), state)
+                )
               }
             />
           </View>
@@ -246,9 +257,7 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.phoneNo = text), state)
-                )
+                this.setState(state => ((state.doctor.phoneNo = text), state))
               }
             />
           </View>
@@ -258,9 +267,7 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.email = text), state)
-                )
+                this.setState(state => ((state.doctor.email = text), state))
               }
             />
           </View>
@@ -270,9 +277,7 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.homeTown = text), state)
-                )
+                this.setState(state => ((state.doctor.homeTown = text), state))
               }
             />
           </View>
@@ -282,7 +287,9 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(state => ((state.doctor.medicalCenter = text), state))
+                this.setState(
+                  state => ((state.doctor.medicalCenter = text), state)
+                )
               }
             />
           </View>
@@ -292,7 +299,9 @@ class AdminAddDoctorPage extends React.Component {
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
-                this.setState(state => ((state.doctor.department = text), state))
+                this.setState(
+                  state => ((state.doctor.department = text), state)
+                )
               }
             />
             />
@@ -306,10 +315,12 @@ class AdminAddDoctorPage extends React.Component {
             <Text style={styles.passwordText}>
               {I18n.get("CreatePassword")}
             </Text>
-            <TextInput style={styles.textInput}
+            <TextInput
+              style={styles.textInput}
               onChangeText={text =>
                 this.setState(state => ((state.doctor.password = text), state))
-              }  />
+              }
+            />
             <TouchableOpacity
               onPress={this.onRegisterButtonClick}
               style={styles.registerButton}
@@ -401,18 +412,19 @@ const styles = StyleSheet.create({
     height: "55%",
     width: "90%",
     marginHorizontal: "5%",
-    marginTop: "5%",
-   // backgroundColor: 'yellow'
+    marginTop: "5%"
+    // backgroundColor: 'yellow'
   },
   formText: {
     width: "35%",
-    height: "100%",
+    height: "80%",
     color: "#8BE0DE",
     marginLeft: "1%",
+    marginTop: "6%",
     // backgroundColor: 'black',
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "flex-start"
+    //justifyContent: "flex-end",
+    alignSelf: "center"
+    // textAlign: 'center'
   },
   formTextInputStyle: {
     width: "70%",
@@ -450,28 +462,28 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "column",
     justifyContent: "flex-start",
-   // backgroundColor: "pink",
+    // backgroundColor: "pink",
     width: "100%",
     height: "50%",
     alignItems: "center",
     paddingTop: "2%",
     marginTop: "2%"
   },
-    textInput: {
-        height: "25%",
-        width: "90%",
-        borderRadius: 20,
-        backgroundColor: "#F8F8F8",
-        marginBottom: "4%",
-        paddingHorizontal: "5%"
-    },
-    passwordText: {
-        fontSize: 15,
-        fontWeight: "normal",
-        color: "#7C7B7B",
-        marginBottom: 5,
-        marginRight: "40%"
-    },
+  textInput: {
+    height: "25%",
+    width: "90%",
+    borderRadius: 20,
+    backgroundColor: "#F8F8F8",
+    marginBottom: "4%",
+    paddingHorizontal: "5%"
+  },
+  passwordText: {
+    fontSize: 15,
+    fontWeight: "normal",
+    color: "#7C7B7B",
+    marginBottom: 5,
+    marginRight: "40%"
+  }
 });
 
 export default AdminAddDoctorPage;

@@ -47,6 +47,29 @@ class ConfirmCodePage extends React.Component {
 
         console.log("Continue Button Clicked")
         this.startActivityIndicator();
+        Cache.getItem("Doctor").then(doc => {
+          if (doc) {
+            Auth.confirmSignUp(doc.name, this.state.registrationCode, {
+              // Optional. Force user confirmation irrespective of existing alias. By default set to True.
+              forceAliasCreation: true
+
+            }).then(data => {
+              console.log(data);
+              this.props.navigation.navigate("AdminAddDoctorPage");
+              this.closeActivityIndicator();
+            })
+              .catch(err => {
+                console.log(err);
+                Alert.alert(
+                  "Error",
+                  I18n.get("WrongCode"),
+                  [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+                  { cancelable: false }
+                );
+                this.closeActivityIndicator();
+              })
+          }
+        })
         Cache.getItem("User").then(user => {
             if(user) {
               Auth.confirmSignUp(user.userName, this.state.registrationCode, {

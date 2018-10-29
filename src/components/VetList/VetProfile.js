@@ -56,7 +56,7 @@ class VetProfile extends React.Component {
     const itemId = navigation.getParam("itemId", "NO-ID");
     // const otherParam = navigation.getParam('otherParam', 'some default value');
 
-    // console.log("ItemId:" + itemId);
+     console.log("ItemId:" + itemId);
 
     // console.log(this.props.navigation.state.params);
 
