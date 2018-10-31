@@ -61,7 +61,7 @@ class PetRegistrationForm extends React.Component {
         use:"Use",
         background: "Background",
         weight:"20Kg",
-        vaccinations: [{ vacName: "", date: ""}]
+        vaccinations: [{ vacName: "PVC", date: "234567"}]
       },
       vacYesChecked: true,
       vacNoChecked: false,
@@ -115,7 +115,7 @@ class PetRegistrationForm extends React.Component {
           use: this.state.pet.use,
           background: this.state.pet.background,
           weight: this.state.pet.weight,
-          vaccinations: [{ vacName: "PVC", date: "123456" }]
+          vaccinations: this.state.pet.vaccinations
         };
         this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))

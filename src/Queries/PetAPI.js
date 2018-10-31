@@ -24,12 +24,31 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
                 $gender: String, $age:String, $origin: String, $product: String, $date: String, $feeding: String, 
                 $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
                  ) {
-    createPet(username: $username, name: $name, category:  $category, petImage: $petImage) {
-      id
-      name
-      where
-      when
-      description
+    createPet(
+  
+          input : {
+            username: $username,
+            category: $category,
+            name: $name, 
+            race: $race,
+            petImage: $petImage,
+            color: $color,
+            gender: $gender,
+            age: $age,
+            origin: $origin,
+            product: $product,
+            date: $date,
+            feeding: $feeding,
+            use: $use,
+            background: $background,
+            weight: $weight,
+            vaccinations: $vaccinations
+          })  {
+         username
+         name
+         category
+         petImage
+
     }
   }`;
 
