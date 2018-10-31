@@ -19,6 +19,7 @@ import { CreatePet } from "../../Queries/PetAPI";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
+import Loader from "../../ActivityIndicator";
 import { felinoRaceListdata } from "../../data/FelinoData";
 import { sexData } from "../../data/FelinoData";
 
@@ -87,7 +88,13 @@ class PetRegistrationForm extends React.Component {
     );
     this.listButtonClick = this.listButtonClick.bind(this);
   }
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
 
+  closeActivityIndicator() {
+    this.setState({ animating: false });
+  }
   saveButtonClick() {
  
     Cache.getItem("User").then(user => {
@@ -110,6 +117,7 @@ class PetRegistrationForm extends React.Component {
           weight: this.state.pet.weight,
           vaccinations: [{ vacName: "PVC", date: "123456" }]
         };
+        this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
             console.log(response);
@@ -245,6 +253,9 @@ class PetRegistrationForm extends React.Component {
               style={styles.originTextInputStyle}
               placeholder={I18n.get("NameOfPet")}
               placeholderTextColor="grey"
+              onChangeText={text =>
+                this.setState(state => ((state.pet.name = text), state))
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -267,6 +278,9 @@ class PetRegistrationForm extends React.Component {
               style={styles.originTextInputStyle}
               placeholder={I18n.get("Color")}
               placeholderTextColor="grey"
+              onChangeText={text =>
+                this.setState(state => ((state.pet.color = text), state))
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -289,12 +303,15 @@ class PetRegistrationForm extends React.Component {
               style={styles.originTextInputStyle}
               placeholder={I18n.get("WriteAge")}
               placeholderTextColor="grey"
+              onChangeText={text =>
+                this.setState(state => ((state.pet.age = text), state))
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Origin")}</Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.originTextInputStyle}
               onPress={() => console.log("OriginButtonClicked")}
             >
@@ -302,7 +319,16 @@ class PetRegistrationForm extends React.Component {
                 {I18n.get("Origin")}
               </Text>
               <Image style={styles.dropDownIconStyle} source={dropDownImage} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <TextInput
+              style={styles.originTextInputStyle}
+              placeholder={I18n.get("Origin")}
+              placeholderTextColor="grey"
+              onChangeText={text =>
+                this.setState(state => ((state.pet.origin = text), state))
+              }
+
+            />
           </View>
           <View style={styles.lastLineWithMarginBottom} />
         </View>
@@ -440,7 +466,10 @@ class PetRegistrationForm extends React.Component {
         <View style={styles.despaContainer}>
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
-            <TextInput style={styles.vaccAndDespatextInputStyle} />
+            <TextInput style={styles.vaccAndDespatextInputStyle}
+              onChangeText={text =>
+                this.setState(state => ((state.pet.product = text), state))
+              } />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>

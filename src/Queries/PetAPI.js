@@ -22,7 +22,7 @@ export const GetPets = `query GetPets($username: String!) {
 }`;
 export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String, $petImage: String, $color: String
                 $gender: String, $age:String, $origin: String, $product: String, $date: String, $feeding: String, 
-                $use: String, $background: String, $weight: String, $vaccinations: [{vacName: "", date: ""}]
+                $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
                  ) {
     createPet(username: $username, name: $name, category:  $category, petImage: $petImage) {
       id
