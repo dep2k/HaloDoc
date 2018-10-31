@@ -258,7 +258,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "MainMenuPage"
+    initialRouteName: "LoginPage"
   }
 );
 

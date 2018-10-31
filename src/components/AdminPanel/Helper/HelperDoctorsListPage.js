@@ -96,10 +96,10 @@ class HelperDoctorsListPage extends React.Component {
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
-  _handleRowClick() {
-    //this.props.navigation.navigate("VetProfile");
-
-    this.props.navigation.setParams({ itemId: "86" });
+  _handleRowClick(data) {
+  
+    // this.props.navigation.setParams({ itemId: "6" });
+   
     this.props.navigation.navigate("VetProfile");
   }
 

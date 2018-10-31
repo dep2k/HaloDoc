@@ -13,6 +13,9 @@ import {
 } from "react-native";
 
 import { I18n } from "aws-amplify";
+import { Cache } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { CreatePet } from "../../Queries/PetAPI";
 import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
@@ -45,18 +48,19 @@ class PetRegistrationForm extends React.Component {
     super(props);
     this.state = {
       pet: {
-        firstName: "",
-        race: "",
+        category: "felino",
+        petImage: "petImage",
+        name: "",
         color: "",
-        gender: "",
         age: "",
         origin: "Origin",
-        homeTown: "",
-        medicalCenter: "",
-        department: "",
-        address: "",
-        password: "",
-        adminEmail: ""
+        product: "",
+        date: "",
+        feeding: "feeding",
+        use:"Use",
+        background: "Background",
+        weight:"20Kg",
+        vaccinations: [{ vacName: "", date: ""}]
       },
       vacYesChecked: true,
       vacNoChecked: false,
@@ -85,7 +89,38 @@ class PetRegistrationForm extends React.Component {
   }
 
   saveButtonClick() {
-    this.props.navigation.navigate("MainMenuPage");
+ 
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const createPetInput = {
+          username: user.userName,
+          category: this.state.pet.category,
+          petImage: this.state.pet.petImage,
+          name: this.state.pet.firstName,
+          race: this.state.raceText,
+          color: this.state.pet.color,
+          gender: this.state.sexText,
+          age: this.state.pet.age,
+          origin: this.state.pet.origin,
+          product: this.state.pet.product,
+          date: this.state.pet.product,
+          feeding: this.state.pet.feeding,
+          use: this.state.pet.use,
+          background: this.state.pet.background,
+          weight: this.state.pet.weight,
+          vaccinations: [{ vacName: "PVC", date: "123456" }]
+        };
+        API.graphql(graphqlOperation(CreatePet, createPetInput))
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.props.navigation.navigate("MainMenuPage");
+            this.closeActivityIndicator();
+          }
+      })
   }
   saveAndRegisterButtonClick() {
     this.props.navigation.goBack(null);
