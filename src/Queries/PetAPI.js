@@ -20,9 +20,39 @@ export const GetPets = `query GetPets($username: String!) {
         
     }
 }`;
-export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String, $petImage: String, $color: String
-                $gender: String, $age:String, $origin: String, $product: String, $date: String, $feeding: String, 
-                $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
+// export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String, $petImage: String, $color: String
+//                 $gender: String, $age:String, $origin: String, $product: String, $date: String, $feeding: String, 
+//                 $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
+//                  ) {
+//     createPet(
+  
+//           input : {
+//             username: $username,
+//             category: $category,
+//             name: $name, 
+//             race: $race,
+//             petImage: $petImage,
+//             color: $color,
+//             gender: $gender,
+//             age: $age,
+//             origin: $origin,
+//             product: $product,
+//             date: $date,
+//             feeding: $feeding,
+//             use: $use,
+//             background: $background,
+//             weight: $weight,
+//             vaccinations: $vaccinations
+//           })  {
+//          username
+//          name
+//          category
+//          petImage
+
+//     }
+//   }`;
+export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String,
+                $sex: String, $age:String, $origin: String, $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
                  ) {
     createPet(
   
@@ -31,14 +61,9 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
             category: $category,
             name: $name, 
             race: $race,
-            petImage: $petImage,
-            color: $color,
-            gender: $gender,
+            sex: $sex,
             age: $age,
             origin: $origin,
-            product: $product,
-            date: $date,
-            feeding: $feeding,
             use: $use,
             background: $background,
             weight: $weight,
@@ -46,9 +71,7 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
           })  {
          username
          name
-         category
-         petImage
-
+         vaccinations
     }
   }`;
 

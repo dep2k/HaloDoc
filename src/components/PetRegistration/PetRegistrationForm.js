@@ -58,10 +58,10 @@ class PetRegistrationForm extends React.Component {
         product: "",
         date: "",
         feeding: "feeding",
-        use:"Use",
+        use: "Use",
         background: "Background",
-        weight:"20Kg",
-        vaccinations: [{ vacName: "PVC", date: "234567"}]
+        weight: "20Kg",
+        vaccinations: [{ name: "PVC", date: "234567" }]
       },
       vacYesChecked: true,
       vacNoChecked: false,
@@ -95,27 +95,64 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
+  componentDidMount() {
+    this.startActivityIndicator();
+    const createPetInput = {
+      username: "Deep",
+      category: "felino",
+      name: "Brownie",
+      race: "American",
+      sex: "macho",
+      age: "1month",
+      origin: "origin",
+      use: "use",
+      background: "background",
+      weight: "20kg",
+      vaccinations: [{ name: "PVC", date: "234567" }]
+    };
+    this.startActivityIndicator();
+    API.graphql(graphqlOperation(CreatePet, createPetInput))
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
+    this.closeActivityIndicator();
+  }
+
   saveButtonClick() {
- 
     Cache.getItem("User").then(user => {
       if (user) {
         const createPetInput = {
-          username: user.userName,
-          category: this.state.pet.category,
-          petImage: this.state.pet.petImage,
-          name: this.state.pet.firstName,
-          race: this.state.raceText,
-          color: this.state.pet.color,
-          gender: this.state.sexText,
-          age: this.state.pet.age,
-          origin: this.state.pet.origin,
-          product: this.state.pet.product,
-          date: this.state.pet.product,
-          feeding: this.state.pet.feeding,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          vaccinations: this.state.pet.vaccinations
+          // username: user.userName,
+          // category: this.state.pet.category,
+          // petImage: this.state.pet.petImage,
+          // name: this.state.pet.firstName,
+          // race: this.state.raceText,
+          // color: this.state.pet.color,
+          // gender: this.state.sexText,
+          // age: this.state.pet.age,
+          // origin: this.state.pet.origin,
+          // product: this.state.pet.product,
+          // date: this.state.pet.product,
+          // feeding: this.state.pet.feeding,
+          // use: this.state.pet.use,
+          // background: this.state.pet.background,
+          // weight: this.state.pet.weight,
+          // vaccinations: this.state.pet.vaccinations
+          username: "Deep",
+          category: "felino",
+          name: "Brownie",
+          race: "American",
+          sex: "macho",
+          age: "1month",
+          origin: "origin",
+          use: "use",
+          background: "background",
+          weight: "20kg",
+          vaccinations: [{ name: "PVC", date: "234567" }]
         };
         this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))
@@ -126,9 +163,9 @@ class PetRegistrationForm extends React.Component {
             console.log(err);
           });
         this.props.navigation.navigate("MainMenuPage");
-            this.closeActivityIndicator();
-          }
-      })
+        this.closeActivityIndicator();
+      }
+    });
   }
   saveAndRegisterButtonClick() {
     this.props.navigation.goBack(null);
@@ -327,7 +364,6 @@ class PetRegistrationForm extends React.Component {
               onChangeText={text =>
                 this.setState(state => ((state.pet.origin = text), state))
               }
-
             />
           </View>
           <View style={styles.lastLineWithMarginBottom} />
@@ -466,10 +502,12 @@ class PetRegistrationForm extends React.Component {
         <View style={styles.despaContainer}>
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
-            <TextInput style={styles.vaccAndDespatextInputStyle}
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
               onChangeText={text =>
                 this.setState(state => ((state.pet.product = text), state))
-              } />
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -691,12 +729,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "5%"
   },
-  grey: {
-    color: "darkgrey"
-  },
-  black: {
-    color: "#000"
-  },
+  
   vaccAndDespatextInputStyle: {
     width: 100,
     height: 30
@@ -762,9 +795,6 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: "space-between",
     alignItems: "center",
-    color: "grey"
-    // alignItems:
-    // backgroundColor: "orange"
   },
   dropDownButtonTextStyle: {
     fontSize: 14,
