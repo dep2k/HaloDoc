@@ -55,22 +55,9 @@ export class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
 
-    footerContainer: {
-        height: "20%",
-        marginBottom: 0,
-        width: "100%",
-      
-    },
+  
 
-    continueBtnContainer: {
-        marginLeft: 40,
-        flexDirection: 'row'
-    },
-
-    continueText: {
-        color: "white",
-        fontSize: 22
-    },
+  
 
     headerContainer: {
 
@@ -114,12 +101,7 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
 
-    nextBtnImage: {
-        marginLeft: 10,
-        width: 30,
-        height: 30,
-        resizeMode: "contain",
-    }
+ 
 })
 
 

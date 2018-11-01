@@ -34,6 +34,7 @@ import PaymentInfoPage from '../components/Consultation/PaymentInfoPage';
 import PreQuestionPage from '../components/Consultation/PreQuestionPage';
 import QuestionsPage from '../components/Consultation/QuestionsPage';
 import PostQuestionsPage from '../components/Consultation/PostQuestionsPage';
+import VetNotificationPage from '../components/Consultation/VetNotificaionPage';
 import ChatPage from '../components/Consultation/ChatPage';
 import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage';
 
@@ -249,6 +250,13 @@ const AppStackNavigator = createStackNavigator(
       }
     },
 
+    VetNotificationPage: {
+      screen: VetNotificationPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
     ChatPage: {
       screen: ChatPage,
       navigationOptions: {
@@ -258,7 +266,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "LoginPage"
+    initialRouteName: "PetChooserPage"
   }
 );
 

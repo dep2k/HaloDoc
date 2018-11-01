@@ -15,17 +15,12 @@ import {
 
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
 
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
-import { GetPets } from "../../Queries/PetAPI";
-import { Avatar } from "react-native-elements";
-import { NaviBar, Footer } from "../Reusable/reusable";
 import { NavBar } from "../Reusable/NavBar";
+import { Footer } from "../Reusable/Footer";
 
 
 
@@ -43,8 +38,13 @@ class PaymentInfoPage extends React.Component {
     }
 
     continueBtnClick() {
+
         console.log("Hello Continue Click");
-        this.props.navigation.navigate("PreQuestionPage");
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        this.props.navigation.navigate("PreQuestionPage",{
+            petInfo:pet,
+        });
     
     }
 
@@ -63,6 +63,7 @@ class PaymentInfoPage extends React.Component {
         } });
     }
 
+
     render() {
 
         const { navigation } = this.props;
@@ -75,7 +76,7 @@ class PaymentInfoPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NavBar onBackPress={this.backButtonClick} title = {navTitle}></NavBar>
+                <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
 
                 <Image
                     source={logoImage}

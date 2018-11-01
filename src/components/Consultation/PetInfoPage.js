@@ -20,8 +20,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
-
+import { NavBar } from "../Reusable/NavBar";
 
 class PetInfoPage extends React.Component {
 
@@ -62,7 +61,7 @@ class PetInfoPage extends React.Component {
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
+                <NavBar  onBackPress = {this.backButtonClick}></NavBar>
             
                 <Image
                     source={logoImage}

@@ -105,9 +105,11 @@ export const  setUpLanguage = () => {
         'Turkish': "Turkish",
         //Felino Sex
         'Hembra': "Female",
-        'Macho' : "Male"
-
-
+        'Macho' : "Male",
+        'PreQuestionText' : 'TO GUARANTEE FOLLOW UP AND UNDERSTAND THE BEST HEALTH STATUS OF YOUR MASCOT, WE WILL BEGIN WITH QUESTIONS, WHICH WILL TAKE A FEW MINUTES WHILE THE VETERINARY IS ATTENDING YOU.',
+        'PostQuestionText': 'For your information and time online. We remind you that this orientation does not replace or substitute a face-to-face veterinary consultation, if Balú does not improve or if it worsens you should consult again.',
+        'Payment' : 'Payment',
+        'VetNotified': 'THE VETERINARY IS ALREADY BEING NOTIFIED AND WILL ATTEND YOU BEFORE 30 MINUTES.',
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -208,8 +210,11 @@ export const  setUpLanguage = () => {
         'Turkish': "Turco",
         //Felino Sex 
         'Hembra': "Hembra",
-        'Macho': "Macho"
-
+        'Macho': "Macho",
+        'PreQuestionText' : 'PARA GARANTIZAR EL SEGUIMIENTO Y COMPRENDER MEJOR EL ESTADO DE SALUD DE TU MASCOTA, EMPEZAREMOS CON UNAS PREGUNTAS, LAS CUALES TARDARAN UNOS MINUTOS MIENTRAS TE ATIENDE EL VETERINARIO.',
+        'PostQuestionText' : 'por tu información y tiempo en línea. Te recordamos que esta orientacion no reemplaza ni sustituye una consulta veterinaria presencial, si Balú no mejora o si empeora debes consultar nuevamente.',
+        'Payment': 'PAGAR',
+        'VetNotified':'EL VETERINARIO YA ESTA SIENDO NOTIFICADO Y TE ATENDERÁ ANTES DE 30 MINUTOS.',
     },
 
     };

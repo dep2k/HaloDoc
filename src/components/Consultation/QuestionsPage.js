@@ -20,7 +20,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
+import { NavBar } from "../Reusable/NavBar";
 
 
 class QuestionsPage extends React.Component {
@@ -33,7 +33,13 @@ class QuestionsPage extends React.Component {
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("PostQuestionsPage");
+        
+         const { navigation } = this.props;
+         const pet = navigation.getParam('petInfo');
+         this.props.navigation.navigate("PostQuestionsPage",{
+             petInfo:pet,
+         });
+     
     }
 
 
@@ -45,11 +51,17 @@ class QuestionsPage extends React.Component {
 
     render() {
 
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        const petName = pet.name;
+        const petCategory = pet.category;
+        const navTitle = petName + " - " + petCategory;
+  
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                  <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
+
                 <Image
                     source={logoImage}
                     style={styles.logoImage}

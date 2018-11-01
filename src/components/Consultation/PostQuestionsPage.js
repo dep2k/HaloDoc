@@ -17,23 +17,34 @@ import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-
+import  {Cache} from "aws-amplify";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
+import { NavBar } from "../Reusable/NavBar";
+import { Footer } from "../Reusable/Footer";
+
 
 
 class PostQuestionsPage extends React.Component {
 
     constructor(props) {
 
-        super(props);      
+        super(props);   
+        this.state = {
+            fullName:""
+        } 
+        this.setInitialState();
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
     }
 
     continueBtnClick() {
-         this.props.navigation.navigate("AvailableDoctorsPage");
+         //this.props.navigation.navigate("AvailableDoctorsPage");
+         const { navigation } = this.props;
+         const pet = navigation.getParam('petInfo');
+         this.props.navigation.navigate("AvailableDoctorsPage",{
+             petInfo:pet,
+         });
     }
 
 
@@ -42,34 +53,41 @@ class PostQuestionsPage extends React.Component {
     }
 
   
+    setInitialState() {
+        Cache.getItem('User').then(user => {
+        if(user) {
+            console.log(user);
+            const firstName = user.firstName;
+            const lastName = user.lastName;
+            this.setState(state => ((state.fullName = firstName + " " + lastName), state));
+        
+        } });
+    }
 
     render() {
 
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        const petName = pet.name;
+        const petCategory = pet.category;
+        const navTitle = petName + " - " + petCategory;
+
+        
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
+                <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
+                
+                <View style = {styles.contentView}>
 
-                <View style={styles.descriptionView}>
+                        <Text style={styles.fullNameText}>{this.state.fullName}
+                        </Text>
+                        <Text style={styles.descriptionText}>{I18n.get("PostQuestionText")}
+                        </Text>
+                  
+                 </View>
 
-                    <Image
-                        source={logoImage}
-                        style={styles.handSymbol}
-                    />
-
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}> Post Questions Page
-                    </Text>
-
-                </View>
-
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
-
+                <Footer  style = {styles.footer} showBtn = {true} onPress = {this.continueBtnClick}></Footer>
                 />
 
 
@@ -86,151 +104,29 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
 
-    petListContainer: {
-
-        marginTop: 50,
-        flexDirection: "column",
-        backgroundColor: "transparent",
-
+    contentView: {
+        height: "70%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
     },
 
-    listItemCotainer: {
-
-        flexDirection: "row",
-        height: 100,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent"
-    },
-
-
-    petButtonContainer: {
-
-        flexDirection: "column",
-        width: "75%",
-        height: 40,
-        marginLeft: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent",
-
-    },
-
-    petImageContainer: {
-        width: "25%",
-        height: 70,
-        marginLeft: 5,
-        marginBottom: 20,
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "flex-start"
-    },
-
-
-    petCategoryText: {
-
-        fontSize: 12,
-        color: "black"
-
-    },
-
-    logoButton: {
-        height: "20%",
-        width: "25%",
-        // marginTop: "2%",
-        marginLeft: "70%",
-        backgroundColor: "transparent"
-    },
-
-    logoImage: {
-        alignSelf: 'flex-end',
-        resizeMode: "contain",
-        marginTop: 10,
-        width: 80,
-        height: 60,
-        marginRight: 20,
-
-    },
-
-    imageBackgroundStyle: {
-        width: "90%",
-        height: "100%",
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    imageBackgroundTextStyle: {
-        color: "white",
-        fontSize: 20
-    },
-    imageBackgroundImageStyle: {
-        borderRadius: 20
-    },
-
-
-    headerContainer: {
-
-        height: "10%",
-        marginTop: 0,
-        width: "100%",
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
-    headerImage: {
-
-        width: "100%",
-        height: "100%",
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-
-    },
-
-    backButtonStyle: {
-
-        backgroundColor: "transparent",
-        width: 44,
-        height: 44,
+    fullNameText: {
         marginLeft: 15,
-        justifyContent: "center",
-        alignItems: "center"
+        fontSize: 24,
+        width: "70%",
+        color: "green"
     },
-
-
-    descriptionView: {
-        marginLeft: 20,
-        marginTop: 20,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center"
-    },
-
-    handSymbol: {
-        width: 25,
-        height: 25
-    },
+  
 
     descriptionText: {
         marginLeft: 15,
-        fontSize: 14,
+        fontSize: 24,
         width: "70%",
 
     },
 
-    backBtn: {
-        marginLeft: 20,
-        width: 30,
-        height: 30,
-    },
 
-    backBtnImage: {
-        width: 30,
-        height: 30,
-        resizeMode: "contain",
-    }
 })
 
 

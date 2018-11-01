@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import {
     View,
@@ -16,66 +14,42 @@ import {
 import { navBarImage } from "../../images/resource";
 import { backBtnImage } from "../../images/resource";
 import { nextBtnImage} from "../../images/resource";
-
 import { I18n } from "aws-amplify";
 
-const NaviBar = ({showBackBtn, onBackPress, title}) => {
-
-return (
-    <View style={styles.headerContainer}>
-
-    <ImageBackground
-        source={navBarImage}
-        style={styles.headerImage}>
-
-            <TouchableOpacity
-            style={styles.backBtn}
-            onPress = {onBackPress}
-            >
-            <Image
-                source={backBtnImage}
-                style={styles.backBtnImage}
-            />
-            
-            </TouchableOpacity>
-
-            {title && <Text style = {styles.headerText}>Some Value which is large</Text>}
-    </ImageBackground>
-
-    </View>
-  );
-};
 
 
 
-const Footer = ({showBtn, onPress}) => {
-
-    return (
-
-        <View style={styles.footerContainer}>
-            <ImageBackground
-                source={navBarImage}
-                style={styles.headerImage}>
-
-                <TouchableOpacity
-                style={styles.continueBtnContainer}
-                onPress = {onPress}
-                >
-
-                <Text style = {styles.continueText}>{I18n.get("Continue")}</Text>
-                <Image
-                source={nextBtnImage}
-                style={styles.nextBtnImage}
-                 />
+export class Footer extends React.Component {
+    
+    render(){
+        return (
+           
+            <View style={styles.footerContainer}>
+                <ImageBackground
+                    source={navBarImage}
+                    style={styles.headerImage}>
+    
+                    <TouchableOpacity
+                    style={styles.continueBtnContainer}
+                    onPress = {this.props.onPress}
+                    >
+                    {this.props.title && <Text style = {styles.continueText}>{this.props.title}</Text>}
+                    {!this.props.title && <Text style = {styles.continueText}>{I18n.get("Continue")}</Text>}
                
-                </TouchableOpacity>
-      
-          </ImageBackground>
-        </View>
-      );
-    };
+                    <Image
+                    source={nextBtnImage}
+                    style={styles.nextBtnImage}
+                     />
+                   
+                    </TouchableOpacity>
+          
+              </ImageBackground>
+            </View>
+          );
+    }
+   
 
-export { NaviBar, Footer };
+}
 
 
 const styles = StyleSheet.create({
@@ -146,5 +120,8 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     }
 })
+
+
+
 
 

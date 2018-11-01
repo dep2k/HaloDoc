@@ -20,7 +20,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
-import { NaviBar } from "../Reusable/reusable";
+import { NavBar } from "../Reusable/NavBar";
 
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
@@ -74,7 +74,7 @@ class ProfilePage extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <NaviBar showBackBtn="false" onBackPress={this.backButtonClick} />
+        <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
 
         <Image source={logoImage} style={styles.logoImage} />
 

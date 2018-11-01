@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from "react-native";
 import { GiftedChat } from 'react-native-gifted-chat'
-import { NaviBar } from "../Reusable/reusable";
+import { NavBar } from "../Reusable/NavBar";
 
 
 class ChatPage extends React.Component {
@@ -58,11 +58,19 @@ class ChatPage extends React.Component {
     }
 
     render() {
+
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        const petName = pet.name;
+        const petCategory = pet.category;
+        const navTitle = petName + " - " + petCategory;
+  
+
         return (
             <View style={styles.mainContainer}>
 
-                <NaviBar  onBackPress = {this.backButtonClick}></NaviBar>
-            
+                <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
+
                 <GiftedChat
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
