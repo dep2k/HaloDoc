@@ -13,45 +13,40 @@ class PetCategories extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.mainContainer}>
+    return <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
-          <Image
-            source={require("../../images/navbarImage.png")}
-            style={styles.headerImage}
-          />
+          <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
         </View>
-        <Image
-          source={require("../../images/logoImage.png")}
-          style={styles.topImage}
-        />
+        <Image source={require("../../images/logoImage.png")} style={styles.topImage} />
         <View style={styles.middleContainer}>
-          <Text
-            style={styles.registrationText}
-          >
+          <Text style={styles.registrationText}>
             {I18n.get("RegistrationOfPets")}
           </Text>
-          <TouchableOpacity
-            style={styles.felineCatStyle}
-            onPress={this.categoryButtonClick}
-          >
-            <Text style={styles.buttonTextStyle}>{I18n.get("FelineCat")}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.categoryButtonClick}
-          >
-            <Text style={styles.buttonTextStyle}>{I18n.get("CanineDog")}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.categoryButtonClick}
-          >
-            <Text style={styles.buttonTextStyle}>{I18n.get("EquineHorse")}</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>
+                  {I18n.get("FelineCat")}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>
+                  {I18n.get("CanineDog")}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+              <View style={styles.buttonViewStyle}>
+                <Text style={styles.buttonTextStyle}>
+                  {I18n.get("EquineHorse")}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    );
+      </View>;
   }
 }
 
@@ -96,30 +91,37 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#BED885",
     textAlign: "center",
-    marginTop: "5%"
+    marginTop: "5%",
+    marginBottom: "15%"
   },
-  felineCatStyle: {
-    backgroundColor: "#BED885",
-    borderRadius: 20,
-    marginTop: "15%",
-    width: "80%",
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center"
-  },
+ 
   buttonTextStyle: {
     fontSize: 17,
-    color: "white"
+    color: "white",
+    alignSelf: "center"
+  },
+  buttonViewStyle: {
+    alignItems: "center",
+    //backgroundColor: 'pink',
+    height: 30,
+    width: 100,
+    justifyContent: "center"
   },
   buttonStyle: {
     backgroundColor: "#BED885",
     borderRadius: 20,
-    marginTop: "7%",
-    width: "80%",
+    width: "100%",
     height: 40,
     justifyContent: "center",
     alignItems: "center"
+  },
+  buttonsContainer : {
+    height: 180,
+    width: "80%",
+  //  backgroundColor: 'black',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
-
 });
 export default PetCategories;
