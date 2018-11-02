@@ -71,7 +71,6 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
           })  {
          username
          name
-         vaccinations
     }
   }`;
 
