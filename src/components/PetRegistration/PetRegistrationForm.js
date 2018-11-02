@@ -58,10 +58,10 @@ class PetRegistrationForm extends React.Component {
         product: "",
         date: "",
         feeding: "feeding",
-        use:"Use",
+        use: "Use",
         background: "Background",
-        weight:"20Kg",
-        vaccinations: [{ vacName: "PVC", date: "234567"}]
+        weight: "20Kg",
+        vaccinations: [{ name: "PVC", date: "234567" }]
       },
       vacYesChecked: true,
       vacNoChecked: false,
@@ -77,7 +77,7 @@ class PetRegistrationForm extends React.Component {
       textColor: "#A9A9A9",
       raceText: "Select Race",
       sexText: "Select Gender",
-      origintext: "Select Origin"
+      origin: ""
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
@@ -95,27 +95,20 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
+
   saveButtonClick() {
- 
     Cache.getItem("User").then(user => {
       if (user) {
+        this.startActivityIndicator();
         const createPetInput = {
           username: user.userName,
           category: this.state.pet.category,
-          petImage: this.state.pet.petImage,
-          name: this.state.pet.firstName,
+          name: this.state.pet.name,
           race: this.state.raceText,
-          color: this.state.pet.color,
-          gender: this.state.sexText,
+          sex: this.state.sexText,
           age: this.state.pet.age,
           origin: this.state.pet.origin,
-          product: this.state.pet.product,
-          date: this.state.pet.product,
-          feeding: this.state.pet.feeding,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          vaccinations: this.state.pet.vaccinations
+          vaccinations: [{ name: "PVC", date: "234567" }]
         };
         this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))
@@ -125,11 +118,28 @@ class PetRegistrationForm extends React.Component {
           .catch(err => {
             console.log(err);
           });
-        this.props.navigation.navigate("MainMenuPage");
-            this.closeActivityIndicator();
-          }
-      })
+
+        this.closeActivityIndicator();
+      }
+    })
+          // username: user.userName,
+          // category: this.state.pet.category,
+          // petImage: this.state.pet.petImage,
+          // name: this.state.pet.firstName,
+          // race: this.state.raceText,
+          // color: this.state.pet.color,
+          // gender: this.state.sexText,
+          // age: this.state.pet.age,
+          // origin: this.state.pet.origin,
+          // product: this.state.pet.product,
+          // date: this.state.pet.product,
+          // feeding: this.state.pet.feeding,
+          // use: this.state.pet.use,
+          // background: this.state.pet.background,
+          // weight: this.state.pet.weight,
+          // vaccinations: this.state.pet.vaccinations
   }
+
   saveAndRegisterButtonClick() {
     this.props.navigation.goBack(null);
   }
@@ -248,7 +258,7 @@ class PetRegistrationForm extends React.Component {
         </Text>
         <View style={styles.clinicHistoryContainer}>
           <View style={styles.TextInputContainer}>
-            <Text style={styles.originText}>{I18n.get("Firstname")}</Text>
+            <Text style={styles.originText}>{I18n.get("Name")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("NameOfPet")}
@@ -310,7 +320,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.originText}>{I18n.get("Origin")}</Text>
+            <Text style={styles.originSelfText}>{I18n.get("Origin")}</Text>
             {/* <TouchableOpacity
               style={styles.originTextInputStyle}
               onPress={() => console.log("OriginButtonClicked")}
@@ -327,7 +337,6 @@ class PetRegistrationForm extends React.Component {
               onChangeText={text =>
                 this.setState(state => ((state.pet.origin = text), state))
               }
-
             />
           </View>
           <View style={styles.lastLineWithMarginBottom} />
@@ -466,10 +475,14 @@ class PetRegistrationForm extends React.Component {
         <View style={styles.despaContainer}>
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
-            <TextInput style={styles.vaccAndDespatextInputStyle}
+            <TextInput
+              style={styles.productTextInputStyle}
+              placeholder = {"Product"}
+              placeholderTextColor = {"grey"}
               onChangeText={text =>
                 this.setState(state => ((state.pet.product = text), state))
-              } />
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -481,7 +494,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.productText}>{I18n.get("Feeding")}</Text>
+            <Text style={styles.feedingText}>{I18n.get("Feeding")}</Text>
           </View>
           <View style={styles.vaccinationLastLine} />
         </View>
@@ -572,12 +585,19 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
     //  backgroundColor: 'black'
   },
-  originText: {
-    width: "25%",
+  originSelfText: {
+    width: 100,
     fontSize: 16,
     alignSelf: "center",
-    color: "#8BE0DE"
-    //backgroundColor: "black"
+    color: "#8BE0DE",
+   // backgroundColor: "black"
+  },
+  originText: {
+    width: 100,
+    fontSize: 16,
+    alignSelf: "center",
+    color: "#8BE0DE",
+   // backgroundColor: "black"
   },
   lastLineStyle: {
     width: "100%",
@@ -691,19 +711,28 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "5%"
   },
-  grey: {
-    color: "darkgrey"
-  },
-  black: {
-    color: "#000"
-  },
+
   vaccAndDespatextInputStyle: {
     width: 100,
-    height: 30
+    height: 30,
+    color: "grey"
   },
+  productTextInputStyle: {
+    width: 100,
+    height: 30,
+    color: "grey"
+    // backgroundColor: "grey"
+  },
+
   productText: {
-    width: "35%",
-    //height: 28,
+    width: 80,
+    color: "#8BE0DE",
+    textAlign: "left",
+    marginRight: 15
+    // backgroundColor: "black"
+  },
+  feedingText: {
+    width: 110,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
@@ -760,11 +789,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "70%",
     height: 30,
+    color: "grey",
     justifyContent: "space-between",
-    alignItems: "center",
-    color: "grey"
-    // alignItems:
-    // backgroundColor: "orange"
+    alignItems: "center"
   },
   dropDownButtonTextStyle: {
     fontSize: 14,
