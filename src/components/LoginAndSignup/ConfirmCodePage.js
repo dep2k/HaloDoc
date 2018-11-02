@@ -143,25 +143,24 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor:'white',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   headerContainer: {
         height: "12%",
         marginTop: 0,
         width: "100%",
-       // backgroundColor:"green",
         justifyContent: "flex-end",
         alignItems:"flex-start",
-      //  marginBottom: "20%"
        },
   textInput: {
-           height: "6%",
-           width: "90%",
+           height: 40,
+           width: 300,
            borderRadius: 20,
            backgroundColor: "white",
-           marginBottom: "10%",
-           marginTop:"2%",
-          marginHorizontal: "5%"           
+           marginBottom:20,
+           marginTop:10,
+           paddingLeft: 20,  
+           alignSelf: "center"         
   },
   backgroundImage: {
     flex: 1,
@@ -170,9 +169,9 @@ const styles = StyleSheet.create({
     textAlign :'center',
     color: 'white',
     fontSize: 15,
-    marginHorizontal: "5%",
-    width: "90%",
-    marginTop: "20%",
+    alignSelf: 'center',
+    width: 300,
+    marginTop: 80,
 
   },
   backButtonStyle: {
