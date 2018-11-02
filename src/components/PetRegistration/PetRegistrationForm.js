@@ -110,7 +110,6 @@ class PetRegistrationForm extends React.Component {
           origin: this.state.pet.origin,
           vaccinations: [{ name: "PVC", date: "234567" }]
         };
-        this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
             console.log(response);
@@ -120,6 +119,7 @@ class PetRegistrationForm extends React.Component {
           });
 
         this.closeActivityIndicator();
+        this.props.navigation.navigate("MainMenuPage");
       }
     })
           // username: user.userName,
@@ -141,7 +141,22 @@ class PetRegistrationForm extends React.Component {
   }
 
   saveAndRegisterButtonClick() {
-    this.props.navigation.goBack(null);
+    Cache.getItem("User").then(user => {
+      if (user) {
+        this.startActivityIndicator();
+        const createPetInput = { username: user.userName, category: this.state.pet.category, name: this.state.pet.name, race: this.state.raceText, sex: this.state.sexText, age: this.state.pet.age, origin: this.state.pet.origin, vaccinations: [{ name: "PVC", date: "234567" }] };
+        API.graphql(graphqlOperation(CreatePet, createPetInput))
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        this.closeActivityIndicator();
+        this.props.navigation.goBack(null);
+      }
+    });
   }
 
   backButtonClick() {
@@ -272,7 +287,7 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
             <TouchableOpacity
-              style={styles.originTextInputStyle}
+              style={styles.dropDownButtonStyle}
               onPress={() => this.listButtonClick("RaceDD")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
@@ -297,7 +312,7 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TouchableOpacity
-              style={styles.originTextInputStyle}
+              style={styles.dropDownButtonStyle}
               onPress={() => this.listButtonClick("SexDD")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
@@ -525,6 +540,7 @@ class PetRegistrationForm extends React.Component {
               </Text>
             </ImageBackground>
           </TouchableOpacity>
+          {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
       </ScrollView>
     );
@@ -562,54 +578,45 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   clinicHistoryContainer: {
-    //backgroundColor: "black",
     height: 270,
     width: "90%",
     marginHorizontal: "5%"
-
-    //   backgroundColor: 'yellow'
   },
 
   TextInputContainer: {
     flexDirection: "row",
     height: 40,
     width: "100%",
-    // backgroundColor: "pink",
     alignItems: "center"
   },
-  clinicTextInputStyle: {
-    width: "100%",
-    height: 40,
-    marginLeft: "5%",
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-    //  backgroundColor: 'black'
-  },
+
   originSelfText: {
     width: 100,
     fontSize: 16,
     alignSelf: "center",
     color: "#8BE0DE",
-   // backgroundColor: "black"
   },
+
   originText: {
     width: 100,
     fontSize: 16,
     alignSelf: "center",
     color: "#8BE0DE",
-   // backgroundColor: "black"
   },
+
   lastLineStyle: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey"
   },
+
   lastLineWithMarginBottom: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey",
     marginBottom: 5
   },
+
   backButtonStyle: {
     backgroundColor: "transparent",
     width: "12%",
@@ -619,6 +626,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+
   backButtonImageStyle: {
     width: "50%",
     height: "100%",
@@ -626,6 +634,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     resizeMode: "contain"
   },
+
   vaccinationText: {
     marginTop: "5%",
     fontWeight: "bold",
@@ -636,19 +645,21 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     textAlign: "center"
   },
+
   yesNoContainer: {
     flexDirection: "row",
     height: 40,
     width: "100%",
-    // backgroundColor: "black",
     justifyContent: "center",
     alignItems: "flex-start"
   },
+
   yesText: {
     fontSize: 15,
     color: "darkgrey",
     marginTop: 4
   },
+
   noText: {
     fontSize: 15,
     color: "darkgrey",
@@ -664,6 +675,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: -10
   },
+
   vacCheckboxContainerStyle: {
     backgroundColor: "transparent",
     borderColor: "transparent",
@@ -680,6 +692,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "5%"
   },
+
   firstTextInputContainer: {
     flexDirection: "row",
     height: 40,
@@ -696,6 +709,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginRight: 15
   },
+
   despaText: {
     marginTop: "10%",
     fontWeight: "bold",
@@ -706,6 +720,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     textAlign: "center"
   },
+
   despaContainer: {
     height: 150,
     width: "90%",
@@ -717,11 +732,11 @@ const styles = StyleSheet.create({
     height: 30,
     color: "grey"
   },
+
   productTextInputStyle: {
     width: 100,
     height: 30,
     color: "grey"
-    // backgroundColor: "grey"
   },
 
   productText: {
@@ -729,8 +744,8 @@ const styles = StyleSheet.create({
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
-    // backgroundColor: "black"
   },
+
   feedingText: {
     width: 110,
     color: "#8BE0DE",
@@ -785,6 +800,7 @@ const styles = StyleSheet.create({
     height: 30,
     marginHorizontal: "5%"
   },
+
   originTextInputStyle: {
     flexDirection: "row",
     width: "70%",
@@ -793,27 +809,36 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
+
+  dropDownButtonStyle:{
+    flexDirection: "row",
+    width: "70%",
+    height: 30,
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
   dropDownButtonTextStyle: {
     fontSize: 14,
     alignSelf: "center",
     color: "grey"
-    // backgroundColor: "yellow"
   },
+
   dropDownIconStyle: {
     height: 10,
     width: 10
-    // position: 'flex-end'
   },
+
   listText: {
     fontSize: 20,
     marginLeft: 150
   },
+
   nameText: {
     color: "#8BE0DE",
     fontSize: 18,
     padding: 2
-    // backgroundColor: 'black'
   },
+
   flatListContentContainerStyle: {
     alignSelf: "center",
     width: 300,
@@ -822,6 +847,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+
   buttonImageBackgroundStyle: {
     width: "100%",
     height: "100%",
@@ -829,6 +855,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  
   buttonImageBackgroundImageStyle: {
     borderRadius: 20
   }

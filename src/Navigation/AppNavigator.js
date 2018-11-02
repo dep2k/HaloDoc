@@ -266,7 +266,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "PetChooserPage"
+    initialRouteName: "LoginPage"
   }
 );
 
