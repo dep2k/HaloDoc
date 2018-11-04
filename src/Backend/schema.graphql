@@ -30,7 +30,7 @@ input ConversationQAInput {
 input CreateConversationInput {
 	user: UserInput
 	doctor: DoctorInput
-	questionsAndAnsers: [ConversationQAInput]
+	questionsAndAnswers: [ConversationQAInput]
 	pet: UpdatePetInput
 }
 
@@ -81,7 +81,6 @@ input DeleteDoctorInput {
 	doctorId: ID!
 	name: String!
 }
-
 
 input DeleteHelperInput {
 	id: ID!

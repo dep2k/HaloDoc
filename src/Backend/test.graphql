@@ -86,7 +86,7 @@ mutation CreateConversation {
       category
       name
       race
-      sex
+      gender
       age
       origin
       use
@@ -136,7 +136,24 @@ mutation CreateDoctor {
 }
 
 mutation CreatePet {
-  createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", sex: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
+  createPet(input:
+    {
+      username: "deep", 
+   		category: "canine", 
+    	name: "bruno", 
+      race: "american", 
+   	 	gender: "m", 
+    	age: "1",
+    	origin: "china", 
+    	use: "Some description about the pet", 
+    	background: "Some BG INfo", 
+    	weight: "5 Kig",
+   		petImage: "imageurl",
+  		color: "black",
+  		product: "productInfo",
+  		date: "393939393",
+  		feeding: "feedinginfo",
+  		vaccinations:[{name:"vacName", date:"38393"},{name:"fadsfa",date:"3939393"}]}) {
     petId
     username
   }
@@ -216,6 +233,7 @@ query ListConversations {
     nextToken
   }
 }
+
 
 
 
