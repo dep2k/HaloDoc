@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   registrationFormContainer: {
-    flex: 0.85,
+    height: 500,
     flexDirection: "column",
     // backgroundColor:'black',
     width: "100%",

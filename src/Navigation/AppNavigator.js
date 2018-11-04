@@ -14,6 +14,7 @@ import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
 import VetListPage from '../components/VetList/VetListPage'
 import VetProfile from '../components/VetList/VetProfile'
 import ProfilePage from '../components/Profile/ProfilePage'
+import UpdateProfilePage from '../components/Profile/UpdateProfilePage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
 import AdminLoginPage from "../components/AdminPanel/Admin/AdminLoginPage";
@@ -90,6 +91,12 @@ const AppStackNavigator = createStackNavigator(
 
     RegistrationPage: {
       screen: RegistrationPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+    UpdateProfilePage: {
+      screen: UpdateProfilePage,
       navigationOptions: {
         header: null
       }
@@ -266,7 +273,11 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
+<<<<<<< HEAD
     initialRouteName: "WelcomePage"
+=======
+    initialRouteName: "LoginPage"
+>>>>>>> 33c6f488e0482e0089abfcb5663e5f8eb94d448b
   }
 );
 

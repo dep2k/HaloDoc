@@ -58,10 +58,10 @@ class PetRegistrationForm extends React.Component {
         product: "",
         date: "",
         feeding: "feeding",
-        use:"Use",
+        use: "Use",
         background: "Background",
-        weight:"20Kg",
-        vaccinations: [{ vacName: "PVC", date: "234567"}]
+        weight: "20Kg",
+        vaccinations: [{ name: "PVC", date: "234567" }]
       },
       vacYesChecked: true,
       vacNoChecked: false,
@@ -77,7 +77,7 @@ class PetRegistrationForm extends React.Component {
       textColor: "#A9A9A9",
       raceText: "Select Race",
       sexText: "Select Gender",
-      origintext: "Select Origin"
+      origin: ""
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
@@ -95,29 +95,21 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
+
   saveButtonClick() {
- 
     Cache.getItem("User").then(user => {
       if (user) {
+        this.startActivityIndicator();
         const createPetInput = {
           username: user.userName,
           category: this.state.pet.category,
-          petImage: this.state.pet.petImage,
-          name: this.state.pet.firstName,
+          name: this.state.pet.name,
           race: this.state.raceText,
-          color: this.state.pet.color,
-          gender: this.state.sexText,
+          sex: this.state.sexText,
           age: this.state.pet.age,
           origin: this.state.pet.origin,
-          product: this.state.pet.product,
-          date: this.state.pet.product,
-          feeding: this.state.pet.feeding,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          vaccinations: this.state.pet.vaccinations
+          vaccinations: [{ name: "PVC", date: "234567" }]
         };
-        this.startActivityIndicator();
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
             console.log(response);
@@ -125,13 +117,46 @@ class PetRegistrationForm extends React.Component {
           .catch(err => {
             console.log(err);
           });
+
+        this.closeActivityIndicator();
         this.props.navigation.navigate("MainMenuPage");
-            this.closeActivityIndicator();
-          }
-      })
+      }
+    })
+          // username: user.userName,
+          // category: this.state.pet.category,
+          // petImage: this.state.pet.petImage,
+          // name: this.state.pet.firstName,
+          // race: this.state.raceText,
+          // color: this.state.pet.color,
+          // gender: this.state.sexText,
+          // age: this.state.pet.age,
+          // origin: this.state.pet.origin,
+          // product: this.state.pet.product,
+          // date: this.state.pet.product,
+          // feeding: this.state.pet.feeding,
+          // use: this.state.pet.use,
+          // background: this.state.pet.background,
+          // weight: this.state.pet.weight,
+          // vaccinations: this.state.pet.vaccinations
   }
+
   saveAndRegisterButtonClick() {
-    this.props.navigation.goBack(null);
+    Cache.getItem("User").then(user => {
+      if (user) {
+        this.startActivityIndicator();
+        const createPetInput = { username: user.userName, category: this.state.pet.category, name: this.state.pet.name, race: this.state.raceText, sex: this.state.sexText, age: this.state.pet.age, origin: this.state.pet.origin, vaccinations: [{ name: "PVC", date: "234567" }] };
+        API.graphql(graphqlOperation(CreatePet, createPetInput))
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        this.closeActivityIndicator();
+        this.props.navigation.goBack(null);
+      }
+    });
   }
 
   backButtonClick() {
@@ -248,7 +273,7 @@ class PetRegistrationForm extends React.Component {
         </Text>
         <View style={styles.clinicHistoryContainer}>
           <View style={styles.TextInputContainer}>
-            <Text style={styles.originText}>{I18n.get("Firstname")}</Text>
+            <Text style={styles.originText}>{I18n.get("Name")}</Text>
             <TextInput
               style={styles.originTextInputStyle}
               placeholder={I18n.get("NameOfPet")}
@@ -262,7 +287,7 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Race")}</Text>
             <TouchableOpacity
-              style={styles.originTextInputStyle}
+              style={styles.dropDownButtonStyle}
               onPress={() => this.listButtonClick("RaceDD")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
@@ -287,7 +312,7 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.TextInputContainer}>
             <Text style={styles.originText}>{I18n.get("Sex")}</Text>
             <TouchableOpacity
-              style={styles.originTextInputStyle}
+              style={styles.dropDownButtonStyle}
               onPress={() => this.listButtonClick("SexDD")}
             >
               <Text style={styles.dropDownButtonTextStyle}>
@@ -310,7 +335,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.originText}>{I18n.get("Origin")}</Text>
+            <Text style={styles.originSelfText}>{I18n.get("Origin")}</Text>
             {/* <TouchableOpacity
               style={styles.originTextInputStyle}
               onPress={() => console.log("OriginButtonClicked")}
@@ -327,7 +352,6 @@ class PetRegistrationForm extends React.Component {
               onChangeText={text =>
                 this.setState(state => ((state.pet.origin = text), state))
               }
-
             />
           </View>
           <View style={styles.lastLineWithMarginBottom} />
@@ -466,10 +490,14 @@ class PetRegistrationForm extends React.Component {
         <View style={styles.despaContainer}>
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
-            <TextInput style={styles.vaccAndDespatextInputStyle}
+            <TextInput
+              style={styles.productTextInputStyle}
+              placeholder = {"Product"}
+              placeholderTextColor = {"grey"}
               onChangeText={text =>
                 this.setState(state => ((state.pet.product = text), state))
-              } />
+              }
+            />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
@@ -481,7 +509,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.productText}>{I18n.get("Feeding")}</Text>
+            <Text style={styles.feedingText}>{I18n.get("Feeding")}</Text>
           </View>
           <View style={styles.vaccinationLastLine} />
         </View>
@@ -512,6 +540,7 @@ class PetRegistrationForm extends React.Component {
               </Text>
             </ImageBackground>
           </TouchableOpacity>
+          {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
       </ScrollView>
     );
@@ -549,47 +578,45 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   clinicHistoryContainer: {
-    //backgroundColor: "black",
     height: 270,
     width: "90%",
     marginHorizontal: "5%"
-
-    //   backgroundColor: 'yellow'
   },
 
   TextInputContainer: {
     flexDirection: "row",
     height: 40,
     width: "100%",
-    // backgroundColor: "pink",
     alignItems: "center"
   },
-  clinicTextInputStyle: {
-    width: "100%",
-    height: 40,
-    marginLeft: "5%",
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-    //  backgroundColor: 'black'
-  },
-  originText: {
-    width: "25%",
+
+  originSelfText: {
+    width: 100,
     fontSize: 16,
     alignSelf: "center",
-    color: "#8BE0DE"
-    //backgroundColor: "black"
+    color: "#8BE0DE",
   },
+
+  originText: {
+    width: 100,
+    fontSize: 16,
+    alignSelf: "center",
+    color: "#8BE0DE",
+  },
+
   lastLineStyle: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey"
   },
+
   lastLineWithMarginBottom: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey",
     marginBottom: 5
   },
+
   backButtonStyle: {
     backgroundColor: "transparent",
     width: "12%",
@@ -599,6 +626,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+
   backButtonImageStyle: {
     width: "50%",
     height: "100%",
@@ -606,6 +634,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     resizeMode: "contain"
   },
+
   vaccinationText: {
     marginTop: "5%",
     fontWeight: "bold",
@@ -616,19 +645,21 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     textAlign: "center"
   },
+
   yesNoContainer: {
     flexDirection: "row",
     height: 40,
     width: "100%",
-    // backgroundColor: "black",
     justifyContent: "center",
     alignItems: "flex-start"
   },
+
   yesText: {
     fontSize: 15,
     color: "darkgrey",
     marginTop: 4
   },
+
   noText: {
     fontSize: 15,
     color: "darkgrey",
@@ -644,6 +675,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: -10
   },
+
   vacCheckboxContainerStyle: {
     backgroundColor: "transparent",
     borderColor: "transparent",
@@ -660,6 +692,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginHorizontal: "5%"
   },
+
   firstTextInputContainer: {
     flexDirection: "row",
     height: 40,
@@ -676,6 +709,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginRight: 15
   },
+
   despaText: {
     marginTop: "10%",
     fontWeight: "bold",
@@ -686,24 +720,34 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     textAlign: "center"
   },
+
   despaContainer: {
     height: 150,
     width: "90%",
     marginHorizontal: "5%"
   },
-  grey: {
-    color: "darkgrey"
-  },
-  black: {
-    color: "#000"
-  },
+
   vaccAndDespatextInputStyle: {
     width: 100,
-    height: 30
+    height: 30,
+    color: "grey"
   },
+
+  productTextInputStyle: {
+    width: 100,
+    height: 30,
+    color: "grey"
+  },
+
   productText: {
-    width: "35%",
-    //height: 28,
+    width: 80,
+    color: "#8BE0DE",
+    textAlign: "left",
+    marginRight: 15
+  },
+
+  feedingText: {
+    width: 110,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
@@ -756,37 +800,45 @@ const styles = StyleSheet.create({
     height: 30,
     marginHorizontal: "5%"
   },
+
   originTextInputStyle: {
     flexDirection: "row",
     width: "70%",
     height: 30,
+    color: "grey",
     justifyContent: "space-between",
-    alignItems: "center",
-    color: "grey"
-    // alignItems:
-    // backgroundColor: "orange"
+    alignItems: "center"
+  },
+
+  dropDownButtonStyle:{
+    flexDirection: "row",
+    width: "70%",
+    height: 30,
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   dropDownButtonTextStyle: {
     fontSize: 14,
     alignSelf: "center",
     color: "grey"
-    // backgroundColor: "yellow"
   },
+
   dropDownIconStyle: {
     height: 10,
     width: 10
-    // position: 'flex-end'
   },
+
   listText: {
     fontSize: 20,
     marginLeft: 150
   },
+
   nameText: {
     color: "#8BE0DE",
     fontSize: 18,
     padding: 2
-    // backgroundColor: 'black'
   },
+
   flatListContentContainerStyle: {
     alignSelf: "center",
     width: 300,
@@ -795,6 +847,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+
   buttonImageBackgroundStyle: {
     width: "100%",
     height: "100%",
@@ -802,6 +855,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  
   buttonImageBackgroundImageStyle: {
     borderRadius: 20
   }

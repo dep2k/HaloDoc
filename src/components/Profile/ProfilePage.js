@@ -25,6 +25,7 @@ import { NavBar } from "../Reusable/NavBar";
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const addIcon = require(base + "addIcon.png");
+const editIcon = require(base + "editIcon.png")
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class ProfilePage extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
+    this.editButtonClick = this.editButtonClick.bind(this);
 
     const getPetsInput = {
       username: "deep"
@@ -55,6 +57,9 @@ class ProfilePage extends React.Component {
       });
   }
 
+  editButtonClick(){
+    this.props.navigation.navigate("UpdateProfilePage");
+  }
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");
   }
@@ -113,7 +118,6 @@ class ProfilePage extends React.Component {
                 </ImageBackground>
                 <Text style={styles.petCategoryText}>{item.category}</Text>
               </View>
-
               <View style={styles.petImageContainer}>
                 <Avatar
                   medium
@@ -129,6 +133,15 @@ class ProfilePage extends React.Component {
             </TouchableOpacity>
           )}
         />
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={this.editButtonClick}
+        >
+          <Image source={editIcon} style={styles.editImageBackgroundStyle} />
+          <Text style={styles.editButtonTextStyle}>
+            {I18n.get("EditProfile")}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -143,9 +156,29 @@ const styles = StyleSheet.create({
   petListContainer: {
     marginTop: 25,
     flexDirection: "column",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    marginBottom: 10
   },
-
+  editButton: {
+    flexDirection: "row",
+    width: 100,
+    marginBottom: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    marginLeft: 30
+  },
+  editImageBackgroundStyle: {
+    height: 20,
+    width: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  editButtonTextStyle: {
+    color: "black",
+    fontSize: 12,
+    marginLeft: 10
+  },
   listItemCotainer: {
     flexDirection: "row",
     height: 100,
@@ -196,10 +229,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  imageBackgroundTextStyle: {
-    color: "white",
-    fontSize: 20
-  },
+
+ 
   imageBackgroundImageStyle: {
     borderRadius: 20
   },
