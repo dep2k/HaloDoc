@@ -8,7 +8,13 @@ class PetCategories extends React.Component {
     this.categoryButtonClick = this.categoryButtonClick.bind(this);
   }
 
-  categoryButtonClick(){
+  categoryButtonClick(type){
+    
+    console.log("CateogoryButtonClick:" + type);
+      this.props.navigation.navigate("PetRegistrationFormPage",{
+          petType: type
+      });
+    
     this.props.navigation.navigate("PetRegistrationFormPage");
   }
 
@@ -23,21 +29,21 @@ class PetCategories extends React.Component {
             {I18n.get("RegistrationOfPets")}
           </Text>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("cat")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("FelineCat")}
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("dog")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("CanineDog")}
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={this.categoryButtonClick}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("horse")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("EquineHorse")}
@@ -102,7 +108,6 @@ const styles = StyleSheet.create({
   },
   buttonViewStyle: {
     alignItems: "center",
-    //backgroundColor: 'pink',
     height: 30,
     width: 100,
     justifyContent: "center"

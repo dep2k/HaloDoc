@@ -23,11 +23,13 @@ import { Auth } from "aws-amplify";
 import NavigationService from "../../NavigationService";
 import { Cache } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
+
+
+
 class RegistrationPage extends React.Component {
   constructor(props) {
     super(props);
      
-   // const styles_phnTextInput = StyleSheet.flatten(styles.phoneTextInput);
     this.state = {
       user: {
         firstName: "",
@@ -389,18 +391,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topContainer: {
-    height: "20%",
+    height: 40,
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    //  backgroundColor: "green",
-    marginTop: "20%"
+   // backgroundColor: "pink",
+    marginTop:50
+    
   },
   backButtonStyle: {
     backgroundColor: "transparent",
-    width: "10%",
-    height: "50%",
+    width: 30,
+    height: 30,
     marginLeft: "5%",
     justifyContent: "center",
     alignItems: "center"
@@ -410,20 +413,21 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    resizeMode: 'contain'
+    resizeMode: "contain"
   },
   registrationFormContainer: {
     height: 500,
     flexDirection: "column",
-    // backgroundColor:'black',
+   // backgroundColor: 'mediumseagreen',
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "15%"
+    marginTop: 30,
+    marginBottom: 20
   },
   registerButton: {
-    //height: "15%",
-    width: "90%",
+    height: 40,
+    width: 280,
     // backgroundColor:'mediumseagreen',
     justifyContent: "center",
     alignItems: "center",
@@ -462,11 +466,11 @@ const styles = StyleSheet.create({
     alignContent: "flex-end"
   },
   buttonContainer: {
-    height: "8%",
-    // backgroundColor: 'yellow',
+    height: 40,
+   // backgroundColor: 'yellow',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "5%"
+   
   },
   // activityIndicator: {
   //   flex: 1,
@@ -480,7 +484,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: "row",
     // backgroundColor: 'black',
-    height: "10%",
+    height: 60,
     justifyContent: "center",
     alignItems: "center"
     //marginTop: "5%"
@@ -519,10 +523,10 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   registerTextStyle: {
-    marginTop: "2%",
-    backgroundColor: "transparent",
+   // backgroundColor: "black",
     fontSize: 25,
-    color: "white"
+    color: "white",
+   
   },
   checkboxContainerStyle: {
     backgroundColor: "transparent",
@@ -530,4 +534,5 @@ const styles = StyleSheet.create({
     width: "15%"
   }
 });
+
 export default RegistrationPage;
