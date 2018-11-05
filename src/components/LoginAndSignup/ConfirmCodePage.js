@@ -28,12 +28,12 @@ class ConfirmCodePage extends React.Component {
           animating: false,
       };
         this.onContinueClick = this.onContinueClick.bind(this);
-        this.backButtonClick = this.backButtonClick.bind(this);
+       // this.backButtonClick = this.backButtonClick.bind(this);
        
     }
-    backButtonClick(){
-           this.props.navigation.goBack(null);
-    }
+  //  // backButtonClick(){
+  //          this.props.navigation.goBack(null);
+  //   }
 
     startActivityIndicator() {
     this.setState({ animating: true });
@@ -108,14 +108,14 @@ class ConfirmCodePage extends React.Component {
                          imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
                                          alignItems: "center", backgroundColor: "transparent"}}> 
-               <View style={styles.headerContainer}>
-                     <TouchableOpacity style = {styles.backButtonStyle}
+                <View style={styles.headerContainer}>
+                     {/* <TouchableOpacity style = {styles.backButtonStyle}
                                     onPress={this.backButtonClick}>
                          <Image source = {require('../../images/backButton.png')}
                                         style= {styles.backButtonImage}>
                        </Image>  
-                     </TouchableOpacity> 
-               </View>
+                     </TouchableOpacity>  */}
+               </View> 
                <Text style = {styles.textStyle}>
                       {I18n.get('CodeSent')}
                </Text>

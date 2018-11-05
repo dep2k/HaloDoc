@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   View,
   Image,
   StyleSheet,
@@ -20,7 +21,11 @@ import { CheckBox } from "react-native-elements";
 import { Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
 import Loader from "../../ActivityIndicator";
-import { felinoRaceListdata } from "../../data/FelinoData";
+import {
+  catRaceListdata,
+  dogRaceListdata,
+  horseRaceListdata
+} from "../../data/FelinoData";
 import { sexData } from "../../data/FelinoData";
 
 const base = "../../images/";
@@ -47,6 +52,11 @@ class DataListItem extends React.Component {
 class PetRegistrationForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.dropDownType = "WhatEverIsType";
+    const { navigation } = this.props;
+    this.petType = navigation.getParam("petType");
+
     this.state = {
       pet: {
         category: "felino",
@@ -63,6 +73,7 @@ class PetRegistrationForm extends React.Component {
         weight: "20Kg",
         vaccinations: [{ name: "PVC", date: "234567" }]
       },
+      animating: false,
       vacYesChecked: true,
       vacNoChecked: false,
       otherChecked: false,
@@ -97,6 +108,80 @@ class PetRegistrationForm extends React.Component {
   }
 
   saveButtonClick() {
+    this.startActivityIndicator();
+  
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const createPetInput = {
+          username: user.userName,
+          category: this.state.pet.category,
+          name: this.state.pet.name,
+          race: this.state.raceText,
+          gender: this.state.sexText,
+          age: this.state.pet.age,
+          origin: this.state.pet.origin,
+          use: this.state.pet.use,
+          background: this.state.pet.background,
+          weight: this.state.pet.weight,
+          petImage: this.state.pet.petImage,
+          color: this.state.pet.color,
+          date: this.state.pet.date,
+          feeding: this.state.pet.feeding,
+          vaccinations: [{ name: "PVC", date: "234567" }]
+        };
+        API.graphql(graphqlOperation(CreatePet, createPetInput))
+          .then(response => {
+            console.log(response);
+            Alert.alert(
+              I18n.get("Success"),
+              I18n.get("RegistrationSuccessful"),
+              [
+                {
+                  text: "OK",
+                  onPress: () => this.props.navigation.navigate("MainMenuPage")
+                }
+              ],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+           
+          })
+          .catch(err => {
+            console.log(err);
+            Alert.alert(
+              "Error",
+              I18n.get("RegistrationUnsuccessful"),
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+          });
+
+        
+       
+      }
+    });
+    // username: user.userName,
+    // category: this.state.pet.category,
+    // petImage: this.state.pet.petImage,
+    // name: this.state.pet.firstName,
+    // race: this.state.raceText,
+    // color: this.state.pet.color,
+    // gender: this.state.sexText,
+    // age: this.state.pet.age,
+    // origin: this.state.pet.origin,
+    // product: this.state.pet.product,
+    // date: this.state.pet.product,
+    // feeding: this.state.pet.feeding,
+    // use: this.state.pet.use,
+    // background: this.state.pet.background,
+    // weight: this.state.pet.weight,
+    // vaccinations: this.state.pet.vaccinations
+  }
+
+  saveAndRegisterButtonClick() {
     Cache.getItem("User").then(user => {
       if (user) {
         this.startActivityIndicator();
@@ -105,46 +190,18 @@ class PetRegistrationForm extends React.Component {
           category: this.state.pet.category,
           name: this.state.pet.name,
           race: this.state.raceText,
-          sex: this.state.sexText,
+          gender: this.state.sexText,
           age: this.state.pet.age,
           origin: this.state.pet.origin,
+          use: this.state.pet.use,
+          background: this.state.pet.background,
+          weight: this.state.pet.weight,
+          petImage: this.state.pet.petImage,
+          color: this.state.pet.color,
+          date: this.state.pet.date,
+          feeding: this.state.pet.feeding,
           vaccinations: [{ name: "PVC", date: "234567" }]
         };
-        API.graphql(graphqlOperation(CreatePet, createPetInput))
-          .then(response => {
-            console.log(response);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-
-        this.closeActivityIndicator();
-        this.props.navigation.navigate("MainMenuPage");
-      }
-    })
-          // username: user.userName,
-          // category: this.state.pet.category,
-          // petImage: this.state.pet.petImage,
-          // name: this.state.pet.firstName,
-          // race: this.state.raceText,
-          // color: this.state.pet.color,
-          // gender: this.state.sexText,
-          // age: this.state.pet.age,
-          // origin: this.state.pet.origin,
-          // product: this.state.pet.product,
-          // date: this.state.pet.product,
-          // feeding: this.state.pet.feeding,
-          // use: this.state.pet.use,
-          // background: this.state.pet.background,
-          // weight: this.state.pet.weight,
-          // vaccinations: this.state.pet.vaccinations
-  }
-
-  saveAndRegisterButtonClick() {
-    Cache.getItem("User").then(user => {
-      if (user) {
-        this.startActivityIndicator();
-        const createPetInput = { username: user.userName, category: this.state.pet.category, name: this.state.pet.name, race: this.state.raceText, sex: this.state.sexText, age: this.state.pet.age, origin: this.state.pet.origin, vaccinations: [{ name: "PVC", date: "234567" }] };
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
             console.log(response);
@@ -158,6 +215,9 @@ class PetRegistrationForm extends React.Component {
       }
     });
   }
+  //  componentDidMount(){
+  //    this.startActivityIndicator();
+  //  }
 
   backButtonClick() {
     this.props.navigation.goBack(null);
@@ -186,24 +246,35 @@ class PetRegistrationForm extends React.Component {
   }
 
   listButtonClick(type) {
-    console.log(type);
+    let dataSource;
+
     if (type == "RaceDD") {
-      this.setState({ dropDownData: felinoRaceListdata });
-      this.setState({ dataType: "raceDropDownData" }, () => {
-        console.log(this.state.dataType);
+      switch (this.petType) {
+        case "dog":
+          dataSource = dogRaceListdata;
+          break;
+        case "cat":
+          dataSource = catRaceListdata;
+
+          break;
+        case "horse":
+          dataSource = horseRaceListdata;
+          break;
+      }
+      this.dropDownType = "raceDropDownData";
+      this.setState({
+        dropDownData: dataSource,
+        modalVisible: true
       });
-    } else if (type == "SexDD") {
-      this.setState({ dropDownData: sexData });
-      this.setState({ dataType: "sexDropDowndata" }, () => {
-        console.log(this.state.dataType);
+    } else if (type == "SexDD" && this.petType) {
+      dataSource = sexData;
+      this.dropDownType = "sexDropDownData";
+      this.setState({
+        dropDownData: dataSource,
+        modalVisible: true
       });
     }
-    this.setModalVisible(true);
   }
-  // rowButtonClick(dataType) {
-  //   console.log(this.state.dataType);
-  //   if (dataType == "raceDropDownData")
-  // }
 
   render() {
     return (
@@ -226,16 +297,18 @@ class PetRegistrationForm extends React.Component {
                     item={item}
                     index={index}
                     onPress={() => {
-                      console.log(this.state.dataType);
-                      if (this.state.dataType == "raceDropDownData") {
-                        this.setState({ raceText: item.name });
-                        this.setState({ textColor: "#000" });
-                      } else if (this.state.dataType == "sexDropDowndata") {
-                        this.setState({ sexText: item.name });
-                        this.setState({ textColor: "#000" });
+                      console.log(this.dropDownType);
+                      if (this.dropDownType == "raceDropDownData") {
+                        this.setState({
+                          raceText: item.name,
+                          modalVisible: false
+                        });
+                      } else if (this.dropDownType == "sexDropDownData") {
+                        this.setState({
+                          sexText: item.name,
+                          modalVisible: false
+                        });
                       }
-                      //  this.setState({text:item.name})
-                      this.setState({ modalVisible: false });
                     }}
                   />
                 );
@@ -492,8 +565,8 @@ class PetRegistrationForm extends React.Component {
             <Text style={styles.productText}>{I18n.get("Product")}</Text>
             <TextInput
               style={styles.productTextInputStyle}
-              placeholder = {"Product"}
-              placeholderTextColor = {"grey"}
+              placeholder={"Product"}
+              placeholderTextColor={"grey"}
               onChangeText={text =>
                 this.setState(state => ((state.pet.product = text), state))
               }
@@ -505,6 +578,9 @@ class PetRegistrationForm extends React.Component {
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
+              onChangeText={text =>
+                this.setState(state => ((state.pet.date = text), state))
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -512,6 +588,7 @@ class PetRegistrationForm extends React.Component {
             <Text style={styles.feedingText}>{I18n.get("Feeding")}</Text>
           </View>
           <View style={styles.vaccinationLastLine} />
+         
         </View>
         <View style={styles.saveButtonContainer}>
           <TouchableOpacity
@@ -540,8 +617,8 @@ class PetRegistrationForm extends React.Component {
               </Text>
             </ImageBackground>
           </TouchableOpacity>
-          {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </ScrollView>
     );
   }
@@ -555,7 +632,7 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
-    height: "6%",
+    height: 60,
     marginTop: 0,
     width: "100%",
     backgroundColor: "transparent",
@@ -594,14 +671,14 @@ const styles = StyleSheet.create({
     width: 100,
     fontSize: 16,
     alignSelf: "center",
-    color: "#8BE0DE",
+    color: "#8BE0DE"
   },
 
   originText: {
     width: 100,
     fontSize: 16,
     alignSelf: "center",
-    color: "#8BE0DE",
+    color: "#8BE0DE"
   },
 
   lastLineStyle: {
@@ -619,10 +696,10 @@ const styles = StyleSheet.create({
 
   backButtonStyle: {
     backgroundColor: "transparent",
-    width: "12%",
-    height: "50%",
-    marginLeft: 10,
-    marginTop: "5%",
+    width: 30,
+    height: 40,
+    marginLeft: 20,
+    marginTop: 15,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -810,7 +887,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-  dropDownButtonStyle:{
+  dropDownButtonStyle: {
     flexDirection: "row",
     width: "70%",
     height: 30,
@@ -855,7 +932,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  
+
   buttonImageBackgroundImageStyle: {
     borderRadius: 20
   }

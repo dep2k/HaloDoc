@@ -6,7 +6,7 @@ export const GetPets = `query GetPets($username: String!) {
         category
         name
         race
-        sex
+        gender
         age
         origin
         use
@@ -52,7 +52,8 @@ export const GetPets = `query GetPets($username: String!) {
 //     }
 //   }`;
 export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String,
-                $sex: String, $age:String, $origin: String, $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput]
+                $gender: String, $age:String, $origin: String, $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput],
+                $petImage: String, $color: String, $product: String, $date: String, $feeding: String
                  ) {
     createPet(
   
@@ -61,16 +62,22 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
             category: $category,
             name: $name, 
             race: $race,
-            sex: $sex,
+            gender: $gender,
             age: $age,
             origin: $origin,
             use: $use,
             background: $background,
             weight: $weight,
             vaccinations: $vaccinations
+            petImage :$petImage
+            color: $color
+            product: $product
+            date: $date
+            feeding: $feeding
           })  {
          username
          name
+         
     }
   }`;
 
