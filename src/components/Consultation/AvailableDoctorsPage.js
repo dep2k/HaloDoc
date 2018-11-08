@@ -17,6 +17,7 @@ import { ListDoctors } from "../../Queries/DoctorAPI";
 import Loader from "../../ActivityIndicator";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import { CreateConversation } from "../../Queries/Chatapi";
 
 const base = "../../images/";
 const backgroundImage = require(base + "newBackground.png");
@@ -26,8 +27,10 @@ const backButtonImage = require(base + "BackButtonShape.png");
 class DataListItem extends React.Component {
 
   onSelectingDoctor() {
-      
-  }  
+
+  }
+
+
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress} style={styles.listCell}>
@@ -91,18 +94,60 @@ class AvailableDoctorsPage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  _handleRowClick(item) {
-  
-    console.log(item);
+  _handleRowClick(doctor) {
+
+    console.log();
     const { navigation } = this.props;
     const pet = navigation.getParam('petInfo');
-    this.props.navigation.navigate("VetNotificationPage",{
-        petInfo:pet,
+    const questionsList = navigation.getParam('questions');
+
+    Cache.getItem('User').then(user => {
+      if (user) {
+
+        const uName = user.userName;
+        pet.username = uName;
+        const fName = user.firstName + " " + user.lastName;
+        // Create Conversation Room
+        const createConversationInput = {
+          user: {
+            username: uName,
+            userType: "Patient",
+            fullName: fName
+          },
+          doctor: {
+            name: doctor.name,
+            speciality: doctor.speciality,
+            doctorId: doctor.doctorId
+          },
+          questionsAndAnswers: questionsList,
+          pet: pet
+        };
+
+        console.log(createConversationInput);
+        API.graphql(graphqlOperation(CreateConversation, createConversationInput))
+          .then(response => {
+            console.log("ConversationCreated");
+            console.log(response);
+            this.closeActivityIndicator();
+            this.props.navigation.navigate("VetNotificationPage", {
+              petInfo: pet,
+              questions: questionsList
+            });
+
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+
+      }
     });
+
 
   }
 
- 
+
 
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
@@ -119,28 +164,28 @@ class AvailableDoctorsPage extends React.Component {
     return (
 
       <View style={styles.mainContainer}>
-      <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
-        
-          <Text style={styles.doctorsDirectoryText}>
-            {I18n.get("DoctorsDirectory")}
-          </Text>
+        <NavBar onBackPress={this.backButtonClick} title={navTitle.toUpperCase()}></NavBar>
 
-          <View style={styles.flatList}>
-            <FlatList
-              data={this.state.doctorsListData}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                return (
-                  <DataListItem
-                    onPress={()=>this._handleRowClick(item)}
-                    item={item}
-                    index={index}
-                  />
-                );
-              }}
-            />
-          </View>
-        
+        <Text style={styles.doctorsDirectoryText}>
+          {I18n.get("DoctorsDirectory")}
+        </Text>
+
+        <View style={styles.flatList}>
+          <FlatList
+            data={this.state.doctorsListData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item, index }) => {
+              return (
+                <DataListItem
+                  onPress={() => this._handleRowClick(item)}
+                  item={item}
+                  index={index}
+                />
+              );
+            }}
+          />
+        </View>
+
         {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
@@ -153,17 +198,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center'
   },
- 
- 
- 
+
+
+
   doctorsDirectoryText: {
     fontSize: 21,
     color: "black",
     marginTop: "10%",
-    alignItems:'center'
+    alignItems: 'center'
   },
   flatList: {
-   // backgroundColor: 'black',
+    // backgroundColor: 'black',
     width: "100%",
     marginTop: "13%"
     // backgroundColor: 'green',
@@ -175,7 +220,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "yellow",
     marginBottom: 25,
     marginLeft: 10,
-    
+
   },
   nameText: {
     color: "black",

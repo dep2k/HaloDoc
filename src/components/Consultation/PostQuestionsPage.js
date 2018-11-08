@@ -42,8 +42,10 @@ class PostQuestionsPage extends React.Component {
          //this.props.navigation.navigate("AvailableDoctorsPage");
          const { navigation } = this.props;
          const pet = navigation.getParam('petInfo');
+         const questionsList = navigation.getParam('questions');
          this.props.navigation.navigate("AvailableDoctorsPage",{
              petInfo:pet,
+             questions: questionsList
          });
     }
 

@@ -28,7 +28,7 @@ export const CreateConversation = `mutation CreateConversation(
                   category
                   name
                   race
-                  sex
+                  gender
                   age
                   origin
                   use

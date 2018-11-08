@@ -6,7 +6,7 @@ export const GetPets = `query GetPets($username: String!) {
         category
         name
         race
-        sex
+        gender
         age
         origin
         use

@@ -26,7 +26,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
-
+import {Footer} from "../Reusable/Footer";
 class Page1 extends React.Component {
 
     render() {
@@ -57,13 +57,33 @@ class Page3 extends React.Component {
 
 }
 
+
 class QuestionsPage extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            pageNo: "2"
+            set1: {
+                question: I18n.get("Question1"),
+                answer:null
+            },
+            set2: {
+                question: I18n.get("Question2"),
+                answer:null
+            },
+            set3: {
+                question: I18n.get("Question3"),
+                answer:null
+            },
+            set4: {
+                question: I18n.get("Question4"),
+                answer:null
+            },
+            set5: {
+                question: I18n.get("Question5"),
+                answer:null
+            },
         }
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
@@ -75,6 +95,11 @@ class QuestionsPage extends React.Component {
         const pet = navigation.getParam('petInfo');
         this.props.navigation.navigate("PostQuestionsPage", {
             petInfo: pet,
+            questions: [this.state.set1,
+                this.state.set2,
+                this.state.set3,
+                this.state.set4,
+                this.state.set5]
         });
 
     }
@@ -105,54 +130,60 @@ class QuestionsPage extends React.Component {
                     <ScrollView style={styles.mainContainer}>
                         <View style={styles.contentView}>
                             <View style={styles.questionAnswerView}>
-                                <Text>Some Title Value</Text>
+                                <Text>{this.state.set1.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    onChangeText={(text) => this.setState({ text })}
-                                    value={this.state.text}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set1.answer = text), state))}
+                                    value={this.state.set1.answer}
                                 />
                             </View>
 
                             <View style={styles.questionAnswerView}>
-                                <Text>Some Title Value</Text>
+                                <Text>{this.state.set2.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    onChangeText={(text) => this.setState({ text })}
-                                    value={this.state.text}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set2.answer = text), state))}
+                                    value={this.state.set2.answer}
                                 />
                             </View>
 
                             <View style={styles.questionAnswerView}>
-                                <Text>Some Title Value</Text>
+                                <Text>{this.state.set3.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    onChangeText={(text) => this.setState({ text })}
-                                    value={this.state.text}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set3.answer = text), state))}
+                                    value={this.state.set3.answer}
                                 />
                             </View>
 
                             <View style={styles.questionAnswerView}>
-                                <Text>Some Title Value</Text>
+                                <Text>{this.state.set4.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    onChangeText={(text) => this.setState({ text })}
-                                    value={this.state.text}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set4.answer = text), state))}
+                                    value={this.state.set4.answer}
                                 />
                             </View>
 
                             <View style={styles.questionAnswerView}>
-                                <Text>Some Title Value</Text>
+                                <Text>{this.state.set5.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    onChangeText={(text) => this.setState({ text })}
-                                    value={this.state.text}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set5.answer = text), state))}
+                                    value={this.state.set5.answer}
                                 />
                             </View>
-                            <Button style={styles.marginBottom} onPress={this.continueBtnClick} title="Continue"></Button>
                             />
                 </View>
 
                     </ScrollView>
+
+                <Footer  style = {styles.footer} showBtn = {true} onPress = {this.continueBtnClick}></Footer>
                 </View>
             </TouchableWithoutFeedback>
 
@@ -181,7 +212,8 @@ const styles = StyleSheet.create({
     },
 
     answerTextInput: {
-        height: 140, borderColor: 'gray', borderWidth: 1
+        height: 140, borderColor: 'gray', 
+        borderWidth: 1
     },
 
     continueBtn: {
