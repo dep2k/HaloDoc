@@ -111,46 +111,29 @@ const dogRaceListdata = [
   { key: "57", name: I18n.get("Schnauzer") }
 ];
 const horseRaceListdata = [
-  {
-    key: "1",
-    name: "Horse"
-  },
-  {
-    key: "2",
-    name: "Horsedata"
-  },
-  {
-    key: "3",
-    name: "doggy"
-  },
-  {
-    key: "4",
-    name: "Angora"
-  },
-  {
-    key: "5",
-    name: "Abisinio"
-  },
-  {
-    key: "6",
-    name: "American"
-  },
-  {
-    key: "7",
-    name: "Asiático"
-  },
-  {
-    key: "8",
-    name: "Angora"
-  },
-  {
-    key: "9",
-    name: "Abisinio"
-  },
-  {
-    key: "10",
-    name: "American"
-  }
+  { key: "1", name: I18n.get("Andalusian") },
+  { key: "2", name: I18n.get("Arab") },
+  { key: "3", name: I18n.get("Columbian") },
+  { key: "4", name: I18n.get("QuarterOfMile") },
+  { key: "5", name: I18n.get("Spanish") },
+  { key: "6", name: I18n.get("Frisian") },
+  { key: "7", name: I18n.get("Palomino") },
+  { key: "8", name: I18n.get("Percheron") },
+  { key: "9", name: I18n.get("Appalosa") },
+  { key: "10", name: I18n.get("Pinto") },
+  { key: "11", name: I18n.get("Paso") },
+  { key: "12", name: I18n.get("Portuguese") },
+  { key: "13", name: I18n.get("Falabella") },
+  { key: "14", name: I18n.get("Lusitano") },
+  { key: "15", name: I18n.get("Hanoverian") },
+  { key: "16", name: I18n.get("Belgian") },
+  { key: "17", name: I18n.get("Argentine") },
+  { key: "18", name: I18n.get("Lipizzano") },
+  { key: "19", name: I18n.get("EnglishBlood") },
+  { key: "20", name: I18n.get("French") },
+  { key: "21", name: I18n.get("Threw") },
+  { key: "22", name: I18n.get("Tennessee") },
+  { key: "23", name: I18n.get("Shetland") },
 ];
 
 const sexData = [
