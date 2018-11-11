@@ -12,7 +12,11 @@ import {
   TouchableWithoutFeedback,
   ImageBackground
 } from "react-native";
-
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel
+} from "react-native-simple-radio-button";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -35,6 +39,8 @@ const dropDownImage = require(base + "dropDownIcon.png");
 const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 //const raceButton = this.props.
+
+var radio_props = [{ label: "Yes", value: 0 }, { label: "No", value: 1 }];
 
 class DataListItem extends React.Component {
   render() {
@@ -73,6 +79,7 @@ class PetRegistrationForm extends React.Component {
         weight: "20Kg",
         vaccinations: [{ name: "PVC", date: "234567" }]
       },
+      value: 0,
       animating: false,
       vacYesChecked: true,
       vacNoChecked: false,
@@ -109,7 +116,7 @@ class PetRegistrationForm extends React.Component {
 
   saveButtonClick() {
     this.startActivityIndicator();
-  
+
     Cache.getItem("User").then(user => {
       if (user) {
         const createPetInput = {
@@ -144,23 +151,17 @@ class PetRegistrationForm extends React.Component {
               { cancelable: false }
             );
             this.closeActivityIndicator();
-           
           })
           .catch(err => {
             console.log(err);
             Alert.alert(
               "Error",
               I18n.get("RegistrationUnsuccessful"),
-              [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-              ],
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
               { cancelable: false }
             );
             this.closeActivityIndicator();
           });
-
-        
-       
       }
     });
     // username: user.userName,
@@ -243,6 +244,245 @@ class PetRegistrationForm extends React.Component {
   }
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  }
+
+  renderVaccinationForm() {
+    console.log(this.petType);
+    if (this.petType == "cat") {
+      return (
+        <View style={styles.vaccinationContainer}>
+          <View style={styles.firstTextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("PVC")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.pvcChecked}
+              onPress={() => this.checkBoxClick("pvcChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("Triple")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.tripleChecked}
+              onPress={() => this.checkBoxClick("tripleChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("Rage")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.raceChecked}
+              onPress={() => this.checkBoxClick("raceChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.otherChecked}
+              onPress={() => this.checkBoxClick("otherChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.vaccinationLastLine} />
+        </View>
+      );
+    } else if (this.petType == "dog") {
+      return (
+        <View style={styles.vaccinationContainer}>
+          <View style={styles.firstTextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("TripleFeline")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.pvcChecked}
+              onPress={() => this.checkBoxClick("pvcChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("RabiaFelina")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.tripleChecked}
+              onPress={() => this.checkBoxClick("tripleChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.otherChecked}
+              onPress={() => this.checkBoxClick("otherChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+            />
+          </View>
+          <View style={styles.vaccinationLastLine} />
+        </View>
+      );
+    } else if (this.petType == "horse") {
+      return (
+        <View style={styles.vaccinationContainer}>
+          <View style={styles.firstTextInputContainer}>
+            <Text style={styles.horseVacText}>{I18n.get("Influenza")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.pvcChecked}
+              onPress={() => this.checkBoxClick("pvcChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.horseVacText}>{I18n.get("Tetanus")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.tripleChecked}
+              onPress={() => this.checkBoxClick("tripleChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={styles.lastLineStyle} />
+          <View style={styles.lastLineStyle} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.horseVacText}>{I18n.get("Encephalitis")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.otherChecked}
+              onPress={() => this.checkBoxClick("otherChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+            />
+          </View>
+          <View style={styles.vaccinationLastLine} />
+          <View style={styles.TextInputContainer}>
+            <Text style={styles.horseVacText}>{I18n.get("Other")}</Text>
+            <CheckBox
+              center
+              containerStyle={styles.vacCheckboxContainerStyle}
+              checkedIcon="dot-circle-o"
+              checkedColor="grey"
+              uncheckedColor="grey"
+              uncheckedIcon="circle-o"
+              checked={this.state.otherChecked}
+              onPress={() => this.checkBoxClick("otherChecked")}
+            />
+            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
+            <TextInput
+              style={styles.vaccAndDespatextInputStyle}
+              placeholder="DD/MM/AAAA"
+            />
+          </View>
+          <View style={styles.vaccinationLastLine} />
+        </View>
+      );
+    }
   }
 
   listButtonClick(type) {
@@ -432,7 +672,7 @@ class PetRegistrationForm extends React.Component {
 
         <Text style={styles.vaccinationText}>{I18n.get("Vaccination")}</Text>
         <View style={styles.yesNoContainer}>
-          <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
+          {/* <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
           <CheckBox
             center
             containerStyle={styles.checkboxContainerStyle}
@@ -454,118 +694,58 @@ class PetRegistrationForm extends React.Component {
             uncheckedIcon="circle-o"
             checked={this.state.vacNoChecked}
             onPress={() => this.checkBoxClick("vacNoButton")}
+          /> */}
+
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            formHorizontal={true}
+            labelHorizontal={true}
+            labelColor={"grey"}
+            selectedLabelColor={"grey"}
+            labelStyle={{ fontSize: 15 }}
+            buttonColor={"grey"}
+            buttonStyle={{ spacing: 20 }}
+            selectedButtonColor={"grey"}
+            buttonSize={10}
+            buttonOuterSize={20}
+            animation={true}
+            onPress={value => {
+              this.setState({ value: value });
+            }}
           />
         </View>
-        <View style={styles.vaccinationContainer}>
-          <View style={styles.firstTextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("PVC")}</Text>
-            <CheckBox
-              center
-              containerStyle={styles.vacCheckboxContainerStyle}
-              checkedIcon="dot-circle-o"
-              checkedColor="grey"
-              uncheckedColor="grey"
-              uncheckedIcon="circle-o"
-              checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick("pvcChecked")}
-            />
-            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
-            <TextInput
-              style={styles.vaccAndDespatextInputStyle}
-              placeholder="DD/MM/AAAA"
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Triple")}</Text>
-            <CheckBox
-              center
-              containerStyle={styles.vacCheckboxContainerStyle}
-              checkedIcon="dot-circle-o"
-              checkedColor="grey"
-              uncheckedColor="grey"
-              uncheckedIcon="circle-o"
-              checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick("tripleChecked")}
-            />
-            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
-            <TextInput
-              style={styles.vaccAndDespatextInputStyle}
-              placeholder="DD/MM/AAAA"
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Rage")}</Text>
-            <CheckBox
-              center
-              containerStyle={styles.vacCheckboxContainerStyle}
-              checkedIcon="dot-circle-o"
-              checkedColor="grey"
-              uncheckedColor="grey"
-              uncheckedIcon="circle-o"
-              checked={this.state.raceChecked}
-              onPress={() => this.checkBoxClick("raceChecked")}
-            />
-            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
-            <TextInput
-              style={styles.vaccAndDespatextInputStyle}
-              placeholder="DD/MM/AAAA"
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
-            <CheckBox
-              center
-              containerStyle={styles.vacCheckboxContainerStyle}
-              checkedIcon="dot-circle-o"
-              checkedColor="grey"
-              uncheckedColor="grey"
-              uncheckedIcon="circle-o"
-              checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
-            />
-            <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
-            <TextInput
-              style={styles.vaccAndDespatextInputStyle}
-              placeholder="DD/MM/AAAA"
-            />
-          </View>
-          <View style={styles.vaccinationLastLine} />
-        </View>
+
+        {this.renderVaccinationForm()}
+
         <Text style={styles.despaText}>{I18n.get("Despa")}</Text>
         <View style={styles.yesNoContainer}>
-          <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
-          <CheckBox
-            center
-            containerStyle={styles.checkboxContainerStyle}
-            checkedIcon="dot-circle-o"
-            checkedColor="grey"
-            uncheckedColor="grey"
-            uncheckedIcon="circle-o"
-            checked={this.state.despaYesChecked}
-            onPress={() => this.checkBoxClick("despaYesChecked")}
-          />
-
-          <Text style={styles.noText}>{I18n.get("No")}</Text>
-          <CheckBox
-            center
-            containerStyle={styles.checkboxContainerStyle}
-            checkedIcon="dot-circle-o"
-            checkedColor="grey"
-            uncheckedColor="grey"
-            uncheckedIcon="circle-o"
-            checked={this.state.despaNoChecked}
-            onPress={() => this.checkBoxClick("despaNoChecked")}
+          <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            formHorizontal={true}
+            labelHorizontal={true}
+            labelColor={"grey"}
+            selectedLabelColor={"grey"}
+            labelStyle={{ fontSize: 15 }}
+            buttonColor={"grey"}
+            buttonStyle={{ spacing: 20 }}
+            selectedButtonColor={"grey"}
+            buttonSize={10}
+            buttonOuterSize={20}
+            animation={true}
+            onPress={value => {
+              this.setState({ value: value });
+            }}
+      
           />
         </View>
         <View style={styles.despaContainer}>
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.productText}>{I18n.get("Product")}</Text>
+            <Text style={styles.feedingText}>{I18n.get("Product")}</Text>
             <TextInput
               style={styles.productTextInputStyle}
-              placeholder={"Product"}
+              placeholder={I18n.get("Product")}
               placeholderTextColor={"grey"}
               onChangeText={text =>
                 this.setState(state => ((state.pet.product = text), state))
@@ -574,10 +754,11 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.fetchaText}>{I18n.get("Date")}</Text>
+            <Text style={styles.feedingText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
               onChangeText={text =>
                 this.setState(state => ((state.pet.date = text), state))
               }
@@ -586,9 +767,16 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
             <Text style={styles.feedingText}>{I18n.get("Feeding")}</Text>
+            <TextInput
+              style={styles.productTextInputStyle}
+              placeholder={I18n.get("Feeding")}
+              placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(state => ((state.pet.feeding = text), state))
+              }
+            />
           </View>
           <View style={styles.vaccinationLastLine} />
-         
         </View>
         <View style={styles.saveButtonContainer}>
           <TouchableOpacity
@@ -729,6 +917,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "flex-start"
+    // backgroundColor : "black"
   },
 
   yesText: {
@@ -768,6 +957,7 @@ const styles = StyleSheet.create({
     height: 175,
     width: "90%",
     marginHorizontal: "5%"
+    // backgroundColor : "grey"
   },
 
   firstTextInputContainer: {
@@ -782,6 +972,12 @@ const styles = StyleSheet.create({
   pvcText: {
     width: "16%",
     // height: 28,
+    color: "#8BE0DE",
+    textAlign: "left",
+    marginRight: 15
+  },
+  horseVacText: {
+    width: "30%",
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
