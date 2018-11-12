@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 20,
-    marginTop: 25
+    marginTop: 20
   },
   backButtonImageStyle: {
     width: 30,
@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
   },
   registerTextStyle: {
-    fontSize: 22,
+    fontSize: 25,
      color: "white",
      marginTop: 25, 
   },

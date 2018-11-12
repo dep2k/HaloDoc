@@ -131,17 +131,19 @@ class LoginPage extends React.Component {
               style={styles.headerImage}
             />
           </View>
-          
-            <TouchableOpacity 
-                 onPress= {this.goToAdminPanel}
-                 style = {styles.logoButton}>
-            <ImageBackground
-              source={logoImage}
-              style= {styles.logoImage}
-              imageStyle= {styles.logoImageimageStyle}
-            >
-            </ImageBackground>
+            <View style = {styles.logoContainer}>
+            <TouchableOpacity
+              onPress={this.goToAdminPanel}
+              style={styles.logoButton}>
+              <ImageBackground
+                source={logoImage}
+                style={styles.logoImage}
+                imageStyle={styles.logoImageimageStyle}
+              >
+              </ImageBackground>
             </TouchableOpacity>
+            </View>
+            
          
           // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
@@ -216,7 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   headerContainer: {
-    height: "10%",
+    height: 70,
     marginTop: 0,
     width: "100%",
     backgroundColor: "transparent",
@@ -230,11 +232,8 @@ const styles = StyleSheet.create({
   logoButton: {
     height: 60,
     width: 80,
-    // marginTop: "2%",
-    marginLeft: "67%",
-    marginTop: 15,
-    marginBottom: 50,
-    backgroundColor: "transparent"
+    marginRight: 35,
+   // backgroundColor: "transparent"
   },
   logoImage: {
     width: "100%",
@@ -245,7 +244,16 @@ const styles = StyleSheet.create({
   logoImageimageStyle: {
     resizeMode: "contain"
   },
-
+  logoContainer: {
+    width: "100%",
+    height: 80,
+    marginTop:10,
+    marginBottom: 50,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+   // backgroundColor: 'green'
+  },
   loginButton: {
     height: 40,
     width: "90%",
@@ -284,7 +292,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#7C7B7B",
     marginBottom: 5,
-    marginRight: "66%"
+    marginRight: "60%"
   },
   passwordText: {
     fontSize: 15,

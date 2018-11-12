@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity
 } from "react-native";
+import { Footer } from "../Reusable/Footer";
 
 class SuccesfulLogin extends React.Component {
   constructor(props) {
@@ -28,10 +29,13 @@ class SuccesfulLogin extends React.Component {
             style={styles.headerImage}
           />
         </View>
-        <Image
-          source={require("../../images/logoImage.png")}
-          style={styles.topImageLogo}
-        />
+        <View style={styles.logoContainer} >
+          <Image
+            source={require("../../images/logoImage.png")}
+            style={styles.topImageLogo}
+          />
+        </View>
+      
         //contains center welcome Text
         <View style={styles.middleContainer}>
           <Text style={styles.headingTextStyle}>{I18n.get("Welcome")}</Text>
@@ -39,7 +43,7 @@ class SuccesfulLogin extends React.Component {
             {I18n.get("WelcomeMessage")}
           </Text>
         </View>
-        <View style={styles.lowerimageContainer}>
+        {/* <View style={styles.lowerimageContainer}>
           <ImageBackground
             source={require("../../images/landscape.png")}
             style={styles.lowerImageBackground}
@@ -53,7 +57,8 @@ class SuccesfulLogin extends React.Component {
               </Text>
             </TouchableOpacity>
           </ImageBackground>
-        </View>
+        </View> */}
+         <Footer showBtn = {true} onPress = {this.continueBtnClick}></Footer>
       </View>
     );
   }
@@ -77,20 +82,30 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  logoContainer: {
+    width: "100%",
+    height: 80,
+    marginTop: 10,
+    marginBottom: "10%",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    // backgroundColor: 'green'
+  },
   topImageLogo: {
-    height: "20%",
-    width: "25%",
-    // marginTop: "2%",
-    marginLeft: "70%",
+    marginRight:35,
     backgroundColor: "transparent",
-    resizeMode: "contain"
+    resizeMode: "contain",
+     height: 60,
+    width: 80,
+    marginRight: 35,
   },
   middleContainer: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    //backgroundColor: "pink",
+   // backgroundColor: "pink",
     width: "100%",
-    height: "50%",
+    height: "52%",
     alignItems: "center",
     paddingTop: "10%"
   },
@@ -110,25 +125,6 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingHorizontal: "5%"
   },
-  enterButtonStyle: {
-    marginLeft: "5%",
-    marginBottom: "10%",
-    alignItems: "center",
-    height: 40,
-    width: "50%",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  lowerimageContainer: {
-    height: "20%",
-    backgroundColor: "pink"
-  },
-  lowerImageBackground: {
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-    height: "100%",
-    width: "100%",
-    backgroundColor: "transparent"
-  }
+  
 });
 export default SuccesfulLogin;

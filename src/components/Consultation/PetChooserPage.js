@@ -127,7 +127,7 @@ class PetChooserPage extends React.Component {
 
                             <View style={styles.petImageContainer}>
                                 <Avatar
-                                    large
+                                    medium
                                     rounded
                                     source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" }}
                                     onPress={() => console.log("Works!")}
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 80,
         height: 60,
-        marginRight: 20,
+        marginRight: 35,
 
     },
 
