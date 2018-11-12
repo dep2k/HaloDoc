@@ -13,12 +13,11 @@ import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { ListDoctors } from "../../Queries/DoctorAPI";
+import { ListDoctors , ListAvailableDoctors} from "../../Queries/DoctorAPI";
 import Loader from "../../ActivityIndicator";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
-import { CreateConversation } from "../../Queries/Chatapi";
-
+import { CreateConversation, SubscriptionToNewMessage } from "../../Queries/Chatapi";
 const base = "../../images/";
 const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
@@ -65,15 +64,18 @@ class AvailableDoctorsPage extends React.Component {
     this._handleRowClick = this._handleRowClick.bind(this);
   }
   componentDidMount() {
-    this.startActivityIndicator();
-    const listInput = { nextToken: null };
 
-    API.graphql(graphqlOperation(ListDoctors, listInput))
+    this.startActivityIndicator();
+    const { navigation } = this.props;
+    const pet = navigation.getParam('petInfo');
+    const listInput = { speciality: pet.category };
+
+    API.graphql(graphqlOperation(ListAvailableDoctors, listInput))
       .then(response => {
         console.log("List shown");
         console.log(response);
         this.setState({
-          doctorsListData: response.data.listDoctors.items
+          doctorsListData: response.data.listAvailableDoctors.items
         });
         this.closeActivityIndicator();
       })
@@ -94,16 +96,13 @@ class AvailableDoctorsPage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  _handleRowClick(doctor) {
-
-    console.log();
+  createConversation(doctor){
     const { navigation } = this.props;
     const pet = navigation.getParam('petInfo');
     const questionsList = navigation.getParam('questions');
-
+    console.log("createConversation call");
     Cache.getItem('User').then(user => {
       if (user) {
-
         const uName = user.userName;
         pet.username = uName;
         const fName = user.firstName + " " + user.lastName;
@@ -126,28 +125,37 @@ class AvailableDoctorsPage extends React.Component {
         console.log(createConversationInput);
         API.graphql(graphqlOperation(CreateConversation, createConversationInput))
           .then(response => {
-            console.log("ConversationCreated");
-            console.log(response);
-            this.closeActivityIndicator();
-            this.props.navigation.navigate("VetNotificationPage", {
-              petInfo: pet,
-              questions: questionsList
-            });
+              this.closeActivityIndicator();
+              console.log(response);
+              const id  = response.data.createConversation.username + "-" + response.data.createConversation.createdAt;
 
+              Cache.getItem('User').then(user => {
+                if (user) {
+                   
+                    this.props.navigation.navigate("VetNotificationPage",{
+                      petInfo:pet,
+                      chatId: id,
+                      user: user
+                  });
+                }
+            });
+            
           })
           .catch(err => {
-            console.log("Failed to show list");
             console.log(err);
             this.closeActivityIndicator();
           });
-
+      } else{
+        console.log("User Not Found");
       }
     });
-
-
   }
 
+  _handleRowClick(doctor) {
 
+    console.log("_handleRowClick");
+    this.createConversation(doctor);
+  }
 
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
@@ -172,6 +180,7 @@ class AvailableDoctorsPage extends React.Component {
 
         <View style={styles.flatList}>
           <FlatList
+           style = {styles.doctorsList}
             data={this.state.doctorsListData}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => {
@@ -207,12 +216,24 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     alignItems: 'center'
   },
+
+
+  
   flatList: {
     // backgroundColor: 'black',
     width: "100%",
     marginTop: "13%"
     // backgroundColor: 'green',
   },
+
+
+  doctorsList: {
+    // backgroundColor: 'black',
+    width: "100%",
+    height: "90%",
+    // backgroundColor: 'green',
+  },
+
   listCell: {
     flexDirection: "row",
     width: "100%",

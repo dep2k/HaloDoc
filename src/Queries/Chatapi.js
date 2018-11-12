@@ -1,7 +1,25 @@
 //Create a new conversation
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
-
+export const CreateMessage = `mutation CreateMessage($_id: String, $text: String, $conversationId: ID!, $user: UserInput) {
+  createMessage(input: 
+    {
+      text: $text, 
+      conversationId: $conversationId,
+      messageId: $_id,
+      user: $user
+    })
+  {
+    text
+    messageId
+    conversationId
+    createdAt
+    user {
+      username
+      fullName
+    }
+  }
+}`
 export const CreateConversation = `mutation CreateConversation(  
     $user: UserInput,
     $doctor: DoctorInput,
@@ -113,3 +131,18 @@ export const SubscriptionToCreateConversation = `subscription SubscribeToCreateC
     }
     doctorId
   }}`;
+
+
+  
+export const SubscriptionToNewMessage = `subscription SubscribeToNewMessage($conversationId:ID!) {
+  subscribeToNewMessage(conversationId: $conversationId) {
+    text
+    messageId
+    conversationId
+    createdAt
+    user {
+      username
+      fullName
+    }
+  }
+}`;

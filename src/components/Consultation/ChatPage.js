@@ -11,9 +11,11 @@ import {
     Button,
     ActivityIndicator
 } from "react-native";
-import { GiftedChat } from 'react-native-gifted-chat'
-import { NavBar } from "../Reusable/NavBar";
 
+import { GiftedChat, messageIdGenerator } from 'react-native-gifted-chat'
+import { NavBar } from "../Reusable/NavBar";
+import { SubscriptionToNewMessage , CreateMessage} from "../../Queries/Chatapi";
+import Amplify, { API, graphqlOperation,Cache } from "aws-amplify";
 
 class ChatPage extends React.Component {
 
@@ -24,38 +26,92 @@ class ChatPage extends React.Component {
             messages: [],
         }  
         this.backButtonClick = this.backButtonClick.bind(this);
+
+        const { navigation } = this.props;
+        // const pet = navigation.getParam('petInfo');
+        // const questionsList = navigation.getParam('questions');
+        this.conversationId = navigation.getParam('chatId');
+        this.myUser = navigation.getParam('user');
+        console.log("constructor:" + this.myUser);
+    }
+
+    componentDidMount(){
+      
+         this.subscribeForChat(this.conversationId);
     }
 
     backButtonClick() {
         this.props.navigation.goBack(null);
+        this.subscription.unsubscribe();
        // this.props.navigation.popToTop();
     }
 
-
-   
-
     componentWillMount() {
+
         this.setState({
             messages: [
-                {
-                    _id: 1,
-                    text: 'Hello developer',
-                    createdAt: new Date(),
-                    user: {
-                        _id: 2,
-                        name: 'React Native',
-                        avatar: 'https://placeimg.com/140/140/any',
-                    },
-                },
+              
             ],
         })
+ 
     }
 
     onSend(messages = []) {
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
+
+        var message = messages[0];
+        message.conversationId = this.conversationId;
+        message.messageId = message._id;
+        console.log(message);
+        API.graphql(graphqlOperation(CreateMessage,message)).then((response)=>{
+            console.log(response);
+        }).catch((exception)=>{
+            console.log(exception);
+        });;
+       
     }
+
+    onReceive(message) {
+       
+        this.setState(previousState => ({
+            messages: GiftedChat.append(previousState.messages, message),
+        }))
+    }
+
+    subscribeForChat(chatId){
+        const subscriptionInput = {
+          conversationId: chatId
+        };
+        console.log("subscribeForChat - ChatId:" + chatId);
+        this.subscription = API.graphql(graphqlOperation(SubscriptionToNewMessage, subscriptionInput)
+        ).subscribe({
+            next: (response) => {
+                console.log(response);
+                var message = response.value.data.subscribeToNewMessage;
+                console.log(message);
+                Cache.getItem('User').then(user => {
+                    if (user) {
+                      const uName = user.userName;
+                      if (message.user.username == uName){
+                          return;
+                      }
+                      message._id = message.messageId;
+                      this.onReceive(message);
+                      this.setState(previousState => ({
+                          messages: GiftedChat.append(previousState.messages, message),
+                      }))
+
+                    }
+                });
+                
+               
+            }
+        });
+      
+    }
+
 
     render() {
 
@@ -65,21 +121,20 @@ class ChatPage extends React.Component {
         const petCategory = pet.category;
         const navTitle = petName + " - " + petCategory;
   
-
+        console.log("Render:" + this.myUser);
         return (
             <View style={styles.mainContainer}>
 
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
-
                 <GiftedChat
                 messages={this.state.messages}
+                messageIdGenerator={this.messageIdGenerator} 
                 onSend={messages => this.onSend(messages)}
                 user={{
-                    _id: 1,
+                    username: this.myUser.userName,
+                    fullName: this.myUser.fullName
                 }}
             />
-
-
             </View>
         );
        
