@@ -273,7 +273,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "MainMenuPage"
+    initialRouteName: "RegistrationPage"
   }
 );
 

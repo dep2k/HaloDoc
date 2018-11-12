@@ -69,7 +69,7 @@ class ProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
   addButtonClick() {
-    this.props.navigation.navigate("PetCategoriesPage");
+    this.props.navigation.push("PetCategoriesPage");
   }
 
   listBtnClick(item) {

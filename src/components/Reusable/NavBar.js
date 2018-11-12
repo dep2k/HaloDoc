@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
   
 
     headerContainer: {
-
-        height: "10%",
+          height: 70,
+        //height: "10%",
         marginTop: 0,
         width: "100%",
         backgroundColor: "transparent",
