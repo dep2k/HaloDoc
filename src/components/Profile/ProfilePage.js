@@ -69,7 +69,7 @@ class ProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
   addButtonClick() {
-    this.props.navigation.navigate("PetCategoriesPage");
+    this.props.navigation.push("PetCategoriesPage");
   }
 
   listBtnClick(item) {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 80,
     height: 60,
-    marginRight: 20
+    marginRight: 35
   },
 
   imageBackgroundStyle: {
@@ -262,18 +262,19 @@ const styles = StyleSheet.create({
   },
 
   descriptionView: {
-    marginLeft: 20,
+    marginHorizontal: "8%",
+    width: "85%",
     marginTop: 50,
     height: 40,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center"
-    //backgroundColor: 'black'
+    alignItems: "center",
+   // backgroundColor: 'black'
   },
 
   handSymbol: {
     width: 35,
-    height: 35
+    height: 35,
   },
 
   myProfileText: {

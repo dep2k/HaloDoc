@@ -168,8 +168,102 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
 
+<<<<<<< HEAD
     contentView: {
         height: "90%"
+=======
+    petListContainer: {
+
+        marginTop: 50,
+        flexDirection: "column",
+        backgroundColor: "transparent",
+
+    },
+
+    listItemCotainer: {
+
+        flexDirection: "row",
+        height: 100,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "transparent"
+    },
+
+
+    petButtonContainer: {
+
+        flexDirection: "column",
+        width: "75%",
+        height: 40,
+        marginLeft: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "transparent",
+
+    },
+
+    petImageContainer: {
+        width: "25%",
+        height: 70,
+        marginLeft: 5,
+        marginBottom: 20,
+        backgroundColor: "transparent",
+        justifyContent: "center",
+        alignItems: "flex-start"
+    },
+
+
+    petCategoryText: {
+
+        fontSize: 12,
+        color: "black"
+
+    },
+
+    logoButton: {
+        height: "20%",
+        width: "25%",
+        // marginTop: "2%",
+        marginLeft: "70%",
+        backgroundColor: "transparent"
+    },
+
+    logoImage: {
+        alignSelf: 'flex-end',
+        resizeMode: "contain",
+        marginTop: 10,
+        width: 80,
+        height: 60,
+        marginRight: 35,
+
+    },
+
+    imageBackgroundStyle: {
+        width: "90%",
+        height: "100%",
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    imageBackgroundTextStyle: {
+        color: "white",
+        fontSize: 20
+    },
+    imageBackgroundImageStyle: {
+        borderRadius: 20
+    },
+
+
+    headerContainer: {
+
+        height: "10%",
+        marginTop: 0,
+        width: "100%",
+        backgroundColor: "transparent",
+        justifyContent: "center",
+        alignItems: "center"
+>>>>>>> RegisterationPage
     },
 
     questionAnswerView: {
