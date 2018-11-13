@@ -22,8 +22,13 @@ subscription SubscribeToCreateConversation {
 subscription SubscribeToNewMessage {
   subscribeToNewMessage(conversationId: "deep-Raman-1539409150214") {
     text
+    messageId
     conversationId
     createdAt
+    user {
+      username
+      fullName
+    }
   }
 }
 
@@ -39,7 +44,14 @@ mutation CreateMessage {
         fullName: "Some Doctor"},
     })
   {
+     text
+    messageId
+    conversationId
     createdAt
+    user {
+      username
+      fullName
+    }
   }
 }
 

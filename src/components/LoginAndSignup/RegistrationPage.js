@@ -103,7 +103,8 @@ class RegistrationPage extends React.Component {
               email: user.email,
               phone_number: user.phoneNo,
               given_name: user.firstName,
-              family_name: user.lastName
+              family_name: user.lastName,
+              'custom:userType': "USER"
 
               // other custom attributes
             }

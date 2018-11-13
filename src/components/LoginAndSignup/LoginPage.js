@@ -72,18 +72,31 @@ class LoginPage extends React.Component {
     if (user.username && user.password && user.password.length >= 8) {
       Auth.signIn(user.username, user.password)
         .then(data => {
+          this.closeActivityIndicator();
           console.log(data);
-          const payload = data.signInUserSession.idToken.payload;;
-          let cognitoUser = {
-            firstName: payload.given_name,
-            lastName: payload.family_name,
-            userName: user.username,  
-            phoneNo: payload.phone_number,
-            email: payload.email,
+          if(user.username == 'Admin'){
+            this.props.navigation.navigate("AdminMenuPage");
+          } else{
+            const payload = data.signInUserSession.idToken.payload;;
+            let cognitoUser = {
+              firstName: payload.given_name,
+              lastName: payload.family_name,
+              userName: user.username,  
+              phoneNo: payload.phone_number,
+              email: payload.email,
+              userType: payload['custom:userType']
+            }
+            console.log(cognitoUser);
+            Cache.setItem("User", cognitoUser);
+
+            if (cognitoUser.userType == "USER") {
+              this.props.navigation.navigate("MainMenuPage");
+            } else  {
+              this.props.navigation.navigate("DoctorConsultationsPage");
+            } 
+
           }
-          console.log(cognitoUser);
-          Cache.setItem("User", cognitoUser);
-          this.props.navigation.navigate("MainMenuPage");
+         
         })
         .catch(err => {
           console.log(err);
@@ -109,7 +122,7 @@ class LoginPage extends React.Component {
 
 
   goToAdminPanel() {
-    this.props.navigation.navigate("AdminLoginPage");
+  //  this.props.navigation.navigate("AdminLoginPage");
   }
 
   _onRegisterClick() {

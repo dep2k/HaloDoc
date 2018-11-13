@@ -135,7 +135,7 @@ class AvailableDoctorsPage extends React.Component {
                     this.props.navigation.navigate("VetNotificationPage",{
                       petInfo:pet,
                       chatId: id,
-                      user: user
+                    
                   });
                 }
             });

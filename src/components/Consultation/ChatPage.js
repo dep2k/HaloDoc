@@ -12,7 +12,7 @@ import {
     ActivityIndicator
 } from "react-native";
 
-import { GiftedChat, messageIdGenerator } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, messageIdGenerator } from 'react-native-gifted-chat'
 import { NavBar } from "../Reusable/NavBar";
 import { SubscriptionToNewMessage , CreateMessage} from "../../Queries/Chatapi";
 import Amplify, { API, graphqlOperation,Cache } from "aws-amplify";
@@ -57,6 +57,8 @@ class ChatPage extends React.Component {
     }
 
     onSend(messages = []) {
+
+        console.log("OnSendCalled");
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }))
@@ -73,10 +75,11 @@ class ChatPage extends React.Component {
        
     }
 
-    onReceive(message) {
+    onReceive(messages = []) {
        
+        console.log("OnReceiveCalled" + messages);
         this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, message),
+            messages: GiftedChat.append(previousState.messages, messages),
         }))
     }
 
@@ -99,10 +102,7 @@ class ChatPage extends React.Component {
                       }
                       message._id = message.messageId;
                       this.onReceive(message);
-                      this.setState(previousState => ({
-                          messages: GiftedChat.append(previousState.messages, message),
-                      }))
-
+                
                     }
                 });
                 
@@ -112,6 +112,34 @@ class ChatPage extends React.Component {
       
     }
 
+    renderBubble = (props) => {
+
+        let username = props.currentMessage.user.userName;
+        var color;
+        if (this.myUser.userName == username){
+            color = '#e67e22';
+        } else{
+            color = '#F3F6E7';
+        }
+       
+        return (
+          <Bubble
+            {...props}
+            textStyle={{
+              right: {
+                color: 'white',
+              },
+            }}
+            wrapperStyle={{
+              left: {
+                backgroundColor: color,
+              },
+            }}
+          />
+        );
+      }
+    
+      
 
     render() {
 
@@ -128,9 +156,11 @@ class ChatPage extends React.Component {
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
                 <GiftedChat
                 messages={this.state.messages}
+                renderBubble={this.renderBubble}
                 messageIdGenerator={this.messageIdGenerator} 
                 onSend={messages => this.onSend(messages)}
                 user={{
+                    _id: this.myUser.userName,
                     username: this.myUser.userName,
                     fullName: this.myUser.fullName
                 }}
