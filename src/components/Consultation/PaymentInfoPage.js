@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: 80,
         height: 60,
-        marginRight: 20,
+        marginRight: 35,
 
     },
 

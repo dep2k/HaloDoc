@@ -12,14 +12,22 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
+const base = "../../images/";
+const backButtonImage = require(base + "BackButtonShape.png");
+const backgroundImage = require(base + "newBackground.png");
 
 class ForgotPasswordPage extends React.Component {
   constructor(props) {
     super(props);
     this.backButtonClick = this.backButtonClick.bind(this);
+    this.onContinueClick = this.onContinueClick.bind(this);
+
   }
   backButtonClick() {
     this.props.navigation.goBack(null);
+  }
+  onContinueClick() {
+    console.log("continue button clicked")
   }
 
   render() {
@@ -27,7 +35,7 @@ class ForgotPasswordPage extends React.Component {
       //Background image for full screen
       <View style={styles.mainContainer}>
         <ImageBackground
-          source={require("../../images/newBackground.png")}
+          source={backgroundImage}
           style={styles.backgroundImage}
           imageStyle={styles.imageBackgroundImageStyle}
         >
@@ -38,7 +46,7 @@ class ForgotPasswordPage extends React.Component {
               onPress={this.backButtonClick}
             >
               <Image
-                source={require("../../images/backButton.png")}
+                source={backButtonImage}
                 style={styles.backButtonImage}
               />
             </TouchableOpacity>
@@ -69,11 +77,11 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   headerContainer: {
-    height: "12%",
+    height: 70,
     marginTop: 0,
     width: "100%",
-    // backgroundColor:"green",
-    justifyContent: "flex-end",
+    backgroundColor:"transparent",
+    justifyContent: "center",
     alignItems: "flex-start"
     //  marginBottom: "20%"
   },
@@ -99,17 +107,15 @@ const styles = StyleSheet.create({
   },
   backButtonStyle: {
     backgroundColor: "transparent",
-    width: "15%",
-    height: "80%",
-    marginLeft: 8,
-    justifyContent: "center",
-    alignItems: "center"
+    width: 30,
+    height: 30,
+    marginLeft: 20,
+    marginTop: 25
   },
   backButtonImage: {
-    width: "40%",
-    height: "50%",
-    justifyContent: "center",
-    alignItems: "center"
+    width: 30,
+    height: 30,
+    resizeMode: 'contain'
   },
   imageBackgroundImageStyle: {
     position: "absolute",

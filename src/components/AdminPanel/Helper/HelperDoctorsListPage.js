@@ -209,13 +209,13 @@ const styles = StyleSheet.create({
   doctorsDirectoryText: {
     fontSize: 21,
     color: "white",
-    marginTop: "10%"
+    marginTop: "10%",
+    marginBottom: 40
   },
   flatList: {
-   // backgroundColor: 'black',
     width: "100%",
-    marginTop: "13%"
-    // backgroundColor: 'green',
+   
+   // backgroundColor: 'green',
   },
   listCell: {
     flexDirection: "row",

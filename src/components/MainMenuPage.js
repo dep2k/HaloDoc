@@ -8,6 +8,7 @@ import {
   ImageBackground
 } from "react-native";
 import { I18n } from "aws-amplify";
+import {Cache} from "aws-amplify";
 import { imageLogo } from "../images/resource";
 
 
@@ -49,6 +50,8 @@ class MainMenuPage extends React.Component {
     //     ],
     //   }),
     // )
+    this.props.navigation.navigate("LoginPage");
+    Cache.clear();
   }
 
   consultBtnClick() {

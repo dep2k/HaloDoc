@@ -313,7 +313,7 @@ export const  setUpLanguage = () => {
         'RabiaFelina': "FELINE RABIA",
         'Influenza' : "INFLUENZA EQUINA",
         'Encephalitis': " ENCEPHALITIS EQUINA",
-        'Tetanus': "Tétano",
+        'Tetanus': "TETANO",
         'Date': "FECHA",
         'Despa': "DESPARACITACION",
         'Product': "PRODUCTO",

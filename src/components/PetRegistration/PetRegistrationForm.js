@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   ImageBackground
 } from "react-native";
+import { NavBar } from "../Reusable/NavBar";
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
@@ -65,7 +66,7 @@ class PetRegistrationForm extends React.Component {
 
     this.state = {
       pet: {
-        category: "felino",
+        category: "",
         petImage: "petImage",
         name: "",
         color: "",
@@ -121,7 +122,7 @@ class PetRegistrationForm extends React.Component {
       if (user) {
         const createPetInput = {
           username: user.userName,
-          category: this.state.pet.category,
+          category: this.petType,
           name: this.state.pet.name,
           race: this.state.raceText,
           gender: this.state.sexText,
@@ -183,12 +184,13 @@ class PetRegistrationForm extends React.Component {
   }
 
   saveAndRegisterButtonClick() {
+    this.startActivityIndicator();
+
     Cache.getItem("User").then(user => {
       if (user) {
-        this.startActivityIndicator();
         const createPetInput = {
           username: user.userName,
-          category: this.state.pet.category,
+          category: this.petType,
           name: this.state.pet.name,
           race: this.state.raceText,
           gender: this.state.sexText,
@@ -206,13 +208,32 @@ class PetRegistrationForm extends React.Component {
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
             console.log(response);
+            Alert.alert(
+              I18n.get("Success"),
+              I18n.get("RegistrationSuccessful"),
+              [
+                {
+                  text: "OK",
+                  onPress: () => this.props.navigation.goBack(null) 
+                }
+              ],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+            
           })
           .catch(err => {
             console.log(err);
+            Alert.alert(
+              "Error",
+              I18n.get("RegistrationUnsuccessful"),
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
           });
 
-        this.closeActivityIndicator();
-        this.props.navigation.goBack(null);
+       
       }
     });
   }
@@ -228,13 +249,13 @@ class PetRegistrationForm extends React.Component {
       this.setState({ vacYesChecked: !this.state.vacYesChecked });
     } else if (type == "vacNoButton") {
       this.setState({ vacNoChecked: !this.state.vacNoChecked });
-    } else if (type == "otherChecked") {
+    } else if (type == I18n.get("Other")) {
       this.setState({ otherChecked: !this.state.otherChecked });
-    } else if (type == "pvcChecked") {
+    } else if (type == I18n.get("PVC")) {
       this.setState({ pvcChecked: !this.state.pvcChecked });
-    } else if (type == "tripleChecked") {
+    } else if (type == I18n.get("Triple")) {
       this.setState({ tripleChecked: !this.state.tripleChecked });
-    } else if (type == "raceChecked") {
+    } else if (type == I18n.get("Rage")) {
       this.setState({ raceChecked: !this.state.raceChecked });
     } else if (type == "despaYesChecked") {
       this.setState({ despaYesChecked: !this.state.despaYesChecked });
@@ -261,7 +282,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick("pvcChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("PVC"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -281,7 +302,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick("tripleChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Triple"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -301,7 +322,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.raceChecked}
-              onPress={() => this.checkBoxClick("raceChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Rage"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -321,7 +342,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Other"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -557,8 +578,8 @@ class PetRegistrationForm extends React.Component {
             }
           </Modal>
         </TouchableWithoutFeedback>
-
-        <View style={styles.headerContainer}>
+        <NavBar onBackPress={this.backButtonClick} ></NavBar>
+        {/* <View style={styles.headerContainer}>
           <ImageBackground source={navBarImage} style={styles.headerImage}>
             <TouchableOpacity
               style={styles.backButtonStyle}
@@ -570,7 +591,7 @@ class PetRegistrationForm extends React.Component {
               />
             </TouchableOpacity>
           </ImageBackground>
-        </View>
+        </View> */}
         <Avatar
           large
           rounded
