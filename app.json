@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "Hola Vet",
+    "description": "Consulation app",
+    "ios": {
+      "bundleIdentifier": "com.app.holavet",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.app.holavet"
+    }
   }
 }

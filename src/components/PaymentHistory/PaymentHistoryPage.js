@@ -61,7 +61,7 @@ class PaymentHistoryPage extends React.Component {
   }
   componentDidMount() {
     this.startActivityIndicator();
-    const getConversations = { username: "deep" };
+    const getConversations = { username: "Deep2018" };
 
     API.graphql(graphqlOperation(GetConversation, getConversations))
       .then(response => {
