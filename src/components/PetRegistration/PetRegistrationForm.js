@@ -249,13 +249,13 @@ class PetRegistrationForm extends React.Component {
       this.setState({ vacYesChecked: !this.state.vacYesChecked });
     } else if (type == "vacNoButton") {
       this.setState({ vacNoChecked: !this.state.vacNoChecked });
-    } else if (type == "otherChecked") {
+    } else if (type == I18n.get("Other")) {
       this.setState({ otherChecked: !this.state.otherChecked });
-    } else if (type == "pvcChecked") {
+    } else if (type == I18n.get("PVC")) {
       this.setState({ pvcChecked: !this.state.pvcChecked });
-    } else if (type == "tripleChecked") {
+    } else if (type == I18n.get("Triple")) {
       this.setState({ tripleChecked: !this.state.tripleChecked });
-    } else if (type == "raceChecked") {
+    } else if (type == I18n.get("Rage")) {
       this.setState({ raceChecked: !this.state.raceChecked });
     } else if (type == "despaYesChecked") {
       this.setState({ despaYesChecked: !this.state.despaYesChecked });
@@ -282,7 +282,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick("pvcChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("PVC"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -302,7 +302,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick("tripleChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Triple"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -322,7 +322,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.raceChecked}
-              onPress={() => this.checkBoxClick("raceChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Rage"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
@@ -342,7 +342,7 @@ class PetRegistrationForm extends React.Component {
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
               checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
+              onPress={() => this.checkBoxClick(I18n.get("Other"))}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
