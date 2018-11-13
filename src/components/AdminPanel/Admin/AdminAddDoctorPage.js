@@ -88,7 +88,8 @@ class AdminAddDoctorPage extends React.Component {
             phone_number: doc.phoneNo,
             email: doc.adminEmail,
             given_name: "abcd",
-            family_name: "efgf"
+            family_name: "efgf",
+            userType: "DOCTOR"
           }
         })
           .then(data => {
