@@ -144,11 +144,12 @@ class ChatPage extends React.Component {
     render() {
 
         const { navigation } = this.props;
-        const pet = navigation.getParam('petInfo');
-        const petName = pet.name;
-        const petCategory = pet.category;
-        const navTitle = petName + " - " + petCategory;
+        // const pet = navigation.getParam('petInfo');
+        // const petName = pet.name;
+        // const petCategory = pet.category;
+        // const navTitle = petName + " - " + petCategory;
   
+        const navTitle = "";
         console.log("Render:" + this.myUser);
         return (
             <View style={styles.mainContainer}>

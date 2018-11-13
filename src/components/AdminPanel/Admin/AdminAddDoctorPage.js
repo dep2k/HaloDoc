@@ -28,18 +28,18 @@ class AdminAddDoctorPage extends React.Component {
     super(props);
     this.state = {
       doctor: {
-        name: "",
-        speciality: "",
+        name: "TestDoctor1",
+        speciality: "Dog",
         profilePic: "",
-        registrationId: "",
-        phoneNo: "",
-        email: "",
-        homeTown: "",
-        medicalCenter: "",
-        department: "",
-        address: "",
-        password: "",
-        adminEmail: ""
+        registrationId: "RegId-19191",
+        phoneNo: "+918198823801",
+        email: "deep.mobdev@gmail.com",
+        homeTown: "Bangalore",
+        medicalCenter: "Motherhood",
+        department: "Dog Wing",
+        address: "Sarjapur",
+        password: "TestDoctor1",
+        adminEmail: "deep.mobdev@gmail.com"
       },
       animating: false
     };
@@ -66,6 +66,7 @@ class AdminAddDoctorPage extends React.Component {
   _addDoctor() {
     const doc = this.state.doctor;
     const createDoctorInput = {
+      doctorId: this.state.doctor.name,
       name: this.state.doctor.name,
       speciality: this.state.doctor.speciality,
       profilePic: "profilePic",
@@ -76,9 +77,22 @@ class AdminAddDoctorPage extends React.Component {
       homeTown: this.state.doctor.homeTown,
       medicalCenter: this.state.doctor.medicalCenter,
       department: this.state.doctor.department,
-      address: this.state.doctor.address
+      address: this.state.doctor.address,
     };
     this.startActivityIndicator();
+
+    console.log(createDoctorInput);
+    // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
+    // .then(response => {
+    //   this.closeActivityIndicator();
+    //   console.log(response);
+    // })
+    // .catch(err => {
+    //   this.closeActivityIndicator();
+    //   console.log(err);
+    // });
+
+    
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
         Auth.signUp({
@@ -89,7 +103,7 @@ class AdminAddDoctorPage extends React.Component {
             email: doc.adminEmail,
             given_name: "abcd",
             family_name: "efgf",
-            userType: "DOCTOR"
+            'custom:userType': "DOCTOR"
           }
         })
           .then(data => {

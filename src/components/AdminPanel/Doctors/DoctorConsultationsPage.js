@@ -8,48 +8,41 @@ import {
   ImageBackground,
   FlatList
 } from "react-native";
-import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import Loader from "../../ActivityIndicator";
-//import listdata from "../../data/felinoRaceListData";
-import { GetConversation } from "../../Queries/Chatapi";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { Avatar } from "react-native-elements";
-import { NavBar } from "../Reusable/NavBar";
 
-const base = "../../images/";
-const myProfileImage = require(base + "myProfileImage.png");
-const historyIcon = require(base + "HistoryIcon.png");
+import Loader from "../../../ActivityIndicator";
+import { GetConversation, SubscriptionToCreateConversation } from "../../../Queries/Chatapi";
+import Amplify, { Cache, I18n, Auth, API, graphqlOperation } from "aws-amplify";
+import { NavBar } from "../../Reusable/NavBar";
+
 
 
 
 class DataListItem extends React.Component {
-    render() {
-        return (
-            <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-                    <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
-                    <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
-                    <Text style={styles.nameText}>{this.props.item.payment}</Text>
-                    <View style={styles.listSeperationLine}></View>
-                <Text style={styles.statusText}>{this.props.item.status}</Text>
-            </TouchableOpacity>
-        );
-    }
+  render() {
+    return (
+      <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
+        <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
+        <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
+        <Text style={styles.nameText}>{this.props.item.payment}</Text>
+        <View style={styles.listSeperationLine}></View>
+        <Text style={styles.statusText}>{this.props.item.status}</Text>
+      </TouchableOpacity>
+    );
+  }
 }
 
 class DoctorConsultationsPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true,
-    conversationListData: [],
-    animating: false
+    this.state = {
+      isLoading: true,
+      conversationListData: [],
+      animating: false
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
+
   }
 
   startActivityIndicator() {
@@ -59,10 +52,25 @@ class DoctorConsultationsPage extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
-  componentDidMount() {
-    this.startActivityIndicator();
-    const getConversations = { username: "deep" };
 
+  subscribeForNewConsultations(username) {
+    const subscriptionInput = {
+      doctorId: username
+    };
+
+    this.subscription = API.graphql(graphqlOperation(SubscriptionToCreateConversation, subscriptionInput)
+    ).subscribe({
+      next: (response) => {
+        console.log(response);
+       // var message = response.value.data.subscribeToNewMessage;
+        console.log(response);
+      }
+    });
+
+  }
+
+  getConversations(uName) {
+    const getConversations = { username: uName };
     API.graphql(graphqlOperation(GetConversation, getConversations))
       .then(response => {
         console.log("got conversation");
@@ -77,6 +85,16 @@ class DoctorConsultationsPage extends React.Component {
         console.log(err);
         this.closeActivityIndicator();
       });
+
+  }
+
+  componentDidMount() {
+    this.startActivityIndicator();
+    Cache.getItem('User').then(user => {
+      console.log(user);
+      this.subscribeForNewConsultations(user.userName);
+      this.getConversations(user.userName)
+    });
   }
 
 
@@ -87,11 +105,21 @@ class DoctorConsultationsPage extends React.Component {
   backButtonClick() {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
+
   }
 
   listBtnClick(item) {
     console.log("List Btn Click");
     console.log(item);
+    const id = item.username + "-" + item.createdAt;
+    Cache.getItem('User').then(user => {
+      if (user) {
+        this.props.navigation.navigate("ChatPage", {
+          chatId: id,
+          user: user
+        });
+      }
+    });
   }
 
   render() {
@@ -99,10 +127,8 @@ class DoctorConsultationsPage extends React.Component {
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
 
-        <Image source={logoImage} style={styles.logoImage} />
 
         <View style={styles.descriptionView}>
-          <Image source={historyIcon} style={styles.handSymbol} />
 
           <Text style={styles.historyText}>
             {I18n.get("HistoryOfConsultaions")}
@@ -113,14 +139,15 @@ class DoctorConsultationsPage extends React.Component {
           style={styles.listContainer}
           data={this.state.conversationListData}
           keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => {
-                    return (
-                        <DataListItem
-                            item={item}
-                            index={index}
-                        />
-                    );
-                }}
+          renderItem={({ item, index }) => {
+            return (
+              <DataListItem
+                onPress={() => this.listBtnClick(item)}
+                item={item}
+                index={index}
+              />
+            );
+          }}
         />
       </View>
     );
@@ -237,12 +264,12 @@ const styles = StyleSheet.create({
     marginHorizontal: "5%"
     // backgroundColor: "black"
   },
-    statusText:{
-        color: 'darkgrey',
-        fontSize: 13,
-        alignSelf: 'flex-end'
-    }
-  
+  statusText: {
+    color: 'darkgrey',
+    fontSize: 13,
+    alignSelf: 'flex-end'
+  }
+
 });
 
 export default DoctorConsultationsPage;

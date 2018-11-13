@@ -101,7 +101,7 @@ getConversations(username: $username) {
                name
            }
         }
-}
+    }
 }`;
 
 
@@ -113,23 +113,6 @@ export const SubscriptionToCreateConversation = `subscription SubscribeToCreateC
       fullName
       type
     }
-    pet {
-      category
-      name
-      race
-      sex
-      age
-      origin
-      use
-      background
-      weight
-    }
-      doctor {
-      name
-      speciality
-      doctorId
-    }
-    doctorId
   }}`;
 
 
