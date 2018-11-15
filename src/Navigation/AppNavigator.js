@@ -273,7 +273,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "WelcomeMessage"
+    initialRouteName: "RegistrationPage"
   }
 );
 
