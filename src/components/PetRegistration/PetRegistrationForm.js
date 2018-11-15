@@ -145,7 +145,7 @@ class PetRegistrationForm extends React.Component {
   // }
 
   saveButtonClick() {
-    this.startActivityIndicator();
+   // this.startActivityIndicator();
     const petInput = {
       dogVaccinations: {
         Pvc: {
@@ -160,8 +160,8 @@ class PetRegistrationForm extends React.Component {
       this.state.pet.feeding,
       this.state.pet.date,
       this.state.pet.product
-
     )
+    this.props.navigation.navigate("MainMenuPage");
     // if (
     //   this.state.value == 0 &&
     //   this.state.pet.catVaccinations &&
@@ -220,56 +220,57 @@ class PetRegistrationForm extends React.Component {
   }
 
   saveAndRegisterButtonClick() {
-    this.startActivityIndicator();
+    this.props.navigation.goBack(null)
+    // this.startActivityIndicator();
 
-    Cache.getItem("User").then(user => {
-      if (user) {
-        const createPetInput = {
-          username: user.userName,
-          category: this.petType,
-          name: this.state.pet.name,
-          race: this.state.raceText,
-          gender: this.state.sexText,
-          age: this.state.pet.age,
-          origin: this.state.pet.origin,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          petImage: this.state.pet.petImage,
-          color: this.state.pet.color,
-          date: this.state.pet.date,
-          feeding: this.state.pet.feeding,
-          catVaccinations: {},
-          vaccinations: [{ name: "PVC", date: "254534" }]
-        };
-        API.graphql(graphqlOperation(CreatePet, createPetInput))
-          .then(response => {
-            console.log(response);
-            Alert.alert(
-              I18n.get("Success"),
-              I18n.get("RegistrationSuccessful"),
-              [
-                {
-                  text: "OK",
-                  onPress: () => this.props.navigation.goBack(null)
-                }
-              ],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          })
-          .catch(err => {
-            console.log(err);
-            Alert.alert(
-              "Error",
-              I18n.get("RegistrationUnsuccessful"),
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          });
-      }
-    });
+    // Cache.getItem("User").then(user => {
+    //   if (user) {
+    //     const createPetInput = {
+    //       username: user.userName,
+    //       category: this.petType,
+    //       name: this.state.pet.name,
+    //       race: this.state.raceText,
+    //       gender: this.state.sexText,
+    //       age: this.state.pet.age,
+    //       origin: this.state.pet.origin,
+    //       use: this.state.pet.use,
+    //       background: this.state.pet.background,
+    //       weight: this.state.pet.weight,
+    //       petImage: this.state.pet.petImage,
+    //       color: this.state.pet.color,
+    //       date: this.state.pet.date,
+    //       feeding: this.state.pet.feeding,
+    //       catVaccinations: {},
+    //       vaccinations: [{ name: "PVC", date: "254534" }]
+    //     };
+    //     API.graphql(graphqlOperation(CreatePet, createPetInput))
+    //       .then(response => {
+    //         console.log(response);
+    //         Alert.alert(
+    //           I18n.get("Success"),
+    //           I18n.get("RegistrationSuccessful"),
+    //           [
+    //             {
+    //               text: "OK",
+    //               onPress: () => this.props.navigation.goBack(null)
+    //             }
+    //           ],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //         Alert.alert(
+    //           "Error",
+    //           I18n.get("RegistrationUnsuccessful"),
+    //           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       });
+    //   }
+    // });
   }
   //  componentDidMount(){
   //    this.startActivityIndicator();
