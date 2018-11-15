@@ -71,25 +71,34 @@ class PetRegistrationForm extends React.Component {
         name: "",
         color: "",
         age: "",
-        origin: "Origin",
+        origin: "",
         product: "",
         date: "",
-        feeding: "feeding",
+        feeding: "",
         use: "Use",
         background: "Background",
         weight: "20Kg",
-        vaccinations: [{ name: "PVC", date: "234567" }]
+        dogVaccinations: {
+          Pvc: { isChecked: false, date: null, name: null },
+          Triple: { isChecked: false, date: null, name: null },
+          Rage: { isChecked: false, date: null, name: null },
+          Other: { isChecked: false, date: null, name: null }
+        },
+        catVaccinations: {
+          TripleViral: { isChecked: false, date: null, name: null },
+          FelineRage: { isChecked: false, date: null, name: null },
+          Other: { isChecked: false, date: null, name: null }
+        },
+        horseVaccinations: {
+          Influenza: { isChecked: false, date: null, name: null },
+          Tetanus: { isChecked: false, date: null, name: null },
+          Encephalitis: { isChecked: false, date: null, name: null },
+          Other: { isChecked: false, date: null, name: null }
+        }
       },
-      value: 0,
+      vaccvalue: 0,
+      despavalue: 0,
       animating: false,
-      vacYesChecked: true,
-      vacNoChecked: false,
-      otherChecked: false,
-      pvcChecked: false,
-      tripleChecked: false,
-      raceChecked: false,
-      despaYesChecked: true,
-      despaNoChecked: false,
       modalVisible: false,
       dropDownData: [],
       dataType: "",
@@ -106,6 +115,7 @@ class PetRegistrationForm extends React.Component {
       this
     );
     this.listButtonClick = this.listButtonClick.bind(this);
+   // this.noDespaClick = this.noDespaClick.bind(this);
   }
   startActivityIndicator() {
     this.setState({ animating: true });
@@ -115,72 +125,98 @@ class PetRegistrationForm extends React.Component {
     this.setState({ animating: false });
   }
 
+  // noValueForDespa() {
+  //   if (despavalue == 1) {
+
+  //   }
+  // }
+
+  // noDespaClick() {
+  //   if (this.state.despavalue == 1) {
+  //     this.setState(
+  //       state => (
+  //         (state.pet.product = null),
+  //         (state.pet.feeding = null),
+  //         (state.pet.date = null),
+  //         state
+  //       )
+  //     );
+  //   }
+  // }
+
   saveButtonClick() {
     this.startActivityIndicator();
-
-    Cache.getItem("User").then(user => {
-      if (user) {
-        const createPetInput = {
-          username: user.userName,
-          category: this.petType,
-          name: this.state.pet.name,
-          race: this.state.raceText,
-          gender: this.state.sexText,
-          age: this.state.pet.age,
-          origin: this.state.pet.origin,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          petImage: this.state.pet.petImage,
-          color: this.state.pet.color,
-          date: this.state.pet.date,
-          feeding: this.state.pet.feeding,
-          vaccinations: [{ name: "PVC", date: "234567" }]
-        };
-        API.graphql(graphqlOperation(CreatePet, createPetInput))
-          .then(response => {
-            console.log(response);
-            Alert.alert(
-              I18n.get("Success"),
-              I18n.get("RegistrationSuccessful"),
-              [
-                {
-                  text: "OK",
-                  onPress: () => this.props.navigation.navigate("MainMenuPage")
-                }
-              ],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          })
-          .catch(err => {
-            console.log(err);
-            Alert.alert(
-              "Error",
-              I18n.get("RegistrationUnsuccessful"),
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          });
+    const petInput = {
+      dogVaccinations: {
+        Pvc: {
+          isChecked: this.state.pet.dogVaccinations.Pvc.isChecked,
+          name: this.state.pet.dogVaccinations.Pvc.name,
+          date: this.state.pet.dogVaccinations.Pvc.date
+        }
       }
-    });
-    // username: user.userName,
-    // category: this.state.pet.category,
-    // petImage: this.state.pet.petImage,
-    // name: this.state.pet.firstName,
-    // race: this.state.raceText,
-    // color: this.state.pet.color,
-    // gender: this.state.sexText,
-    // age: this.state.pet.age,
-    // origin: this.state.pet.origin,
-    // product: this.state.pet.product,
-    // date: this.state.pet.product,
-    // feeding: this.state.pet.feeding,
-    // use: this.state.pet.use,
-    // background: this.state.pet.background,
-    // weight: this.state.pet.weight,
-    // vaccinations: this.state.pet.vaccinations
+    };
+    console.log(petInput)
+    console.log(
+      this.state.pet.feeding,
+      this.state.pet.date,
+      this.state.pet.product
+
+    )
+    // if (
+    //   this.state.value == 0 &&
+    //   this.state.pet.catVaccinations &&
+    //   this.state.pet.dogVaccinations &&
+    //   this.state.pet.horseVaccinations
+    // ) {
+    // }
+
+    // Cache.getItem("User").then(user => {
+    //   if (user) {
+    //     const createPetInput = {
+    //       username: "TestUser",
+    //       category: this.petType,
+    //       name: this.state.pet.name,
+    //       race: this.state.raceText,
+    //       gender: this.state.sexText,
+    //       age: this.state.pet.age,
+    //       origin: this.state.pet.origin,
+    //       use: this.state.pet.use,
+    //       background: this.state.pet.background,
+    //       weight: this.state.pet.weight,
+    //       petImage: this.state.pet.petImage,
+    //       color: this.state.pet.color,
+    //       date: this.state.pet.date,
+    //       feeding: this.state.pet.feeding,
+    //       vaccinations: this.state.pet.vaccinations
+    //     };
+    //     API.graphql(graphqlOperation(CreatePet, createPetInput))
+    //       .then(response => {
+    //         console.log(response);
+    //         Alert.alert(
+    //           I18n.get("Success"),
+    //           I18n.get("RegistrationSuccessful"),
+    //           [
+    //             {
+    //               text: "OK",
+    //               onPress: () => this.props.navigation.navigate("MainMenuPage")
+    //             }
+    //           ],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //         Alert.alert(
+    //           "Error",
+    //           I18n.get("RegistrationUnsuccessful"),
+    //           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       });
+    //   }
+    // });
   }
 
   saveAndRegisterButtonClick() {
@@ -203,7 +239,8 @@ class PetRegistrationForm extends React.Component {
           color: this.state.pet.color,
           date: this.state.pet.date,
           feeding: this.state.pet.feeding,
-          vaccinations: [{ name: "PVC", date: "234567" }]
+          catVaccinations: {},
+          vaccinations: [{ name: "PVC", date: "254534" }]
         };
         API.graphql(graphqlOperation(CreatePet, createPetInput))
           .then(response => {
@@ -214,13 +251,12 @@ class PetRegistrationForm extends React.Component {
               [
                 {
                   text: "OK",
-                  onPress: () => this.props.navigation.goBack(null) 
+                  onPress: () => this.props.navigation.goBack(null)
                 }
               ],
               { cancelable: false }
             );
             this.closeActivityIndicator();
-            
           })
           .catch(err => {
             console.log(err);
@@ -232,8 +268,6 @@ class PetRegistrationForm extends React.Component {
             );
             this.closeActivityIndicator();
           });
-
-       
       }
     });
   }
@@ -244,32 +278,108 @@ class PetRegistrationForm extends React.Component {
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
+
   checkBoxClick(type) {
-    if (type == "vacYesButton") {
-      this.setState({ vacYesChecked: !this.state.vacYesChecked });
-    } else if (type == "vacNoButton") {
-      this.setState({ vacNoChecked: !this.state.vacNoChecked });
-    } else if (type == I18n.get("Other")) {
-      this.setState({ otherChecked: !this.state.otherChecked });
-    } else if (type == I18n.get("PVC")) {
-      this.setState({ pvcChecked: !this.state.pvcChecked });
-    } else if (type == I18n.get("Triple")) {
-      this.setState({ tripleChecked: !this.state.tripleChecked });
-    } else if (type == I18n.get("Rage")) {
-      this.setState({ raceChecked: !this.state.raceChecked });
-    } else if (type == "despaYesChecked") {
-      this.setState({ despaYesChecked: !this.state.despaYesChecked });
-    } else if (type == "despaNoChecked") {
-      this.setState({ despaNoChecked: !this.state.despaNoChecked });
+    if (this.state.vaccvalue == 0) {
+      if (type == "CatOther") {
+        this.setState(
+          state => (
+            (state.pet.catVaccinations.Other.isChecked = !this.state.pet
+              .catVaccinations.Other.isChecked),
+            state
+          )
+        );
+      } else if (type == "TripleViral") {
+        this.setState(
+          state => (
+            (state.pet.catVaccinations.TripleViral.isChecked = !this.state.pet
+              .catVaccinations.TripleViral.isChecked),
+            state
+          )
+        );
+      } else if (type == "FelineRage") {
+        this.setState(
+          state => (
+            (state.pet.catVaccinations.FelineRage.isChecked = !this.state.pet
+              .catVaccinations.FelineRage.isChecked),
+            state
+          )
+        );
+      } else if (type == "DogOther") {
+        this.setState(
+          state => (
+            (state.pet.dogVaccinations.Other.isChecked = !this.state.pet
+              .dogVaccinations.Other.isChecked),
+            state
+          )
+        );
+      } else if (type == "PVC") {
+        this.setState(
+          state => (
+            (state.pet.dogVaccinations.Pvc.isChecked = !this.state.pet
+              .dogVaccinations.Pvc.isChecked),
+            state
+          )
+        );
+      } else if (type == "Rage") {
+        this.setState(
+          state => (
+            (state.pet.dogVaccinations.Rage.isChecked = !this.state.pet
+              .dogVaccinations.Rage.isChecked),
+            state
+          )
+        );
+      } else if (type == "Triple") {
+        this.setState(
+          state => (
+            (state.pet.dogVaccinations.Triple.isChecked = !this.state.pet
+              .dogVaccinations.Triple.isChecked),
+            state
+          )
+        );
+      } else if (type == "Influenza") {
+        this.setState(
+          state => (
+            (state.pet.horseVaccinations.Influenza.isChecked = !this.state.pet
+              .horseVaccinations.Influenza.isChecked),
+            state
+          )
+        );
+      } else if (type == "Tetanus") {
+        this.setState(
+          state => (
+            (state.pet.horseVaccinations.Tetanus.isChecked = !this.state.pet
+              .horseVaccinations.Tetanus.isChecked),
+            state
+          )
+        );
+      } else if (type == "Encephalitis") {
+        this.setState(
+          state => (
+            (state.pet.horseVaccinations.Encephalitis.isChecked = !this.state
+              .pet.horseVaccinations.Encephalitis.isChecked),
+            state
+          )
+        );
+      } else if (type == "Other") {
+        this.setState(
+          state => (
+            (state.pet.horseVaccinations.Other.isChecked = !this.state.pet
+              .horseVaccinations.Other.isChecked),
+            state
+          )
+        );
+      }
     }
   }
+
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
 
   renderVaccinationForm() {
     console.log(this.petType);
-    if (this.petType == "cat") {
+    if (this.petType == "dog") {
       return (
         <View style={styles.vaccinationContainer}>
           <View style={styles.firstTextInputContainer}>
@@ -281,14 +391,19 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick(I18n.get("PVC"))}
+              checked={this.state.pet.dogVaccinations.Pvc.isChecked}
+              onPress={() => this.checkBoxClick("PVC")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.pet.dogVaccinations.Pvc.date = text), state)
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -301,14 +416,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick(I18n.get("Triple"))}
+              checked={this.state.pet.dogVaccinations.Triple.isChecked}
+              onPress={() => this.checkBoxClick("Triple")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.dogVaccinations.Triple.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -321,14 +443,19 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.raceChecked}
-              onPress={() => this.checkBoxClick(I18n.get("Rage"))}
+              checked={this.state.pet.dogVaccinations.Rage.isChecked}
+              onPress={() => this.checkBoxClick("Rage")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => ((state.pet.dogVaccinations.Rage.date = text), state)
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -341,24 +468,31 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick(I18n.get("Other"))}
+              checked={this.state.pet.dogVaccinations.Other.isChecked}
+              onPress={() => this.checkBoxClick("DogOther")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.dogVaccinations.Other.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.vaccinationLastLine} />
         </View>
       );
-    } else if (this.petType == "dog") {
+    } else if (this.petType == "cat") {
       return (
         <View style={styles.vaccinationContainer}>
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("TripleFeline")}</Text>
+            <Text style={styles.pvcText}>{I18n.get("TripleViral")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -366,19 +500,26 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick("pvcChecked")}
+              checked={this.state.pet.catVaccinations.TripleViral.isChecked}
+              onPress={() => this.checkBoxClick("TripleViral")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.catVaccinations.TripleViral.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("RabiaFelina")}</Text>
+            <Text style={styles.pvcText}>{I18n.get("FelineRage")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -386,14 +527,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick("tripleChecked")}
+              checked={this.state.pet.catVaccinations.FelineRage.isChecked}
+              onPress={() => this.checkBoxClick("FelineRage")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.catVaccinations.FelineRage.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -407,13 +555,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
+              checked={this.state.pet.catVaccinations.Other.isChecked}
+              onPress={() => this.checkBoxClick("CatOther")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.catVaccinations.Other.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.vaccinationLastLine} />
@@ -431,14 +587,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.pvcChecked}
-              onPress={() => this.checkBoxClick("pvcChecked")}
+              checked={this.state.pet.horseVaccinations.Influenza.isChecked}
+              onPress={() => this.checkBoxClick("Influenza")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.horseVaccinations.Influenza.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -451,14 +614,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.tripleChecked}
-              onPress={() => this.checkBoxClick("tripleChecked")}
+              checked={this.state.pet.horseVaccinations.Tetanus.isChecked}
+              onPress={() => this.checkBoxClick("Tetanus")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.horseVaccinations.Tetanus.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -472,13 +642,22 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
+              checked={this.state.pet.horseVaccinations.Encephalitis.isChecked}
+              onPress={() => this.checkBoxClick("Encephalitis")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.horseVaccinations.Encephalitis.date = text),
+                    state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.vaccinationLastLine} />
@@ -491,13 +670,21 @@ class PetRegistrationForm extends React.Component {
               checkedColor="grey"
               uncheckedColor="grey"
               uncheckedIcon="circle-o"
-              checked={this.state.otherChecked}
-              onPress={() => this.checkBoxClick("otherChecked")}
+              checked={this.state.pet.horseVaccinations.Other.isChecked}
+              onPress={() => this.checkBoxClick("Other")}
             />
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
+              placeholderTextColor={"grey"}
+              onChangeText={text =>
+                this.setState(
+                  state => (
+                    (state.pet.horseVaccinations.Other.date = text), state
+                  )
+                )
+              }
             />
           </View>
           <View style={styles.vaccinationLastLine} />
@@ -578,7 +765,7 @@ class PetRegistrationForm extends React.Component {
             }
           </Modal>
         </TouchableWithoutFeedback>
-        <NavBar onBackPress={this.backButtonClick} ></NavBar>
+        <NavBar onBackPress={this.backButtonClick} />
         {/* <View style={styles.headerContainer}>
           <ImageBackground source={navBarImage} style={styles.headerImage}>
             <TouchableOpacity
@@ -732,7 +919,37 @@ class PetRegistrationForm extends React.Component {
             buttonOuterSize={20}
             animation={true}
             onPress={value => {
-              this.setState({ value: value });
+              this.setState({ vaccvalue: value });
+              console.log(value);
+              if (value == 1) {
+                this.setState(
+                  state => (
+                    ((state.pet.catVaccinations.FelineRage.isChecked = false),
+                    (state.pet.catVaccinations.FelineRage.date = null)),
+                    ((state.pet.catVaccinations.TripleViral.isChecked = false),
+                    (state.pet.catVaccinations.TripleViral.date = null)),
+                    ((state.pet.catVaccinations.Other.isChecked = false),
+                    (state.pet.catVaccinations.Other.date = null)),
+                    ((state.pet.dogVaccinations.Pvc.isChecked = false),
+                    (state.pet.dogVaccinations.Pvc.date = null)),
+                    ((state.pet.dogVaccinations.Triple.isChecked = false),
+                    (state.pet.dogVaccinations.Triple.date = null)),
+                    ((state.pet.dogVaccinations.Rage.isChecked = false),
+                    (state.pet.dogVaccinations.Rage.date = null)),
+                    ((state.pet.dogVaccinations.Other.isChecked = false),
+                    (state.pet.dogVaccinations.Other.date = null)),
+                    ((state.pet.horseVaccinations.Other.isChecked = false),
+                    (state.pet.horseVaccinations.Other.date = null)),
+                    ((state.pet.horseVaccinations.Influenza.isChecked = false),
+                    (state.pet.horseVaccinations.Influenza.date = null)),
+                    ((state.pet.horseVaccinations.Tetanus.isChecked = false),
+                    (state.pet.horseVaccinations.Tetanus.date = null)),
+                    ((state.pet.horseVaccinations.Encephalitis.isChecked = false),
+                    (state.pet.horseVaccinations.Encephalitis.date = null)),
+                    state
+                  )
+                );
+              }
             }}
           />
         </View>
@@ -756,9 +973,19 @@ class PetRegistrationForm extends React.Component {
             buttonOuterSize={20}
             animation={true}
             onPress={value => {
-              this.setState({ value: value });
+              this.setState({ despavalue: value });
+              console.log(value);
+              if (value == 1) {
+                this.setState(
+                  state => (
+                    (state.pet.product = null),
+                    (state.pet.feeding = null),
+                    (state.pet.date = null),
+                    state
+                  )
+                );
+              }
             }}
-      
           />
         </View>
         <View style={styles.despaContainer}>
@@ -780,9 +1007,13 @@ class PetRegistrationForm extends React.Component {
               style={styles.vaccAndDespatextInputStyle}
               placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
-              onChangeText={text =>
-                this.setState(state => ((state.pet.date = text), state))
-              }
+              onChangeText={text => {
+                if (this.state.despavalue == 0) {
+                  this.setState(state => ((state.pet.date = text), state));
+                } else if (this.state.despavalue == 1) {
+                  this.setState(state => ((state.pet.date = null), state));
+                }
+              }}
             />
           </View>
           <View style={styles.lastLineStyle} />
@@ -792,9 +1023,13 @@ class PetRegistrationForm extends React.Component {
               style={styles.productTextInputStyle}
               placeholder={I18n.get("Feeding")}
               placeholderTextColor={"grey"}
-              onChangeText={text =>
-                this.setState(state => ((state.pet.feeding = text), state))
-              }
+              onChangeText={text => {
+                if (this.state.despavalue == 0) {
+                  this.setState(state => ((state.pet.feeding = text), state));
+                } else if (this.state.despavalue == 1) {
+                  this.setState(state => ((state.pet.feeding = null), state));
+                }
+              }}
             />
           </View>
           <View style={styles.vaccinationLastLine} />
