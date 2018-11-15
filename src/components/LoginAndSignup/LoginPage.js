@@ -94,7 +94,8 @@ class LoginPage extends React.Component {
           Alert.alert(
             "Error",
             I18n.get("Username and Password are not correct"),
-            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            [{ text: "OK",
+             onPress: () => console.log("OK Pressed") }],
             { cancelable: false }
           );
           this.closeActivityIndicator();

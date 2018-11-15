@@ -26,20 +26,35 @@ const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const addIcon = require(base + "addIcon.png");
 const editIcon = require(base + "editIcon.png")
+import Loader from "../../ActivityIndicator";
 
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, dataSource: [] };
+    this.state = { dataSource: [] };
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
     this.editButtonClick = this.editButtonClick.bind(this);
+  }
 
-    const getPetsInput = {
-      username: "deep"
-    };
+  editButtonClick() {
+    this.props.navigation.navigate("UpdateProfilePage");
+  }
+  petButtonClick() {
+    // this.props.navigation.navigate("HelperHistoryPage");
+  }
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
+
+  closeActivityIndicator() {
+    this.setState({ animating: false });
+  }
+  componentDidMount() {
+    this.startActivityIndicator();
+    const getPetsInput = { username: "deep" };
 
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {
@@ -50,20 +65,14 @@ class ProfilePage extends React.Component {
           isLoading: false,
           dataSource: response.data.getPets.items
         });
+        this.closeActivityIndicator();
       })
       .catch(err => {
         console.log("Failed to add doctor");
         console.log(err);
+        this.closeActivityIndicator();
       });
   }
-
-  editButtonClick(){
-    this.props.navigation.navigate("UpdateProfilePage");
-  }
-  petButtonClick() {
-    // this.props.navigation.navigate("HelperHistoryPage");
-  }
-
   backButtonClick() {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
@@ -142,6 +151,7 @@ class ProfilePage extends React.Component {
             {I18n.get("EditProfile")}
           </Text>
         </TouchableOpacity>
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }

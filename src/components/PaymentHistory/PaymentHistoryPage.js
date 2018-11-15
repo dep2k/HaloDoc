@@ -20,6 +20,7 @@ import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import { Cache } from "aws-amplify";
 
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
@@ -44,7 +45,7 @@ class DataListItem extends React.Component {
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true,
+    this.state = {
     conversationListData: [],
     animating: false
     };
@@ -59,9 +60,18 @@ class PaymentHistoryPage extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
+
+
   componentDidMount() {
     this.startActivityIndicator();
-    const getConversations = { username: "Deep2018" };
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const username = {
+          username: user.userName,
+         };
+   
+    const getConversations = { username: username }
+   
 
     API.graphql(graphqlOperation(GetConversation, getConversations))
       .then(response => {
@@ -71,14 +81,18 @@ class PaymentHistoryPage extends React.Component {
           conversationListData: response.data.getConversations.items
         });
         this.closeActivityIndicator();
+        console.log(username);
       })
       .catch(err => {
         console.log("Failed to show list");
         console.log(err);
         this.closeActivityIndicator();
       });
-  }
-
+        
+    }
+      
+  })
+}
 
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");
@@ -122,6 +136,7 @@ class PaymentHistoryPage extends React.Component {
                     );
                 }}
         />
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }

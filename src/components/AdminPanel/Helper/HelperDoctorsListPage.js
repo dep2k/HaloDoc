@@ -96,11 +96,10 @@ class HelperDoctorsListPage extends React.Component {
   backButtonClick() {
     this.props.navigation.goBack(null);
   }
-  _handleRowClick(data) {
-  
-    // this.props.navigation.setParams({ itemId: "6" });
-   
-    this.props.navigation.navigate("VetProfile");
+
+  _handleRowClick(item) {
+    console.log(item);
+    this.props.navigation.navigate("VetProfile", { docInfo: item });
   }
 
   logOutButtonClick() {
@@ -147,7 +146,7 @@ class HelperDoctorsListPage extends React.Component {
               renderItem={({ item, index }) => {
                 return (
                   <DataListItem
-                    onPress={this._handleRowClick}
+                    onPress={() => this._handleRowClick(item)}
                     item={item}
                     index={index}
                   />
@@ -214,8 +213,8 @@ const styles = StyleSheet.create({
   },
   flatList: {
     width: "100%",
-   
-   // backgroundColor: 'green',
+
+    // backgroundColor: 'green',
   },
   listCell: {
     flexDirection: "row",
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "yellow",
     marginBottom: 25,
     marginLeft: 10,
-    
+
   },
   nameText: {
     color: "white",
