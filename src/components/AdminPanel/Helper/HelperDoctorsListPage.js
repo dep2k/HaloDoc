@@ -98,7 +98,6 @@ class HelperDoctorsListPage extends React.Component {
   }
 
   _handleRowClick(item) {
-    console.log(item);
     this.props.navigation.navigate("VetProfile", { docInfo: item });
   }
 
