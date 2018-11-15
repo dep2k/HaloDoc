@@ -23,6 +23,11 @@ import { Auth } from "aws-amplify";
 import NavigationService from "../../NavigationService";
 import { Cache } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
+
+const base = "../../images/";
+const backButtonImage = require(base + "BackButtonShape.png");
+
+
 class UpdateProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -45,24 +50,11 @@ class UpdateProfilePage extends React.Component {
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
-    this._registerBtnClick = this._registerBtnClick.bind(this);
+    this.updateButtonClick = this.updateButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.termsButtonClick = this.termsButtonClick.bind(this);
   }
 
-  // validate = (text) => {
-  //   console.log(text);
-  //   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  //   if (reg.test(text) === false) {
-  //     console.log("Email is Not Correct");
-  //     this.setState({ email: text })
-  //     return false;
-  //   }
-  //   else {
-  //     this.setState({ email: text })
-  //     console.log("Email is Correct");
-  //   }
-  // }
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -81,313 +73,140 @@ class UpdateProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  _registerBtnClick() {
-    const user = this.state.user;
-    this.startActivityIndicator();
-    if (
-      user.firstName &&
-      user.lastName &&
-      user.userName &&
-      user.email &&
-      user.phoneNo &&
-      user.password &&
-      user.confirmPassword
-    ) {
-      if (user.password.length >= 8) {
-        if (user.password == user.confirmPassword) {
-          Auth.signUp({
-            username: user.userName,
-            password: user.password,
-            attributes: {
-              email: user.email,
-              phone_number: user.phoneNo,
-              given_name: user.firstName,
-              family_name: user.lastName
-
-              // other custom attributes
-            }
-          })
-            .then(data => {
-              console.log(data);
-              Cache.setItem("User", this.state.user);
-              this.props.navigation.navigate("CodeConfirmationPage");
-              this.closeActivityIndicator();
-            })
-            .catch(err => {
-              console.log(err);
-              this.closeActivityIndicator();
-              Alert.alert(
-                "Error",
-                I18n.get("RegistrationUnsuccessful"),
-                [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-                { cancelable: false }
-              );
-            });
-        } else {
-          Alert.alert(
-            "Error",
-            I18n.get("Passwords dont match"),
-            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-            { cancelable: false }
-          );
-          this.closeActivityIndicator();
-        }
-      } else {
-        Alert.alert(
-          "Error",
-          I18n.get("PasswordLength"),
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-          { cancelable: false }
-        );
-        this.closeActivityIndicator();
-      }
-    } else {
-      Alert.alert(
-        "Error",
-        I18n.get("All Fields are mandatory"),
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { cancelable: false }
-      );
-      this.closeActivityIndicator();
-    }
+  updateButtonClick() {
+   
   }
 
   render() {
-    return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
-          <ImageBackground
-            source={require("../../images/newBackground.png")}
-            style={styles.fullBackgroundImage}
-            imageStyle={styles.fullbackgroundImageStyle}
-          >
-            <KeyboardAvoidingView
-              style={styles.registrationFormContainer}
-              behavior="padding"
-            >
+          <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}>
+            <KeyboardAvoidingView style={styles.keyboradAvoidingContainer} behavior="padding">
               <View style={styles.topContainer}>
-                <TouchableOpacity
-                  style={styles.backButtonStyle}
-                  onPress={this.backButtonClick}
-                >
-                  <Image
-                    source={require("../../images/backButton.png")}
-                    style={styles.backButtonImageStyle}
-                  />
+                <TouchableOpacity style={styles.backButtonStyle} onPress={this.backButtonClick}>
+                  <Image source={backButtonImage} style={styles.backButtonImageStyle} />
                 </TouchableOpacity>
+                <View style={styles.titleView}>
+                  {" "}
+                  <Text style={styles.registerTextStyle}>
+                    {I18n.get("UpdateProfile")}
+                  </Text>
+                </View>
               </View>
-              <Text style={styles.registerTextStyle}>
-                {I18n.get("UpdateProfile")}
-              </Text>
-              <TextInput
-                style={styles.firstTextInputStyle}
-                autoCapitalize={"none"}
-                placeholder={I18n.get("Firstname")}
-                placeholderTextColor="white"
-                returnKeyType={"next"}
-                autoCorrect={false}
-                onSubmitEditing={() => {
-                  this.secondTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                onChangeText={text =>
-                  this.setState(state => ((state.user.firstName = text), state))
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.secondTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.thirdTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Lastname")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.lastName = text), state))
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.thirdTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.phone.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                placeholder={I18n.get("UserId")}
-                autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.userName = text), state))
-                }
-              />
+              <View style={styles.formContainer}>
+                <TextInput style={styles.firstTextInputStyle} autoCapitalize={"none"} placeholder={I18n.get("Firstname")} placeholderTextColor="white" returnKeyType={"next"} autoCorrect={false} onSubmitEditing={() => {
+                    this.secondTextInput.focus();
+                  }} blurOnSubmit={false} onChangeText={text => this.setState(state => ((state.user.firstName = text), state))} />
+                <TextInput ref={input => {
+                    this.secondTextInput = input;
+                  }} returnKeyType={"next"} onSubmitEditing={() => {
+                    this.thirdTextInput.focus();
+                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Lastname")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.lastName = text), state))} />
+                <TextInput ref={input => {
+                    this.thirdTextInput = input;
+                  }} returnKeyType={"next"} onSubmitEditing={() => {
+                    this.phone.focus();
+                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} placeholder={I18n.get("UserId")} autoCorrect={false} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.userName = text), state))} />
+                <TouchableWithoutFeedback>
+                  <PhoneInput style={styles.phoneTextInput} ref={ref => {
+                      this.phone = ref;
+                    }} returnKeyType={"next"} onSubmitEditing={() => {
+                      this.fifithTextInput.focus();
+                    }} blurOnSubmit={false} textStyle={{ color: "white" }} onChangePhoneNumber={number => this.setState(state => ((state.user.phoneNo = number), state)) // textProps={{ placeholder: "Phone Number" }}
+                    } />
+                </TouchableWithoutFeedback>
 
-              <TouchableWithoutFeedback>
-                <PhoneInput
-                  style={styles.phoneTextInput}
-                  ref={ref => {
-                    this.phone = ref;
-                  }}
-                  returnKeyType={"next"}
-                  onSubmitEditing={() => {
-                    this.fifithTextInput.focus();
-                  }}
-                  //  keyboardType="phone-pad"
-                  blurOnSubmit={false}
-                  textStyle={{ color: "white" }}
-                  // textProps={{ placeholder: "Phone Number" }}
-                  onChangePhoneNumber={number =>
-                    this.setState(
-                      state => ((state.user.phoneNo = number), state)
-                    )
-                  }
-                />
-              </TouchableWithoutFeedback>
-
-              <TextInput
-                ref={input => {
-                  this.fifithTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.sixthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                keyboardType={"email-address"}
-                placeholder={I18n.get("Email")}
-                autoCorrect={false}
-                placeholderTextColor="white" // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
-                onChangeText={text =>
-                  this.setState(state => ((state.user.email = text), state))
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.sixthTextInput = input;
-                }}
-                secureTextEntry={true}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.seventhTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Create password")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.password = text), state))
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.seventhTextInput = input;
-                }}
-                secureTextEntry={true}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Confirm password")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(
-                    state => ((state.user.confirmPassword = text), state)
-                  )
-                }
-              />
-              <TextInput
-                style={styles.lastTextInputStyle}
-                placeholder={I18n.get("")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.email = text), state))
-                }
-              />
+                <TextInput ref={input => {
+                    this.fifithTextInput = input;
+                  }} returnKeyType={"next"} onSubmitEditing={() => {
+                    this.sixthTextInput.focus();
+                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} keyboardType={"email-address"} placeholder={I18n.get("Email")} autoCorrect={false} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
+                  } />
+                <TextInput ref={input => {
+                    this.sixthTextInput = input;
+                  }} secureTextEntry={true} returnKeyType={"next"} onSubmitEditing={() => {
+                    this.seventhTextInput.focus();
+                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Create password")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.password = text), state))} />
+                <TextInput ref={input => {
+                    this.seventhTextInput = input;
+                  }} secureTextEntry={true} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Confirm password")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.confirmPassword = text), state))} />
+                <TextInput style={styles.lastTextInputStyle} placeholder={I18n.get("")} placeholderTextColor="white" />
+              </View>
             </KeyboardAvoidingView>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={this._registerBtnClick}
-                style={styles.updateButton}
-              >
-                <ImageBackground
-                  source={require("../../images/loginButtonImage.png")}
-                  style={styles.imageBackgroundRegisterButtonStyle}
-                  imageStyle={styles.imageStyleRegisterButtonImageBackground}
-                >
+              <TouchableOpacity onPress={this.updateButtonClick} style={styles.registerButton}>
+                <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundRegisterButtonStyle} imageStyle={styles.imageStyleRegisterButtonImageBackground}>
                   <Text style={styles.imageBackgroundTextStyle}>
                     {I18n.get("Update")}
                   </Text>
                 </ImageBackground>
               </TouchableOpacity>
             </View>
-            {this.state.animating && (
-              <Loader animating={this.state.animating} />
-            )}
+            {this.state.animating && <Loader animating={this.state.animating} />}
           </ImageBackground>
         </View>
-      </TouchableWithoutFeedback>
-    );
+      </TouchableWithoutFeedback>;
   }
 }
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexDirection: "column",
+    // backgroundColor: "white",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
   mainContainer: {
     flex: 1
   },
   topContainer: {
-    height: "20%",
+    height: 60,
     width: "100%",
+    //backgroundColor: "pink",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    //  backgroundColor: "green",
-    marginTop: "20%"
+    marginTop: 20
   },
   backButtonStyle: {
     backgroundColor: "transparent",
-    width: "10%",
-    height: "50%",
-    marginLeft: "5%",
-    justifyContent: "center",
-    alignItems: "center"
+    width: 30,
+    height: 30,
+    marginLeft: 20,
+    marginTop: 20
   },
   backButtonImageStyle: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: 30,
+    height: 30,
     resizeMode: "contain"
   },
-  registrationFormContainer: {
-    height:500,
+  keyboradAvoidingContainer: {
+    height: 460,
     flexDirection: "column",
-    // backgroundColor:'black',
+    //backgroundColor: "yellow",
     width: "100%",
+    justifyContent: "flex-start"
+    // alignItems: "center",
+  },
+  formContainer: {
+    height: 360,
+    width: "100%",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "15%"
+    marginTop: 30,
+    alignSelf: "flex-end",
+    // backgroundColor: "black"
   },
-  updateButton: {
-    width: "90%",
+  registerButton: {
+    height: 40,
+    width: 280,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20
   },
   firstTextInputStyle: {
-    height: "10%",
+    height: 35,
     width: "80%",
     marginTop: "3%",
     borderBottomColor: "white",
@@ -396,7 +215,7 @@ const styles = StyleSheet.create({
     alignContent: "flex-end"
   },
   textInput: {
-    height: "10%",
+    height: 35,
     width: "80%",
     marginTop: "3%",
     borderBottomColor: "white",
@@ -405,7 +224,7 @@ const styles = StyleSheet.create({
     alignContent: "flex-end"
   },
   phoneTextInput: {
-    height: "10%",
+    height: 35,
     width: "80%",
     marginTop: "3%",
     borderBottomColor: "white",
@@ -413,16 +232,18 @@ const styles = StyleSheet.create({
     alignContent: "flex-end"
   },
   lastTextInputStyle: {
-    height: "10%",
+    height: 35,
     width: "80%",
-    marginTop: "7%",
+    marginTop: "3%",
     alignContent: "flex-end"
   },
   buttonContainer: {
     height: 40,
+    // backgroundColor: 'yellow',
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30
+    marginBottom: 0,
+    marginTop: 20
   },
 
   fullBackgroundImage: {
@@ -430,11 +251,10 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: "row",
-    // backgroundColor: 'black',
-    height: "10%",
+    //  backgroundColor: 'black',
+    height: 60,
     justifyContent: "center",
     alignItems: "center"
-    //marginTop: "5%"
   },
   termsButton: {
     height: "30%",
@@ -469,11 +289,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20
   },
+  titleView: {
+    width: "75%",
+    // backgroundColor: 'red',
+    alignItems: "center",
+    justifyContent: "center"
+  },
   registerTextStyle: {
-    marginTop: "2%",
-    backgroundColor: "transparent",
     fontSize: 25,
-    color: "white"
+    color: "white",
+    marginTop: 25
   },
   checkboxContainerStyle: {
     backgroundColor: "transparent",

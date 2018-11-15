@@ -281,7 +281,11 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
+<<<<<<< HEAD
     initialRouteName: "WelcomePage",
+=======
+    initialRouteName: "WelcomePage"
+>>>>>>> RegisterationPage
   }
 );
 

@@ -53,12 +53,16 @@ class VetProfile extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const itemId = navigation.getParam()
-    // const otherParam = navigation.getParam('otherParam', 'some default value');
-
-     console.log("ItemId:" + itemId);
-
-    // console.log(this.props.navigation.state.params);
+    const doc = navigation.getParam("docInfo");
+    const docName = doc.name;
+    const docSpeciality = doc.speciality;
+    const docAddress = doc.address;
+    const docRegId = doc.registrationId;
+    const docPhnNo = doc.phoneNo;
+    const docEmail = doc.email;
+    const docHomeTown = doc.homeTown;
+    const docMedCenter = doc.medicalCenter;
+    const docDepartment = doc.department;
 
     return (
       <View style={styles.mainContainer}>
@@ -89,55 +93,47 @@ class VetProfile extends React.Component {
           />
         </View>
         <View style={styles.middleContainer}>
-          <Text style={styles.drNameText} onPress={this.updateText}>
-            {this.state.defaultNameText}
-          </Text>
-          <Text style={styles.drSpecialityText} onPress={this.updateText}>
-            {this.state.defaultNameText}
-          </Text>
+          <Text style={styles.drNameText}>{docName}</Text>
+          <Text style={styles.drSpecialityText}>{docSpeciality}</Text>
 
-          <View style={styles.firstTextInputContainer}>
+          {/* <View style={styles.firstTextInputContainer}>
             <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("Speciality")}</Text>
+            <Text style={styles.dataTextStyle}>{docSpeciality}</Text>
+          </View> */}
+          {/* <View style={styles.lastLineStyle} /> */}
+          <View style={styles.firstTextInputContainer}>
+            <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
+            <Text style={styles.dataTextStyle}>{docRegId}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Address")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("Address")}</Text>
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
-            <Text style={styles.dataTextStyle}>
-              {I18n.get("RegistrationId")}
-            </Text>
+            <Text style={styles.dataTextStyle}>{docAddress}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("PhoneNo")}</Text>
+            <Text style={styles.dataTextStyle}>{docPhnNo}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Email")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("Email")}</Text>
+            <Text style={styles.dataTextStyle}>{docEmail}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("HomeTown")}</Text>
+            <Text style={styles.dataTextStyle}>{docHomeTown}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("MedicalCenter")}</Text>
-            <Text style={styles.dataTextStyle}>
-              {I18n.get("MedicalCenter")}
-            </Text>
+            <Text style={styles.dataTextStyle}>{docMedCenter}</Text>
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Department")}</Text>
-            <Text style={styles.dataTextStyle}>{I18n.get("Department")}</Text>
+            <Text style={styles.dataTextStyle}>{docDepartment}</Text>
           </View>
           <View style={styles.lastLineStyle} />
         </View>
@@ -210,16 +206,14 @@ const styles = StyleSheet.create({
     width: "35%",
     color: "#8BE0DE",
     marginLeft: "1%",
-    // backgroundColor: 'black',
-   // flexDirection: "column",
-   // justifyContent: "flex-end",
     alignSelf: "center"
   },
-  formTextInputStyle: {
-    width: "70%",
-    height: "100%",
-    //  justifyContent: "flex-end",
-    alignItems: "flex-end"
+  firstFormText: {
+    width: "35%",
+    color: "#8BE0DE",
+    marginLeft: "1%",
+    alignSelf: "center",
+    marginTop: 20
   },
   lastLineStyle: {
     width: "100%",
@@ -231,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 44,
     width: "100%",
-    marginTop: 25,
+    marginTop: 40,
     justifyContent: "flex-start",
     alignItems: "flex-end"
   },
@@ -244,7 +238,7 @@ const styles = StyleSheet.create({
   },
   dataTextStyle: {
     width: "70%",
-    color: "darkgrey",
+    color: "black",
     marginLeft: "1%",
     alignSelf: "center"
   }
