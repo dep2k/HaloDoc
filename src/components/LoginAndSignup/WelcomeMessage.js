@@ -58,7 +58,7 @@ class SuccesfulLogin extends React.Component {
             </TouchableOpacity>
           </ImageBackground>
         </View> */}
-         <Footer showBtn = {true} onPress = {this.continueBtnClick}></Footer>
+         <Footer showBtn = {true} onPress = {this.enterButtonClick}></Footer>
       </View>
     );
   }

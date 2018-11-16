@@ -1,11 +1,22 @@
 import React from "react";
 import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { I18n } from "aws-amplify";
+import { NavBar } from "../Reusable/NavBar";
+
+const base = "../../images/";
+const navBarImage = require(base + "navbarImage.png");
 
 class PetCategories extends React.Component {
   constructor(props) {
     super(props);
+
+    const { navigation } = this.props;
+    this.pageName = navigation.getParam("pageName");
+
+
     this.categoryButtonClick = this.categoryButtonClick.bind(this);
+    this.backButtonClick = this.backButtonClick.bind(this);
+   // this.renderHeader = this.renderHeader.bind(this);
   }
 
   categoryButtonClick(type){
@@ -18,32 +29,49 @@ class PetCategories extends React.Component {
     this.props.navigation.navigate("PetRegistrationFormPage");
   }
 
+  backButtonClick() {
+    this.props.navigation.goBack(null);
+  }
+
+  renderHeader() {
+    
+    
+    if (this.pageName == "ProfilePage") {
+      return (
+      <NavBar onBackPress={this.backButtonClick} />)
+    } else {
+      return (
+      <View style={styles.headerContainer}>
+        <Image source={navBarImage} style={styles.headerImage} />
+      </View>)
+    }
+  }
+
   render() {
     return <View style={styles.mainContainer}>
-        <View style={styles.headerContainer}>
-          <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
-        </View>
+        {this.renderHeader()}
+
         <Image source={require("../../images/logoImage.png")} style={styles.topImage} />
         <View style={styles.middleContainer}>
           <Text style={styles.registrationText}>
             {I18n.get("RegistrationOfPets")}
           </Text>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("cat")}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => this.categoryButtonClick("cat")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("FelineCat")}
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("dog")}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => this.categoryButtonClick("dog")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("CanineDog")}
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={()=>this.categoryButtonClick("horse")}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => this.categoryButtonClick("horse")}>
               <View style={styles.buttonViewStyle}>
                 <Text style={styles.buttonTextStyle}>
                   {I18n.get("EquineHorse")}

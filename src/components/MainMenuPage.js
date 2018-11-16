@@ -35,6 +35,7 @@ class MainMenuPage extends React.Component {
   }
 
   myProfileButtonClick() {
+   
     this.props.navigation.navigate("ProfilePage");
   }
   historyButtonClick() {
@@ -81,7 +82,9 @@ class MainMenuPage extends React.Component {
             </View>
             <View style={styles.singleButtonContainer}>
               <Image style={styles.iconImagesStyle} source={myProfileIcon} />
-              <TouchableOpacity onPress={this.myProfileButtonClick}>
+              <TouchableOpacity onPress={() =>
+               this.myProfileButtonClick() 
+              }>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("MyProfile")}
                 </Text>
