@@ -43,6 +43,7 @@ class SuccesfulLogin extends React.Component {
             {I18n.get("WelcomeMessage")}
           </Text>
         </View>
+<<<<<<< HEAD
         {/* <View style={styles.lowerimageContainer}>
           <ImageBackground
             source={require("../../images/landscape.png")}
@@ -58,6 +59,8 @@ class SuccesfulLogin extends React.Component {
             </TouchableOpacity>
           </ImageBackground>
         </View> */}
+=======
+>>>>>>> RegisterationPage
          <Footer showBtn = {true} onPress = {this.enterButtonClick}></Footer>
       </View>
     );
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
    // backgroundColor: "pink",
     width: "100%",
-    height: "52%",
+    flex:2.3,
     alignItems: "center",
     paddingTop: "10%"
   },
