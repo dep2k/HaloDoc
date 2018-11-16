@@ -38,8 +38,9 @@ import PostQuestionsPage from '../components/Consultation/PostQuestionsPage';
 import VetNotificationPage from '../components/Consultation/VetNotificaionPage';
 import ChatPage from '../components/Consultation/ChatPage';
 import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage';
-
 import AvailableDoctorsPage from '../components/Consultation/AvailableDoctorsPage';
+
+//import DoctorConsultationsPage from '../components/AdminPanel/Doctors/DoctorConsultationsPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -270,10 +271,17 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     }
+
+    // DoctorConsultationsPage: {
+    //   screen: DoctorConsultationsPage,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // }
   },
 
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "MainMenuPage"
   }
 );
 
