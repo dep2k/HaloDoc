@@ -6,31 +6,26 @@ import { View,
      Text,
      ImageBackground,
      TouchableOpacity } from "react-native";
+import { Footer } from "../Reusable/Footer";
 
 class SuccesfulLogin extends React.Component {
 
 constructor(props) {
     super(props);
-    this._onSignInClick = this.continueButtonClick.bind(this);
+    this.continueButtonClick = this.continueButtonClick.bind(this);
   }
  continueButtonClick() {
      this.props.navigation.navigate('WelcomeMessage');
  }
     render() {
-        return (
-            <View style={styles.mainContainer}>
-                   <View style = {styles.headerContainer}>
-                        <Image source={require("../../images/navbarImage.png")}
-                               style={styles.headerImage}>
-                        </Image>
-                   </View>
-              <View style = {styles.upperImageContainer}>
-               <Image
-                    source={require("../../images/SucessfulLoginMiddle.png")}
-                    style = { styles.upperImageStyle}>
-               </Image>
-              </View>
-              <View style = {styles.lowerimageContainer}>
+        return <View style={styles.mainContainer}>
+            <View style={styles.headerContainer}>
+              <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
+            </View>
+            <View style={styles.upperImageContainer}>
+              <Image source={require("../../images/SucessfulLoginMiddle.png")} style={styles.upperImageStyle} />
+            </View>
+            {/* <View style = {styles.lowerimageContainer}>
                 <ImageBackground
                     source={require("../../images/landscape.png")}
                     style={ styles.lowerImageBackground}>
@@ -41,9 +36,9 @@ constructor(props) {
                         </Text> 
                     </TouchableOpacity>
                 </ImageBackground>
-              </View>
-            </View>
-        );
+              </View> */}
+            <Footer showBtn={true} onPress={this.continueButtonClick} />
+          </View>;
     }
 }
 
