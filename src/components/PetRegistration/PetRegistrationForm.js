@@ -53,7 +53,6 @@ class PetRegistrationForm extends React.Component {
     this.dropDownType = "WhatEverIsType";
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");
-
     this.state = {
       pet: {
         category: "",
@@ -101,12 +100,11 @@ class PetRegistrationForm extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
-    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(
-      this
-    );
+    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
     this.listButtonClick = this.listButtonClick.bind(this);
    // this.noDespaClick = this.noDespaClick.bind(this);
   }
+
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -134,79 +132,93 @@ class PetRegistrationForm extends React.Component {
   //   }
   // }
 
-  saveButtonClick() {
-   // this.startActivityIndicator();
-    const petInput = {
-      dogVaccinations: {
-        Pvc: {
-          isChecked: this.state.pet.dogVaccinations.Pvc.isChecked,
-          name: this.state.pet.dogVaccinations.Pvc.name,
-          date: this.state.pet.dogVaccinations.Pvc.date
-        }
-      }
-    };
-    console.log(petInput)
-    console.log(
-      this.state.pet.feeding,
-      this.state.pet.date,
-      this.state.pet.product
-    )
-    this.props.navigation.navigate("MainMenuPage");
-    // if (
-    //   this.state.value == 0 &&
-    //   this.state.pet.catVaccinations &&
-    //   this.state.pet.dogVaccinations &&
-    //   this.state.pet.horseVaccinations
-    // ) {
-    // }
 
-    // Cache.getItem("User").then(user => {
-    //   if (user) {
-    //     const createPetInput = {
-    //       username: "TestUser",
-    //       category: this.petType,
-    //       name: this.state.pet.name,
-    //       race: this.state.raceText,
-    //       gender: this.state.sexText,
-    //       age: this.state.pet.age,
-    //       origin: this.state.pet.origin,
-    //       use: this.state.pet.use,
-    //       background: this.state.pet.background,
-    //       weight: this.state.pet.weight,
-    //       petImage: this.state.pet.petImage,
-    //       color: this.state.pet.color,
-    //       date: this.state.pet.date,
-    //       feeding: this.state.pet.feeding,
-    //       vaccinations: this.state.pet.vaccinations
-    //     };
-    //     API.graphql(graphqlOperation(CreatePet, createPetInput))
-    //       .then(response => {
-    //         console.log(response);
-    //         Alert.alert(
-    //           I18n.get("Success"),
-    //           I18n.get("RegistrationSuccessful"),
-    //           [
-    //             {
-    //               text: "OK",
-    //               onPress: () => this.props.navigation.navigate("MainMenuPage")
-    //             }
-    //           ],
-    //           { cancelable: false }
-    //         );
-    //         this.closeActivityIndicator();
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //         Alert.alert(
-    //           "Error",
-    //           I18n.get("RegistrationUnsuccessful"),
-    //           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-    //           { cancelable: false }
-    //         );
-    //         this.closeActivityIndicator();
-    //       });
-    //   }
-    // });
+  registerPet(vaccinationsArray){
+    
+    switch (this.petType) {
+    
+      case 'dog': 
+      vaccinationsArray = [
+          { name: 'pvc', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'triple', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'rage', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+        ]
+        break;
+
+      case 'cat': 
+      vaccinationsArray = [
+          { name: 'TripleViral', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'FelineRage', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+        ]
+        break;
+
+      case 'horse': 
+        vaccinationsArray = [
+          { name: 'Influenza', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'Tetanus', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'Encephalitis', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
+        ]
+        break;
+    }
+
+    const petInput = vaccinations;
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const createPetInput = {
+          username: "TestUser",
+          category: this.petType,
+          name: this.state.pet.name,
+          race: this.state.raceText,
+          gender: this.state.sexText,
+          age: this.state.pet.age,
+          origin: this.state.pet.origin,
+          use: this.state.pet.use,
+          background: this.state.pet.background,
+          weight: this.state.pet.weight,
+          petImage: this.state.pet.petImage,
+          color: this.state.pet.color,
+          date: this.state.pet.date,
+          feeding: this.state.pet.feeding,
+          vaccinations: vaccinationsArray
+        };
+
+
+        API.graphql(graphqlOperation(CreatePet, createPetInput))
+          .then(response => {
+            console.log(response);
+            Alert.alert(
+              I18n.get("Success"),
+              I18n.get("RegistrationSuccessful"),
+              [
+                {
+                  text: "OK",
+                  onPress: () => this.props.navigation.navigate("MainMenuPage")
+                }
+              ],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log(err);
+            Alert.alert(
+              "Error",
+              I18n.get("RegistrationUnsuccessful"),
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+          });
+      }
+    });
+  }
+
+
+  saveButtonClick() {
+    this.registerPet();
   }
 
   saveAndRegisterButtonClick() {
