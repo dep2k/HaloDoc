@@ -156,11 +156,7 @@ class LoginPage extends React.Component {
               </ImageBackground>
             </TouchableOpacity>
             </View>
-            
-         
-          // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
-            // Username Field
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
             <TextInput
               autoCapitalize={"none"}
@@ -175,7 +171,6 @@ class LoginPage extends React.Component {
                   this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
               }
             />
-            // Password Field
             <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
             <TextInput
               ref={input => {
@@ -188,7 +183,6 @@ class LoginPage extends React.Component {
                   this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
               }
             />
-            //SignINButton
             <TouchableOpacity
               onPress={this._onSignInClick}
               style={styles.loginButton}
@@ -203,14 +197,12 @@ class LoginPage extends React.Component {
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
-            // Forgot Password Field
             <Button
               style={styles.forgotPasswordButton}
               color="grey"
               title={I18n.get("Forgot Password")}
               onPress={this.forgotPasswordButtonClick}
             />
-            // Register Button
             <Button
               color="darkgrey"
               title={I18n.get("RegisterMe")}

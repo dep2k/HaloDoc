@@ -13,11 +13,7 @@ import {
   ImageBackground
 } from "react-native";
 import { NavBar } from "../Reusable/NavBar";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from "react-native-simple-radio-button";
+import RadioForm from "react-native-simple-radio-button";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -34,13 +30,8 @@ import {
 import { sexData } from "../../data/FelinoData";
 
 const base = "../../images/";
-//let data = this.ref.flatList.data;
 const buttonImage = require(base + "loginButtonImage.png");
 const dropDownImage = require(base + "dropDownIcon.png");
-const navBarImage = require(base + "navbarImage.png");
-const backButtonImage = require(base + "BackButtonShape.png");
-//const raceButton = this.props.
-
 var radio_props = [{ label: "Yes", value: 0 }, { label: "No", value: 1 }];
 
 class DataListItem extends React.Component {
@@ -59,7 +50,6 @@ class DataListItem extends React.Component {
 class PetRegistrationForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.dropDownType = "WhatEverIsType";
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");

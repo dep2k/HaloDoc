@@ -28,18 +28,18 @@ class AdminAddDoctorPage extends React.Component {
     super(props);
     this.state = {
       doctor: {
-        name: "TestDoctor1",
-        speciality: "Dog",
+        name: "",
+        speciality: "",
         profilePic: "",
-        registrationId: "RegId-19191",
-        phoneNo: "+918198823801",
-        email: "deep.mobdev@gmail.com",
-        homeTown: "Bangalore",
-        medicalCenter: "Motherhood",
-        department: "Dog Wing",
-        address: "Sarjapur",
-        password: "TestDoctor1",
-        adminEmail: "deep.mobdev@gmail.com"
+        registrationId: "",
+        phoneNo: "",
+        email: "",
+        homeTown: "",
+        medicalCenter: "",
+        department: "",
+        address: "",
+        password: "",
+        adminEmail: ""
       },
       animating: false
     };
