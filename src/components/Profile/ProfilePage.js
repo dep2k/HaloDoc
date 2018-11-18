@@ -58,8 +58,8 @@ class ProfilePage extends React.Component {
 
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {
-        console.log("Pets Received");
-        console.log(response);
+        // console.log("Pets Received");
+        // console.log(response);
 
         this.setState({
           isLoading: false,
@@ -77,8 +77,11 @@ class ProfilePage extends React.Component {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
   }
-  addButtonClick() {
-    this.props.navigation.push("PetCategoriesPage");
+  addButtonClick(nameOfPage) {
+    console.log("addButtonClicked:" + nameOfPage);
+    this.props.navigation.push("PetCategoriesPage", {
+      pageName: nameOfPage
+    });
   }
 
   listBtnClick(item) {
@@ -99,7 +102,9 @@ class ProfilePage extends React.Component {
 
           <TouchableOpacity
             style={styles.handSymbol}
-            onPress={this.addButtonClick}
+            onPress={() =>
+              this.addButtonClick("ProfilePage")
+            }
           >
             <ImageBackground
               source={addIcon}

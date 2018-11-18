@@ -71,7 +71,7 @@ export  const AllConversations = `query AllConversation($nextToken: String) {
         conversationId
         userId
         vetId
-        status
+        conversationStatus
         payment
         createdAt
     }

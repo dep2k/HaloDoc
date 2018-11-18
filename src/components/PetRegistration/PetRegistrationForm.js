@@ -134,7 +134,7 @@ class PetRegistrationForm extends React.Component {
 
 
   registerPet(vaccinationsArray){
-    
+
     switch (this.petType) {
     
       case 'dog': 
@@ -386,7 +386,7 @@ class PetRegistrationForm extends React.Component {
       return (
         <View style={styles.vaccinationContainer}>
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("PVC")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("PVC")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -411,7 +411,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Triple")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("Triple")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -438,7 +438,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Rage")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("Rage")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -463,7 +463,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("Other")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -495,7 +495,7 @@ class PetRegistrationForm extends React.Component {
       return (
         <View style={styles.vaccinationContainer}>
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("TripleViral")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("TripleViral")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -522,7 +522,7 @@ class PetRegistrationForm extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("FelineRage")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("FelineRage")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -550,7 +550,7 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.lastLineStyle} />
           <View style={styles.lastLineStyle} />
           <View style={styles.TextInputContainer}>
-            <Text style={styles.pvcText}>{I18n.get("Other")}</Text>
+            <Text style={styles.dogVacText}>{I18n.get("Other")}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}
@@ -729,7 +729,10 @@ class PetRegistrationForm extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style = {styles.mainContainer}>
+      <NavBar onBackPress={this.backButtonClick} />
+      <ScrollView style={styles.scrollview}
+           horizontal= {false}>
         <TouchableWithoutFeedback
           onPress={() =>
             this.setState({
@@ -768,30 +771,17 @@ class PetRegistrationForm extends React.Component {
             }
           </Modal>
         </TouchableWithoutFeedback>
-        <NavBar onBackPress={this.backButtonClick} />
-        {/* <View style={styles.headerContainer}>
-          <ImageBackground source={navBarImage} style={styles.headerImage}>
-            <TouchableOpacity
-              style={styles.backButtonStyle}
-              onPress={this.backButtonClick}
-            >
-              <Image
-                source={backButtonImage}
-                style={styles.backButtonImageStyle}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-        </View> */}
-        <Avatar
-          large
-          rounded
-          source={{
-            uri:
-              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-          }}
-          onPress={() => console.log("Works!")}
-          activeOpacity={0.7}
-        />
+          <View style = {styles.avatar}>
+           <Avatar
+            large
+            rounded
+            source={{
+              uri:
+                "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+            }}
+            onPress={() => console.log("Works!")}
+          /></View>
+       
         <Text style={styles.clinicHistoryText}>
           {I18n.get("ClinicHistory")}
         </Text>
@@ -883,30 +873,7 @@ class PetRegistrationForm extends React.Component {
 
         <Text style={styles.vaccinationText}>{I18n.get("Vaccination")}</Text>
         <View style={styles.yesNoContainer}>
-          {/* <Text style={styles.yesText}>{I18n.get("Yes")}</Text>
-          <CheckBox
-            center
-            containerStyle={styles.checkboxContainerStyle}
-            checkedIcon="dot-circle-o"
-            checkedColor="grey"
-            uncheckedColor="grey"
-            uncheckedIcon="circle-o"
-            checked={this.state.vacYesChecked}
-            onPress={() => this.checkBoxClick("vacYesButton")}
-          />
-
-          <Text style={styles.noText}>{I18n.get("No")}</Text>
-          <CheckBox
-            center
-            containerStyle={styles.checkboxContainerStyle}
-            checkedIcon="dot-circle-o"
-            checkedColor="grey"
-            uncheckedColor="grey"
-            uncheckedIcon="circle-o"
-            checked={this.state.vacNoChecked}
-            onPress={() => this.checkBoxClick("vacNoButton")}
-          /> */}
-
+        
           <RadioForm
             radio_props={radio_props}
             initial={0}
@@ -1067,15 +1034,26 @@ class PetRegistrationForm extends React.Component {
         </View>
         {this.state.animating && <Loader animating={this.state.animating} />}
       </ScrollView>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  contentContainer: {
+  mainContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",  
+    backgroundColor: "white",
+    flex:1
+  },
+
+  scrollview: {
     flexDirection: "column",
     backgroundColor: "white",
-    justifyContent: "flex-start",
-    alignItems: "center"
+  //  justifyContent: "flex-start",
+  //  marginTop: 10,
+    alignSelf: 'stretch',
+    marginBottom: 20
   },
 
   headerContainer: {
@@ -1089,6 +1067,12 @@ const styles = StyleSheet.create({
   headerImage: {
     width: "100%",
     height: "100%"
+  },
+  avatar: {
+    height: 80, 
+    width: "100%",
+    justifyContent: "center", 
+    alignItems: 'center'
   },
 
   clinicHistoryText: {
@@ -1105,27 +1089,32 @@ const styles = StyleSheet.create({
     height: 270,
     width: "90%",
     marginHorizontal: "5%"
+   
   },
 
   TextInputContainer: {
     flexDirection: "row",
     height: 40,
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+   // backgroundColor: "yellow"
   },
 
   originSelfText: {
-    width: 100,
-    fontSize: 16,
+    width: "31%",
+    fontSize: 14,
     alignSelf: "center",
-    color: "#8BE0DE"
+    color: "#8BE0DE",
+    //backgroundColor: 'black'
   },
 
   originText: {
-    width: 100,
-    fontSize: 16,
+    width: "30%",
+    fontSize: 14,
     alignSelf: "center",
-    color: "#8BE0DE"
+    color: "#8BE0DE",
+    marginRight:3,
+    //backgroundColor: 'black'
   },
 
   lastLineStyle: {
@@ -1160,14 +1149,15 @@ const styles = StyleSheet.create({
   },
 
   vaccinationText: {
-    marginTop: "5%",
+    marginTop:5,
     fontWeight: "bold",
     fontSize: 20,
     color: "#BED885",
     width: "80%",
     marginBottom: "2%",
     marginHorizontal: "10%",
-    textAlign: "center"
+    textAlign: "center",
+   // backgroundColor: "black"
   },
 
   yesNoContainer: {
@@ -1204,12 +1194,11 @@ const styles = StyleSheet.create({
   vacCheckboxContainerStyle: {
     backgroundColor: "transparent",
     borderColor: "transparent",
-    width: "20%",
+    width: "18%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-
-    marginLeft: -10
+     marginLeft: -10
   },
 
   vaccinationContainer: {
@@ -1225,25 +1214,36 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: 20
+    marginTop: 10
   },
 
   pvcText: {
-    width: "16%",
-    // height: 28,
+    width: "17%",
     color: "#8BE0DE",
     textAlign: "left",
-    marginRight: 15
+    marginRight: 2,
+    //backgroundColor: "orange",
+    fontSize: 14
+  },
+  dogVacText: {
+    width: "20%",
+    color: "#8BE0DE",
+    textAlign: "left",
+    marginRight: 10,
+   // backgroundColor: "green",
+    fontSize: 14
   },
   horseVacText: {
-    width: "30%",
+    width: "34%",
     color: "#8BE0DE",
     textAlign: "left",
-    marginRight: 15
+    marginRight: 10,
+   // backgroundColor: "green",
+    fontSize:14
   },
 
   despaText: {
-    marginTop: "10%",
+    marginTop:15,
     fontWeight: "bold",
     fontSize: 20,
     color: "#BED885",
@@ -1260,33 +1260,38 @@ const styles = StyleSheet.create({
   },
 
   vaccAndDespatextInputStyle: {
-    width: 100,
+    width: "35%",
     height: 30,
-    color: "grey"
+    //color: "grey",
+    //backgroundColor:"yellow",
+    fontSize:13
   },
 
   productTextInputStyle: {
-    width: 100,
+    width: "35%",
     height: 30,
-    color: "grey"
+    color: "grey",
+    fontSize:13
+   // backgroundColor: "grey"
   },
 
   productText: {
-    width: 80,
+    width: "13%",
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
   },
 
   feedingText: {
-    width: 110,
+    width: "36%",
     color: "#8BE0DE",
     textAlign: "left",
-    marginRight: 15
+    marginRight: 15,
+   // backgroundColor: "black",
+    fontSize: 14
   },
   fetchaText: {
     width: "16%",
-    //height: 28,
     color: "#8BE0DE",
     textAlign: "left",
     marginRight: 15
@@ -1298,13 +1303,14 @@ const styles = StyleSheet.create({
     marginHorizontal: "5%",
     height: 150,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    //backgroundColor: "yellow"
   },
   saveButtonStyle: {
     height: 40,
     width: "98%",
     borderRadius: 20,
-    backgroundColor: "seagreen",
+    //backgroundColor: "seagreen",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -1317,7 +1323,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: "98%",
     borderRadius: 20,
-    backgroundColor: "seagreen",
+    //backgroundColor: "seagreen",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 15
@@ -1339,7 +1345,8 @@ const styles = StyleSheet.create({
     height: 30,
     color: "grey",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    fontSize:13
   },
 
   dropDownButtonStyle: {

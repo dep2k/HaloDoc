@@ -1,4 +1,13 @@
-
+# Welcome!
+#
+# This is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# An example query named "GetPost" might look like:
+#
+#     query GetPost {
+#       singlePost(id: 123) {
+#         id
 
 subscription SubscribeToCreateDoctor {
   subscribeToCreateDoctor {
@@ -223,6 +232,22 @@ query GetConversations {
   }
 }
 
+query GetUserConversations {
+  getUserConversations(username: "TestUser", conversationStatus: "CLOSED") {
+    items {
+      conversationStatus
+    }
+  }
+}
+
+query GetDoctorConversations {
+  getDoctorConversations(username: "TestUser", conversationStatus: "CLOSED") {
+    items {
+      conversationStatus
+    }
+  }
+}
+
 query ListConversations {
   listConversations {
     items {
@@ -242,5 +267,27 @@ query ListConversations {
 
 
 
+
+
+
+#         title
+#       }
+#     }
+#
+# An example mutation named "PutPost" might look like:
+#
+#     mutation PutPost {
+#       putPost(id: 123, title: "Hello, world!") {
+#         id
+#         title
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Ctrl+Shift+P (also removes comments)
+#       Run Query:  Ctrl+Enter   (or press the play button above)
+#   Auto Complete:  Ctrl+Space   (or just start typing)
+#
 
 

@@ -40,7 +40,7 @@ import ChatPage from '../components/Consultation/ChatPage';
 import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage';
 import AvailableDoctorsPage from '../components/Consultation/AvailableDoctorsPage';
 
-import DoctorConsultationsPage from '../components/AdminPanel/Doctors/DoctorConsultationsPage';
+//import DoctorConsultationsPage from '../components/AdminPanel/Doctors/DoctorConsultationsPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -272,16 +272,25 @@ const AppStackNavigator = createStackNavigator(
       }
     },
 
-    DoctorConsultationsPage: {
-      screen: DoctorConsultationsPage,
-      navigationOptions: {
-        header: null
-      }
-    }
+    // DoctorConsultationsPage: {
+    //   screen: DoctorConsultationsPage,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // }
+
+    // DoctorConsultationsPage: {
+    //   screen: DoctorConsultationsPage,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // }
   },
 
   {
+
     initialRouteName: "PetCategoriesPage"
+
   }
 );
 
