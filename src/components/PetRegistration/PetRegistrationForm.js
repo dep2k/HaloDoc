@@ -112,6 +112,7 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
+<<<<<<< HEAD
 
   // noValueForDespa() {
   //   if (despavalue == 1) {
@@ -212,6 +213,18 @@ class PetRegistrationForm extends React.Component {
             );
             this.closeActivityIndicator();
           });
+=======
+  
+  saveButtonClick() {
+   // this.startActivityIndicator();
+    const petInput = {
+      dogVaccinations: {
+        Pvc: {
+          isChecked: this.state.pet.dogVaccinations.Pvc.isChecked,
+          name: this.state.pet.dogVaccinations.Pvc.name,
+          date: this.state.pet.dogVaccinations.Pvc.date
+        }
+>>>>>>> RegisterationPage
       }
     });
   }

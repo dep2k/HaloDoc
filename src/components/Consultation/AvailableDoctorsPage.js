@@ -214,7 +214,12 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: "black",
     marginTop: "10%",
+<<<<<<< HEAD
     alignItems: 'center'
+=======
+    alignItems:'center',
+    marginBottom: 40
+>>>>>>> RegisterationPage
   },
 
 
@@ -222,7 +227,7 @@ const styles = StyleSheet.create({
   flatList: {
     // backgroundColor: 'black',
     width: "100%",
-    marginTop: "13%"
+    //marginTop: "13%"
     // backgroundColor: 'green',
   },
 

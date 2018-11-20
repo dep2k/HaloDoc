@@ -25,18 +25,6 @@ constructor(props) {
             <View style={styles.upperImageContainer}>
               <Image source={require("../../images/SucessfulLoginMiddle.png")} style={styles.upperImageStyle} />
             </View>
-            {/* <View style = {styles.lowerimageContainer}>
-                <ImageBackground
-                    source={require("../../images/landscape.png")}
-                    style={ styles.lowerImageBackground}>
-                    <TouchableOpacity onPress= { this._onSignInClick }
-                                    style={styles.continueButtonStyle}>
-                        <Text style={{ color: "white", fontSize: 20}}>
-                                  {I18n.get('Continue')}
-                        </Text> 
-                    </TouchableOpacity>
-                </ImageBackground>
-              </View> */}
             <Footer showBtn={true} onPress={this.continueButtonClick} />
           </View>;
     }

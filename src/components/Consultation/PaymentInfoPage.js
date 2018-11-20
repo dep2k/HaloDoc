@@ -185,7 +185,8 @@ const styles = StyleSheet.create({
         marginLeft:40,
         marginRight:40,
         marginTop: 20,
-        flex:1,
+        flex: 2.3,
+       // backgroundColor: 'green',
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: 'column'

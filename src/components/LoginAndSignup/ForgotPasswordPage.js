@@ -33,12 +33,14 @@ class ForgotPasswordPage extends React.Component {
   render() {
     return (
       //Background image for full screen
+
       <View style={styles.mainContainer}>
-        <ImageBackground
+      {/* <MainContainer> */}
+        {/* <ImageBackground
           source={backgroundImage}
           style={styles.backgroundImage}
           imageStyle={styles.imageBackgroundImageStyle}
-        >
+        > */}
           // header
           <View style={styles.headerContainer}>
             <TouchableOpacity
@@ -55,7 +57,6 @@ class ForgotPasswordPage extends React.Component {
           <Text style={styles.textStyle}>{I18n.get("EnterEmail")}</Text>
           <TextInput
             style={styles.textInput}
-           // placeholder={I18n.get("Confirm Code")}
             onChangeText={text => this.setState({ registrationCode: text })}
           />
           //Continue Button
@@ -64,7 +65,8 @@ class ForgotPasswordPage extends React.Component {
             title={I18n.get('Continue')}
             onPress={this.onContinueClick}
           /> 
-        </ImageBackground>
+        {/* </ImageBackground> */}
+      {/* </MainContainer> */}
       </View>
     );
   }
@@ -73,14 +75,14 @@ class ForgotPasswordPage extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#AACB62",
     flexDirection: "column"
   },
   headerContainer: {
     height: 70,
     marginTop: 0,
     width: "100%",
-    backgroundColor:"transparent",
+    backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "flex-start"
     //  marginBottom: "20%"
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   backButtonImage: {
     width: 30,
     height: 30,
-    resizeMode: 'contain'
+    resizeMode: "contain"
   },
   imageBackgroundImageStyle: {
     position: "absolute",

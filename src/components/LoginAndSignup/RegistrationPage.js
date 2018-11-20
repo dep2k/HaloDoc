@@ -159,7 +159,7 @@ class RegistrationPage extends React.Component {
   render() {
     return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
-          <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}>
+          {/* <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}> */}
             <KeyboardAvoidingView style={styles.keyboradAvoidingContainer} behavior="padding">
               <View style={styles.topContainer}>
                 <TouchableOpacity style={styles.backButtonStyle} onPress={this.backButtonClick}>
@@ -233,21 +233,16 @@ class RegistrationPage extends React.Component {
            
 
             {this.state.animating && <Loader animating={this.state.animating} />}
-          </ImageBackground>
+          {/* </ImageBackground> */}
         </View>
       </TouchableWithoutFeedback>;
   }
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flexDirection: "column",
-    // backgroundColor: "white",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
   mainContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#AACB61"
   },
   topContainer: {
     height: 60,
@@ -285,8 +280,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
-    alignSelf: "flex-end",
-   // backgroundColor: "black"
+    alignSelf: "flex-end"
+    // backgroundColor: "black"
   },
   registerButton: {
     height: 40,

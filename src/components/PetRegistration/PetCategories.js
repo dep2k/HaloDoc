@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { I18n } from "aws-amplify";
 import { NavBar } from "../Reusable/NavBar";
 
+
 const base = "../../images/";
 const navBarImage = require(base + "navbarImage.png");
 

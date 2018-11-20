@@ -28,18 +28,21 @@ class MainMenuPage extends React.Component {
     this.vetListButtonClick = this.vetListButtonClick.bind(this);
     this.myProfileButtonClick = this.myProfileButtonClick.bind(this);
     this.historyButtonClick = this.historyButtonClick.bind(this);
+    this.openConsultaionsButtonClick = this.openConsultaionsButtonClick.bind(this);
   }
 
   vetListButtonClick() {
     this.props.navigation.navigate("HelperDoctorsListPage");
   }
+  openConsultaionsButtonClick() {
+
+  }
 
   myProfileButtonClick() {
-   
     this.props.navigation.navigate("ProfilePage");
   }
   historyButtonClick() {
-    this.props.navigation.navigate("PaymentHistoryPage")
+    this.props.navigation.navigate("PaymentHistoryPage");
   }
   logOutButtonClick() {
     // this.props.navigation.dispatch(
@@ -81,10 +84,27 @@ class MainMenuPage extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={styles.singleButtonContainer}>
+              <Image style={styles.iconImagesStyle} source={consultIcon} />
+              <TouchableOpacity
+                onPress={() => this.openConsultaionsButtonClick()}
+              >
+                <Text style={styles.touchableOpacityText}>
+                  {I18n.get("OpenConsultations")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.singleButtonContainer}>
+              <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
+              <TouchableOpacity onPress={this.historyButtonClick}>
+                <Text style={styles.touchableOpacityText}>
+                  {I18n.get("HistoryOfConsultaions")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.singleButtonContainer}>
               <Image style={styles.iconImagesStyle} source={myProfileIcon} />
-              <TouchableOpacity onPress={() =>
-               this.myProfileButtonClick() 
-              }>
+              <TouchableOpacity onPress={() => this.myProfileButtonClick()}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("MyProfile")}
                 </Text>
@@ -101,29 +121,6 @@ class MainMenuPage extends React.Component {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
-              <TouchableOpacity
-                onPress={this.historyButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("HistoryOfConsultaions")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {/* <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={paymentHistoryIcon}
-              />
-              <TouchableOpacity>
-                <Text
-                  style={styles.touchableOpacityText}
-                  
-                >
-                  {I18n.get("PaymentHistory")}
-                </Text>
-              </TouchableOpacity>
-            </View> */}
             <View style={styles.singleButtonContainer}>
               <Image style={styles.iconImagesStyle} source={myProfileIcon} />
               <TouchableOpacity onPress={this.logOutButtonClick}>
