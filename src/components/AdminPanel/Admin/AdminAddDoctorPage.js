@@ -3,12 +3,13 @@ import { I18n } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
+import { NavBar } from "../../Reusable/NavBar";
 
 import {
   StyleSheet,
   View,
   Text,
-  Image,
+  ScrollView,
   ImageBackground,
   TouchableOpacity,
   TextInput,
@@ -21,6 +22,7 @@ import { Avatar } from "react-native-elements";
 
 const base = "../../../images/";
 const backgroundImage = require(base + "loginButtonImage.png");
+const navBarImage = require(base + "navbarImage.png");
 
 
 class AdminAddDoctorPage extends React.Component {
@@ -29,6 +31,7 @@ class AdminAddDoctorPage extends React.Component {
     this.state = {
       doctor: {
         name: "",
+        userName: "",
         speciality: "",
         profilePic: "",
         registrationId: "",
@@ -67,6 +70,7 @@ class AdminAddDoctorPage extends React.Component {
     const doc = this.state.doctor;
     const createDoctorInput = {
       name: this.state.doctor.name,
+      userName: this.state.doctor.userName,
       speciality: this.state.doctor.speciality,
       profilePic: "profilePic",
       registrationId: this.state.doctor.registrationId,
@@ -82,7 +86,7 @@ class AdminAddDoctorPage extends React.Component {
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
         Auth.signUp({
-          username: doc.name,
+          username: doc.userName,
           password: doc.password,
           attributes: {
             phone_number: doc.phoneNo,
@@ -138,22 +142,9 @@ class AdminAddDoctorPage extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.headerContainer}>
-          <ImageBackground
-            source={require("../../../images/navbarImage.png")}
-            style={styles.headerImage}
-          >
-            <TouchableOpacity
-              style={styles.backButtonStyle}
-              onPress={this.backButtonClick}
-            >
-              <Image
-                source={require("../../../images/BackButtonShape.png")}
-                style={styles.backButtonImageStyle}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-        </View>
+        <NavBar onBackPress={this.backButtonClick} />)
+         <ScrollView style={styles.scrollview}>
+          <View style={styles.avatar}>
         <Avatar
           large
           rounded
@@ -164,7 +155,12 @@ class AdminAddDoctorPage extends React.Component {
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />
-        <Text style={styles.drNameText}>{I18n.get("AddDoctorDetailes")}</Text>
+          </View>
+          <View style = {styles.headindTextStyle}>
+            <Text style={styles.drNameText}>{I18n.get("AddDoctorDetailes")}</Text>
+          </View>
+
+        
         <View style={styles.formContainer}>
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
@@ -179,7 +175,7 @@ class AdminAddDoctorPage extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Name")}</Text>
+              <Text style={styles.formText}>{I18n.get("NameOfDoctor")}</Text>
             <TextInput
               style={styles.formTextInputStyle}
               onChangeText={text =>
@@ -188,6 +184,20 @@ class AdminAddDoctorPage extends React.Component {
             />
           </View>
           <View style={styles.lastLineStyle} />
+
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("Username")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.userName = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+          
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
             <TextInput
@@ -276,12 +286,8 @@ class AdminAddDoctorPage extends React.Component {
             />
             />
           </View>
-          <View style={styles.lastLineStyle} />
+            <View style={styles.LastlastLineStyle} />
           <View style={styles.buttonsContainer}>
-            {/* <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
-            <TextInput
-                style={styles.textInput}
-            /> */}
             <Text style={styles.passwordText}>
               {I18n.get("CreatePassword")}
             </Text>
@@ -308,6 +314,7 @@ class AdminAddDoctorPage extends React.Component {
           </View>
         </View>
         {this.state.animating && <Loader animating={this.state.animating} />}
+        </ScrollView>
       </View>
     );
   }
@@ -315,12 +322,20 @@ class AdminAddDoctorPage extends React.Component {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1
+  },
+
+  scrollview: {
     flexDirection: "column",
     backgroundColor: "white",
-
-    alignItems: "center"
+    alignSelf: "stretch",
+    marginBottom: 20
   },
+
   headerContainer: {
     height: "10%",
     marginTop: 0,
@@ -334,36 +349,41 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   backButtonStyle: {
-    backgroundColor: "transparent",
-    width: "12%",
-    height: "20%",
+    backgroundColor: "blue",
+    width: 40,
+    height: 40,
     marginLeft: "5%",
-    marginTop: "7%",
+    marginTop: "4%",
     justifyContent: "center",
     alignItems: "center"
   },
   backButtonImageStyle: {
     width: "50%",
     height: "100%",
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     resizeMode: "contain"
   },
-
-  middleContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    // backgroundColor: "pink",
+  avatar: {
+    height: 80,
     width: "100%",
-    height: "50%",
+    justifyContent: "center",
     alignItems: "center"
-    // paddingTop: "10%"
   },
+  headindTextStyle: {
+    height: 40,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+    // backgroundColor: "black"
+  },
+
   drNameText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#A3C852",
     marginTop: "5%"
+    // textAlign: 'center'
   },
   profilePic: {
     width: "18%",
@@ -373,17 +393,17 @@ const styles = StyleSheet.create({
 
   textInputContainer: {
     flexDirection: "row",
-    height: "10%",
+    height: 45,
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "flex-end"
   },
   formContainer: {
-    height: "55%",
+    flex: 0.7,
     width: "90%",
     marginHorizontal: "5%",
     marginTop: "5%"
-    // backgroundColor: 'yellow'
+    //backgroundColor: 'yellow'
   },
   formText: {
     width: "35%",
@@ -397,15 +417,21 @@ const styles = StyleSheet.create({
     // textAlign: 'center'
   },
   formTextInputStyle: {
-    width: "70%",
-    height: "100%",
-    //  justifyContent: "flex-end",
+    width: "63%",
+    height: 45,
     alignItems: "flex-end"
+    // backgroundColor: 'pink'
   },
   lastLineStyle: {
     width: "100%",
     height: 0.5,
     backgroundColor: "darkgrey"
+  },
+  LastlastLineStyle: {
+    width: "100%",
+    height: 0.5,
+    backgroundColor: "darkgrey",
+    marginBottom: 30
   },
   registerButton: {
     height: 40,
@@ -444,7 +470,7 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 20,
     backgroundColor: "#F8F8F8",
-    marginBottom: 4,
+    marginBottom: 15,
     paddingHorizontal: "5%"
   },
   passwordText: {

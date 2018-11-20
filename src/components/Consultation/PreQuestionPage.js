@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     },
 
     contentView: {
-        height: "70%",
+        //height: "70%",
+        flex:2.3
     },
 
 

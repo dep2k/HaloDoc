@@ -160,12 +160,13 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: "black",
     marginTop: "10%",
-    alignItems:'center'
+    alignItems:'center',
+    marginBottom: 40
   },
   flatList: {
    // backgroundColor: 'black',
     width: "100%",
-    marginTop: "13%"
+    //marginTop: "13%"
     // backgroundColor: 'green',
   },
   listCell: {

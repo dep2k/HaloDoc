@@ -124,26 +124,7 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
-
-  // noValueForDespa() {
-  //   if (despavalue == 1) {
-
-  //   }
-  // }
-
-  // noDespaClick() {
-  //   if (this.state.despavalue == 1) {
-  //     this.setState(
-  //       state => (
-  //         (state.pet.product = null),
-  //         (state.pet.feeding = null),
-  //         (state.pet.date = null),
-  //         state
-  //       )
-  //     );
-  //   }
-  // }
-
+  
   saveButtonClick() {
    // this.startActivityIndicator();
     const petInput = {

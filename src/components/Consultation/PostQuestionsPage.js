@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
 
     contentView: {
-        height: "70%",
+       flex:2.3,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column'

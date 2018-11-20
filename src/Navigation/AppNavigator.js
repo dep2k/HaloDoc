@@ -271,17 +271,10 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     }
-
-    // DoctorConsultationsPage: {
-    //   screen: DoctorConsultationsPage,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // }
   },
 
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "AdminAddDoctorPage"
   }
 );
 
