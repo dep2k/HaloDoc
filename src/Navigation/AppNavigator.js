@@ -270,7 +270,6 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-<<<<<<< HEAD
     },
 
     // DoctorConsultationsPage: {
@@ -290,15 +289,8 @@ const AppStackNavigator = createStackNavigator(
 
   {
 
-    initialRouteName: "PetCategoriesPage"
+    initialRouteName: "WelcomePage"
 
-=======
-    }
-  },
-
-  {
-    initialRouteName: "AdminAddDoctorPage"
->>>>>>> RegisterationPage
   }
 );
 
