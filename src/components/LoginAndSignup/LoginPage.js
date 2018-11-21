@@ -75,19 +75,31 @@ class LoginPage extends React.Component {
     if (user.username && user.password && user.password.length >= 8) {
       Auth.signIn(user.username, user.password)
         .then(data => {
-          console.log(data);
-          const payload = data.signInUserSession.idToken.payload;;
-          let cognitoUser = {
-            firstName: payload.given_name,
-            lastName: payload.family_name,
-            userName: user.username,  
-            phoneNo: payload.phone_number,
-            email: payload.email,
-          }
-          console.log(cognitoUser);
-          Cache.setItem("User", cognitoUser);
-          this.props.navigation.navigate("MainMenuPage");
           this.closeActivityIndicator();
+          console.log(data);
+          if(user.username == 'Admin'){
+            this.props.navigation.navigate("AdminMenuPage");
+          } else{
+            const payload = data.signInUserSession.idToken.payload;;
+            let cognitoUser = {
+              firstName: payload.given_name,
+              lastName: payload.family_name,
+              userName: user.username,  
+              phoneNo: payload.phone_number,
+              email: payload.email,
+              userType: payload['custom:userType']
+            }
+            console.log(cognitoUser);
+            Cache.setItem("User", cognitoUser);
+
+            if (cognitoUser.userType == "USER") {
+              this.props.navigation.navigate("MainMenuPage");
+            } else  {
+              this.props.navigation.navigate("DoctorConsultationsPage");
+            } 
+
+          }
+         
         })
         .catch(err => {
           console.log(err);
@@ -114,7 +126,7 @@ class LoginPage extends React.Component {
 
 
   goToAdminPanel() {
-    this.props.navigation.navigate("AdminLoginPage");
+  //  this.props.navigation.navigate("AdminLoginPage");
   }
 
   _onRegisterClick() {
@@ -144,11 +156,7 @@ class LoginPage extends React.Component {
               </ImageBackground>
             </TouchableOpacity>
             </View>
-            
-         
-          // Contains Input Filds and Login Button
           <View style={styles.middleContainer}>
-            // Username Field
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
             <TextInput
               autoCapitalize={"none"}
@@ -163,7 +171,6 @@ class LoginPage extends React.Component {
                   this.setState(state => ((state.user.username = text), state)) // placeholder={I18n.get('Username')}
               }
             />
-            // Password Field
             <Text style={styles.passwordText}>{I18n.get("Password")}</Text>
             <TextInput
               ref={input => {
@@ -176,7 +183,6 @@ class LoginPage extends React.Component {
                   this.setState(state => ((state.user.password = text), state)) //placeholder="Password"
               }
             />
-            //SignINButton
             <TouchableOpacity
               onPress={this._onSignInClick}
               style={styles.loginButton}
@@ -191,14 +197,12 @@ class LoginPage extends React.Component {
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
-            // Forgot Password Field
             <Button
               style={styles.forgotPasswordButton}
               color="grey"
               title={I18n.get("Forgot Password")}
               onPress={this.forgotPasswordButtonClick}
             />
-            // Register Button
             <Button
               color="darkgrey"
               title={I18n.get("RegisterMe")}
