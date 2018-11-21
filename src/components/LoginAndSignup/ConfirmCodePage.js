@@ -103,11 +103,11 @@ class ConfirmCodePage extends React.Component {
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}> 
       <View style={styles.mainContainer}>
-         <ImageBackground source = {require("../../images/newBackground.png")} 
+         {/* <ImageBackground source = {require("../../images/newBackground.png")} 
                          style = {styles.backgroundImage}
                          imageStyle = {{position: 'absolute', resizeMode: 'cover',width: "100%", height: "100%",
                                         backgroundColor: 'transparent',flexDirection: "column", justifyContent: "flex-start",
-                                         alignItems: "center", backgroundColor: "transparent"}}> 
+                                         alignItems: "center", backgroundColor: "transparent"}}>  */}
                 <View style={styles.headerContainer}>
                      {/* <TouchableOpacity style = {styles.backButtonStyle}
                                     onPress={this.backButtonClick}>
@@ -128,7 +128,7 @@ class ConfirmCodePage extends React.Component {
                  title={I18n.get('Continue')}
                  onPress= {this.onContinueClick} >
                </Button>
-           </ImageBackground>
+           {/* </ImageBackground> */}
           {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
    </TouchableWithoutFeedback>
@@ -142,53 +142,52 @@ class ConfirmCodePage extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor:'white',
-    flexDirection: 'column',
+    backgroundColor: "white",
+    flexDirection: "column",
+    backgroundColor: "#AACB61"
   },
   headerContainer: {
-        height: "12%",
-        marginTop: 0,
-        width: "100%",
-        justifyContent: "flex-end",
-        alignItems:"flex-start",
-       },
+    height: "12%",
+    marginTop: 0,
+    width: "100%",
+    justifyContent: "flex-end",
+    alignItems: "flex-start"
+  },
   textInput: {
-           height: 40,
-           width: 300,
-           borderRadius: 20,
-           backgroundColor: "white",
-           marginBottom:20,
-           marginTop:10,
-           paddingLeft: 20,  
-           alignSelf: "center"         
+    height: 40,
+    width: 300,
+    borderRadius: 20,
+    backgroundColor: "white",
+    marginBottom: 20,
+    marginTop: 10,
+    paddingLeft: 20,
+    alignSelf: "center"
   },
   backgroundImage: {
-    flex: 1,
- },
+    flex: 1
+  },
   textStyle: {
-    textAlign :'center',
-    color: 'white',
+    textAlign: "center",
+    color: "white",
     fontSize: 15,
-    alignSelf: 'center',
+    alignSelf: "center",
     width: 300,
-    marginTop: 80,
-
+    marginTop: 80
   },
   backButtonStyle: {
-    backgroundColor: "transparent", 
-    width: "15%", 
-    height: "80%", 
-    marginLeft: 8, 
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: "transparent",
+    width: "15%",
+    height: "80%",
+    marginLeft: 8,
+    justifyContent: "center",
+    alignItems: "center"
   },
   backButtonImage: {
-    width: "40%", 
-    height: "50%", 
-    justifyContent: 'center',
-    alignItems: 'center'
+    width: "40%",
+    height: "50%",
+    justifyContent: "center",
+    alignItems: "center"
   }
-  
 });
 
 export default ConfirmCodePage;

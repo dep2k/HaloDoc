@@ -68,11 +68,11 @@ class MainMenuPage extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <ImageBackground
+        {/* <ImageBackground
           source={require("../images/newBackground.png")}
           style={styles.fullBackgroundImage}
           imageStyle={styles.fullbackgroundImageStyle}
-        >
+        > */}
           <Text style={styles.menuText}>MENU</Text>
           <View style={styles.buttonsMainContainer}>
             <View style={styles.singleButtonContainer}>
@@ -130,34 +130,36 @@ class MainMenuPage extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1
-
-    // backgroundColor: "#BED885"
-  },
-  fullBackgroundImage: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  fullbackgroundImageStyle: {
-    position: "absolute",
-    resizeMode: "cover",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "transparent",
+    backgroundColor: "#AACB61",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "transparent"
   },
+  // fullBackgroundImage: {
+  //   flex: 1,
+  //   flexDirection: "column",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center"
+  // },
+  // fullbackgroundImageStyle: {
+  //   position: "absolute",
+  //   resizeMode: "cover",
+  //   width: "100%",
+  //   height: "100%",
+  //   backgroundColor: "transparent",
+  //   flexDirection: "column",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center",
+  //   backgroundColor: "transparent"
+  // },
   menuText: {
     fontSize: 25,
     color: "white",

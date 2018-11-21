@@ -23,6 +23,7 @@ import AdminCreateHelperDoctorPage from "../components/AdminPanel/Admin/AdminCre
 import AdminAddDoctorPage from "../components/AdminPanel/Admin/AdminAddDoctorPage";
 import HelperLoginPage from "../components/AdminPanel/Helper/HelperLoginPage";
 import DoctorLoginPage from "../components/AdminPanel/Doctors/DoctorLoginPage";
+import DoctorMenuPage from "../components/AdminPanel/Doctors/DoctorMenuPage";
 import HelperServicesPage from "../components/AdminPanel/Helper/HelperServicesPage";
 import HelperHistoryPage from "../components/AdminPanel/Helper/HelperHistoryPage";
 import HelperShowServicesPage  from "../components/AdminPanel/Helper/HelperShowServicesPage";
@@ -250,6 +251,13 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
+     DoctorMenuPage: {
+      screen: DoctorMenuPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+  
 
     AvailableDoctorsPage: {
       screen: AvailableDoctorsPage,
@@ -286,11 +294,18 @@ const AppStackNavigator = createStackNavigator(
     //   }
     // }
   },
+  
+ 
+
 
   {
+<<<<<<< HEAD
 
     initialRouteName: "WelcomePage"
 
+=======
+  initialRouteName: "DoctorMenuPage"
+>>>>>>> RegisterationPage
   }
 );
 
