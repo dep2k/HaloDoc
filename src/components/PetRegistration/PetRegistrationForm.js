@@ -1029,8 +1029,6 @@ const styles = StyleSheet.create({
   scrollview: {
     flexDirection: "column",
     backgroundColor: "white",
-  //  justifyContent: "flex-start",
-  //  marginTop: 10,
     alignSelf: 'stretch',
     marginBottom: 20
   },
