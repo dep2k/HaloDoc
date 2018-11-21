@@ -13,7 +13,11 @@ import {
   ImageBackground
 } from "react-native";
 import { NavBar } from "../Reusable/NavBar";
-import RadioForm from "react-native-simple-radio-button";
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel
+} from "react-native-simple-radio-button";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -30,8 +34,13 @@ import {
 import { sexData } from "../../data/FelinoData";
 
 const base = "../../images/";
+//let data = this.ref.flatList.data;
 const buttonImage = require(base + "loginButtonImage.png");
 const dropDownImage = require(base + "dropDownIcon.png");
+const navBarImage = require(base + "navbarImage.png");
+const backButtonImage = require(base + "BackButtonShape.png");
+//const raceButton = this.props.
+
 var radio_props = [{ label: "Yes", value: 0 }, { label: "No", value: 1 }];
 
 class DataListItem extends React.Component {
@@ -50,9 +59,11 @@ class DataListItem extends React.Component {
 class PetRegistrationForm extends React.Component {
   constructor(props) {
     super(props);
+
     this.dropDownType = "WhatEverIsType";
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");
+
     this.state = {
       pet: {
         category: "",
@@ -100,11 +111,14 @@ class PetRegistrationForm extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this.checkBoxClick = this.checkBoxClick.bind(this);
     this.saveButtonClick = this.saveButtonClick.bind(this);
-    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
+    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(
+      this
+    );
+
     this.listButtonClick = this.listButtonClick.bind(this);
    // this.noDespaClick = this.noDespaClick.bind(this);
   }
-
+  
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -112,108 +126,6 @@ class PetRegistrationForm extends React.Component {
   closeActivityIndicator() {
     this.setState({ animating: false });
   }
-<<<<<<< HEAD
-
-  // noValueForDespa() {
-  //   if (despavalue == 1) {
-
-  //   }
-  // }
-
-  // noDespaClick() {
-  //   if (this.state.despavalue == 1) {
-  //     this.setState(
-  //       state => (
-  //         (state.pet.product = null),
-  //         (state.pet.feeding = null),
-  //         (state.pet.date = null),
-  //         state
-  //       )
-  //     );
-  //   }
-  // }
-
-
-  registerPet(vaccinationsArray){
-
-    switch (this.petType) {
-    
-      case 'dog': 
-      vaccinationsArray = [
-          { name: 'pvc', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'triple', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'rage', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-        ]
-        break;
-
-      case 'cat': 
-      vaccinationsArray = [
-          { name: 'TripleViral', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'FelineRage', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-        ]
-        break;
-
-      case 'horse': 
-        vaccinationsArray = [
-          { name: 'Influenza', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'Tetanus', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'Encephalitis', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-          { name: 'other', isChecked: this.state.pet.dogVaccinations.Pvc.isChecked, date: this.state.pet.dogVaccinations.Pvc.date },
-        ]
-        break;
-    }
-
-    const petInput = vaccinations;
-    Cache.getItem("User").then(user => {
-      if (user) {
-        const createPetInput = {
-          username: "TestUser",
-          category: this.petType,
-          name: this.state.pet.name,
-          race: this.state.raceText,
-          gender: this.state.sexText,
-          age: this.state.pet.age,
-          origin: this.state.pet.origin,
-          use: this.state.pet.use,
-          background: this.state.pet.background,
-          weight: this.state.pet.weight,
-          petImage: this.state.pet.petImage,
-          color: this.state.pet.color,
-          date: this.state.pet.date,
-          feeding: this.state.pet.feeding,
-          vaccinations: vaccinationsArray
-        };
-
-
-        API.graphql(graphqlOperation(CreatePet, createPetInput))
-          .then(response => {
-            console.log(response);
-            Alert.alert(
-              I18n.get("Success"),
-              I18n.get("RegistrationSuccessful"),
-              [
-                {
-                  text: "OK",
-                  onPress: () => this.props.navigation.navigate("MainMenuPage")
-                }
-              ],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          })
-          .catch(err => {
-            console.log(err);
-            Alert.alert(
-              "Error",
-              I18n.get("RegistrationUnsuccessful"),
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-              { cancelable: false }
-            );
-            this.closeActivityIndicator();
-          });
-=======
   
   saveButtonClick() {
    // this.startActivityIndicator();
@@ -224,14 +136,70 @@ class PetRegistrationForm extends React.Component {
           name: this.state.pet.dogVaccinations.Pvc.name,
           date: this.state.pet.dogVaccinations.Pvc.date
         }
->>>>>>> RegisterationPage
       }
-    });
-  }
+    };
+    console.log(petInput)
+    console.log(
+      this.state.pet.feeding,
+      this.state.pet.date,
+      this.state.pet.product
+    )
+    this.props.navigation.navigate("MainMenuPage");
+    // if (
+    //   this.state.value == 0 &&
+    //   this.state.pet.catVaccinations &&
+    //   this.state.pet.dogVaccinations &&
+    //   this.state.pet.horseVaccinations
+    // ) {
+    // }
 
-
-  saveButtonClick() {
-    this.registerPet();
+    // Cache.getItem("User").then(user => {
+    //   if (user) {
+    //     const createPetInput = {
+    //       username: "TestUser",
+    //       category: this.petType,
+    //       name: this.state.pet.name,
+    //       race: this.state.raceText,
+    //       gender: this.state.sexText,
+    //       age: this.state.pet.age,
+    //       origin: this.state.pet.origin,
+    //       use: this.state.pet.use,
+    //       background: this.state.pet.background,
+    //       weight: this.state.pet.weight,
+    //       petImage: this.state.pet.petImage,
+    //       color: this.state.pet.color,
+    //       date: this.state.pet.date,
+    //       feeding: this.state.pet.feeding,
+    //       vaccinations: this.state.pet.vaccinations
+    //     };
+    //     API.graphql(graphqlOperation(CreatePet, createPetInput))
+    //       .then(response => {
+    //         console.log(response);
+    //         Alert.alert(
+    //           I18n.get("Success"),
+    //           I18n.get("RegistrationSuccessful"),
+    //           [
+    //             {
+    //               text: "OK",
+    //               onPress: () => this.props.navigation.navigate("MainMenuPage")
+    //             }
+    //           ],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //         Alert.alert(
+    //           "Error",
+    //           I18n.get("RegistrationUnsuccessful"),
+    //           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+    //           { cancelable: false }
+    //         );
+    //         this.closeActivityIndicator();
+    //       });
+    //   }
+    // });
   }
 
   saveAndRegisterButtonClick() {
@@ -1066,19 +1034,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginBottom: 20
   },
-
-  headerContainer: {
-    height: 60,
-    marginTop: 0,
-    width: "100%",
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerImage: {
-    width: "100%",
-    height: "100%"
-  },
   avatar: {
     height: 80, 
     width: "100%",
@@ -1179,29 +1134,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
     // backgroundColor : "black"
   },
-
-  yesText: {
-    fontSize: 15,
-    color: "darkgrey",
-    marginTop: 4
-  },
-
-  noText: {
-    fontSize: 15,
-    color: "darkgrey",
-    marginTop: 4,
-    marginLeft: 0
-  },
-
-  checkboxContainerStyle: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    width: "12%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: -10
-  },
-
   vacCheckboxContainerStyle: {
     backgroundColor: "transparent",
     borderColor: "transparent",
