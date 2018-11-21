@@ -251,21 +251,18 @@ const AppStackNavigator = createStackNavigator(
         header: null
       }
     },
-     DoctorMenuPage: {
+    DoctorMenuPage: {
       screen: DoctorMenuPage,
       navigationOptions: {
         header: null
       }
     },
-  
-
     AvailableDoctorsPage: {
       screen: AvailableDoctorsPage,
       navigationOptions: {
         header: null
       }
     },
-
     VetNotificationPage: {
       screen: VetNotificationPage,
       navigationOptions: {
@@ -294,17 +291,17 @@ const AppStackNavigator = createStackNavigator(
     //   }
     // }
   },
-  
- 
-
-
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     initialRouteName: "WelcomePage"
 
 =======
   initialRouteName: "DoctorMenuPage"
+>>>>>>> RegisterationPage
+=======
+    initialRouteName: "RegistrationPage"
 >>>>>>> RegisterationPage
   }
 );
