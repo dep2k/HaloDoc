@@ -275,10 +275,12 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    }
+    },
+
   },
+  
   {
-    initialRouteName: "RegistrationPage"
+    initialRouteName: "WelcomePage"
   }
 );
 
