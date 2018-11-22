@@ -95,7 +95,7 @@ class LoginPage extends React.Component {
             if (cognitoUser.userType == "USER") {
               this.props.navigation.navigate("MainMenuPage");
             } else  {
-              this.props.navigation.navigate("DoctorConsultationsPage");
+              this.props.navigation.navigate("DoctorMenuPagedmin  ");
             } 
 
           }
