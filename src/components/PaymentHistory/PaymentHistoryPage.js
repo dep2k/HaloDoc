@@ -13,7 +13,7 @@ import { I18n } from "aws-amplify";
 import { navBarImage } from "../../images/resource";
 import Loader from "../../ActivityIndicator";
 //import listdata from "../../data/felinoRaceListData";
-import { GetConversation } from "../../Queries/Chatapi";
+import { GetDoctorConversations } from "../../Queries/Chatapi";
 import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
@@ -47,7 +47,8 @@ class PaymentHistoryPage extends React.Component {
     super(props);
     this.state = {
     conversationListData: [],
-    animating: false
+    animating: false,
+    consultationStatus: "",
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
@@ -61,33 +62,66 @@ class PaymentHistoryPage extends React.Component {
     this.setState({ animating: false });
   }
 
+  renderHeading() {
+    if (this.consultationType == "OnGoingStatus") {
+      return (
+      <Text style={styles.historyText}>
+        {I18n.get("OpenConsultations")}
+      </Text>);
+
+    } else if (this.consultationType == "ClosedStatus") {
+      return (
+        <Text style={styles.historyText}>
+          {I18n.get("HistoryOfConsultaions")}
+        </Text>
+      );
+    }
+  }
+
 
   componentDidMount() {
     this.startActivityIndicator();
+    const { navigation } = this.props;
+    this.consultationType = navigation.getParam("consultationType");
+
     Cache.getItem("User").then(user => {
       if (user) {
+        if (this.consultationType == "OnGoingStatus") {
+          this.setState(
+            state => (
+              (state.consultationStatus = "ONGOING"),
+              state
+            ))
+          } else if (this.consultationType == "ClosedStatus")
+           {
+          this.setState(
+            state => (
+              (state.consultationStatus = "CLOSED"),
+              state
+            ))
+        }
+
         const username = {
           username: user.userName,
          };
+      
+        const getDoctorConversations = { username: username, conversationStatus: this.state.consultationStatus };
    
-    const getConversations = { username: username }
-   
-
-    API.graphql(graphqlOperation(GetConversation, getConversations))
-      .then(response => {
-        console.log("got conversation");
-        console.log(response);
-        this.setState({
-          conversationListData: response.data.getConversations.items
-        });
-        this.closeActivityIndicator();
-        console.log(username);
-      })
-      .catch(err => {
-        console.log("Failed to show list");
-        console.log(err);
-        this.closeActivityIndicator();
-      });
+        API.graphql(graphqlOperation(GetDoctorConversations, getDoctorConversations))
+          .then(response => {
+            console.log("got doctor conversations");
+            console.log(response);
+            this.setState({
+              conversationListData:
+                response.data.getDoctorConversations.items
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
         
     }
       
@@ -117,10 +151,7 @@ class PaymentHistoryPage extends React.Component {
 
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
-
-          <Text style={styles.historyText}>
-            {I18n.get("HistoryOfConsultaions")}
-          </Text>
+          {this.renderHeading()}
         </View>
 
         <FlatList

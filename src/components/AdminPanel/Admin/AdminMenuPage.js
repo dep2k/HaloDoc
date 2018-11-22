@@ -35,8 +35,9 @@ class AdminMenuPage extends React.Component {
   helperButtonClick() {
       this.props.navigation.navigate("HelperLoginPage");
   }
-  doctorButtonClick() {
-      this.props.navigation.navigate("HelperDoctorsListPage");
+  doctorButtonClick(nameOfPage) {
+      this.props.navigation.navigate("HelperDoctorsListPage", 
+     { nameOfPage : nameOfPage});
   }
 
   logOutButtonClick() {
@@ -63,7 +64,7 @@ class AdminMenuPage extends React.Component {
           imageStyle={styles.fullbackgroundImageStyle}
         > */}
           <View style={styles.topContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.backButtonStyle}
               onPress={this.backButtonClick}
             >
@@ -71,7 +72,7 @@ class AdminMenuPage extends React.Component {
                 source={backButtonImage}
                 style={styles.backButtonImageStyle}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <Text style={styles.menuText}>MENU</Text>
           <View style={styles.buttonsMainContainer}>
@@ -91,7 +92,7 @@ class AdminMenuPage extends React.Component {
                 style={styles.iconImagesStyle}
               source={docIconImage}
               />
-             <TouchableOpacity onPress={this.doctorButtonClick}>
+            <TouchableOpacity onPress={() => this.doctorButtonClick("AdminPage")}>
                 <Text style={styles.touchableOpacityText}>
                   {I18n.get("Doctor")}
                 </Text>

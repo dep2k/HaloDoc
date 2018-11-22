@@ -25,6 +25,7 @@ const backButtonImage = require(base + "BackButtonShape.png");
 const navBarImage = require(base + "navbarImage.png");
 const addIcon = require(base + "addIcon.png");
 
+
 // const listInput = {nextToken:null};
 // API.graphql(graphqlOperation(ListDoctors, listInput))
 //   .then(data => {
@@ -61,12 +62,18 @@ class DataListItem extends React.Component {
 }
 
 class HelperDoctorsListPage extends React.Component {
+
+  
   constructor(props) {
     super(props);
     this.state = {
       doctorsListData: [],
       animating: false
     };
+
+
+    const { navigation } = this.props;
+    this.nameOfPage = navigation.getParam("nameOfPage");
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this._handleRowClick = this._handleRowClick.bind(this);
@@ -109,21 +116,26 @@ class HelperDoctorsListPage extends React.Component {
     this.props.navigation.navigate("VetProfile", { docInfo: item });
   }
 
-  logOutButtonClick() {
-    // this.props.navigation.dispatch(
-    //   this.props.NavigationActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-    //     ],
-    //   }),
-    // )
-  }
+  renderAddButton() {
+    if (this.nameOfPage == "AdminPage") {
+      return  <TouchableOpacity
+        style={styles.addButtonStyle}
+        onPress={() =>
+          this.addButtonClick()
+        }
+      >
+        <Image
+          source={addIcon}
+          style={styles.addIconStyle}
+          imageStyle={styles.addIconImageStyle}
+        />
+      </TouchableOpacity>
+    } else {
 
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-  });
+    }
+    }
+  
+
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -142,18 +154,8 @@ class HelperDoctorsListPage extends React.Component {
               style={styles.backButtonImageStyle}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.addButtonStyle}
-            onPress={() =>
-              this.addButtonClick()
-            }
-          >
-            <Image
-              source={addIcon}
-              style={styles.addIconStyle}
-              imageStyle={styles.addIconImageStyle}
-            />
-          </TouchableOpacity>
+          {this.renderAddButton()}
+      
         </View>
         <Text style={styles.doctorsDirectoryText}>
           {I18n.get("DoctorsDirectory")}
@@ -238,8 +240,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     width: "100%"
-
-    // backgroundColor: 'green',
   },
   listCell: {
     flexDirection: "row",

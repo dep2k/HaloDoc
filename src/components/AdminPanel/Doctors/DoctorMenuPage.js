@@ -12,107 +12,59 @@ import { I18n } from "aws-amplify";
 
 
 const base = "../../../images/"
-const backgroundImage = require(base + "newBackground.png")
-const backButtonImage = require(base + "BackButtonShape.png");
-const docIconImage = require(base + "DoctorIcon.png");
 const consultIcon = require(base + "consultIcon.png");
 
 class DoctorMenuPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.logOutButtonClick = this.logOutButtonClick.bind(this);
-        this.backButtonClick = this.backButtonClick.bind(this);
-        this.helperButtonClick = this.helperButtonClick.bind(this);
-        this.doctorButtonClick = this.doctorButtonClick.bind(this);
-        this.adminButtonClick = this.adminButtonClick.bind(this);
-    }
-    adminButtonClick() {
-        this.props.navigation.navigate("AdminCreateHelperDoctorPage")
-    }
-    backButtonClick() {
-        this.props.navigation.goBack(null);
-    }
-    helperButtonClick() {
-        this.props.navigation.navigate("HelperLoginPage");
-    }
-    doctorButtonClick() {
-        this.props.navigation.navigate("HelperDoctorsListPage");
-    }
+  constructor(props) {
+    super(props);
 
-    logOutButtonClick() {
-        // this.props.navigation.dispatch(
-        //   this.props.NavigationActions.reset({
-        //     index: 1,
-        //     actions: [
-        //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-        //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-        //     ],
-        //   }),
-        // )
-    }
+    this.openConsultationsClick = this.openConsultationsClick.bind(this);
+    this.historyButtonClick = this.historyButtonClick.bind(this);
+  }
 
-    static navigationOptions = ({ navigation }) => ({
-        headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-    });
-    render() {
-        return (
-            <View style={styles.mainContainer}>
-                {/* <ImageBackground
-          source={backgroundImage}
-          style={styles.fullBackgroundImage}
-          imageStyle={styles.fullbackgroundImageStyle}
-        > */}
-                <View style={styles.topContainer}>
-                    <TouchableOpacity
-                        style={styles.backButtonStyle}
-                        onPress={this.backButtonClick}
-                    >
-                        <Image
-                            source={backButtonImage}
-                            style={styles.backButtonImageStyle}
-                        />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.menuText}>MENU</Text>
-                <View style={styles.buttonsMainContainer}>
-                    {/* <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../../../images/ImageLogo.jpg")}
-              />
-              <TouchableOpacity onPress={this.helperButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Helper")}
-                </Text>
-              </TouchableOpacity>
-            </View> */}
-                    <View style={styles.singleButtonContainer}>
-                        <Image
-                            style={styles.iconImagesStyle}
-                            source={consultIcon}
-                        />
-                        <TouchableOpacity onPress={this.doctorButtonClick}>
-                            <Text style={styles.touchableOpacityText}>
-                                {I18n.get("OpenConsultations")}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.singleButtonContainer}>
-                        <Image
-                            style={styles.iconImagesStyle}
-                            source={consultIcon}
-                        />
-                        <TouchableOpacity onPress={this.adminButtonClick}>
-                            <Text style={styles.touchableOpacityText}>
-                                {I18n.get("HistoryOfConsultaions")}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                {/* </ImageBackground> */}
-            </View>
-        );
-    }
+ConsultationButtonClick(type) {
+    console.log("ConsultationButtonClick:" + type);
+    this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
+
+}
+    historyButtonClick() {
+        this.props.navigation.navigate("PaymentHistoryPage");
+  }
+
+  openConsultationsClick() {
+    this.props.navigation.navigate("OpenConsultationsPage");
+  }
+
+  
+  render() {
+    return (
+      <View style={styles.mainContainer}>
+      <View
+      style= {styles.topContainer}>
+
+      </View>
+        <Text style={styles.menuText}>MENU</Text>
+        <View style={styles.buttonsMainContainer}>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+                    <TouchableOpacity onPress={() => this.ConsultationButtonClick("OnGoingStatus")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("OpenConsultations")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+                    <TouchableOpacity onPress={() => this.ConsultationButtonClick("ClosedStatus")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("HistoryOfConsultaions")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
     mainContainer: {
@@ -145,23 +97,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         resizeMode: 'contain'
     },
-    // fullBackgroundImage: {
-    //     flex: 1,
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center"
-    // },
-    // fullbackgroundImageStyle: {
-    //     position: "absolute",
-    //     resizeMode: "cover",
-    //     width: "100%",
-    //     height: "100%",
-    //     backgroundColor: "transparent",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center",
-    //     backgroundColor: "transparent"
-    // },
     menuText: {
         fontSize: 25,
         color: "white",

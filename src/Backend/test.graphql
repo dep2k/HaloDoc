@@ -71,12 +71,12 @@ mutation CreateConversation {
     {
       user: {
         username: "deep",
-   			userType: "Patient",
+        userType: "Patient",
         fullName: "Deep A"
       },
       doctor: {
         name: "Raman",
-   			speciality: "dog",
+        speciality: "dog",
         doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
       },
       questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
@@ -100,7 +100,7 @@ mutation CreateConversation {
       weight
       
     }
-  	doctor {
+    doctor {
       name
       speciality
       doctorId
@@ -146,21 +146,21 @@ mutation CreatePet {
   createPet(input:
     {
       username: "deep", 
-   		category: "canine", 
-    	name: "bruno", 
+      category: "canine", 
+      name: "bruno", 
       race: "american", 
-   	 	gender: "m", 
-    	age: "1",
-    	origin: "china", 
-    	use: "Some description about the pet", 
-    	background: "Some BG INfo", 
-    	weight: "5 Kig",
-   		petImage: "imageurl",
-  		color: "black",
-  		product: "productInfo",
-  		date: "393939393",
-  		feeding: "feedinginfo",
-  		vaccinations:[{name:"vacName", date:"38393"},{name:"fadsfa",date:"3939393"}]}) {
+      gender: "m", 
+      age: "1",
+      origin: "china", 
+      use: "Some description about the pet", 
+      background: "Some BG INfo", 
+      weight: "5 Kig",
+      petImage: "imageurl",
+      color: "black",
+      product: "productInfo",
+      date: "393939393",
+      feeding: "feedinginfo",
+      vaccinations:[{name:"vacName", date:"38393"},{name:"fadsfa",date:"3939393"}]}) {
     petId
     username
   }
@@ -241,7 +241,7 @@ query GetUserConversations {
 }
 
 query GetDoctorConversations {
-  getDoctorConversations(username: "TestUser", conversationStatus: "CLOSED") {
+  getDoctorConversations(username: "TestDoctor1", conversationStatus: "CLOSED") {
     items {
       conversationStatus
     }
@@ -256,38 +256,4 @@ query ListConversations {
     nextToken
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#         title
-#       }
-#     }
-#
-# An example mutation named "PutPost" might look like:
-#
-#     mutation PutPost {
-#       putPost(id: 123, title: "Hello, world!") {
-#         id
-#         title
-#       }
-#     }
-#
-# Keyboard shortcuts:
-#
-#  Prettify Query:  Ctrl+Shift+P (also removes comments)
-#       Run Query:  Ctrl+Enter   (or press the play button above)
-#   Auto Complete:  Ctrl+Space   (or just start typing)
-#
-
 
