@@ -114,9 +114,11 @@ class PetRegistrationForm extends React.Component {
     this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(
       this
     );
+
     this.listButtonClick = this.listButtonClick.bind(this);
    // this.noDespaClick = this.noDespaClick.bind(this);
   }
+  
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -1032,19 +1034,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginBottom: 20
   },
-
-  headerContainer: {
-    height: 60,
-    marginTop: 0,
-    width: "100%",
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerImage: {
-    width: "100%",
-    height: "100%"
-  },
   avatar: {
     height: 80, 
     width: "100%",
@@ -1145,29 +1134,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
     // backgroundColor : "black"
   },
-
-  yesText: {
-    fontSize: 15,
-    color: "darkgrey",
-    marginTop: 4
-  },
-
-  noText: {
-    fontSize: 15,
-    color: "darkgrey",
-    marginTop: 4,
-    marginLeft: 0
-  },
-
-  checkboxContainerStyle: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    width: "12%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: -10
-  },
-
   vacCheckboxContainerStyle: {
     backgroundColor: "transparent",
     borderColor: "transparent",

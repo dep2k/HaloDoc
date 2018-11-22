@@ -277,10 +277,40 @@ const AppStackNavigator = createStackNavigator(
       }
     },
 
+<<<<<<< HEAD
+=======
+    // DoctorConsultationsPage: {
+    //   screen: DoctorConsultationsPage,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // }
+
+    // DoctorConsultationsPage: {
+    //   screen: DoctorConsultationsPage,
+    //   navigationOptions: {
+    //     header: null
+    //   }
+    // }
+>>>>>>> master
   },
   
   {
+<<<<<<< HEAD
     initialRouteName: "WelcomePage"
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    initialRouteName: "WelcomePage"
+
+=======
+  initialRouteName: "DoctorMenuPage"
+>>>>>>> RegisterationPage
+=======
+    initialRouteName: "RegistrationPage"
+>>>>>>> RegisterationPage
+>>>>>>> master
   }
 );
 

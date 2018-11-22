@@ -1,11 +1,12 @@
 
-export const CreateDoctor = `mutation CreateDoctor($name: String, $speciality: String, 
+export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: String, $speciality: String, 
         $profilePic: String, $registrationId: String, $phoneNo: String, $email: String,
         $homeTown: String, $medicalCenter: String, $department: String, $address: String ) {
     
          createDoctor(
   
           input : {
+            doctorId: $doctorId,
             name: $name, 
             speciality: $speciality,
             profilePic: $profilePic,

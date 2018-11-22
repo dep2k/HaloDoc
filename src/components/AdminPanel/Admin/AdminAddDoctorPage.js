@@ -69,6 +69,7 @@ class AdminAddDoctorPage extends React.Component {
   _addDoctor() {
     const doc = this.state.doctor;
     const createDoctorInput = {
+      doctorId: this.state.doctor.name,
       name: this.state.doctor.name,
       userName: this.state.doctor.userName,
       speciality: this.state.doctor.speciality,
@@ -80,9 +81,22 @@ class AdminAddDoctorPage extends React.Component {
       homeTown: this.state.doctor.homeTown,
       medicalCenter: this.state.doctor.medicalCenter,
       department: this.state.doctor.department,
-      address: this.state.doctor.address
+      address: this.state.doctor.address,
     };
     this.startActivityIndicator();
+
+    console.log(createDoctorInput);
+    // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
+    // .then(response => {
+    //   this.closeActivityIndicator();
+    //   console.log(response);
+    // })
+    // .catch(err => {
+    //   this.closeActivityIndicator();
+    //   console.log(err);
+    // });
+
+    
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
         Auth.signUp({
@@ -92,7 +106,8 @@ class AdminAddDoctorPage extends React.Component {
             phone_number: doc.phoneNo,
             email: doc.adminEmail,
             given_name: "abcd",
-            family_name: "efgf"
+            family_name: "efgf",
+            'custom:userType': "DOCTOR"
           }
         })
           .then(data => {

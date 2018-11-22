@@ -30,7 +30,7 @@ input ConversationQAInput {
 input CreateConversationInput {
 	user: UserInput
 	doctor: DoctorInput
-	questionsAndAnsers: [ConversationQAInput]
+	questionsAndAnswers: [ConversationQAInput]
 	pet: UpdatePetInput
 }
 
@@ -57,10 +57,10 @@ input CreateHelperInput {
 }
 
 input CreateMessageInput {
-	content: String
+	text: String
 	conversationId: ID!
-	receiver: UserInput
-	sender: UserInput
+	messageId: String
+	user: UserInput
 }
 
 input CreatePetInput {
@@ -68,20 +68,24 @@ input CreatePetInput {
 	category: String
 	name: String
 	race: String
-	sex: String
+	gender: String
 	age: String
 	origin: String
 	use: String
 	background: String
 	weight: String
 	vaccinations: [VaccinationInput]
+	petImage: String
+	color: String
+	product: String
+	date: String
+	feeding: String
 }
 
 input DeleteDoctorInput {
 	doctorId: ID!
 	name: String!
 }
-
 
 input DeleteHelperInput {
 	id: ID!
@@ -136,9 +140,9 @@ type Message {
 	conversationId: ID!
 	createdAt: String
 	#attributes
-	content: String!
-	receiver: User
-	sender: User
+	text: String
+	messageId: String
+	user: User
 }
 
 type MessageConnection {
@@ -171,13 +175,18 @@ type Pet {
 	category: String
 	name: String
 	race: String
-	sex: String
+	gender: String
 	age: String
 	origin: String
 	use: String
 	background: String
 	weight: String
 	vaccinations: [Vaccination]
+	petImage: String
+	color: String
+	product: String
+	date: String
+	feeding: String
 }
 
 type PetsConnection {
@@ -306,13 +315,18 @@ input UpdatePetInput {
 	category: String
 	name: String
 	race: String
-	sex: String
+	gender: String
 	age: String
 	origin: String
 	use: String
 	background: String
 	weight: String
 	vaccinations: [VaccinationInput]
+	petImage: String
+	color: String
+	product: String
+	date: String
+	feeding: String
 }
 
 type User {

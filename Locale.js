@@ -29,9 +29,6 @@ export const  setUpLanguage = () => {
         'OpenConsultations': "OPEN CONSULTATIONS",
         'Consultations' : "CONSULTATIONS",
         'MyProfile': "MY PROFILE",
-        'EditProfile': "Edit my profile",
-        'UpdateProfile': "Update profile",
-        "Update": "Update",
         'VeterinaryDirectory': "VETERINARY DIRECTORY",
         'HistoryOfConsultaions': "HISTORY OF CONSULTATIONS",
         'PaymentHistory': "PAYMENT HISTORY",
@@ -252,6 +249,13 @@ export const  setUpLanguage = () => {
         'PostQuestionText': 'For your information and time online. We remind you that this orientation does not replace or substitute a face-to-face veterinary consultation, if Balú does not improve or if it worsens you should consult again.',
         'Payment' : 'Payment',
         'VetNotified': 'THE VETERINARY IS ALREADY BEING NOTIFIED AND WILL ATTEND YOU BEFORE 30 MINUTES.',
+        //Questions
+        'Question1':'HOW MUCH DOES THE SYMPTOMS PRESENT?',
+        'Question2':'ALLERGY TO ANY FOOD OR MEDICINE?',
+        'Question3':'HAVE YOU PROVIDED ANY TYPE OF TREATMENT? HOW MUCH?',
+        'Question4':'ANY SPECIAL CONDITION OR BACKGROUND?',
+        'Question5':'WEIGHT',
+
     },
     'es': {
         'Sign In': "INICIO DE SESION",
@@ -277,9 +281,6 @@ export const  setUpLanguage = () => {
         'OpenConsultations' : "CONSULTAS ABIERTAS",
         'Consultations': "CONSULTAS",
         'MyProfile': "MI PERFIL",
-        'EditProfile': "Editar mi perfil",
-        'UpdateProfile': "Actualización del perfil",
-        'Update': "Actualizar",
         'VeterinaryDirectory': "DIRECTORIO VETERINARIO",
         'HistoryOfConsultaions':"HISTORIAL DE CONSULTAS",
         'PaymentHistory': "HISTORIAL DE PAGOS",
@@ -501,6 +502,13 @@ export const  setUpLanguage = () => {
         'PostQuestionText' : 'por tu información y tiempo en línea. Te recordamos que esta orientacion no reemplaza ni sustituye una consulta veterinaria presencial, si Balú no mejora o si empeora debes consultar nuevamente.',
         'Payment': 'PAGAR',
         'VetNotified':'EL VETERINARIO YA ESTA SIENDO NOTIFICADO Y TE ATENDERÁ ANTES DE 30 MINUTOS.',
+        'Question1':'¿HACE CUÁNTO PRESENTA LOS SÍNTOMAS?',
+        'Question2':'¿ALERGIA A ALGÚN ALIMENTO O MEDICAMENTO?',
+        'Question3':'¿LE HAS SUMINISTRADO ALGÚN TIPO DE TRATAMIENTO? ¿HACE CUÁNTO?',
+        'Question4':'¿ALGUNA CONDICIÓN ESPECIAL O ANTECEDENTE?',
+        'Question5':'PESO',
+
+
     },
 
     };

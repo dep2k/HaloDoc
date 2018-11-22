@@ -30,3 +30,21 @@
          
     }
 }
+
+// Get Conversations (NOT WORKING)
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        ## Provide a query expression. **
+        "expression": "username = :username and createdAt > :createdAt",
+        "expressionValues" : {
+            ":username" : {
+                "S" : "${ctx.args.username}"
+            },
+            ":createdAt": {
+                "S": "0"
+            }
+        }
+    }
+}

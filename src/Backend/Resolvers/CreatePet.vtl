@@ -1,0 +1,41 @@
+## Below example shows how to create an object from all provided GraphQL arguments
+## The primary key of the obejct is a randomly generated UUD using the $util.autoId() utility
+## Other utilities include $util.matches() for regular expressions, $util.time.nowISO8601() or 
+##   $util.time.nowEpochMilliSeconds() for timestamps, and even List or Map helpers like
+##   $util.list.copyAndRetainAll() $util.map.copyAndRemoveAllKeys() for shallow copies
+## Read more: https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html#utility-helpers-in-util
+
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+    
+    	#set( $prefix = "petId:" )
+        #set( $id = $util.autoId())
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        "petId": {"S": "$prefix$id"},
+        ##"petId": {"S": "$util.time.nowEpochSeconds()"},
+        "username": {"S": "${context.arguments.input.username}" }
+    },
+    
+    "attributeValues" : {
+    
+         "category": {"S": "${context.arguments.input.category}" },
+         "name": $util.dynamodb.toDynamoDBJson($ctx.args.input.name),
+         "race": {"S": "${context.arguments.input.race}" },
+         "petImage": {"S": "${context.arguments.input.petImage}" },
+         "color": {"S": "${context.arguments.input.color}" },
+         "gender": {"S": "${context.arguments.input.gender}" },
+         "age": {"S": "${context.arguments.input.age}" },
+         "origin": {"S" :  "${context.arguments.input.origin}" },
+         "product" : {"S" :  "${context.arguments.input.product}" },
+         "date": {"S" :  "${context.arguments.input.date}" },
+         "feeding": {"S" :  "${context.arguments.input.feeding}" },
+         "use": {"S" : "${context.arguments.input.use}" },
+         "background" : {"S" :  "${context.arguments.input.background}"},
+         "weight" : {"S" :  "${context.arguments.input.weight}"},
+         "vaccinations": $util.dynamodb.toListJson($ctx.args.input.vaccinations),
+  
+         
+    }
+}

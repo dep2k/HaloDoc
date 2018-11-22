@@ -1,4 +1,13 @@
-
+# Welcome!
+#
+# This is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# An example query named "GetPost" might look like:
+#
+#     query GetPost {
+#       singlePost(id: 123) {
+#         id
 
 subscription SubscribeToCreateDoctor {
   subscribeToCreateDoctor {
@@ -21,13 +30,12 @@ subscription SubscribeToCreateConversation {
 
 subscription SubscribeToNewMessage {
   subscribeToNewMessage(conversationId: "deep-Raman-1539409150214") {
-    content
+    text
+    messageId
     conversationId
     createdAt
-    receiver {
-      fullName
-    }
-    sender {
+    user {
+      username
       fullName
     }
   }
@@ -36,23 +44,21 @@ subscription SubscribeToNewMessage {
 
 mutation CreateMessage {
   createMessage(input: 
-    { content: "A message", 
+    { 
+      text: "A message", 
       conversationId: "deep-Raman-1539409150214",
-      receiver: 
-      {username: "DoctorId3939393",
-        userType: "Doctor", 
+      messageId:"383jd",
+      user: 
+       {username: "DoctorId3939393",
         fullName: "Some Doctor"},
-      sender: {username: "PatientId3939393", 
-        userType: "Patient",
-        fullName: "Deep A"}})
+    })
   {
-    content
+     text
+    messageId
     conversationId
     createdAt
-    receiver {
-      fullName
-    }
-    sender {
+    user {
+      username
       fullName
     }
   }
@@ -92,6 +98,7 @@ mutation CreateConversation {
       use
       background
       weight
+      
     }
   	doctor {
       name
@@ -136,7 +143,24 @@ mutation CreateDoctor {
 }
 
 mutation CreatePet {
-  createPet(input: {username: "deep", category: "canine", name: "bruno", race: "american", gender: "m", age: "1", origin: "china", use: "Some description about the pet", background: "Some BG INfo", weight: "5 Kig"}) {
+  createPet(input:
+    {
+      username: "deep", 
+   		category: "canine", 
+    	name: "bruno", 
+      race: "american", 
+   	 	gender: "m", 
+    	age: "1",
+    	origin: "china", 
+    	use: "Some description about the pet", 
+    	background: "Some BG INfo", 
+    	weight: "5 Kig",
+   		petImage: "imageurl",
+  		color: "black",
+  		product: "productInfo",
+  		date: "393939393",
+  		feeding: "feedinginfo",
+  		vaccinations:[{name:"vacName", date:"38393"},{name:"fadsfa",date:"3939393"}]}) {
     petId
     username
   }
@@ -208,6 +232,22 @@ query GetConversations {
   }
 }
 
+query GetUserConversations {
+  getUserConversations(username: "TestUser", conversationStatus: "CLOSED") {
+    items {
+      conversationStatus
+    }
+  }
+}
+
+query GetDoctorConversations {
+  getDoctorConversations(username: "TestUser", conversationStatus: "CLOSED") {
+    items {
+      conversationStatus
+    }
+  }
+}
+
 query ListConversations {
   listConversations {
     items {
@@ -225,5 +265,29 @@ query ListConversations {
 
 
 
+
+
+
+
+
+#         title
+#       }
+#     }
+#
+# An example mutation named "PutPost" might look like:
+#
+#     mutation PutPost {
+#       putPost(id: 123, title: "Hello, world!") {
+#         id
+#         title
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Ctrl+Shift+P (also removes comments)
+#       Run Query:  Ctrl+Enter   (or press the play button above)
+#   Auto Complete:  Ctrl+Space   (or just start typing)
+#
 
 

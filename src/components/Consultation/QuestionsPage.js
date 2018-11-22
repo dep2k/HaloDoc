@@ -1,13 +1,18 @@
 import React from "react";
 import {
     View,
+    ScrollView,
     Image,
+    TextInput,
     StyleSheet,
     Text,
     TouchableOpacity,
     ImageBackground,
     FlatList,
     Button,
+    TouchableWithoutFeedback,
+    KeyboardAvoidingView,
+    Keyboard,
     ActivityIndicator
 } from "react-native";
 import { I18n } from "aws-amplify";
@@ -21,25 +26,82 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import {Footer} from "../Reusable/Footer";
+class Page1 extends React.Component {
+
+    render() {
+        return (
+            <Text>Page1</Text>
+        );
+    }
+
+}
+
+class Page2 extends React.Component {
+
+    render() {
+        return (
+            <Text>Page2</Text>
+        );
+    }
+
+}
+
+class Page3 extends React.Component {
+
+    render() {
+        return (
+            <Text>Page3</Text>
+        );
+    }
+
+}
 
 
 class QuestionsPage extends React.Component {
 
     constructor(props) {
+        super(props);
 
-        super(props);      
+        this.state = {
+            set1: {
+                question: I18n.get("Question1"),
+                answer:null
+            },
+            set2: {
+                question: I18n.get("Question2"),
+                answer:null
+            },
+            set3: {
+                question: I18n.get("Question3"),
+                answer:null
+            },
+            set4: {
+                question: I18n.get("Question4"),
+                answer:null
+            },
+            set5: {
+                question: I18n.get("Question5"),
+                answer:null
+            },
+        }
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
     }
 
     continueBtnClick() {
-        
-         const { navigation } = this.props;
-         const pet = navigation.getParam('petInfo');
-         this.props.navigation.navigate("PostQuestionsPage",{
-             petInfo:pet,
-         });
-     
+
+        const { navigation } = this.props;
+        const pet = navigation.getParam('petInfo');
+        this.props.navigation.navigate("PostQuestionsPage", {
+            petInfo: pet,
+            questions: [this.state.set1,
+                this.state.set2,
+                this.state.set3,
+                this.state.set4,
+                this.state.set5]
+        });
+
     }
 
 
@@ -47,7 +109,8 @@ class QuestionsPage extends React.Component {
         this.props.navigation.goBack(null);
     }
 
-  
+
+
 
     render() {
 
@@ -56,37 +119,74 @@ class QuestionsPage extends React.Component {
         const petName = pet.name;
         const petCategory = pet.category;
         const navTitle = petName + " - " + petCategory;
-  
+
         return (
-            <View style={styles.mainContainer}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.mainContainer}>
+                    <NavBar onBackPress={this.backButtonClick} title={navTitle.toUpperCase()}></NavBar>
+                    {/* { {this.state.pageNo == 1 && <Page1></Page1> }
+                {this.state.pageNo == 2 && <Page2></Page2> }
+                {this.state.pageNo == 3 && <Page3></Page3> }}  */}
+                    <ScrollView style={styles.mainContainer}>
+                        <View style={styles.contentView}>
+                            <View style={styles.questionAnswerView}>
+                                <Text>{this.state.set1.question}</Text>
+                                <TextInput
+                                    style={styles.answerTextInput}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set1.answer = text), state))}
+                                    value={this.state.set1.answer}
+                                />
+                            </View>
 
-                  <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
+                            <View style={styles.questionAnswerView}>
+                                <Text>{this.state.set2.question}</Text>
+                                <TextInput
+                                    style={styles.answerTextInput}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set2.answer = text), state))}
+                                    value={this.state.set2.answer}
+                                />
+                            </View>
 
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
+                            <View style={styles.questionAnswerView}>
+                                <Text>{this.state.set3.question}</Text>
+                                <TextInput
+                                    style={styles.answerTextInput}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set3.answer = text), state))}
+                                    value={this.state.set3.answer}
+                                />
+                            </View>
 
-                <View style={styles.descriptionView}>
+                            <View style={styles.questionAnswerView}>
+                                <Text>{this.state.set4.question}</Text>
+                                <TextInput
+                                    style={styles.answerTextInput}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set4.answer = text), state))}
+                                    value={this.state.set4.answer}
+                                />
+                            </View>
 
-                    <Image
-                        source={logoImage}
-                        style={styles.handSymbol}
-                    />
-
-                    <Text style={styles.descriptionText}
-                        numberOfLines={2}>Questions Page
-                    </Text>
-
+                            <View style={styles.questionAnswerView}>
+                                <Text>{this.state.set5.question}</Text>
+                                <TextInput
+                                    style={styles.answerTextInput}
+                                    multiline = {true}
+                                    onChangeText={text => this.setState(state => ((state.set5.answer = text), state))}
+                                    value={this.state.set5.answer}
+                                />
+                            </View>
+                            />
                 </View>
 
-                <Button onPress = {this.continueBtnClick} title = "Continue"></Button>
+                    </ScrollView>
 
+                <Footer  style = {styles.footer} showBtn = {true} onPress = {this.continueBtnClick}></Footer>
+                </View>
+            </TouchableWithoutFeedback>
 
-                />
-
-
-            </View>
         );
     }
 
@@ -99,151 +199,28 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
 
-    petListContainer: {
+    contentView: {
+        height: "90%"
+    },
 
-        marginTop: 50,
-        flexDirection: "column",
-        backgroundColor: "transparent",
+    questionAnswerView: {
+        padding: 20,
+    },
+
+    questionText: {
 
     },
 
-    listItemCotainer: {
-
-        flexDirection: "row",
-        height: 100,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent"
+    answerTextInput: {
+        height: 140, borderColor: 'gray', 
+        borderWidth: 1
     },
 
-
-    petButtonContainer: {
-
-        flexDirection: "column",
-        width: "75%",
-        height: 40,
-        marginLeft: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent",
-
-    },
-
-    petImageContainer: {
-        width: "25%",
-        height: 70,
-        marginLeft: 5,
-        marginBottom: 20,
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "flex-start"
-    },
-
-
-    petCategoryText: {
-
-        fontSize: 12,
-        color: "black"
-
-    },
-
-    logoButton: {
-        height: "20%",
-        width: "25%",
-        // marginTop: "2%",
-        marginLeft: "70%",
-        backgroundColor: "transparent"
-    },
-
-    logoImage: {
-        alignSelf: 'flex-end',
-        resizeMode: "contain",
-        marginTop: 10,
-        width: 80,
-        height: 60,
-        marginRight: 35,
-
-    },
-
-    imageBackgroundStyle: {
-        width: "90%",
-        height: "100%",
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    imageBackgroundTextStyle: {
-        color: "white",
-        fontSize: 20
-    },
-    imageBackgroundImageStyle: {
-        borderRadius: 20
-    },
-
-
-    headerContainer: {
-
-        height: "10%",
-        marginTop: 0,
-        width: "100%",
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
-    headerImage: {
-
-        width: "100%",
-        height: "100%",
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-
-    },
-
-    backButtonStyle: {
-
-        backgroundColor: "transparent",
-        width: 44,
-        height: 44,
-        marginLeft: 15,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
-
-    descriptionView: {
-        marginLeft: 20,
-        marginTop: 20,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center"
-    },
-
-    handSymbol: {
-        width: 25,
-        height: 25
-    },
-
-    descriptionText: {
-        marginLeft: 15,
-        fontSize: 14,
-        width: "70%",
-
-    },
-
-    backBtn: {
-        marginLeft: 20,
-        width: 30,
-        height: 30,
-    },
-
-    backBtnImage: {
-        width: 30,
-        height: 30,
-        resizeMode: "contain",
+    continueBtn: {
+        marginBottom: 30,
     }
+
+
 })
 
 

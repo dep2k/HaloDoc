@@ -10,7 +10,7 @@ import {
     Button,
     ActivityIndicator
 } from "react-native";
-import { I18n } from "aws-amplify";
+import { I18n , Cache} from "aws-amplify";
 
 
 import { logoImage, petWithPathImage } from "../../images/resource";
@@ -34,9 +34,19 @@ class VetNotificationPage extends React.Component {
          
          const { navigation } = this.props;
          const pet = navigation.getParam('petInfo');
-         this.props.navigation.navigate("ChatPage",{
-             petInfo:pet,
-         });
+         const id = navigation.getParam('chatId');
+        
+
+         Cache.getItem('User').then(user => {
+            if (user) {
+               
+                this.props.navigation.navigate("ChatPage",{
+                  petInfo:pet,
+                  chatId: id,
+                  user: user
+              });
+            }
+        });
     }
 
 
@@ -48,14 +58,12 @@ class VetNotificationPage extends React.Component {
 
     render() {
 
-
         const { navigation } = this.props;
         const pet = navigation.getParam('petInfo');
         const petName = pet.name;
         const petCategory = pet.category;
         const navTitle = petName + " - " + petCategory;
   
-
         return (
             <View style={styles.mainContainer}>
 
