@@ -5,14 +5,14 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    ImageBackground
 } from "react-native";
-import SVGImage from "react-native-svg-image";
+
 import { I18n } from "aws-amplify";
 
 
 const base = "../../../images/"
 const consultIcon = require(base + "consultIcon.png");
+const myProfileIcon = require(base + "myProfileIcon.png");
 
 class DoctorMenuPage extends React.Component {
   constructor(props) {
@@ -61,6 +61,14 @@ ConsultationButtonClick(type) {
               </Text>
             </TouchableOpacity>
           </View>
+                <View style={styles.singleButtonContainer}>
+                    <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+                    <TouchableOpacity onPress={this.logOutButtonClick}>
+                        <Text style={styles.touchableOpacityText}>
+                            {I18n.get("LogOut")}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
         </View>
       </View>
     );
@@ -121,8 +129,8 @@ const styles = StyleSheet.create({
         // backgroundColor: "pink"
     },
     iconImagesStyle: {
-        width: 35,
-        height: 35,
+        width: 30,
+        height: 30,
         marginLeft: "5%",
         marginRight: "5%",
         resizeMode: 'contain'

@@ -121,6 +121,8 @@ getUserConversations(username: $username ,conversationStatus: $conversationStatu
      items {
          conversationStatus
          username
+         createdAt
+         payment
          doctor {
            name
          }

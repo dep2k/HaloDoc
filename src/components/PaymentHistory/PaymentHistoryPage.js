@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-//import {listdata} from "../../data/FelinoData";
+import Loader from "../../ActivityIndicator";
 import { GetDoctorConversations } from "../../Queries/Chatapi";
+import {GetUserConversations} from "../../Queries/Chatapi";
 
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -19,21 +20,23 @@ import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
 
-
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
 
-
 class DataListItem extends React.Component {
   render() {
-    
     return (
-      <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        style={styles.cellContainer}
+      >
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
         <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
-        <Text style={styles.nameText}>{"Payment is" + this.props.item.payment}</Text>
-        <View style={styles.listSeperationLine}></View>
+        <Text style={styles.nameText}>
+          {"Payment is" + this.props.item.payment}
+        </Text>
+        <View style={styles.listSeperationLine} />
         {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
       </TouchableOpacity>
     );
@@ -85,29 +88,22 @@ class PaymentHistoryPage extends React.Component {
     this.startActivityIndicator();
     const { navigation } = this.props;
     this.consultationType = navigation.getParam("consultationType");
-
+    if (this.consultationType == "OnGoingStatus") {
+      this.setState(
+        state => ((state.consultationStatus = "ONGOING"), state)
+      );
+    } else if (this.consultationType == "ClosedStatus") {
+      this.setState(
+        state => ((state.consultationStatus = "CLOSED"), state)
+      );
+    }
     Cache.getItem("User").then(user => {
-      if (user) {
-        if (this.consultationType == "OnGoingStatus") {
-          this.setState(
-            state => ((state.consultationStatus = "ONGOING"), state)
-          );
-        } else if (this.consultationType == "ClosedStatus") {
-          this.setState(
-            state => ((state.consultationStatus = "CLOSED"), state)
-          );
-        }
-
-        const username = {
-          username: user.userName
-        };
-
+      if (user && user.userType == "DOCTOR") {
         const getDoctorConversations = {
-          username: "TestDoctor1",
+          username: user.userName,
           conversationStatus: this.state.consultationStatus
         };
-
-        API.graphql(
+        return API.graphql(
           graphqlOperation(GetDoctorConversations, getDoctorConversations)
         )
           .then(response => {
@@ -123,9 +119,56 @@ class PaymentHistoryPage extends React.Component {
             console.log(err);
             this.closeActivityIndicator();
           });
-      }
-    });
-  }
+        } else if (user && user.userType == "USER") {
+        const getUserConversations = {
+          username: user.userName,
+          conversationStatus: this.state.consultationStatus
+        };
+        return API.graphql(graphqlOperation(GetUserConversations, getUserConversations))
+          .then(response => {
+            console.log("got User conversations");
+            console.log(response);
+            this.setState({
+              conversationListData:
+                response.data.getUserConversations.items
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+        }
+  })
+
+}
+
+  // const username = {
+  //   username: user.userName
+  // };
+
+  //   } else if (usertype == "USER") {
+  //     const getUserConversations = {
+  //       username: "TestUser",
+  //       conversationStatus: this.state.consultationStatus
+  //     };
+  //     API.graphql(graphqlOperation(GetUserConversations, getUserConversations))
+  //       .then(response => {
+  //         console.log("got user conversations");
+  //         console.log(response);
+  //         this.setState({
+  //           conversationListData:
+  //             response.data.getUserConversations.items
+  //         });
+  //         this.closeActivityIndicator();
+  //       })
+  //       .catch(err => {
+  //         console.log("Failed to show list");
+  //         console.log(err);
+  //         this.closeActivityIndicator();
+  //       });
+  //   }
 
   render() {
     return (
@@ -148,6 +191,7 @@ class PaymentHistoryPage extends React.Component {
             return <DataListItem item={item} index={index} />;
           }}
         />
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }
@@ -184,8 +228,8 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 25,
-    flexDirection: "column",
-  //  backgroundColor: "lightgreen"
+    flexDirection: "column"
+    //  backgroundColor: "lightgreen"
   },
   nameText: {
     color: "#8BE0DE",
@@ -247,8 +291,8 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
-   // backgroundColor: 'black'
+    alignItems: "center"
+    // backgroundColor: 'black'
   },
   listSeperationLine: {
     backgroundColor: "#8BE0DE",
@@ -258,16 +302,15 @@ const styles = StyleSheet.create({
   cellContainer: {
     height: 100,
     width: "90%",
-    flexDirection: 'column',
-    marginHorizontal: "5%",
-  //  backgroundColor: "orange"
+    flexDirection: "column",
+    marginHorizontal: "5%"
+    //  backgroundColor: "orange"
   },
   statusText: {
-    color: 'darkgrey',
+    color: "darkgrey",
     fontSize: 13,
-    alignSelf: 'flex-end'
+    alignSelf: "flex-end"
   }
-
 });
 
 export default PaymentHistoryPage;

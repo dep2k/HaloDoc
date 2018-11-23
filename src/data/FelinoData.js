@@ -2,27 +2,6 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 
-const listdata =[
-  {
-    key: "1",
-    name: "DoctorName",
-    date: "CreatedAt",
-    payment: "Payment"
-  },
-   {
-    key: "2",
-    name: "DoctorName",
-    date: "CreatedAt",
-    payment: "Payment"
-  },
-   {
-    key: "3",
-    name: "DoctorName",
-    date: "CreatedAt",
-    payment: "Payment"
-  }
-];
-
 const catRaceListdata = [
   { key: "1", name: I18n.get("Abisinio") },
   { key: "2", name: I18n.get("American") },
@@ -173,6 +152,5 @@ export {
   catRaceListdata,
   dogRaceListdata,
   horseRaceListdata,
-  listdata
 };
   
