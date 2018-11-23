@@ -13,13 +13,16 @@ import { I18n } from "aws-amplify";
 const base = "../../../images/"
 const consultIcon = require(base + "consultIcon.png");
 const myProfileIcon = require(base + "myProfileIcon.png");
+import { Cache } from "aws-amplify";
 
 class DoctorMenuPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.openConsultationsClick = this.openConsultationsClick.bind(this);
-    this.historyButtonClick = this.historyButtonClick.bind(this);
+      this.ConsultationButtonClick = this.ConsultationButtonClick.bind(this);
+      this.logOutButtonClick = this.logOutButtonClick.bind(this);
+
+    
   }
 
 ConsultationButtonClick(type) {
@@ -27,13 +30,12 @@ ConsultationButtonClick(type) {
     this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
 
 }
-    historyButtonClick() {
-        this.props.navigation.navigate("PaymentHistoryPage");
-  }
 
-  openConsultationsClick() {
-    this.props.navigation.navigate("OpenConsultationsPage");
-  }
+ logOutButtonClick() {
+        this.props.navigation.navigate("LoginPage");
+        Cache.clear();
+    }
+
 
   
   render() {

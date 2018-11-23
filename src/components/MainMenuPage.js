@@ -44,15 +44,6 @@ class MainMenuPage extends React.Component {
   }
  
   logOutButtonClick() {
-    // this.props.navigation.dispatch(
-    //   this.props.NavigationActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-    //     ],
-    //   }),
-    // )
     this.props.navigation.navigate("LoginPage");
     Cache.clear();
   }

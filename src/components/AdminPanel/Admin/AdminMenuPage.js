@@ -14,8 +14,10 @@ import { I18n } from "aws-amplify";
 const base = "../../../images/"
 const backgroundImage = require(base + "newBackground.png")
 const backButtonImage = require(base + "BackButtonShape.png");
+const myProfileIcon = require(base + "myProfileIcon.png");
 const docIconImage = require(base + "DoctorIcon.png");
 const consultIcon = require(base + "consultIcon.png");
+import { Cache } from "aws-amplify";
 
 class AdminMenuPage extends React.Component {
   constructor(props) {
@@ -41,28 +43,14 @@ class AdminMenuPage extends React.Component {
   }
 
   logOutButtonClick() {
-    // this.props.navigation.dispatch(
-    //   this.props.NavigationActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-    //     ],
-    //   }),
-    // )
+    this.props.navigation.navigate("LoginPage");
+    Cache.clear();
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-  });
+ 
   render() {
     return (
       <View style={styles.mainContainer}>
-        {/* <ImageBackground
-          source={backgroundImage}
-          style={styles.fullBackgroundImage}
-          imageStyle={styles.fullbackgroundImageStyle}
-        > */}
           <View style={styles.topContainer}>
             {/* <TouchableOpacity
               style={styles.backButtonStyle}
@@ -109,6 +97,14 @@ class AdminMenuPage extends React.Component {
                 </Text>
               </TouchableOpacity>
             </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+            <TouchableOpacity onPress={this.logOutButtonClick}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("LogOut")}
+              </Text>
+            </TouchableOpacity>
+          </View>
           </View>
         {/* </ImageBackground> */}
       </View>
@@ -187,8 +183,8 @@ const styles = StyleSheet.create({
         // backgroundColor: "pink"
     },
     iconImagesStyle: {
-        width: 35,
-        height: 35,
+        width: 30,
+        height: 30,
         marginLeft: "5%",
         marginRight: "5%",
         resizeMode: 'contain'
