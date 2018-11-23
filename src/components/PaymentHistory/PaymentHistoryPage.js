@@ -5,23 +5,18 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ImageBackground,
   FlatList
 } from "react-native";
 import { I18n } from "aws-amplify";
 
 import Loader from "../../ActivityIndicator";
-import { GetDoctorConversations } from "../../Queries/Chatapi";
-import {GetUserConversations} from "../../Queries/Chatapi";
-
+import { GetDoctorConversations, ListConversations, GetUserConversations } from "../../Queries/Chatapi";
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
 
 const base = "../../images/";
-const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
 
 class DataListItem extends React.Component {
@@ -78,6 +73,10 @@ class PaymentHistoryPage extends React.Component {
           {I18n.get("HistoryOfConsultaions")}
         </Text>
       );
+    } else if (this.consultationType == "listOfAllConsultations") {
+      return <Text style={styles.historyText}>
+        {I18n.get("Consultations")}
+        </Text>;
     }
   }
   backButtonClick() {
@@ -139,36 +138,29 @@ class PaymentHistoryPage extends React.Component {
             console.log(err);
             this.closeActivityIndicator();
           });
+      } else if (user && user.userName == "Admin") {
+        
+        const listConversations = {
+          username: 'Admin'
         }
+        return API.graphql(graphqlOperation(ListConversations, listConversations))
+          .then(response => {
+            console.log("got User conversations");
+            console.log(response);
+            this.setState({
+              conversationListData:
+                response.data.listConversations.items
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+      }
   })
-
 }
-
-  // const username = {
-  //   username: user.userName
-  // };
-
-  //   } else if (usertype == "USER") {
-  //     const getUserConversations = {
-  //       username: "TestUser",
-  //       conversationStatus: this.state.consultationStatus
-  //     };
-  //     API.graphql(graphqlOperation(GetUserConversations, getUserConversations))
-  //       .then(response => {
-  //         console.log("got user conversations");
-  //         console.log(response);
-  //         this.setState({
-  //           conversationListData:
-  //             response.data.getUserConversations.items
-  //         });
-  //         this.closeActivityIndicator();
-  //       })
-  //       .catch(err => {
-  //         console.log("Failed to show list");
-  //         console.log(err);
-  //         this.closeActivityIndicator();
-  //       });
-  //   }
 
   render() {
     return (

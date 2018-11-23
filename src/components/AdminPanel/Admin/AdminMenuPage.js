@@ -24,22 +24,20 @@ class AdminMenuPage extends React.Component {
     super(props);
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
     this.backButtonClick = this.backButtonClick.bind(this);
-    this.helperButtonClick = this.helperButtonClick.bind(this);
     this.doctorButtonClick = this.doctorButtonClick.bind(this);
-    this.adminButtonClick = this.adminButtonClick.bind(this);
-  }
-  adminButtonClick() {
-    this.props.navigation.navigate("AdminCreateHelperDoctorPage")
+    this.consultationsButtonClick = this.consultationsButtonClick.bind(this);
   }
   backButtonClick() { 
     this.props.navigation.goBack(null);
   }
-  helperButtonClick() {
-      this.props.navigation.navigate("HelperLoginPage");
-  }
   doctorButtonClick(nameOfPage) {
       this.props.navigation.navigate("HelperDoctorsListPage", 
      { nameOfPage : nameOfPage});
+  }
+  consultationsButtonClick(type) {
+    this.props.navigation.navigate("PaymentHistoryPage", {
+      consultationType: type
+    });
   }
 
   logOutButtonClick() {
@@ -49,10 +47,9 @@ class AdminMenuPage extends React.Component {
 
  
   render() {
-    return (
-      <View style={styles.mainContainer}>
-          <View style={styles.topContainer}>
-            {/* <TouchableOpacity
+    return <View style={styles.mainContainer}>
+        <View style={styles.topContainer}>
+          {/* <TouchableOpacity
               style={styles.backButtonStyle}
               onPress={this.backButtonClick}
             >
@@ -61,42 +58,25 @@ class AdminMenuPage extends React.Component {
                 style={styles.backButtonImageStyle}
               />
             </TouchableOpacity> */}
-          </View>
-          <Text style={styles.menuText}>MENU</Text>
-          <View style={styles.buttonsMainContainer}>
-            {/* <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../../../images/ImageLogo.jpg")}
-              />
-              <TouchableOpacity onPress={this.helperButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Helper")}
-                </Text>
-              </TouchableOpacity>
-            </View> */}
-            <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-              source={docIconImage}
-              />
+        </View>
+        <Text style={styles.menuText}>MENU</Text>
+        <View style={styles.buttonsMainContainer}>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={docIconImage} />
             <TouchableOpacity onPress={() => this.doctorButtonClick("AdminPage")}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Doctor")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-              source={consultIcon}
-              />
-              <TouchableOpacity onPress= {this.adminButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                   {I18n.get("Consultations")}
-                </Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("Doctor")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+            <TouchableOpacity onPress={() => this.consultationsButtonClick("listOfAllConsultations")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("Consultations")}
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={myProfileIcon} />
             <TouchableOpacity onPress={this.logOutButtonClick}>
@@ -105,10 +85,9 @@ class AdminMenuPage extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          </View>
+        </View>
         {/* </ImageBackground> */}
-      </View>
-    );
+      </View>;
   }
 }
 const styles = StyleSheet.create({

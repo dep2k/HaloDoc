@@ -26,9 +26,7 @@ class DoctorMenuPage extends React.Component {
   }
 
 ConsultationButtonClick(type) {
-    console.log("ConsultationButtonClick:" + type);
     this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
-
 }
 
  logOutButtonClick() {

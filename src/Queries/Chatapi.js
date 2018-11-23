@@ -129,6 +129,19 @@ getUserConversations(username: $username ,conversationStatus: $conversationStatu
         }
     }
 }`;
+export const ListConversations = `query ListConversations {
+  listConversations {
+    items {
+      username
+      payment
+      createdAt
+      doctor{
+        name
+      }
+    }
+    nextToken
+  }
+}`;
 
 export const SubscriptionToCreateConversation = `subscription SubscribeToCreateConversation($doctorId: String) {
   subscribeToCreateConversation(doctorId: $doctorId) {
