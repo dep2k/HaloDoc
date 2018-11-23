@@ -116,7 +116,17 @@ getDoctorConversations(username: $username ,conversationStatus: $conversationSta
         }
     }
 }`;
-
+export const GetUserConversations = `query GetUserConversations($username: String!, $conversationStatus: String! ) {
+getUserConversations(username: $username ,conversationStatus: $conversationStatus ) {
+     items {
+         conversationStatus
+         username
+         doctor {
+           name
+         }
+        }
+    }
+}`;
 
 export const SubscriptionToCreateConversation = `subscription SubscribeToCreateConversation($doctorId: String) {
   subscribeToCreateConversation(doctorId: $doctorId) {

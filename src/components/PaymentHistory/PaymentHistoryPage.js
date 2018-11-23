@@ -10,45 +10,43 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import Loader from "../../ActivityIndicator";
-//import listdata from "../../data/felinoRaceListData";
+//import {listdata} from "../../data/FelinoData";
 import { GetDoctorConversations } from "../../Queries/Chatapi";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
+
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
 
+
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
 
 
-
 class DataListItem extends React.Component {
-    render() {
-        return (
-            <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-                    <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
-                    <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
-                    <Text style={styles.nameText}>{this.props.item.payment}</Text>
-                    <View style={styles.listSeperationLine}></View>
-                <Text style={styles.statusText}>{this.props.item.status}</Text>
-            </TouchableOpacity>
-        );
-    }
+  render() {
+    
+    return (
+      <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
+        <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
+        <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
+        <Text style={styles.nameText}>{"Payment is" + this.props.item.payment}</Text>
+        <View style={styles.listSeperationLine}></View>
+        {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
+      </TouchableOpacity>
+    );
+  }
 }
 
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    conversationListData: [],
-    animating: false,
-    consultationStatus: "",
+      conversationListData: [],
+      animating: false,
+      consultationStatus: ""
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
@@ -62,13 +60,15 @@ class PaymentHistoryPage extends React.Component {
     this.setState({ animating: false });
   }
 
+  listBtnClick(item) {
+    console.log("List Btn Click");
+    console.log(item);
+  }
   renderHeading() {
     if (this.consultationType == "OnGoingStatus") {
       return (
-      <Text style={styles.historyText}>
-        {I18n.get("OpenConsultations")}
-      </Text>);
-
+        <Text style={styles.historyText}>{I18n.get("OpenConsultations")}</Text>
+      );
     } else if (this.consultationType == "ClosedStatus") {
       return (
         <Text style={styles.historyText}>
@@ -77,8 +77,10 @@ class PaymentHistoryPage extends React.Component {
       );
     }
   }
-
-
+  backButtonClick() {
+    console.log("BackBtnClick");
+    this.props.navigation.goBack(null);
+  }
   componentDidMount() {
     this.startActivityIndicator();
     const { navigation } = this.props;
@@ -88,32 +90,31 @@ class PaymentHistoryPage extends React.Component {
       if (user) {
         if (this.consultationType == "OnGoingStatus") {
           this.setState(
-            state => (
-              (state.consultationStatus = "ONGOING"),
-              state
-            ))
-          } else if (this.consultationType == "ClosedStatus")
-           {
+            state => ((state.consultationStatus = "ONGOING"), state)
+          );
+        } else if (this.consultationType == "ClosedStatus") {
           this.setState(
-            state => (
-              (state.consultationStatus = "CLOSED"),
-              state
-            ))
+            state => ((state.consultationStatus = "CLOSED"), state)
+          );
         }
 
         const username = {
-          username: user.userName,
-         };
-      
-        const getDoctorConversations = { username: username, conversationStatus: this.state.consultationStatus };
-   
-        API.graphql(graphqlOperation(GetDoctorConversations, getDoctorConversations))
+          username: user.userName
+        };
+
+        const getDoctorConversations = {
+          username: "TestDoctor1",
+          conversationStatus: this.state.consultationStatus
+        };
+
+        API.graphql(
+          graphqlOperation(GetDoctorConversations, getDoctorConversations)
+        )
           .then(response => {
             console.log("got doctor conversations");
             console.log(response);
             this.setState({
-              conversationListData:
-                response.data.getDoctorConversations.items
+              conversationListData: response.data.getDoctorConversations.items
             });
             this.closeActivityIndicator();
           })
@@ -122,24 +123,8 @@ class PaymentHistoryPage extends React.Component {
             console.log(err);
             this.closeActivityIndicator();
           });
-        
-    }
-      
-  })
-}
-
-  petButtonClick() {
-    // this.props.navigation.navigate("HelperHistoryPage");
-  }
-
-  backButtonClick() {
-    console.log("BackBtnClick");
-    this.props.navigation.goBack(null);
-  }
-
-  listBtnClick(item) {
-    console.log("List Btn Click");
-    console.log(item);
+      }
+    });
   }
 
   render() {
@@ -151,6 +136,7 @@ class PaymentHistoryPage extends React.Component {
 
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
+
           {this.renderHeading()}
         </View>
 
@@ -158,16 +144,10 @@ class PaymentHistoryPage extends React.Component {
           style={styles.listContainer}
           data={this.state.conversationListData}
           keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => {
-                    return (
-                        <DataListItem
-                            item={item}
-                            index={index}
-                        />
-                    );
-                }}
+          renderItem={({ item, index }) => {
+            return <DataListItem item={item} index={index} />;
+          }}
         />
-        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }
@@ -205,11 +185,11 @@ const styles = StyleSheet.create({
   listContainer: {
     marginTop: 25,
     flexDirection: "column",
-    backgroundColor: "transparent"
+  //  backgroundColor: "lightgreen"
   },
   nameText: {
     color: "#8BE0DE",
-    fontSize: 16,
+    fontSize: 18,
     padding: 2
   },
 
@@ -246,9 +226,8 @@ const styles = StyleSheet.create({
   historyText: {
     marginLeft: 15,
     fontSize: 20,
-    width: "85%",
-    color: "#A4C952",
-    fontWeight: 'bold'
+    width: "80%",
+    color: "#A4C952"
   },
 
   backBtn: {
@@ -268,8 +247,8 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center"
-    //backgroundColor: 'black'
+    alignItems: "center",
+   // backgroundColor: 'black'
   },
   listSeperationLine: {
     backgroundColor: "#8BE0DE",
@@ -280,15 +259,15 @@ const styles = StyleSheet.create({
     height: 100,
     width: "90%",
     flexDirection: 'column',
-    marginHorizontal: "5%"
-    // backgroundColor: "black"
+    marginHorizontal: "5%",
+  //  backgroundColor: "orange"
   },
-    statusText:{
-        color: 'darkgrey',
-        fontSize: 13,
-        alignSelf: 'flex-end'
-    }
-  
+  statusText: {
+    color: 'darkgrey',
+    fontSize: 13,
+    alignSelf: 'flex-end'
+  }
+
 });
 
 export default PaymentHistoryPage;
