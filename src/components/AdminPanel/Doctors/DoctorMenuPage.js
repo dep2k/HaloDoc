@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     buttonsMainContainer: {
         flexDirection: "column",
-        flex: 0.25,
+        height:175,
         width: "100%",
         justifyContent: "flex-start",
         justifyContent: "space-evenly",
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     },
     singleButtonContainer: {
         flexDirection: "row",
-        height: "20%",
+        height: 46,
         width: "100%",
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
         // backgroundColor: "pink"
     },
     iconImagesStyle: {
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     touchableOpacityText: {
-        fontSize: 20,
+        fontSize: 16.5,
         color: "white",
         fontWeight: "bold"
     }

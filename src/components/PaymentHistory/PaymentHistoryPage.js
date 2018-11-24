@@ -48,6 +48,7 @@ class PaymentHistoryPage extends React.Component {
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
+    this._handleRowClick = this._handleRowClick.bind(this);
   }
 
   startActivityIndicator() {
@@ -58,9 +59,8 @@ class PaymentHistoryPage extends React.Component {
     this.setState({ animating: false });
   }
 
-  listBtnClick(item) {
-    console.log("List Btn Click");
-    console.log(item);
+  _handleRowClick(item) {
+    this.props.navigation.navigate("ChatPage", { user: item });
   }
   renderHeading() {
     if (this.consultationType == "OnGoingStatus") {
@@ -177,7 +177,10 @@ class PaymentHistoryPage extends React.Component {
           data={this.state.conversationListData}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => {
-            return <DataListItem item={item} index={index} />;
+            return <DataListItem 
+              onPress={() => this._handleRowClick(item)}
+            item={item} 
+            index={index} />;
           }}
         />
         {this.state.animating && <Loader animating={this.state.animating} />}

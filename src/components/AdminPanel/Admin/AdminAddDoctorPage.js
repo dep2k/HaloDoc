@@ -301,9 +301,22 @@ class AdminAddDoctorPage extends React.Component {
             />
             />
           </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("CreatePassword")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.password = text), state)
+                  )
+                }
+              />
+              />
+          </View>
             <View style={styles.LastlastLineStyle} />
           <View style={styles.buttonsContainer}>
-            <Text style={styles.passwordText}>
+            {/* <Text style={styles.passwordText}>
               {I18n.get("CreatePassword")}
             </Text>
             <TextInput
@@ -311,7 +324,7 @@ class AdminAddDoctorPage extends React.Component {
               onChangeText={text =>
                 this.setState(state => ((state.doctor.password = text), state))
               }
-            />
+            /> */}
             <TouchableOpacity
               onPress={this.onRegisterButtonClick}
               style={styles.registerButton}
@@ -422,20 +435,21 @@ const styles = StyleSheet.create({
   },
   formText: {
     width: "35%",
-    height: "80%",
     color: "#8BE0DE",
     marginLeft: "1%",
+    fontSize:14,
+    height: 25,
     marginTop: "6%",
-    // backgroundColor: 'black',
-    //justifyContent: "flex-end",
-    alignSelf: "center"
-    // textAlign: 'center'
+    alignSelf: "center",
+   // backgroundColor: 'blue'
   },
   formTextInputStyle: {
     width: "63%",
     height: 45,
-    alignItems: "flex-end"
-    // backgroundColor: 'pink'
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+   //  backgroundColor: 'pink',
+    fontSize: 14,
   },
   lastLineStyle: {
     width: "100%",

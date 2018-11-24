@@ -79,7 +79,6 @@ class LoginPage extends React.Component {
           console.log(data);
           if(user.username == 'Admin'){
             this.props.navigation.navigate("AdminMenuPage");
-
           } else{
             const payload = data.signInUserSession.idToken.payload;;
             let cognitoUser = {

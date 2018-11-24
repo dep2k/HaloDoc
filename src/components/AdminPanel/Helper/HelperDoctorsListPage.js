@@ -5,11 +5,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  ImageBackground,
   FlatList
 } from "react-native";
-import SVGImage from "react-native-svg-image";
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -18,26 +15,12 @@ import Loader from "../../../ActivityIndicator";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../../Reusable/NavBar";
 
-
 const base = "../../../images/";
 const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 const navBarImage = require(base + "navbarImage.png");
 const addIcon = require(base + "addIcon.png");
 
-
-// const listInput = {nextToken:null};
-// API.graphql(graphqlOperation(ListDoctors, listInput))
-//   .then(data => {
-//     console.log("List shown");
-//     console.log(data);
-//     this.closeActivityIndicator();
-//   })
-//   .catch(err => {
-//     console.log("Failed to show list");
-//     console.log(err);
-//     this.closeActivityIndicator();
-//   });
 class DataListItem extends React.Component {
   render() {
     return (
@@ -62,15 +45,12 @@ class DataListItem extends React.Component {
 }
 
 class HelperDoctorsListPage extends React.Component {
-
-  
   constructor(props) {
     super(props);
     this.state = {
       doctorsListData: [],
       animating: false
     };
-
 
     const { navigation } = this.props;
     this.nameOfPage = navigation.getParam("nameOfPage");
@@ -109,7 +89,7 @@ class HelperDoctorsListPage extends React.Component {
     this.props.navigation.goBack(null);
   }
   addButtonClick() {
-    this.props.navigation.push("AdminAddDoctorPage")
+    this.props.navigation.push("AdminAddDoctorPage");
   }
 
   _handleRowClick(item) {
@@ -118,43 +98,30 @@ class HelperDoctorsListPage extends React.Component {
 
   renderAddButton() {
     if (this.nameOfPage == "AdminPage") {
-      return <View style={styles.topContainer}>
-        <TouchableOpacity
-          style={styles.backButtonStyle}
-          onPress={this.backButtonClick}
-        >
-          <Image
-            source={backButtonImage}
-            style={styles.backButtonImageStyle}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.addButtonStyle}
-          onPress={() =>
-            this.addButtonClick()
-          }
-        >
-          <Image
-            source={addIcon}
-            style={styles.addIconStyle}
-            imageStyle={styles.addIconImageStyle}
-          />
-        </TouchableOpacity>
-      </View>
-    
+      return (
+        <View style = {styles.addButtonContainer}>
+          <TouchableOpacity
+            style={styles.addButtonStyle}
+            onPress={() => this.addButtonClick()}
+          >
+            <Image
+              source={addIcon}
+              style={styles.addIconStyle}
+              imageStyle={styles.addIconImageStyle}
+            />
+          </TouchableOpacity>
+        </View>
+      );
     } else {
-      return(
-        <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
-      ) 
     }
-    }
-  
+  }
 
   render() {
     return (
       <View style={styles.mainContainer}>
+        <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
         {this.renderAddButton()}
-       
+
         <Text style={styles.doctorsDirectoryText}>
           {I18n.get("DoctorsDirectory")}
         </Text>
@@ -202,9 +169,16 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30
   },
+  addButtonContainer : {
+    height: 40, 
+    width: "100%",
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    alignItems: 'center'
+  },
   addButtonStyle: {
     marginTop: 30,
-    marginRight: 20,
+    marginRight: 25,
     width: 30,
     height: 30
   },
