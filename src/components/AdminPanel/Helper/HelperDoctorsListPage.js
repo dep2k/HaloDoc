@@ -118,20 +118,34 @@ class HelperDoctorsListPage extends React.Component {
 
   renderAddButton() {
     if (this.nameOfPage == "AdminPage") {
-      return  <TouchableOpacity
-        style={styles.addButtonStyle}
-        onPress={() =>
-          this.addButtonClick()
-        }
-      >
-        <Image
-          source={addIcon}
-          style={styles.addIconStyle}
-          imageStyle={styles.addIconImageStyle}
-        />
-      </TouchableOpacity>
+      return <View style={styles.topContainer}>
+        <TouchableOpacity
+          style={styles.backButtonStyle}
+          onPress={this.backButtonClick}
+        >
+          <Image
+            source={backButtonImage}
+            style={styles.backButtonImageStyle}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.addButtonStyle}
+          onPress={() =>
+            this.addButtonClick()
+          }
+        >
+          <Image
+            source={addIcon}
+            style={styles.addIconStyle}
+            imageStyle={styles.addIconImageStyle}
+          />
+        </TouchableOpacity>
+      </View>
+    
     } else {
-
+      return(
+        <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
+      ) 
     }
     }
   
@@ -139,24 +153,8 @@ class HelperDoctorsListPage extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        {/* <ImageBackground
-          source={backgroundImage}
-          style={styles.fullBackgroundImage}
-          imageStyle={styles.fullbackgroundImageStyle}
-        >  */}
-        <View style={styles.topContainer}>
-          <TouchableOpacity
-            style={styles.backButtonStyle}
-            onPress={this.backButtonClick}
-          >
-            <Image
-              source={backButtonImage}
-              style={styles.backButtonImageStyle}
-            />
-          </TouchableOpacity>
-          {this.renderAddButton()}
-      
-        </View>
+        {this.renderAddButton()}
+       
         <Text style={styles.doctorsDirectoryText}>
           {I18n.get("DoctorsDirectory")}
         </Text>
@@ -185,16 +183,16 @@ class HelperDoctorsListPage extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#AACB61",
+    backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center"
   },
   topContainer: {
-    height:70,
+    height: 70,
     width: "100%",
     flexDirection: "row",
-   // backgroundColor: "blue",
+    // backgroundColor: "blue",
     justifyContent: "space-between",
     alignItems: "center"
   },
@@ -202,18 +200,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 20,
     width: 30,
-    height: 30,
+    height: 30
   },
   addButtonStyle: {
     marginTop: 30,
     marginRight: 20,
     width: 30,
-    height: 30,
+    height: 30
   },
   backButtonImageStyle: {
     width: 30,
     height: 30,
-    resizeMode: "contain",
+    resizeMode: "contain"
   },
   fullBackgroundImage: {
     flex: 1,
@@ -234,7 +232,7 @@ const styles = StyleSheet.create({
   },
   doctorsDirectoryText: {
     fontSize: 21,
-    color: "white",
+    color: "black",
     marginTop: "10%",
     marginBottom: 40
   },
@@ -250,12 +248,12 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   nameText: {
-    color: "white",
+    color: "black",
     fontSize: 18,
     padding: 2
   },
   categoryText: {
-    color: "white",
+    color: "black",
     fontSize: 13,
     padding: 2,
     marginBottom: 10

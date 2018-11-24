@@ -106,7 +106,6 @@ class PaymentHistoryPage extends React.Component {
           graphqlOperation(GetDoctorConversations, getDoctorConversations)
         )
           .then(response => {
-            console.log("got doctor conversations");
             console.log(response);
             this.setState({
               conversationListData: response.data.getDoctorConversations.items
@@ -125,7 +124,6 @@ class PaymentHistoryPage extends React.Component {
         };
         return API.graphql(graphqlOperation(GetUserConversations, getUserConversations))
           .then(response => {
-            console.log("got User conversations");
             console.log(response);
             this.setState({
               conversationListData:
@@ -138,8 +136,7 @@ class PaymentHistoryPage extends React.Component {
             console.log(err);
             this.closeActivityIndicator();
           });
-      } else if (user && user.userName == "Admin") {
-        
+      } else {
         const listConversations = {
           username: 'Admin'
         }

@@ -275,12 +275,12 @@ const AppStackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    },
+    }
   },
-  
+
   {
-    initialRouteName: "WelcomePage"
-  },
+    initialRouteName: "AdminAddDoctorPage"
+  }
 );
 
 export default AppStackNavigator;
