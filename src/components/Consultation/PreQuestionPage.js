@@ -116,9 +116,7 @@ const styles = StyleSheet.create({
  
     petWithPathStyle: {
         height: "100%",
-        width: "80%",
-      
-        
+        width: "80%",  
     },
 
     descriptionText: {
