@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
 
   headerContainer: {
-    height: "10%",
+    height: 70,
     width: "100%",
     backgroundColor: "transparent",
     justifyContent: "center",

@@ -8,6 +8,8 @@ import {
   ImageBackground,
   TouchableOpacity
 } from "react-native";
+const base = "../../images/";
+const logoImage = require(base + "logoImage.png");
 import { Footer } from "../Reusable/Footer";
 
 class SuccesfulLogin extends React.Component {
@@ -29,11 +31,13 @@ class SuccesfulLogin extends React.Component {
             style={styles.headerImage}
           />
         </View>
-        <View style={styles.logoContainer} >
-          <Image
-            source={require("../../images/logoImage.png")}
-            style={styles.topImageLogo}
-          />
+        <View style={styles.logoContainer}>
+            <ImageBackground
+              source={logoImage}
+              style={styles.logoImage}
+              imageStyle={styles.logoImageimageStyle}
+            >
+            </ImageBackground>
         </View>
       
         //contains center welcome Text
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   headerContainer: {
-    height: "10%",
+    height:70,
     //  marginTop: 30,
     width: "100%",
     backgroundColor: "transparent",
@@ -70,21 +74,28 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: "100%",
     height: 80,
-    marginTop: 10,
-    marginBottom: "10%",
+   // marginTop: 10,
+    // /marginBottom: "10%",
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    // backgroundColor: 'green'
+  // backgroundColor: 'green'
   },
-  topImageLogo: {
-    marginRight:35,
-    backgroundColor: "transparent",
-    resizeMode: "contain",
-     height: 60,
+  logoImage: {
+    height: 60,
     width: 80,
     marginRight: 35,
+  //  marginTop: 10,
+  //  backgroundColor: "black"
   },
+  // topImageLogo: {
+  //   marginRight:35,
+  //   backgroundColor: "transparent",
+  //   resizeMode: "contain",
+  //    height: 60,
+  //   width: 80,
+  //   marginRight: 35,
+  // },
   middleContainer: {
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flex:2.3,
     alignItems: "center",
-    paddingTop: "10%"
+    paddingTop: "30%"
   },
   headingTextStyle: {
     fontSize: 24,
@@ -108,7 +119,9 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontWeight: "normal",
     width: "90%",
-    paddingHorizontal: "5%"
+    height: 100,
+    paddingHorizontal: "5%",
+    //backgroundColor: "black",
   },
   
 });
