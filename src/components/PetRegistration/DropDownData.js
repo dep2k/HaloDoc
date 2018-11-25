@@ -1,14 +1,8 @@
 
-import React from "react";
 import { I18n } from "aws-amplify";
 
 
 
-export const petDropDownData = {
-  cat: catRaceListdata,
-  dot: dogRaceListdata,
-  horse: horseRaceListdata
-}
 
 const catRaceListdata = [
   { key: "1", name: I18n.get("Abisinio") },
@@ -144,7 +138,7 @@ const horseRaceListdata = [
   { key: "23", name: I18n.get("Shetland") },
 ];
 
-const sexData = [
+export const genderData = [
   {
     key: "1",
     name: "Hembra"
@@ -155,5 +149,15 @@ const sexData = [
   }
 ];
 
-export { sexData, catRaceListdata, dogRaceListdata, horseRaceListdata};
+
+
+export const petRaceListData = {
+  cat: catRaceListdata,
+  dot: dogRaceListdata,
+  horse: horseRaceListdata
+}
+// export
+// {   genderData, 
+//     petRaceListData
+// };
   
