@@ -96,7 +96,9 @@ class RegistrationPage extends React.Component {
             .then(data => {
               console.log(data);
               Cache.setItem("User", this.state.user);
-              this.props.navigation.navigate("CodeConfirmationPage");
+              this.props.navigation.navigate("CodeConfirmationPage", {
+                username: user.userName , pageType: "UserRegistrationPage"
+              });
               this.closeActivityIndicator();
             })
             .catch(err => {

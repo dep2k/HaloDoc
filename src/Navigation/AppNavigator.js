@@ -279,7 +279,7 @@ const AppStackNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "SuccesfulLoginPage"
+    initialRouteName: "WelcomePage"
   }
 );
 

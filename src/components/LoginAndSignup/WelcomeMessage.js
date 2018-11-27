@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 100,
     paddingHorizontal: "5%",
-    //backgroundColor: "black",
+  //backgroundColor: "black",
   },
   
 });

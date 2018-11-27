@@ -78,7 +78,7 @@ class LoginPage extends React.Component {
           this.closeActivityIndicator();
           console.log(data);
           if(user.username == 'Admin'){
-            this.props.navigation.navigate("AdminMenuPage");
+            this.props.navigation.navigate("AdminMenuPage"); 
           } else{
             const payload = data.signInUserSession.idToken.payload;;
             let cognitoUser = {
@@ -97,7 +97,6 @@ class LoginPage extends React.Component {
             } else if (cognitoUser.userType == "DOCTOR") {
               this.props.navigation.navigate("DoctorMenuPage");
             } 
-
           }
          
         })

@@ -64,6 +64,7 @@ class AdminAddDoctorPage extends React.Component {
 
   onRegisterButtonClick() {
     this._addDoctor();
+    console.log("DoctorAdded");
   }
 
   _addDoctor() {
@@ -84,18 +85,6 @@ class AdminAddDoctorPage extends React.Component {
       address: this.state.doctor.address,
     };
     this.startActivityIndicator();
-
-    console.log(createDoctorInput);
-    // API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
-    // .then(response => {
-    //   this.closeActivityIndicator();
-    //   console.log(response);
-    // })
-    // .catch(err => {
-    //   this.closeActivityIndicator();
-    //   console.log(err);
-    // });
-
     
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
@@ -112,7 +101,6 @@ class AdminAddDoctorPage extends React.Component {
         })
           .then(data => {
             console.log(data);
-            Cache.setItem("Doctor", this.state.doctor);
             API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
               .then(response => {
                 console.log(response);
@@ -121,7 +109,10 @@ class AdminAddDoctorPage extends React.Component {
                 console.log(err);
               });
 
-            this.props.navigation.navigate("CodeConfirmationPage");
+            this.props.navigation.navigate("CodeConfirmationPage", {
+              username: doc.userName, pageType: "DocRegistrationPage"
+            });
+            console.log(doc.userName)
             this.closeActivityIndicator();
           })
           .catch(err => {
