@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
     backBtn: {
         marginTop: 30,
-        marginLeft: 20,
+        marginLeft: 25,
         width: 30,
         height: 30,
     },
