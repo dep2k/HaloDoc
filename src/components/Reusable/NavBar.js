@@ -55,10 +55,6 @@ export class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
 
-  
-
-  
-
     headerContainer: {
           height: 70,
         //height: "10%",
