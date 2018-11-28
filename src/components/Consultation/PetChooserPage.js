@@ -34,7 +34,7 @@ class PetChooserPage extends React.Component {
         this.petButtonClick = this.petButtonClick.bind(this);
 
         const getPetsInput = {
-            username: "deep"
+            username: "TestDoctor1"
         }
 
         API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {

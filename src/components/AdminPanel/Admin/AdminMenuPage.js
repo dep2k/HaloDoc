@@ -13,109 +13,90 @@ import { I18n } from "aws-amplify";
 
 const base = "../../../images/"
 const backgroundImage = require(base + "newBackground.png")
+const backButtonImage = require(base + "BackButtonShape.png");
+const myProfileIcon = require(base + "myProfileIcon.png");
+const docIconImage = require(base + "DoctorIcon.png");
+const consultIcon = require(base + "consultIcon.png");
+import { Cache } from "aws-amplify";
 
 class AdminMenuPage extends React.Component {
   constructor(props) {
     super(props);
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
     this.backButtonClick = this.backButtonClick.bind(this);
-    this.helperButtonClick = this.helperButtonClick.bind(this);
     this.doctorButtonClick = this.doctorButtonClick.bind(this);
-    this.adminButtonClick = this.adminButtonClick.bind(this);
-  }
-  adminButtonClick() {
-    this.props.navigation.navigate("AdminCreateHelperDoctorPage")
+    this.consultationsButtonClick = this.consultationsButtonClick.bind(this);
   }
   backButtonClick() { 
     this.props.navigation.goBack(null);
   }
-  helperButtonClick() {
-      this.props.navigation.navigate("HelperLoginPage");
+  doctorButtonClick(nameOfPage) {
+      this.props.navigation.navigate("HelperDoctorsListPage", 
+     { nameOfPage : nameOfPage});
   }
-  doctorButtonClick() {
-      this.props.navigation.navigate("DoctorLoginPage");
+  consultationsButtonClick(type) {
+    this.props.navigation.navigate("PaymentHistoryPage", {
+      consultationType: type
+    });
   }
 
   logOutButtonClick() {
-    // this.props.navigation.dispatch(
-    //   this.props.NavigationActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-    //     ],
-    //   }),
-    // )
+    this.props.navigation.navigate("LoginPage");
+    Cache.clear();
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-  });
+ 
   render() {
-    return (
-      <View style={styles.mainContainer}>
-        <ImageBackground
-          source={backgroundImage}
-          style={styles.fullBackgroundImage}
-          imageStyle={styles.fullbackgroundImageStyle}
-        >
-          <View style={styles.topContainer}>
-            <TouchableOpacity
+    return <View style={styles.mainContainer}>
+        <View style={styles.topContainer}>
+          {/* <TouchableOpacity
               style={styles.backButtonStyle}
               onPress={this.backButtonClick}
             >
               <Image
-                source={require("../../../images/BackButtonShape.png")}
+                source={backButtonImage}
                 style={styles.backButtonImageStyle}
               />
+            </TouchableOpacity> */}
+        </View>
+        <Text style={styles.menuText}>MENU</Text>
+        <View style={styles.buttonsMainContainer}>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={docIconImage} />
+            <TouchableOpacity onPress={() => this.doctorButtonClick("AdminPage")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("Doctor")}
+              </Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.menuText}>MENU</Text>
-          <View style={styles.buttonsMainContainer}>
-            <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../../../images/ImageLogo.jpg")}
-              />
-              <TouchableOpacity onPress={this.helperButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Helper")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../../../images/ImageLogo.jpg")}
-              />
-             <TouchableOpacity onPress={this.doctorButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Doctor")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={require("../../../images/ImageLogo.jpg")}
-              />
-              <TouchableOpacity onPress= {this.adminButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("ADMINISTRATOR")}
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+            <TouchableOpacity onPress={() => this.consultationsButtonClick("listOfAllConsultations")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("Consultations")}
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </View>
-    );
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+            <TouchableOpacity onPress={this.logOutButtonClick}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("LogOut")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* </ImageBackground> */}
+      </View>;
   }
 }
 const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1
-
-        // backgroundColor: "#BED885"
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      backgroundColor: "#AACB61"
     },
     topContainer: {
         height: "7%",
@@ -123,8 +104,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        //backgroundColor: "green",
-       // marginTop: "10%"
     },
   backButtonStyle: {
     backgroundColor: "transparent",
@@ -142,23 +121,23 @@ const styles = StyleSheet.create({
         alignItems: "center",
         resizeMode: 'contain'
     },
-    fullBackgroundImage: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center"
-    },
-    fullbackgroundImageStyle: {
-        position: "absolute",
-        resizeMode: "cover",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "transparent",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        backgroundColor: "transparent"
-    },
+    // fullBackgroundImage: {
+    //     flex: 1,
+    //     flexDirection: "column",
+    //     justifyContent: "flex-start",
+    //     alignItems: "center"
+    // },
+    // fullbackgroundImageStyle: {
+    //     position: "absolute",
+    //     resizeMode: "cover",
+    //     width: "100%",
+    //     height: "100%",
+    //     backgroundColor: "transparent",
+    //     flexDirection: "column",
+    //     justifyContent: "flex-start",
+    //     alignItems: "center",
+    //     backgroundColor: "transparent"
+    // },
     menuText: {
         fontSize: 25,
         color: "white",
@@ -168,11 +147,11 @@ const styles = StyleSheet.create({
     },
     buttonsMainContainer: {
         flexDirection: "column",
-        flex: 0.4,
+        height:175,
         width: "100%",
         justifyContent: "flex-start",
-        justifyContent: "space-evenly"
-        // backgroundColor: "pink"
+        justifyContent: "space-evenly",
+         //backgroundColor: "pink"
     },
     singleButtonContainer: {
         flexDirection: "row",
@@ -183,15 +162,16 @@ const styles = StyleSheet.create({
         // backgroundColor: "pink"
     },
     iconImagesStyle: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         marginLeft: "5%",
-        marginRight: "5%"
+        marginRight: "5%",
+        resizeMode: 'contain'
     },
     touchableOpacityText: {
-        fontSize: 20,
+        fontSize: 16.5,
         color: "white",
-        fontWeight: "normal"
+        fontWeight: "bold"
     }
 });
 export default AdminMenuPage;

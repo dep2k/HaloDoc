@@ -103,7 +103,45 @@ getConversations(username: $username) {
         }
     }
 }`;
-
+export const GetDoctorConversations = `query GetDoctorConversations($username: String!, $conversationStatus: String! ) {
+getDoctorConversations(username: $username ,conversationStatus: $conversationStatus ) {
+     items {
+         conversationStatus
+         username
+         createdAt
+         payment
+         doctor {
+           name
+         }
+        }
+    }
+}`;
+export const GetUserConversations = `query GetUserConversations($username: String!, $conversationStatus: String! ) {
+getUserConversations(username: $username ,conversationStatus: $conversationStatus ) {
+     items {
+         conversationStatus
+         username
+         createdAt
+         payment
+         doctor {
+           name
+         }
+        }
+    }
+}`;
+export const ListConversations = `query ListConversations {
+  listConversations {
+    items {
+      username
+      payment
+      createdAt
+      doctor{
+        name
+      }
+    }
+    nextToken
+  }
+}`;
 
 export const SubscriptionToCreateConversation = `subscription SubscribeToCreateConversation($doctorId: String) {
   subscribeToCreateConversation(doctorId: $doctorId) {

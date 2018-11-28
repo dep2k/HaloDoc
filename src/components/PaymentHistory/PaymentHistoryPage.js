@@ -5,52 +5,51 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  ImageBackground,
   FlatList
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
 import Loader from "../../ActivityIndicator";
-//import listdata from "../../data/felinoRaceListData";
-import { GetConversation } from "../../Queries/Chatapi";
-import { backBtnImage } from "../../images/resource";
-import { btnBackgroundImage } from "../../images/resource";
+import { GetDoctorConversations, ListConversations, GetUserConversations } from "../../Queries/Chatapi";
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
 
 const base = "../../images/";
-const myProfileImage = require(base + "myProfileImage.png");
 const historyIcon = require(base + "HistoryIcon.png");
 
-
-
 class DataListItem extends React.Component {
-    render() {
-        return (
-            <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
-                    <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
-                    <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
-                    <Text style={styles.nameText}>{this.props.item.payment}</Text>
-                    <View style={styles.listSeperationLine}></View>
-                <Text style={styles.statusText}>{this.props.item.status}</Text>
-            </TouchableOpacity>
-        );
-    }
+  render() {
+    return (
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        style={styles.cellContainer}
+      >
+        <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
+        <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
+        <Text style={styles.nameText}>
+          {"Payment" + this.props.item.payment}
+        </Text>
+        <View style={styles.listSeperationLine} />
+        {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
+      </TouchableOpacity>
+    );
+  }
 }
 
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-    conversationListData: [],
-    animating: false
+      conversationListData: [],
+      animating: false,
+      consultationStatus: ""
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
+    this._handleRowClick = this._handleRowClick.bind(this);
   }
 
   startActivityIndicator() {
@@ -61,52 +60,107 @@ class PaymentHistoryPage extends React.Component {
     this.setState({ animating: false });
   }
 
-
-  componentDidMount() {
-    this.startActivityIndicator();
-    Cache.getItem("User").then(user => {
-      if (user) {
-        const username = {
-          username: user.userName,
-         };
-   
-    const getConversations = { username: username }
-   
-
-    API.graphql(graphqlOperation(GetConversation, getConversations))
-      .then(response => {
-        console.log("got conversation");
-        console.log(response);
-        this.setState({
-          conversationListData: response.data.getConversations.items
-        });
-        this.closeActivityIndicator();
-        console.log(username);
-      })
-      .catch(err => {
-        console.log("Failed to show list");
-        console.log(err);
-        this.closeActivityIndicator();
-      });
-        
-    }
-      
-  })
-}
-
-  petButtonClick() {
-    // this.props.navigation.navigate("HelperHistoryPage");
+  _handleRowClick(item) {
+    this.props.navigation.navigate("ChatPage", { user : item.username,
+      chatId: item.username + "-" + item.createdAt , consultationStatus: this.state.consultationType} );
   }
-
+  renderHeading() {
+    if (this.consultationType == "OnGoingStatus") {
+      return (
+        <Text style={styles.historyText}>{I18n.get("OpenConsultations")}</Text>
+      );
+    } else if (this.consultationType == "ClosedStatus") {
+      return (
+        <Text style={styles.historyText}>
+          {I18n.get("HistoryOfConsultaions")}
+        </Text>
+      );
+    } else if (this.consultationType == "listOfAllConsultations") {
+      return <Text style={styles.historyText}>
+        {I18n.get("Consultations")}
+        </Text>;
+    }
+  }
   backButtonClick() {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
   }
+  componentDidMount() {
+    this.startActivityIndicator();
+    const { navigation } = this.props;
+    this.consultationType = navigation.getParam("consultationType");
+    if (this.consultationType == "OnGoingStatus") {
+      this.setState(
+        state => ((state.consultationStatus = "ONGOING"), state)
+      );
 
-  listBtnClick(item) {
-    console.log("List Btn Click");
-    console.log(item);
-  }
+    } else if (this.consultationType == "ClosedStatus") {
+      this.setState(
+        state => ((state.consultationStatus = "CLOSED"), state)
+      );
+    }
+    Cache.getItem("User").then(user => {
+      if (user && user.userType == "DOCTOR") {
+        const getDoctorConversations = {
+          username: user.userName,
+          conversationStatus: this.state.consultationStatus
+        };
+        return API.graphql(
+          graphqlOperation(GetDoctorConversations, getDoctorConversations)
+        )
+          .then(response => {
+            console.log(response);
+            this.setState({
+              conversationListData: response.data.getDoctorConversations.items,
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+        } else if (user && user.userType == "USER") {
+        const getUserConversations = {
+          username: user.userName,
+          conversationStatus: this.state.consultationStatus
+        };
+        return API.graphql(graphqlOperation(GetUserConversations, getUserConversations))
+          .then(response => {
+            console.log(response);
+            this.setState({
+              conversationListData: response.data.getUserConversations.items
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+      } else {
+        const listConversations = {
+          username: 'Admin'
+        }
+        return API.graphql(graphqlOperation(ListConversations, listConversations))
+          .then(response => {
+            console.log("got User conversations");
+            console.log(response);
+            this.setState({
+              conversationListData:
+                response.data.listConversations.items
+            });
+            this.closeActivityIndicator();
+          })
+          .catch(err => {
+            console.log("Failed to show list");
+            console.log(err);
+            this.closeActivityIndicator();
+          });
+      }
+      
+  })
+}
 
   render() {
     return (
@@ -118,23 +172,19 @@ class PaymentHistoryPage extends React.Component {
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
 
-          <Text style={styles.historyText}>
-            {I18n.get("HistoryOfConsultaions")}
-          </Text>
+          {this.renderHeading()}
         </View>
 
         <FlatList
           style={styles.listContainer}
           data={this.state.conversationListData}
           keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => {
-                    return (
-                        <DataListItem
-                            item={item}
-                            index={index}
-                        />
-                    );
-                }}
+          renderItem={({ item, index }) => {
+            return <DataListItem 
+            onPress={() => this._handleRowClick(item)}
+            item={item} 
+            index={index} />;
+          }}
         />
         {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
@@ -173,12 +223,12 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 25,
-    flexDirection: "column",
-    backgroundColor: "transparent"
+    flexDirection: "column"
+    //  backgroundColor: "lightgreen"
   },
   nameText: {
     color: "#8BE0DE",
-    fontSize: 16,
+    fontSize: 18,
     padding: 2
   },
 
@@ -215,9 +265,8 @@ const styles = StyleSheet.create({
   historyText: {
     marginLeft: 15,
     fontSize: 20,
-    width: "85%",
-    color: "#A4C952",
-    fontWeight: 'bold'
+    width: "80%",
+    color: "#A4C952"
   },
 
   backBtn: {
@@ -238,7 +287,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center"
-    //backgroundColor: 'black'
+    // backgroundColor: 'black'
   },
   listSeperationLine: {
     backgroundColor: "#8BE0DE",
@@ -248,16 +297,15 @@ const styles = StyleSheet.create({
   cellContainer: {
     height: 100,
     width: "90%",
-    flexDirection: 'column',
+    flexDirection: "column",
     marginHorizontal: "5%"
-    // backgroundColor: "black"
+    //  backgroundColor: "orange"
   },
-    statusText:{
-        color: 'darkgrey',
-        fontSize: 13,
-        alignSelf: 'flex-end'
-    }
-  
+  statusText: {
+    color: "darkgrey",
+    fontSize: 13,
+    alignSelf: "flex-end"
+  }
 });
 
 export default PaymentHistoryPage;

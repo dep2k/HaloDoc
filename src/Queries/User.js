@@ -11,3 +11,17 @@
       description
     }
   }`;
+export const GetUserConversations = `query GetUserConversations($username: String!, $conversationStatus: String! ) {
+getUserConversations(username: $username ,conversationStatus: $conversationStatus ) {
+     items {
+         conversationStatus
+         username
+         status
+         createdAt
+         payment
+         doctor {
+           name
+         }
+        }
+    }
+}`;

@@ -73,7 +73,6 @@ class PetRegistrationForm extends React.Component {
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
   }
 
-
   render() {
     return (
       <View style={styles.mainContainer}>

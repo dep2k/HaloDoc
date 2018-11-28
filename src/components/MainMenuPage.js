@@ -27,30 +27,23 @@ class MainMenuPage extends React.Component {
     this.consultBtnClick = this.consultBtnClick.bind(this);
     this.vetListButtonClick = this.vetListButtonClick.bind(this);
     this.myProfileButtonClick = this.myProfileButtonClick.bind(this);
-    this.historyButtonClick = this.historyButtonClick.bind(this);
+    this.ConsultationButtonClick = this.ConsultationButtonClick.bind(this);
+
   }
 
   vetListButtonClick() {
     this.props.navigation.navigate("HelperDoctorsListPage");
   }
-
+ 
+  ConsultationButtonClick(type) {
+    console.log("ConsultationButtonClick:" + type);
+    this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
+  }
   myProfileButtonClick() {
-   
     this.props.navigation.navigate("ProfilePage");
   }
-  historyButtonClick() {
-    this.props.navigation.navigate("PaymentHistoryPage")
-  }
+ 
   logOutButtonClick() {
-    // this.props.navigation.dispatch(
-    //   this.props.NavigationActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       this.props. NavigationActions.navigate({ routeName: 'Router' }),
-    //       this.props. NavigationActions.navigate({ routeName: 'LoginPage' }),
-    //     ],
-    //   }),
-    // )
     this.props.navigation.navigate("LoginPage");
     Cache.clear();
   }
@@ -63,104 +56,93 @@ class MainMenuPage extends React.Component {
   //   headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
   // });
   render() {
-    return (
-      <View style={styles.mainContainer}>
-        <ImageBackground
+    return <View style={styles.mainContainer}>
+        {/* <ImageBackground
           source={require("../images/newBackground.png")}
           style={styles.fullBackgroundImage}
           imageStyle={styles.fullbackgroundImageStyle}
-        >
-          <Text style={styles.menuText}>MENU</Text>
-          <View style={styles.buttonsMainContainer}>
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={consultIcon} />
-              <TouchableOpacity onPress={this.consultBtnClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("Consult")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={myProfileIcon} />
-              <TouchableOpacity onPress={() =>
-               this.myProfileButtonClick() 
-              }>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("MyProfile")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={doctorListicon} />
-              <TouchableOpacity>
-                <Text
-                  style={styles.touchableOpacityText}
-                  onPress={this.vetListButtonClick}
-                >
-                  {I18n.get("VeterinaryDirectory")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
-              <TouchableOpacity
-                onPress={this.historyButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("HistoryOfConsultaions")}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {/* <View style={styles.singleButtonContainer}>
-              <Image
-                style={styles.iconImagesStyle}
-                source={paymentHistoryIcon}
-              />
-              <TouchableOpacity>
-                <Text
-                  style={styles.touchableOpacityText}
-                  
-                >
-                  {I18n.get("PaymentHistory")}
-                </Text>
-              </TouchableOpacity>
-            </View> */}
-            <View style={styles.singleButtonContainer}>
-              <Image style={styles.iconImagesStyle} source={myProfileIcon} />
-              <TouchableOpacity onPress={this.logOutButtonClick}>
-                <Text style={styles.touchableOpacityText}>
-                  {I18n.get("LogOut")}
-                </Text>
-              </TouchableOpacity>
-            </View>
+        > */}
+        <Text style={styles.menuText}>MENU</Text>
+        <View style={styles.buttonsMainContainer}>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+            <TouchableOpacity onPress={this.consultBtnClick}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("Consult")}
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </View>
-    );
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={consultIcon} />
+          <TouchableOpacity onPress={() => this.ConsultationButtonClick("OnGoingStatus")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("OpenConsultations")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
+            <TouchableOpacity onPress={() => this.ConsultationButtonClick("ClosedStatus")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("HistoryOfConsultaions")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+            <TouchableOpacity onPress={() => this.myProfileButtonClick()}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("MyProfile")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={doctorListicon} />
+            <TouchableOpacity>
+              <Text style={styles.touchableOpacityText} onPress={this.vetListButtonClick}>
+                {I18n.get("VeterinaryDirectory")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.singleButtonContainer}>
+            <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+            <TouchableOpacity onPress={this.logOutButtonClick}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("LogOut")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* </ImageBackground> */}
+      </View>;
   }
 }
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1
-
-    // backgroundColor: "#BED885"
-  },
-  fullBackgroundImage: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  fullbackgroundImageStyle: {
-    position: "absolute",
-    resizeMode: "cover",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "transparent",
+    backgroundColor: "#AACB61",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "transparent"
   },
+  // fullBackgroundImage: {
+  //   flex: 1,
+  //   flexDirection: "column",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center"
+  // },
+  // fullbackgroundImageStyle: {
+  //   position: "absolute",
+  //   resizeMode: "cover",
+  //   width: "100%",
+  //   height: "100%",
+  //   backgroundColor: "transparent",
+  //   flexDirection: "column",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center",
+  //   backgroundColor: "transparent"
+  // },
   menuText: {
     fontSize: 25,
     color: "white",

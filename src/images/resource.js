@@ -9,6 +9,7 @@ const nextBtnImage = require("./NextButtonShape.png");
 const handIcon = require("./HandIcon.png");
 const petWithPathImage = require("./PetAndPath.png");
 const textInputImage = require("./TextInputImage.png");
+const catImage = require("./CatImage.png");
 
 export {
     imageLogo,
@@ -20,4 +21,5 @@ export {
     handIcon,
     petWithPathImage,
     textInputImage,
+    catImage
 }

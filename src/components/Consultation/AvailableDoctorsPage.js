@@ -202,31 +202,24 @@ class AvailableDoctorsPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
   mainContainer: {
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center'
   },
-
-
-
   doctorsDirectoryText: {
     fontSize: 21,
     color: "black",
     marginTop: "10%",
-    alignItems: 'center'
+    alignItems:'center',
+    marginBottom: 40
   },
 
-
-  
   flatList: {
-    // backgroundColor: 'black',
     width: "100%",
-    marginTop: "13%"
-    // backgroundColor: 'green',
   },
-
-
+  
   doctorsList: {
     // backgroundColor: 'black',
     width: "100%",

@@ -155,5 +155,10 @@ const sexData = [
   }
 ];
 
-export { sexData, catRaceListdata, dogRaceListdata, horseRaceListdata};
+export {
+  sexData,
+  catRaceListdata,
+  dogRaceListdata,
+  horseRaceListdata,
+};
   

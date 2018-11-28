@@ -32,6 +32,7 @@ class ChatPage extends React.Component {
         // const questionsList = navigation.getParam('questions');
         this.conversationId = navigation.getParam('chatId');
         this.myUser = navigation.getParam('user');
+        this.consultationStatus = navigation.getParam("consultationStatus");
         console.log("constructor:" + this.myUser);
     }
 

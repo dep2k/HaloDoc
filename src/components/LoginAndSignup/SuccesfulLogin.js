@@ -7,6 +7,7 @@ import { View,
      ImageBackground,
      TouchableOpacity } from "react-native";
 import { Footer } from "../Reusable/Footer";
+import {catImage} from "../../images/resource"
 
 class SuccesfulLogin extends React.Component {
 
@@ -22,77 +23,74 @@ constructor(props) {
             <View style={styles.headerContainer}>
               <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
             </View>
-            <View style={styles.upperImageContainer}>
-              <Image source={require("../../images/SucessfulLoginMiddle.png")} style={styles.upperImageStyle} />
-            </View>
-            {/* <View style = {styles.lowerimageContainer}>
-                <ImageBackground
-                    source={require("../../images/landscape.png")}
-                    style={ styles.lowerImageBackground}>
-                    <TouchableOpacity onPress= { this._onSignInClick }
-                                    style={styles.continueButtonStyle}>
-                        <Text style={{ color: "white", fontSize: 20}}>
-                                  {I18n.get('Continue')}
-                        </Text> 
-                    </TouchableOpacity>
-                </ImageBackground>
-              </View> */}
+            <View style={styles.contentView}>
+
+                <View style={styles.descriptionView}>
+                    <ImageBackground
+                        source={catImage}
+                        style={styles.catImageStyle}
+                        imageStyle={styles.petWithPathImageStyle}>
+
+                        <Text style={styles.descriptionText}
+                            numberOfLines={0}>{I18n.get("SucessMessage")}
+                        </Text>
+                    </ImageBackground>
+                </View>
+          </View>
             <Footer showBtn={true} onPress={this.continueButtonClick} />
           </View>;
     }
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        backgroundColor: "white"
-    },
-    upperImageContainer: {
-        flex:2.3,
-       // backgroundColor: "pink"
-       
-   },
-   upperImageStyle: {
-        height: 225,
-        width: "80%",
-        resizeMode: 'contain',
-        marginTop: "35%",
-        marginHorizontal: "10%",
-        
-   },
-   lowerimageContainer: {
-       height: "20%",
-       backgroundColor: "pink",
+  mainContainer: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "white"
   },
-  lowerImageBackground: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
+  contentView: {
+    flex: 2.3,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  descriptionView: {
     height: "100%",
-    width: '100%',
-    backgroundColor: "transparent"
+    width: "100%",
+    alignItems: "center",
+  //  backgroundColor: 'pink'
   },
-   headerContainer: {
-        height: "10%",
-       // marginTop: 30,
-        width: "100%",
-        backgroundColor:"transparent",
-        justifyContent: "center",
-        alignItems:"center"
-       },
-      headerImage: {
-         width:"100%",
-         height: "100%" 
-      },
-      continueButtonStyle: {
-          marginLeft: "5%", 
-          marginBottom: "10%",
-          alignItems: 'center',
-          height: 40,
-          width: '50%', 
-          justifyContent: 'center',
-          alignItems: 'center'
-      }
 
-})
+  headerContainer: {
+    height: 70,
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  headerImage: {
+    width: "100%",
+    height: "100%"
+  },
+    petWithPathImageStyle: {
+        resizeMode: "contain",
+    },
+    catImageStyle: {
+        height: "90%",
+        width: "85%",
+      //  backgroundColor: 'black'
+    },
+
+    descriptionText: {
+        color: 'grey',
+        marginTop: 250,
+        marginLeft: 10,
+        marginRight: 10,
+        fontSize: 24,
+       // fontWeight: 'bold',
+        textAlign: 'center'
+
+    },
+
+});
 export default SuccesfulLogin;

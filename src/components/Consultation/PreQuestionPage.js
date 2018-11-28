@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     },
 
     contentView: {
-        height: "70%",
+        //height: "70%",
+        flex:2.3
     },
 
 
@@ -115,9 +116,7 @@ const styles = StyleSheet.create({
  
     petWithPathStyle: {
         height: "100%",
-        width: "80%",
-      
-        
+        width: "80%",  
     },
 
     descriptionText: {
