@@ -12,6 +12,7 @@ import InfoPanel from "./InfoPanel";
 import VaccinationPanel from './VaccinationPanel';
 import DespaPanel from './DespaPanel';
 import DropDown from './DropDown';
+import ButtonsPanel from "./ButtonsPanel";
 
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
@@ -21,11 +22,9 @@ import { CreatePet } from "../../Queries/PetAPI";
 import Loader from "../../ActivityIndicator";
 import { petRaceListData } from "./DropDownData";
 import { genderData } from './DropDownData';
-import { vaccinationsDict } from "./VaccinationsData";
-import ButtonsPanel from "./ButtonsPanel";
-import { styles } from './Styles';
-const base = "../../images/";
+import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
+import { styles } from './Styles';
 
 
 class PetRegistrationForm extends React.Component {
@@ -35,7 +34,7 @@ class PetRegistrationForm extends React.Component {
     this.dropDownType = [];
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");
-    defaultValue = "null";
+    defaultValue = null;
 
     this.state = {
       pet: {
@@ -68,11 +67,7 @@ class PetRegistrationForm extends React.Component {
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
-    this.checkBoxClick = this.checkBoxClick.bind(this);
-    this.saveButtonClick = this.saveButtonClick.bind(this);
-    this.saveAndRegisterButtonClick = this.saveAndRegisterButtonClick.bind(this);
     this.listButtonClick = this.listButtonClick.bind(this);
-    // this.noDespaClick = this.noDespaClick.bind(this);
     this.onChangeText = this.onChangeText.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
@@ -120,7 +115,7 @@ class PetRegistrationForm extends React.Component {
           </DespaPanel>
 
           {this.state.animating && <Loader animating={this.state.animating} />}
-          <ButtonsPanel></ButtonsPanel>
+          <ButtonsPanel onPress = {(type) => this.onPress(type)}></ButtonsPanel>
 
         </ScrollView>
       </View>
@@ -134,14 +129,14 @@ class PetRegistrationForm extends React.Component {
     if (type == "FormNameTI"){
       this.setState(
         state => (
-          (state.pet.name = text),
+          (state.pet.info.name = text),
           state
         )
       );
     } else if (type == "FormAgeTI"){
       this.setState(
         state => (
-          (state.pet.age = text),
+          (state.pet.info.age = text),
           state
         )
       );
@@ -149,7 +144,7 @@ class PetRegistrationForm extends React.Component {
     else if (type == "FormColorTI"){
       this.setState(
         state => (
-          (state.pet.color = text),
+          (state.pet.info.color = text),
           state
         )
       );
@@ -157,29 +152,41 @@ class PetRegistrationForm extends React.Component {
     else if (type == "FormOriginTI"){
       this.setState(
         state => (
-          (state.pet.origin = text),
+          (state.pet.info.origin = text),
           state
         )
       );
     }
   
-
-
-
     //Despa
-    if(type == "Product") {
-        this.createPetInput["Despa"].product = text;
+    else if(type == "Product") {
+      this.setState(
+        state => (
+          (state.pet.despa.product = text),
+          state
+        )
+      );
     } else if (type == "Date") {
-      this.createPetInput["Despa"].despa.date = text;
+      this.setState(
+        state => (
+          (state.pet.despa.date = text),
+          state
+        )
+      );
     } else if (type == "Feeding") {
-      this.createPetInput["Feeding"].despa.feeding = text;
+      this.setState(
+        state => (
+          (state.pet.despa.feeding = text),
+          state
+        )
+      );
     }
 
     //vaccination
     else{
       this.setState(
         state => (
-          (state.pet.vaccinations.vacDict[vac].date = text),
+          (state.pet.vaccinations.vacDict[type].date = text),
           state
         )
       );
@@ -222,6 +229,7 @@ class PetRegistrationForm extends React.Component {
   }
 
   onPress(type) {
+    console.log("ONPress:" + type);
     console.log(this.petType);
 
     if (type == "FormRaceDD") {
@@ -231,9 +239,13 @@ class PetRegistrationForm extends React.Component {
     } else if (type == "FormGenderDD") {
       console.log(genderData);
       this.showDropDown(genderData, 'FormGenderDD');
+    } else if (type == "SaveClick") {
+      console.log("SaveClick");
+      this.registerPet();
+    } else if (type == "SaveAndRegisterClick") {
+      this.goToPreviousPage = true;
+      this.registerPet();
     }
-
-
   }
 
   showDropDown(data, type) {
@@ -278,7 +290,12 @@ class PetRegistrationForm extends React.Component {
   }
 
   showErrorAlert() {
-
+    Alert.alert(
+      "Error",
+      I18n.get("Data missing"),
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
   }
 
   getCreatePetInput(user) {
@@ -289,32 +306,36 @@ class PetRegistrationForm extends React.Component {
 
       name: this.state.pet.info.name,
       race: this.state.pet.info.race,
-      color: this.state.pet.color,
+      color: this.state.pet.info.color,
       gender: this.state.pet.info.gender,
       age: this.state.pet.info.age,
-      origin: this.state.pet.origin,
+      origin: this.state.pet.info.origin,
       category: this.petType,
-      petImage: this.state.pet.petImage,
+      petImage: this.state.pet.info.petImage,
 
       // use: this.state.pet.use,
       // background: this.state.pet.background,
       // weight: this.state.pet.weight,
 
       // Pet Vaccinations
-      vaccinations: vaccinationsArray,
+      vaccinations: getVaccinationsArray(this.state.pet.vaccinations.vacDict),
       // Pet Despa
-      despa: this.state.pet.despa,
+      product: this.state.pet.despa.product,
+      date: this.state.pet.despa.date,
+      feeding: this.state.pet.despa.feeding
 
     };
 
-
+    return createPetInput;
   }
 
   registerPetAPICall(createPetInput) {
+    console.log("registerPetAPICall");
     this.startActivityIndicator();
     API.graphql(graphqlOperation(CreatePet, createPetInput))
       .then(response => {
         console.log(response);
+
         Alert.alert(
           I18n.get("Success"),
           I18n.get("RegistrationSuccessful"),
@@ -327,6 +348,9 @@ class PetRegistrationForm extends React.Component {
           { cancelable: false }
         );
         this.closeActivityIndicator();
+        if (this.goToPreviousPage == 'true'){
+          this.props.navigation.goBack(null);
+        }
       })
       .catch(err => {
         console.log(err);
@@ -341,27 +365,20 @@ class PetRegistrationForm extends React.Component {
   }
 
   registerPet() {
+    console.log("registerPetCalled");
     if (!this.isValidState()) {
       this.showErrorAlert();
       return;
     }
     //const vaccinationArray = this.getVaccinationsArray();
+   
     Cache.getItem("User").then(user => {
       if (user) {
         const createPetInput = this.getCreatePetInput(user);
         console.log(createPetInput);
         this.registerPetAPICall(createPetInput);
-      }
+      } 
     });
-  }
-
-
-  saveButtonClick() {
-    this.registerPet();
-  }
-
-  saveAndRegisterButtonClick() {
-    this.props.navigation.goBack(null)
   }
 
 
@@ -369,12 +386,7 @@ class PetRegistrationForm extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  checkBoxClick(type) {
-    if (this.state.vaccvalue == 0) {
-    }
 
-    this.setState(state => (this.state.pet.vaccinations[type].isChecked != this.state.pet.vaccinations[type].isChecked))
-  }
 
   setModalVisible(visible) {
     //this.setState({ this.state.dropDown.modalVisible: visible });

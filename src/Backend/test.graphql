@@ -224,13 +224,7 @@ query GetPets {
   }
 }
 
-query GetConversations {
-  getConversations(username: "3482340923849023") {
-    items {
-      username
-    }
-  }
-}
+
 
 query GetUserConversations {
   getUserConversations(username: "TestUser", conversationStatus: "CLOSED") {
@@ -240,6 +234,13 @@ query GetUserConversations {
   }
 }
 
+query GetMessages {
+  getMessages(conversationId:"Deep2018-1541949454649") {
+    items {
+      text
+    }
+  }
+}
 query GetDoctorConversations {
   getDoctorConversations(username: "TestUser", conversationStatus: "CLOSED") {
     items {
@@ -256,19 +257,6 @@ query ListConversations {
     nextToken
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #         title
 #       }
@@ -289,5 +277,6 @@ query ListConversations {
 #       Run Query:  Ctrl+Enter   (or press the play button above)
 #   Auto Complete:  Ctrl+Space   (or just start typing)
 #
+
 
 

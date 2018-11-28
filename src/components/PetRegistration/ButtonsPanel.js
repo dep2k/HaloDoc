@@ -20,7 +20,7 @@ export class ButtonsPanel extends React.Component {
             <View style={styles.saveButtonContainer}>
                 <TouchableOpacity
                     style={styles.saveButtonStyle}
-                    onPress={this.props.saveButtonClick}>
+                    onPress={()=>this.props.onPress("SaveClick")}>
                     <ImageBackground
                         source={buttonImage}
                         style={styles.buttonImageBackgroundStyle}
@@ -30,7 +30,7 @@ export class ButtonsPanel extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.saveAndRegisterButton}
-                    onPress={this.props.saveAndRegisterButtonClick}>
+                    onPress={()=>this.props.onPress("SaveAndRegisterClick")}>
                     <ImageBackground
                         source={buttonImage}
                         style={styles.buttonImageBackgroundStyle}
