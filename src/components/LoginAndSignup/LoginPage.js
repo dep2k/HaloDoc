@@ -2,9 +2,9 @@
 
 import { Auth } from "aws-amplify";
 import React from "react";
-import { I18n } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Cache } from "aws-amplify";
+import { I18n } from "aws-amplify";
 
 import {
   StyleSheet,

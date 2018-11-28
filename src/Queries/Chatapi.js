@@ -129,6 +129,15 @@ getUserConversations(username: $username ,conversationStatus: $conversationStatu
         }
     }
 }`;
+
+export const GetMessages = `query GetMessages($conversationId : String!) {
+  getMessages (conversationId: $conversationId ){
+    items {
+      text
+    }
+  }
+}`; 
+
 export const ListConversations = `query ListConversations {
   listConversations {
     items {
