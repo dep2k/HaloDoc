@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('en');
+    I18n.setLanguage('es');
     const dict = {
     'en': {
         'Sign In': "Sign In",
@@ -47,6 +47,8 @@ export const  setUpLanguage = () => {
         'Success': "Success",
         'SucessMessage': "YOUR REGISTRATION HAS BEEN SUCCESSFUL",
         'WrongCode' : "Code is wrong",
+        'ConsultationClosed' : "This Consultation is closed",
+        'CantSendMessage' : "You can not send any message",
         'RegistrationOfPets': "REGISTRATION OF PETS",
         'FelineCat': "FELINE",
         'CanineDog': "CANINE",
@@ -300,6 +302,8 @@ export const  setUpLanguage = () => {
         'Success': "Éxito",
         'SucessMessage': "TU REGISTRO HA SIDO EXITOSO",
         'WrongCode': "codigo erroneo",
+        'ConsultationClosed': "Esta consulta está cerrada",
+        'CantSendMessage': "No puedes enviar ningún mensaje",
         'RegistrationOfPets' :"INSCRIPCION DE MASCOTAS",
         'FelineCat': "FELINO",
         'CanineDog': "CANINO",

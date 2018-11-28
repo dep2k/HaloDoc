@@ -2,7 +2,7 @@
 import React from "react";
 import {
     View,
-    Image,
+    Alert,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -14,6 +14,7 @@ import {
 
 import { GiftedChat, Bubble, messageIdGenerator } from 'react-native-gifted-chat'
 import { NavBar } from "../Reusable/NavBar";
+import { I18n } from "aws-amplify";
 import { SubscriptionToNewMessage , CreateMessage} from "../../Queries/Chatapi";
 import Amplify, { API, graphqlOperation,Cache } from "aws-amplify";
 
@@ -34,6 +35,8 @@ class ChatPage extends React.Component {
         this.myUser = navigation.getParam('user');
         this.consultationStatus = navigation.getParam("consultationStatus");
         console.log("constructor:" + this.myUser);
+        console.log(this.consultationStatus);
+
     }
 
     componentDidMount(){
@@ -60,20 +63,40 @@ class ChatPage extends React.Component {
     onSend(messages = []) {
 
         console.log("OnSendCalled");
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }))
+        if (this.consultationStatus == "ClosedStatus") {
+            Alert.alert(
+                I18n.get("ConsultationClosed"),
+                I18n.get("CantSendMessage"),
+              [
+                {
+                  text: "OK",
+                  onPress: () => console.log("OK Pressed")
+                }
+              ],
+              { cancelable: false }
+            );
+            return;
+        }else {
+            this.setState(previousState => ({
+                messages: GiftedChat.append(previousState.messages, messages),
+            }))
 
-        var message = messages[0];
-        message.conversationId = this.conversationId;
-        message.messageId = message._id;
-        console.log(message);
-        API.graphql(graphqlOperation(CreateMessage,message)).then((response)=>{
-            console.log(response);
-        }).catch((exception)=>{
-            console.log(exception);
-        });;
+            var message = messages[0];
+            message.conversationId = this.conversationId;
+            message.messageId = message._id;
+            console.log(message);
+            console.log(this.consultationStatus);
+
+            API.graphql(graphqlOperation(CreateMessage, message))
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(exception => {
+                    console.log(exception);
+                });
+        }
        
+    
     }
 
     onReceive(messages = []) {
