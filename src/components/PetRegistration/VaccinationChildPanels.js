@@ -17,7 +17,7 @@ export class DogPanel extends React.Component {
     return (
       <View style={styles.vaccinationContainer}>
 
-        <FormDateInput titleLabel={I18n.get("Pvc")}
+        <FormDateInput titleLabel={I18n.get("PVC")}
           isChecked={this.props.vaccinationDict.dog.PVC.isChecked}
           onCheckboxPress={() => this.props.onCheckboxPress("PVC")}
           onChangeText={(text) => this.props.onChangeText(text,"PVC")}>

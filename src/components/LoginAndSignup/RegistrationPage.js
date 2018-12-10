@@ -235,7 +235,7 @@ class RegistrationPage extends React.Component {
                   blurOnSubmit={false}
                   style={styles.phnTextInput}
                   autoCapitalize={"none"}
-                  placeholder="Phone Number"
+                  placeholder={I18n.get("PhoneNo")}
                   autoCorrect={false}
                   placeholderTextColor="white"
                   onChangeText={text =>

@@ -192,7 +192,7 @@ class LoginPage extends React.Component {
                 imageStyle={styles.imageBackgroundImageStyle}
               >
                 <Text style={styles.imageBackgroundTextStyle}>
-                  {I18n.get("Sign In")}
+                  {I18n.get("LogIn")}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>

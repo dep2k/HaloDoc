@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('en');
+    I18n.setLanguage('es');
     const dict = {
     'en': {
         'Sign In': "Sign In",
@@ -12,7 +12,6 @@ export const  setUpLanguage = () => {
         'Sign Up': "SignUp",
         'Username': "Username",
         'Password' : "Password",
-        'CreatePassword': "Create Password",
         'Forgot Password': "Forgot Password?",
         'Name': "Name",
         'NameOfDoctor' : "Name of Doctor",
@@ -103,7 +102,6 @@ export const  setUpLanguage = () => {
         'Speciality': "Speciality",
         'Address': "Address",
         'Department': "Department",
-        'PhoneNo': "Phone No",
         'Open': "Open",
         'Closed': 'Closed',
         'Inprogress': "In Progress",
@@ -261,24 +259,23 @@ export const  setUpLanguage = () => {
 
     },
     'es': {
-        'Sign In': "INICIO DE SESION",
+        'LogIn': "Inicio De Sesión",
         'RegisterMe': "REGISTRARME",
         'Register':"REGISTRAR",
         'Sign Up': "REGISTRATE",
         'Username': "Usuario",
-        'Password': "Contracena",
-        'CreatePassword': "Crear Contracena",
-        'Forgot Password': "Olvide me contacena?",
+        'Password': "Contraseña",
+        'Forgot Password': "Olvidó tu contraseña?",
         'Name': "Nombre",
         'NameOfDoctor': "Nombre del doctor",
         'Firstname': "Nombre",
         'Lastname': "Apellidos",
-        'UserId': "Cedula",
-        'PhoneNo': "Telefono",
+        'UserId': "Nombre de usuario",
+        'PhoneNo': "Número de teléfono",
         'Email': "Email",
         'AdminEmail': "AdminEmail", 
-        'Create password' : "Crear contracena",
-        'Confirm password': "Confirmar contra-",
+        'Create password': "Crear contraseña",
+        'Confirm password': "Confirmar contraseña",
         'Accept terms and conditions': "Accepto terminos y condiciones",
         'Consult': "NUEVA CONSULTA",
         'OpenConsultations' : "CONSULTAS ABIERTAS",
@@ -314,7 +311,7 @@ export const  setUpLanguage = () => {
         'Color': "Color",
         'Sex': "Sexo",
         'Age' : "Edad",
-        'Vaccination': "VACUNATION",
+        'Vaccination': "VACUNACIÓN",
         'Yes': "SÍ",
         'No': "NO",
         'PVC': "PVC",
@@ -334,7 +331,7 @@ export const  setUpLanguage = () => {
         'SaveAndRegister': "GUARDAR E INSCRIBIR OTRA MASCOTA",
         'Welcome': "Bienvenido a Holavet",
         'Enter' : "INGRESAR",
-        'WelcomeMessage': "A partir de ahora tienes a tu disposicion un grupo de  veterinarios que te acompanaran las 24 horas del dia, todos los dias del ano",
+        'WelcomeMessage': "A partir de ahora tienes a tu disposición un grupo de  veterinarios que te acompañar las 24 horas del dia, todos los dias del ano",
         'LogOut': "Cerrar Sesión",
         'NameOfPet': "Nombre de tu mascota",
         'SelectRace': "Selecciona la raza",
@@ -357,7 +354,6 @@ export const  setUpLanguage = () => {
         'MedicalCenter': "Centro medico",
         'Speciality':"Especialidad",
         'Address': "Direccion",
-        'PhoneNo': "Phone No",
         'Department': "Muncipio",
         'Open': "abierto",
         'Closed': "cerrado",

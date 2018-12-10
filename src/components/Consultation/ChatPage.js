@@ -18,7 +18,11 @@ import {
 } from "react-native-gifted-chat";
 import { NavBar } from "../Reusable/NavBar";
 import { I18n } from "aws-amplify";
-import { SubscriptionToNewMessage, CreateMessage, GetMessages } from "../../Queries/Chatapi";
+import {
+  SubscriptionToNewMessage,
+  CreateMessage,
+  GetMessages
+} from "../../Queries/Chatapi";
 import Amplify, { API, graphqlOperation, Cache } from "aws-amplify";
 
 class ChatPage extends React.Component {
@@ -40,23 +44,20 @@ class ChatPage extends React.Component {
   }
 
   componentDidMount() {
-
-      const getMessages = { conversationId: this.conversationId };
-      console.log(this.conversationId);
-    API.graphql(
-        graphqlOperation(GetMessages, getMessages)
-    )
+    const getMessages = { conversationId: this.conversationId };
+    console.log(this.conversationId);
+    API.graphql(graphqlOperation(GetMessages, getMessages))
       .then(response => {
         console.log(response);
         this.setState({
-            messages: response.data.getMessages.items
+          messages: response.data.getMessages.items
         });
         //this.closeActivityIndicator();
       })
       .catch(err => {
         console.log("Failed to show list");
         console.log(err);
-      //  this.closeActivityIndicator();
+        //  this.closeActivityIndicator();
       });
     this.subscribeForChat(this.conversationId);
   }
@@ -170,11 +171,6 @@ class ChatPage extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    // const pet = navigation.getParam('petInfo');
-    // const petName = pet.name;
-    // const petCategory = pet.category;
-    // const navTitle = petName + " - " + petCategory;
-
     const navTitle = "";
     console.log("Render:" + this.myUser);
     return (
