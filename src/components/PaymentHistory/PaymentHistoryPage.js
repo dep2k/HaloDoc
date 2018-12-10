@@ -296,6 +296,7 @@ const styles = StyleSheet.create({
   },
   listSeperationLine: {
     backgroundColor: "#8BE0DE",
+    marginTop: 10,
     height: 1.3,
     width: "100%"
   },

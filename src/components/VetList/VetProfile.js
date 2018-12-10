@@ -22,6 +22,7 @@ const base = "../../images/";
 const navBarImage = require(base + "navbarImage.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 const logoImage = require(base + "logoImage.png");
+const placeHolderImage = require(base + "placeholderImage.png");
 
 import { Avatar } from "react-native-elements";
 
@@ -84,17 +85,14 @@ class VetProfile extends React.Component {
           <Avatar
             large
             rounded
-            source={{
-              uri:
-                "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-            }}
+            source={placeHolderImage}
             onPress={() => console.log("Works!")}
             activeOpacity={0.7}
           />
         </View>
         <View style={styles.middleContainer}>
           <Text style={styles.drNameText}>{docName}</Text>
-          <Text style={styles.drSpecialityText}>{docSpeciality}</Text>
+          <Text style={styles.drSpecialityText}>{docSpeciality + " " + I18n.get("Specialist")}</Text>
 
           {/* <View style={styles.firstTextInputContainer}>
             <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
