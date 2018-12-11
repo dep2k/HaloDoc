@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     },
   
     originText: {
-      width: "30%",
+      width: "32%",
       fontSize: 14,
       alignSelf: "center",
       color: "#8BE0DE",

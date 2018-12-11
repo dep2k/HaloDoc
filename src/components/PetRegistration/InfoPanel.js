@@ -15,7 +15,7 @@ export class InfoPanel extends React.Component {
      
         <View style={styles.clinicHistoryContainer}>
           <FormTextInput titleLabel = {I18n.get('Name')}
-            inputPlaceHolder = {I18n.get('NameOfPet')}
+            // inputPlaceHolder = {I18n.get('NameOfPet')}
             inputText = {this.props.name}
             onChangeText = {text => this.props.onChangeText(text,'FormNameTI')}>
            </FormTextInput>
@@ -28,7 +28,7 @@ export class InfoPanel extends React.Component {
 
 
           <FormTextInput titleLabel = {I18n.get('Color')}
-            inputPlaceHolder = {I18n.get('Color')}
+            // inputPlaceHolder = {I18n.get('Color')}
             inputText = {this.props.color}
             onChangeText = {text => this.props.onChangeText(text,'FormColorTI')}>
           </FormTextInput>
@@ -40,14 +40,14 @@ export class InfoPanel extends React.Component {
           </FormDropDownInput>
 
           <FormTextInput titleLabel = {I18n.get('Age')}
-            inputPlaceHolder = {I18n.get('WriteAge')}
+            // inputPlaceHolder = {I18n.get('WriteAge')}
             inputText = {this.props.age}
             onChangeText = {text => this.props.onChangeText(text,'FormAgeTI')}>
            </FormTextInput>
 
           
           <FormTextInput titleLabel = {I18n.get('Origin')}
-             inputPlaceHolder = {I18n.get('Origin')}
+            //  inputPlaceHolder = {I18n.get('Origin')}
              inputText = {this.props.origin}
              onChangeText = {text => this.props.onChangeText(text,'FormOriginTI')}>
            </FormTextInput>

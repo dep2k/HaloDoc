@@ -26,8 +26,6 @@ import { SubscribeToCreateDoctor } from "../../Queries/DoctorAPI";
 const base = "../../images/";
 const logoImage = require(base + "logoImage.png");
 
-
-
 class LoginPage extends React.Component {
 
   constructor(props) {
@@ -98,9 +96,7 @@ class LoginPage extends React.Component {
               this.props.navigation.navigate("DoctorMenuPage");
             } 
           }
-         
-        })
-        .catch(err => {
+        }).catch(err => {
           console.log(err);
           Alert.alert(
             "Error",

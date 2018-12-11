@@ -24,19 +24,19 @@ export class DespaPanel extends React.Component {
         <View style={styles.despaContainer}>
 
           <FormTextInput titleLabel={I18n.get('Product')}
-            inputPlaceHolder={I18n.get('Product')}
+            // inputPlaceHolder={I18n.get('Product')}
             inputText={""}
             onChangeText={text => this.props.onChangeText(text,"Product")}>
           </FormTextInput>
 
           <FormTextInput titleLabel={I18n.get('Date')}
-            inputPlaceHolder={I18n.get('DD/MM/YYYY')}
+            // inputPlaceHolder={I18n.get('DD/MM/YYYY')}
             inputText={""}
             onChangeText={text => this.props.onChangeText(text,"Date")}>
           </FormTextInput>
 
           <FormTextInput titleLabel={I18n.get('Feeding')}
-            inputPlaceHolder={I18n.get('Feeding')}
+            // inputPlaceHolder={I18n.get('Feeding')}
             inputText={""}
             onChangeText={text => this.props.onChangeText(text,"Feeding")}>
           </FormTextInput>

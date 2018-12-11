@@ -30,6 +30,7 @@ import { styles } from './Styles';
 class PetRegistrationForm extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.dropDownType = [];
     const { navigation } = this.props;
@@ -50,7 +51,7 @@ class PetRegistrationForm extends React.Component {
         },
 
         vaccinations: {
-          vacDict: this.getVaccinationsDictionary()
+          vacDict: this.getVaccinationsDictionaryForSelectedPetType()
         },
 
         despa: {
@@ -92,12 +93,12 @@ class PetRegistrationForm extends React.Component {
           </Text>
 
           <InfoPanel
-            name={this.state.pet.name}
-            race={this.state.pet.race}
-            color={this.state.pet.color}
-            age={this.state.pet.age}
-            origin={this.state.pet.origin}
-            gender={this.state.pet.gender}
+            name={this.state.pet.info.name}
+            race={this.state.pet.info.race}
+            color={this.state.pet.info.color}
+            age={this.state.pet.info.age}
+            origin={this.state.pet.info.origin}
+            gender={this.state.pet.info.gender}
             onChangeText={(text, type) => this.onChangeText(text, type)}
             onPress={(type) => this.onPress(type)}>
           </InfoPanel>
@@ -122,7 +123,7 @@ class PetRegistrationForm extends React.Component {
   }
 
   onChangeText(text, type) {
-    console.log(text + "-" + type);
+   // console.log(text + "-" + type);
 
     //INfo Panel
     if (type == "FormNameTI"){
@@ -193,7 +194,7 @@ class PetRegistrationForm extends React.Component {
   }
 
   onCheckboxPress(vac) {
-    console.log("Vaccination:" + vac);
+   // console.log("Vaccination:" + vac);
     //  console.log(this.state.vaccinations.vacDict);
     this.setState(
       state => (
@@ -210,7 +211,7 @@ class PetRegistrationForm extends React.Component {
       const race = item.name;
       this.setState(
         state => (
-          (state.pet.race = race),
+          (state.pet.info.race = race),
           (state.modalVisible = false),
           state
         )
@@ -219,7 +220,7 @@ class PetRegistrationForm extends React.Component {
       const gender = item.name;
       this.setState(
         state => (
-          (state.pet.gender = gender),
+          (state.pet.info.gender = gender),
           (state.modalVisible = false),
           state
         )
@@ -228,18 +229,18 @@ class PetRegistrationForm extends React.Component {
   }
 
   onPress(type) {
-    console.log("ONPress:" + type);
-    console.log(this.petType);
+    //console.log("ONPress:" + type);
+    //console.log(this.petType);
 
     if (type == "FormRaceDD") {
-      console.log(petRaceListData);
+      //console.log(petRaceListData);
       const raceList = petRaceListData[this.petType];
       this.showDropDown(raceList, 'FormRaceDD');
     } else if (type == "FormGenderDD") {
-      console.log(genderData);
+      //console.log(genderData);
       this.showDropDown(genderData, 'FormGenderDD');
     } else if (type == "SaveClick") {
-      console.log("SaveClick");
+      //console.log("SaveClick");
       this.registerPet();
     } else if (type == "SaveAndRegisterClick") {
       this.goToPreviousPage = true;
@@ -258,11 +259,11 @@ class PetRegistrationForm extends React.Component {
     );
   }
 
-  getVaccinationsDictionary() {
+  getVaccinationsDictionaryForSelectedPetType() {
 
     var vaccinationDict = vaccinationsDict[this.petType];
-    console.log("VaccinationDict:");
-    console.log(vaccinationDict)
+   // console.log("VaccinationDict:");
+   // console.log(vaccinationDict)
     return vaccinationDict
 
   }
@@ -277,6 +278,7 @@ class PetRegistrationForm extends React.Component {
 
 
   isValidState() {
+    console.log(this.state);
     if (this.state.pet.info.name &&
       this.state.pet.info.race &&
       this.state.pet.info.color &&
@@ -329,10 +331,11 @@ class PetRegistrationForm extends React.Component {
   }
 
   registerPetAPICall(createPetInput) {
-    console.log("registerPetAPICall");
+    //console.log("registerPetAPICall");
     this.startActivityIndicator();
     API.graphql(graphqlOperation(CreatePet, createPetInput))
       .then(response => {
+        console.log("API-Response:");
         console.log(response);
 
         Alert.alert(
@@ -341,15 +344,18 @@ class PetRegistrationForm extends React.Component {
           [
             {
               text: "OK",
-              onPress: () => this.props.navigation.navigate("MainMenuPage")
+              onPress: () => {
+                if (this.goToPreviousPage == true) {
+                  this.props.navigation.goBack(null);
+                } else {
+                  this.props.navigation.navigate("MainMenuPage");
+                }
+              }  
             }
           ],
           { cancelable: false }
         );
         this.closeActivityIndicator();
-        if (this.goToPreviousPage == 'true'){
-          this.props.navigation.goBack(null);
-        }
       })
       .catch(err => {
         console.log(err);
@@ -370,7 +376,7 @@ class PetRegistrationForm extends React.Component {
       return;
     }
     //const vaccinationArray = this.getVaccinationsArray();
-   
+    
     Cache.getItem("User").then(user => {
       if (user) {
         const createPetInput = this.getCreatePetInput(user);

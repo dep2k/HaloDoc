@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('en');
+    I18n.setLanguage('es');
     const dict = {
     'en': {
         'Sign In': "Sign In",

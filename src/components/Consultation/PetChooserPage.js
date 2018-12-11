@@ -11,11 +11,9 @@ import {
     ActivityIndicator
 } from "react-native";
 import { I18n } from "aws-amplify";
-
-
+import { Cache } from "aws-amplify";
 import { btnBackgroundImage, handIcon } from "../../images/resource";
 import { logoImage } from "../../images/resource";
-
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
 import { GetPets } from "../../Queries/PetAPI";
@@ -33,25 +31,27 @@ class PetChooserPage extends React.Component {
         this.backButtonClick = this.backButtonClick.bind(this);
         this.petButtonClick = this.petButtonClick.bind(this);
 
-        const getPetsInput = {
-            username: "TestDoctor1"
-        }
-
-        API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {
-            console.log("Pets Received");
-            console.log(response);
-
-            this.setState({
-                isLoading: false,
-                dataSource: response.data.getPets.items
-            });
-
-        }).catch(err => {
-            console.log("Failed to add doctor");
-            console.log(err);
-
-        });
-
+        Cache.getItem("User").then(user => {
+            if (user) {
+                const getPetsInput = {
+                    username: user.userName
+                }
+                API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {
+                    console.log("Pets Received");
+                    console.log(response);
+        
+                    this.setState({
+                        isLoading: false,
+                        dataSource: response.data.getPets.items
+                    });
+        
+                }).catch(err => {
+                    console.log("Failed to add doctor");
+                    console.log(err);
+        
+                });
+            } 
+          });
     }
 
     petButtonClick(item) {

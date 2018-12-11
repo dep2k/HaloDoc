@@ -29,7 +29,7 @@ export class FormDateInput extends React.Component {
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
               style={styles.vaccAndDespatextInputStyle}
-              placeholder="DD/MM/AAAA"
+              // placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
               onChangeText={text => this.props.onChangeText(text)}/>
           </View>
