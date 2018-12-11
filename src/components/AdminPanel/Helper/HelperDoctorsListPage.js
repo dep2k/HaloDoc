@@ -20,6 +20,7 @@ const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 const navBarImage = require(base + "navbarImage.png");
 const addIcon = require(base + "addIcon.png");
+const placeHolderImage = require(base + "placeholderImage.png");
 
 class DataListItem extends React.Component {
   render() {
@@ -28,16 +29,13 @@ class DataListItem extends React.Component {
         <Avatar
           medium
           rounded
-          source={{
-            uri:
-              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-          }}
+          source={placeHolderImage}
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />
         <View style={styles.textsView}>
           <Text style={styles.nameText}>{this.props.item.name}</Text>
-          <Text style={styles.categoryText}>{this.props.item.speciality}</Text>
+          <Text style={styles.categoryText}>{this.props.item.speciality + " " + I18n.get("Specialist")}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -208,10 +206,12 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: "black",
     marginTop: "10%",
-    marginBottom: 40
+    marginBottom: 35
   },
   flatList: {
-    width: "100%"
+    width: "100%",
+   // backgroundColor: "green",
+    flex: 0.95
   },
   listCell: {
     flexDirection: "row",

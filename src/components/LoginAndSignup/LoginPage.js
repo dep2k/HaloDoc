@@ -2,9 +2,9 @@
 
 import { Auth } from "aws-amplify";
 import React from "react";
-import { I18n } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Cache } from "aws-amplify";
+import { I18n } from "aws-amplify";
 
 import {
   StyleSheet,
@@ -188,7 +188,7 @@ class LoginPage extends React.Component {
                 imageStyle={styles.imageBackgroundImageStyle}
               >
                 <Text style={styles.imageBackgroundTextStyle}>
-                  {I18n.get("Sign In")}
+                  {I18n.get("LogIn")}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>

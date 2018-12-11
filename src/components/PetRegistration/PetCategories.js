@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
   },
   registrationText: {
     fontSize: 25,
-    width: 180,
+    width: 320,
+   // backgroundColor:"black",
     fontWeight: "bold",
     color: "#BED885",
     textAlign: "center",

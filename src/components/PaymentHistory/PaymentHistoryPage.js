@@ -29,7 +29,7 @@ class DataListItem extends React.Component {
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
         <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
         <Text style={styles.nameText}>
-          {"Payment" + this.props.item.payment}
+          {"Payment " + this.props.item.payment}
         </Text>
         <View style={styles.listSeperationLine} />
         {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
@@ -41,6 +41,7 @@ class DataListItem extends React.Component {
 class PaymentHistoryPage extends React.Component {
   constructor(props) {
     super(props);
+    this.username = ""
 
     this.state = {
       conversationListData: [],
@@ -61,8 +62,11 @@ class PaymentHistoryPage extends React.Component {
   }
 
   _handleRowClick(item) {
+     if (this.username == "Admin") {
+          return;
+     }
     this.props.navigation.navigate("ChatPage", { user : item.username,
-      chatId: item.username + "-" + item.createdAt , consultationStatus: this.state.consultationType} );
+      chatId: item.username + "-" + item.createdAt , consultationStatus: this.consultationType} );
   }
   renderHeading() {
     if (this.consultationType == "OnGoingStatus") {
@@ -93,7 +97,6 @@ class PaymentHistoryPage extends React.Component {
       this.setState(
         state => ((state.consultationStatus = "ONGOING"), state)
       );
-
     } else if (this.consultationType == "ClosedStatus") {
       this.setState(
         state => ((state.consultationStatus = "CLOSED"), state)
@@ -111,7 +114,7 @@ class PaymentHistoryPage extends React.Component {
           .then(response => {
             console.log(response);
             this.setState({
-              conversationListData: response.data.getDoctorConversations.items,
+              conversationListData: response.data.getDoctorConversations.items
             });
             this.closeActivityIndicator();
           })
@@ -120,7 +123,7 @@ class PaymentHistoryPage extends React.Component {
             console.log(err);
             this.closeActivityIndicator();
           });
-        } else if (user && user.userType == "USER") {
+      } else if (user && user.userType == "USER") {
         const getUserConversations = {
           username: user.userName,
           conversationStatus: this.state.consultationStatus
@@ -129,7 +132,8 @@ class PaymentHistoryPage extends React.Component {
           .then(response => {
             console.log(response);
             this.setState({
-              conversationListData: response.data.getUserConversations.items
+              conversationListData:
+                response.data.getUserConversations.items
             });
             this.closeActivityIndicator();
           })
@@ -150,6 +154,7 @@ class PaymentHistoryPage extends React.Component {
               conversationListData:
                 response.data.listConversations.items
             });
+            this.username = "Admin";
             this.closeActivityIndicator();
           })
           .catch(err => {
@@ -158,9 +163,9 @@ class PaymentHistoryPage extends React.Component {
             this.closeActivityIndicator();
           });
       }
-      
-  })
-}
+    })
+  }
+
 
   render() {
     return (
@@ -291,6 +296,7 @@ const styles = StyleSheet.create({
   },
   listSeperationLine: {
     backgroundColor: "#8BE0DE",
+    marginTop: 10,
     height: 1.3,
     width: "100%"
   },
