@@ -17,9 +17,11 @@ import {
 } from "react-native";
 
 import Loader from "../../ActivityIndicator";
+import { NavBar } from "../Reusable/NavBar";
 
 const base = "../../images/";
 const navBarImage = require(base + "navbarImage.png");
+
 const backButtonImage = require(base + "BackButtonShape.png");
 const logoImage = require(base + "logoImage.png");
 const placeHolderImage = require(base + "placeholderImage.png");
@@ -65,34 +67,17 @@ class VetProfile extends React.Component {
     const docMedCenter = doc.medicalCenter;
     const docDepartment = doc.department;
 
-    return (
-      <View style={styles.mainContainer}>
-        <View style={styles.headerContainer}>
-          <ImageBackground source={navBarImage} style={styles.headerImage}>
-            <TouchableOpacity
-              style={styles.backButtonStyle}
-              onPress={this.backButtonClick}
-            >
-              <Image
-                source={backButtonImage}
-                style={styles.backButtonImageStyle}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-        </View>
+    return <View style={styles.mainContainer}>
+        <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
         {this.state.animating && <Loader animating={this.state.animating} />}
         <View style={styles.profilePicContainer}>
-          <Avatar
-            large
-            rounded
-            source={placeHolderImage}
-            onPress={() => console.log("Works!")}
-            activeOpacity={0.7}
-          />
+          <Avatar large rounded source={placeHolderImage} onPress={() => console.log("Works!")} activeOpacity={0.7} />
         </View>
         <View style={styles.middleContainer}>
           <Text style={styles.drNameText}>{docName}</Text>
-          <Text style={styles.drSpecialityText}>{docSpeciality + " " + I18n.get("Specialist")}</Text>
+          <Text style={styles.drSpecialityText}>
+            {docSpeciality + " " + I18n.get("Specialist")}
+          </Text>
 
           {/* <View style={styles.firstTextInputContainer}>
             <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
@@ -100,7 +85,9 @@ class VetProfile extends React.Component {
           </View> */}
           {/* <View style={styles.lastLineStyle} /> */}
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
+            <Text style={styles.formText}>
+              {I18n.get("RegistrationId")}
+            </Text>
             <Text style={styles.dataTextStyle}>{docRegId}</Text>
           </View>
           <View style={styles.lastLineStyle} />
@@ -135,8 +122,7 @@ class VetProfile extends React.Component {
           </View>
           <View style={styles.lastLineStyle} />
         </View>
-      </View>
-    );
+      </View>;
   }
 }
 
