@@ -340,7 +340,7 @@ export const  setUpLanguage = () => {
         'SelectSex': "Selecciona el Sexo",
         'WriteAge': "Edad de la mascota",
         'Helper': "AUXILIAR",
-        'Doctor': "LISTA DE VETERINARIOs",
+        'Doctor': "LISTA DE VETERINARIOS",
         'ADMINISTRATOR': "ADMINISTRADOR",
         'Services': "SERVICIOS",
         'DoctorsDirectory': "DIRECTORIO VETERINARIO",
