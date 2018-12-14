@@ -97,7 +97,7 @@ export class HorsePanel extends React.Component {
 
         <FormDateInput titleLabel={I18n.get("Other")}
           isChecked={this.props.vaccinationDict.horse.OTHER.isChecked}
-          onCheckboxPress={() => this.props.onCheckboxPress("ENCEPHALITIS")}
+          onCheckboxPress={() => this.props.onCheckboxPress("OTHER")}
           onChangeText={(text) => this.props.onChangeText(text, OTHER)}>
         </FormDateInput>
 

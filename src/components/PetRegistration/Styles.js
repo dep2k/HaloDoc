@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
     },
   
     originSelfText: {
-      width: "31%",
+      width: 105,
       fontSize: 14,
       alignSelf: "center",
       color: "#8BE0DE",
@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
     },
   
     originText: {
-      width: "32%",
+      width: 105,
       fontSize: 14,
       alignSelf: "center",
       color: "#8BE0DE",
@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
       width: "100%",
       height: 0.5,
       backgroundColor: "darkgrey",
-      marginBottom: 5
+    //  marginBottom: 5
     },
   
     backButtonStyle: {
@@ -118,12 +118,12 @@ export const styles = StyleSheet.create({
     },
   
     vaccinationText: {
-      marginTop:5,
+      marginTop:10,
       fontWeight: "bold",
       fontSize: 20,
       color: "#BED885",
       width: "80%",
-      marginBottom: "2%",
+      marginBottom: 20,
       marginHorizontal: "10%",
       textAlign: "center",
      // backgroundColor: "black"
@@ -171,7 +171,7 @@ export const styles = StyleSheet.create({
     },
   
     vaccinationContainer: {
-      height: 175,
+      height: 185,
       width: "90%",
       marginHorizontal: "5%"
       // backgroundColor : "grey"
@@ -183,7 +183,7 @@ export const styles = StyleSheet.create({
       width: "100%",
       justifyContent: "flex-start",
       alignItems: "center",
-      marginTop: 10
+    //  marginTop: 10
     },
   
     pvcText: {
@@ -203,7 +203,7 @@ export const styles = StyleSheet.create({
       fontSize: 14
     },
     horseVacText: {
-      width: "34%",
+      width: 100,
       color: "#8BE0DE",
       textAlign: "left",
       marginRight: 10,
@@ -212,12 +212,12 @@ export const styles = StyleSheet.create({
     },
   
     despaText: {
-      marginTop:15,
+      marginTop:10,
       fontWeight: "bold",
       fontSize: 20,
       color: "#BED885",
       width: "80%",
-      marginBottom: "2%",
+      marginBottom: 20,
       marginHorizontal: "10%",
       textAlign: "center"
     },
@@ -320,7 +320,8 @@ export const styles = StyleSheet.create({
   
     dropDownButtonStyle: {
       flexDirection: "row",
-      width: "70%",
+      width:"63%",
+    //  backgroundColor: 'pink',
       height: 30,
       justifyContent: "space-between",
       alignItems: "center"
