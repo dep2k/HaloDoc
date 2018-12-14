@@ -33,6 +33,10 @@ class ProfilePage extends React.Component {
     super(props);
     this.state = { dataSource: [] };
 
+    const { navigation } = this.props;
+    this.myUsername = navigation.getParam("username");
+     
+
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
@@ -54,7 +58,8 @@ class ProfilePage extends React.Component {
   }
   componentDidMount() {
     this.startActivityIndicator();
-    const getPetsInput = { username: "deep" };
+    console.log(this.myUsername);
+    const getPetsInput = { username: this.myUsername };
 
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {

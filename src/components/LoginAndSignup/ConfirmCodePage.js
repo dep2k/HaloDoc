@@ -15,7 +15,6 @@ import {
 } from "react-native";
 
 import { I18n } from "aws-amplify";
-import { Cache } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
 
 class ConfirmCodePage extends React.Component {
