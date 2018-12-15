@@ -3,6 +3,7 @@
     "sdkVersion": "27.0.0",
     "name": "Hola Vet",
     "description": "Consulation app",
+    "orientation" : "portrait",
     "ios": {
       "bundleIdentifier": "com.app.holavet",
       "supportsTablet": false

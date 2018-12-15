@@ -68,6 +68,7 @@ class RegistrationPage extends React.Component {
   }
 
   _registerBtnClick() {
+    if (this.state.checked == true) {
     const user = this.state.user;
     this.startActivityIndicator();
     if (
@@ -139,7 +140,16 @@ class RegistrationPage extends React.Component {
       );
       this.closeActivityIndicator();
     }
+  } else {
+      Alert.alert(
+        "Error",
+        I18n.get("Accept terms and conditions"),
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+    }
   }
+
 
   render() {
     return (

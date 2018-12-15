@@ -39,6 +39,7 @@ export const  setUpLanguage = () => {
         'All Fields are mandatory': "All fields are mandatory",
         'Both Fields are mandatory': "Both Fields are mandatory",
         'OK' : "OK",
+        'is' : "is",
         'EnterEmail': 'Enter username to change the password',
         'PasswordLength':"Password should be greater than  Eight characters",
         'RegistrationUnsuccessful' : "Registration Unsucessfull",
@@ -250,6 +251,7 @@ export const  setUpLanguage = () => {
         'PreQuestionText' : 'TO GUARANTEE FOLLOW UP AND UNDERSTAND THE BEST HEALTH STATUS OF YOUR MASCOT, WE WILL BEGIN WITH QUESTIONS, WHICH WILL TAKE A FEW MINUTES WHILE THE VETERINARY IS ATTENDING YOU.',
         'PostQuestionText': 'For your information and time online. We remind you that this orientation does not replace or substitute a face-to-face veterinary consultation, if Balú does not improve or if it worsens you should consult again.',
         'Payment' : 'Payment',
+        'ConsultationPayment': 'Payment',
         'VetNotified': 'THE VETERINARY IS ALREADY BEING NOTIFIED AND WILL ATTEND YOU BEFORE 30 MINUTES.',
         //Questions
         'Question1':'HOW MUCH DOES THE SYMPTOMS PRESENT?',
@@ -292,6 +294,7 @@ export const  setUpLanguage = () => {
         'Username and Password are not correct': "El nombre de usuario y la contraseña no son válidos",
         'All Fields are mandatory': "Todos los campos son obligatorios",
         'OK':"OK",
+        'is' : "es",
         'Both Fields are mandatory': "Ambos campos son obligatorios",
         'EnterEmail': "Ingrese el nombre de usuario para cambiar la contraseña",
         'PasswordLength': "La contraseña debe tener más de ocho caracteres",
@@ -502,9 +505,12 @@ export const  setUpLanguage = () => {
         //Gender
         'Hembra': "Hembra",
         'Macho': "Macho",
+
+
         'PreQuestionText' : 'PARA GARANTIZAR EL SEGUIMIENTO Y COMPRENDER MEJOR EL ESTADO DE SALUD DE TU MASCOTA, EMPEZAREMOS CON UNAS PREGUNTAS, LAS CUALES TARDARAN UNOS MINUTOS MIENTRAS TE ATIENDE EL VETERINARIO.',
         'PostQuestionText' : 'por tu información y tiempo en línea. Te recordamos que esta orientacion no reemplaza ni sustituye una consulta veterinaria presencial, si Balú no mejora o si empeora debes consultar nuevamente.',
         'Payment': 'PAGAR',
+        'ConsultationPayment' : "Pago",
         'VetNotified':'EL VETERINARIO YA ESTA SIENDO NOTIFICADO Y TE ATENDERÁ ANTES DE 30 MINUTOS.',
         'Question1':'¿HACE CUÁNTO PRESENTA LOS SÍNTOMAS?',
         'Question2':'¿ALERGIA A ALGÚN ALIMENTO O MEDICAMENTO?',

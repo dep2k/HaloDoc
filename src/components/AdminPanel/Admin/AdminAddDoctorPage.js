@@ -25,6 +25,8 @@ import { Avatar } from "react-native-elements";
 const base = "../../../images/";
 const backgroundImage = require(base + "loginButtonImage.png");
 const navBarImage = require(base + "navbarImage.png");
+const placeHolderImage = require(base + "placeholderImage.png");
+
 
 class AdminAddDoctorPage extends React.Component {
   constructor(props) {
@@ -157,10 +159,7 @@ class AdminAddDoctorPage extends React.Component {
             <Avatar
               large
               rounded
-              source={{
-                uri:
-                  "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-              }}
+              source={placeHolderImage}
               onPress={() => console.log("Works!")}
               activeOpacity={0.7}
             />
@@ -407,7 +406,7 @@ class AdminAddDoctorPage extends React.Component {
             </View>
             <View style={styles.lastLineStyle} />
             <View style={styles.textInputContainer}>
-              <Text style={styles.formText}>{I18n.get("CreatePassword")}</Text>
+              <Text style={styles.formText}>{I18n.get("Password")}</Text>
               <TextInput
                 style={styles.formTextInputStyle}
                 ref={input => {

@@ -21,20 +21,15 @@ const historyIcon = require(base + "HistoryIcon.png");
 
 class DataListItem extends React.Component {
   render() {
-    return (
-      <TouchableOpacity
-        onPress={this.props.onPress}
-        style={styles.cellContainer}
-      >
+    return <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
         <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
         <Text style={styles.nameText}>
-          {"Payment " + this.props.item.payment}
+        {I18n.get("ConsultationPayment") + " " + I18n.get("is") + " " + this.props.item.payment}
         </Text>
         <View style={styles.listSeperationLine} />
         {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
-      </TouchableOpacity>
-    );
+      </TouchableOpacity>;
   }
 }
 

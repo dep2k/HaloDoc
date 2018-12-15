@@ -56,12 +56,15 @@ class ConfirmCodePage extends React.Component {
             console.log(this.pageType)
             if (this.pageType == "DocRegistrationPage"){
               Alert.alert(
-                "Success",
+                I18n.get("Success"),
                 I18n.get("SucessMessage"),
                 [
                   {
                     text: "OK",
-                    onPress: () => this.props.navigation.navigate("AdminMenuPage")
+                    onPress: () =>
+                      this.props.navigation.navigate(
+                        "AdminMenuPage"
+                      )
                   }
                 ],
                 { cancelable: false }

@@ -22,12 +22,9 @@ class PetCategories extends React.Component {
 
   categoryButtonClick(type){
     
-    console.log("CateogoryButtonClick:" + type);
-      this.props.navigation.navigate("PetRegistrationFormPage",{
+    this.props.navigation.push("PetRegistrationFormPage",{
           petType: type
       });
-    
-    this.props.navigation.navigate("PetRegistrationFormPage");
   }
 
   backButtonClick() {

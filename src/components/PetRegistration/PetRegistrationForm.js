@@ -20,11 +20,15 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { CreatePet } from "../../Queries/PetAPI";
 
 import Loader from "../../ActivityIndicator";
+import { Avatar } from "react-native-elements";
 import { petRaceListData } from "./DropDownData";
 import { genderData } from './DropDownData';
 import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
 import { styles } from './Styles';
+const base = "../../images/";
+const petProfileImage = require(base + "petPlaceholderImage.jpg");
+
 
 
 class PetRegistrationForm extends React.Component {
@@ -36,7 +40,7 @@ class PetRegistrationForm extends React.Component {
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");
     defaultValue = null;
-
+   
     this.state = {
       pet: {
         info: {
@@ -72,6 +76,8 @@ class PetRegistrationForm extends React.Component {
     this.onChangeText = this.onChangeText.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
+
+   
   }
 
   render() {
@@ -80,11 +86,20 @@ class PetRegistrationForm extends React.Component {
         <NavBar onBackPress={this.backButtonClick} />
         <ScrollView style={styles.scrollview}
           horizontal={false}>
-
+          <View style={styles.profileImage}>
+            <Avatar
+              large
+              rounded
+              source={petProfileImage}
+              onPress={() => console.log("Works!")}
+              activeOpacity={0.7}
+            />
+        </View>
           <DropDown
             dropDownType={this.state.dropDownType}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.dropDownData}
+            // onModalBackPress={this.onModalBackPress()}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}>
           </DropDown>
 
@@ -204,6 +219,12 @@ class PetRegistrationForm extends React.Component {
       )
     );
 
+  }
+
+  onModalBackPress() {
+    this.setState({
+      modalVisible: false
+    })
   }
 
   onPressDDList(item, type) {

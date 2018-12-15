@@ -2,6 +2,7 @@ import React from "react";
 import {
   FlatList,
   View,
+  TouchableWithoutFeedback
 } from "react-native";
 
 import Modal from "react-native-modal";
@@ -13,6 +14,11 @@ export class DropDown extends React.Component {
     render(){
       return(
         <View>
+          {/* <TouchableWithoutFeedback
+            onPress={() =>
+              {this.props.onModalBackPress()}
+      }
+      > */}
         <Modal backdropOpacity={0.5} isVisible={this.props.modalVisible}>
         <FlatList
           contentContainerStyle={styles.flatListContentContainerStyle}
@@ -34,6 +40,7 @@ export class DropDown extends React.Component {
         />
         }
       </Modal>
+      {/* </TouchableWithoutFeedback> */}
       </View>
       );
     }
