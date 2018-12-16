@@ -26,9 +26,7 @@ const backButtonImage = require(base + "BackButtonShape.png");
 class DataListItem extends React.Component {
 
   onSelectingDoctor() {
-
   }
-
 
   render() {
     return (
@@ -63,6 +61,7 @@ class AvailableDoctorsPage extends React.Component {
     this.backButtonClick = this.backButtonClick.bind(this);
     this._handleRowClick = this._handleRowClick.bind(this);
   }
+
   componentDidMount() {
 
     this.startActivityIndicator();
@@ -127,21 +126,18 @@ class AvailableDoctorsPage extends React.Component {
           .then(response => {
               this.closeActivityIndicator();
               console.log(response);
+              this.consultation = response.data.createConversation;
               const id  = response.data.createConversation.username + "-" + response.data.createConversation.createdAt;
-
               Cache.getItem('User').then(user => {
                 if (user) {
-                   
                     this.props.navigation.navigate("VetNotificationPage",{
                       petInfo:pet,
                       chatId: id,
-                    
+                      consultation: this.consultation
                   });
                 }
             });
-            
-          })
-          .catch(err => {
+          }).catch(err => {
             console.log(err);
             this.closeActivityIndicator();
           });

@@ -14,7 +14,7 @@ class FormTextInput extends React.Component {
     return (
       <View>
         <View style={styles.TextInputContainer}>
-          <Text style={styles.originText}>{this.props.titleLabel}</Text>
+          <Text style={styles.originSelfText}>{this.props.titleLabel}</Text>
           <TextInput
             style={styles.originTextInputStyle}
             placeholder={this.props.inputPlaceHolder}

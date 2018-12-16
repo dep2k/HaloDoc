@@ -1,6 +1,7 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 import { CheckBox } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 // import PhoneInput from "react-native-phone-input";
 
 import {
@@ -67,6 +68,7 @@ class RegistrationPage extends React.Component {
   }
 
   _registerBtnClick() {
+    if (this.state.checked == true) {
     const user = this.state.user;
     this.startActivityIndicator();
     if (
@@ -138,34 +140,42 @@ class RegistrationPage extends React.Component {
       );
       this.closeActivityIndicator();
     }
+  } else {
+      Alert.alert(
+        "Error",
+        I18n.get("Accept terms and conditions"),
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { cancelable: false }
+      );
+    }
   }
+
 
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
-          {/* <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}> */}
-          <KeyboardAvoidingView
-            style={styles.keyboradAvoidingContainer}
-            behavior="padding"
-          >
-            <View style={styles.topContainer}>
-              <TouchableOpacity
-                style={styles.backButtonStyle}
-                onPress={this.backButtonClick}
-              >
-                <Image
-                  source={backButtonImage}
-                  style={styles.backButtonImageStyle}
-                />
-              </TouchableOpacity>
-              <View style={styles.titleView}>
-                {" "}
-                <Text style={styles.registerTextStyle}>
-                  {I18n.get("Sign Up")}
-                </Text>
-              </View>
+          <View style={styles.topContainer}>
+            <TouchableOpacity
+              style={styles.backButtonStyle}
+              onPress={this.backButtonClick}
+            >
+              <Image
+                source={backButtonImage}
+                style={styles.backButtonImageStyle}
+              />
+            </TouchableOpacity>
+            <View style={styles.titleView}>
+              {" "}
+              <Text style={styles.registerTextStyle}>
+                {I18n.get("Sign Up")}
+              </Text>
             </View>
+          </View>
+          <KeyboardAwareScrollView
+            style={styles.keyboradAvoidingContainer}
+          >
+          
             <View style={styles.formContainer}>
               <TextInput
                 style={styles.firstTextInputStyle}
@@ -305,7 +315,7 @@ class RegistrationPage extends React.Component {
                 placeholderTextColor="white"
               />
             </View>
-          </KeyboardAvoidingView>
+        
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={this._registerBtnClick}
@@ -346,7 +356,7 @@ class RegistrationPage extends React.Component {
           </View>
 
           {this.state.animating && <Loader animating={this.state.animating} />}
-          {/* </ImageBackground> */}
+          </KeyboardAwareScrollView>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -356,6 +366,8 @@ class RegistrationPage extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
     backgroundColor: "#AACB61"
   },
   topContainer: {
@@ -380,21 +392,22 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   keyboradAvoidingContainer: {
-    height: 460,
+   // height: 460,
     flexDirection: "column",
+    alignSelf: "stretch",
     //backgroundColor: "yellow",
     width: "100%",
-    justifyContent: "flex-start"
+   // justifyContent: "flex-start"
     // alignItems: "center",
   },
   formContainer: {
-    height: 360,
+  
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
-    alignSelf: "flex-end"
+    marginTop: 50,
+    alignSelf: "flex-end",
     // backgroundColor: "black"
   },
   registerButton: {
@@ -443,19 +456,19 @@ const styles = StyleSheet.create({
     color: "white",
     alignContent: "flex-end"
   },
-  lastTextInputStyle: {
-    height: 35,
-    width: "80%",
-    marginTop: "3%",
-    alignContent: "flex-end"
-  },
+  // lastTextInputStyle: {
+  //   height: 35,
+  //   width: "80%",
+  //   marginTop: "3%",
+  //   alignContent: "flex-end"
+  // },
   buttonContainer: {
     height: 40,
-    // backgroundColor: 'yellow',
+     //backgroundColor: 'yellow',
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 0,
-    marginTop: 20
+    // marginBottom: 0,
+    marginTop: 40
   },
 
   fullBackgroundImage: {

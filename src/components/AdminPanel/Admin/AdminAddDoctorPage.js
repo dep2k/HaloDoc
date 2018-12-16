@@ -4,12 +4,14 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { NavBar } from "../../Reusable/NavBar";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
+  KeyboardAvoidingView,
   ImageBackground,
   TouchableOpacity,
   TextInput,
@@ -23,6 +25,7 @@ import { Avatar } from "react-native-elements";
 const base = "../../../images/";
 const backgroundImage = require(base + "loginButtonImage.png");
 const navBarImage = require(base + "navbarImage.png");
+const placeHolderImage = require(base + "placeholderImage.png");
 
 
 class AdminAddDoctorPage extends React.Component {
@@ -44,7 +47,8 @@ class AdminAddDoctorPage extends React.Component {
         password: "",
         adminEmail: ""
       },
-      animating: false
+      animating: false,
+       phncode: "+57",
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
@@ -82,21 +86,21 @@ class AdminAddDoctorPage extends React.Component {
       homeTown: this.state.doctor.homeTown,
       medicalCenter: this.state.doctor.medicalCenter,
       department: this.state.doctor.department,
-      address: this.state.doctor.address,
+      address: this.state.doctor.address
     };
     this.startActivityIndicator();
-    
+
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
         Auth.signUp({
           username: doc.userName,
           password: doc.password,
           attributes: {
-            phone_number: doc.phoneNo,
+            phone_number: (this.state.phncode + doc.phoneNo),
             email: doc.adminEmail,
             given_name: "abcd",
             family_name: "efgf",
-            'custom:userType': "DOCTOR"
+            "custom:userType": "DOCTOR"
           }
         })
           .then(data => {
@@ -110,9 +114,10 @@ class AdminAddDoctorPage extends React.Component {
               });
 
             this.props.navigation.navigate("CodeConfirmationPage", {
-              username: doc.userName, pageType: "DocRegistrationPage"
+              username: doc.userName,
+              pageType: "DocRegistrationPage"
             });
-            console.log(doc.userName)
+            console.log(doc.userName);
             this.closeActivityIndicator();
           })
           .catch(err => {
@@ -149,51 +154,76 @@ class AdminAddDoctorPage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavBar onBackPress={this.backButtonClick} />)
-         <ScrollView style={styles.scrollview}>
+        <KeyboardAwareScrollView style={styles.scrollview}>
           <View style={styles.avatar}>
-        <Avatar
-          large
-          rounded
-          source={{
-            uri:
-              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-          }}
-          onPress={() => console.log("Works!")}
-          activeOpacity={0.7}
-        />
+            <Avatar
+              large
+              rounded
+              source={placeHolderImage}
+              onPress={() => console.log("Works!")}
+              activeOpacity={0.7}
+            />
           </View>
-          <View style = {styles.headindTextStyle}>
-            <Text style={styles.drNameText}>{I18n.get("AddDoctorDetailes")}</Text>
+          <View style={styles.headindTextStyle}>
+            <Text style={styles.drNameText}>
+              {I18n.get("AddDoctorDetailes")}
+            </Text>
           </View>
 
-        
-        <View style={styles.formContainer}>
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.adminEmail = text), state)
-                )
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
+          <View style={styles.formContainer}>
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                autoCapitalize={"none"}
+                returnKeyType={"next"}
+                autoCorrect={false}
+                onSubmitEditing={() => {
+                  this.secondTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.adminEmail = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("NameOfDoctor")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(state => ((state.doctor.name = text), state))
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.secondTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.thirdTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(state => ((state.doctor.name = text), state))
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
 
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("Username")}</Text>
               <TextInput
+                ref={input => {
+                  this.thirdTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.fourthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
                 style={styles.formTextInputStyle}
                 onChangeText={text =>
                   this.setState(
@@ -203,100 +233,188 @@ class AdminAddDoctorPage extends React.Component {
               />
             </View>
             <View style={styles.lastLineStyle} />
-          
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.speciality = text), state)
-                )
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Address")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(state => ((state.doctor.address = text), state))
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.registrationId = text), state)
-                )
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>Phone No</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(state => ((state.doctor.phoneNo = text), state))
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Email")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(state => ((state.doctor.email = text), state))
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(state => ((state.doctor.homeTown = text), state))
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("MedicalCenter")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.medicalCenter = text), state)
-                )
-              }
-            />
-          </View>
-          <View style={styles.lastLineStyle} />
-          <View style={styles.textInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Department")}</Text>
-            <TextInput
-              style={styles.formTextInputStyle}
-              onChangeText={text =>
-                this.setState(
-                  state => ((state.doctor.department = text), state)
-                )
-              }
-            />
-            />
-          </View>
-            <View style={styles.lastLineStyle} />
+
             <View style={styles.textInputContainer}>
-              <Text style={styles.formText}>{I18n.get("CreatePassword")}</Text>
+              <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
               <TextInput
                 style={styles.formTextInputStyle}
+                ref={input => {
+                  this.fourthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.fifthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.speciality = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("Address")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.fifthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.sixthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(state => ((state.doctor.address = text), state))
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("RegistrationId")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.sixthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.seventhTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.registrationId = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
+              <Text style={styles.phnCodeText}>
+                {this.state.phncode}
+              </Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.seventhTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.eighthTextInput.focus();
+                }}
+                onChangeText={text =>
+                  this.setState(state => ((state.doctor.phoneNo = text), state))
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("Email")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.eighthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.ninthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(state => ((state.doctor.email = text), state))
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.ninthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.tenthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.homeTown = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("MedicalCenter")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.tenthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.eleventhTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.medicalCenter = text), state)
+                  )
+                }
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("Department")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.eleventhTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.twelvethTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.doctor.department = text), state)
+                  )
+                }
+              />
+              />
+            </View>
+            <View style={styles.lastLineStyle} />
+            <View style={styles.textInputContainer}>
+              <Text style={styles.formText}>{I18n.get("Password")}</Text>
+              <TextInput
+                style={styles.formTextInputStyle}
+                ref={input => {
+                  this.twelvethTextInput = input;
+                }}
+                blurOnSubmit={false}
+                autoCapitalize={"none"}
+                autoCorrect={false}
                 onChangeText={text =>
                   this.setState(
                     state => ((state.doctor.password = text), state)
@@ -304,10 +422,10 @@ class AdminAddDoctorPage extends React.Component {
                 }
               />
               />
-          </View>
+            </View>
             <View style={styles.LastlastLineStyle} />
-          <View style={styles.buttonsContainer}>
-            {/* <Text style={styles.passwordText}>
+            <View style={styles.buttonsContainer}>
+              {/* <Text style={styles.passwordText}>
               {I18n.get("CreatePassword")}
             </Text>
             <TextInput
@@ -316,24 +434,24 @@ class AdminAddDoctorPage extends React.Component {
                 this.setState(state => ((state.doctor.password = text), state))
               }
             /> */}
-            <TouchableOpacity
-              onPress={this.onRegisterButtonClick}
-              style={styles.registerButton}
-            >
-              <ImageBackground
-                source={backgroundImage}
-                style={styles.buttonImageBackgroundStyle}
-                imageStyle={styles.buttonImageBackgroundImageStyle}
+              <TouchableOpacity
+                onPress={this.onRegisterButtonClick}
+                style={styles.registerButton}
               >
-                <Text style={styles.buttonImageBackgroundTextStyle}>
-                  {I18n.get("Register")}
-                </Text>
-              </ImageBackground>
-            </TouchableOpacity>
+                <ImageBackground
+                  source={backgroundImage}
+                  style={styles.buttonImageBackgroundStyle}
+                  imageStyle={styles.buttonImageBackgroundImageStyle}
+                >
+                  <Text style={styles.buttonImageBackgroundTextStyle}>
+                    {I18n.get("Register")}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        {this.state.animating && <Loader animating={this.state.animating} />}
-        </ScrollView>
+          {this.state.animating && <Loader animating={this.state.animating} />}
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -352,7 +470,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "white",
     alignSelf: "stretch",
-    marginBottom: 20
+    marginBottom: 20,
+   // height: 1000,
   },
 
   headerContainer: {
@@ -428,19 +547,16 @@ const styles = StyleSheet.create({
     width: "35%",
     color: "#8BE0DE",
     marginLeft: "1%",
-    fontSize:14,
-    height: 25,
-    marginTop: "6%",
-    alignSelf: "center",
-   // backgroundColor: 'blue'
+    fontSize: 14,
+    alignSelf: "center"
   },
   formTextInputStyle: {
     width: "63%",
     height: 45,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-   //  backgroundColor: 'pink',
-    fontSize: 14,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    //  backgroundColor: 'pink',
+    fontSize: 14
   },
   lastLineStyle: {
     width: "100%",
@@ -452,6 +568,12 @@ const styles = StyleSheet.create({
     height: 0.5,
     backgroundColor: "darkgrey",
     marginBottom: 30
+  },
+  phnCodeText: {
+    color: "black",
+    width: "10%",
+    alignSelf: 'center',
+   // backgroundColor : 'black'
   },
   registerButton: {
     height: 40,

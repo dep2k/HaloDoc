@@ -38,6 +38,7 @@ export const CreateConversation = `mutation CreateConversation(
             }) {
                 username
                 createdAt
+                payment
                 user {
                   fullName
                   type

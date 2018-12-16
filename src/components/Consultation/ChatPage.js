@@ -42,12 +42,13 @@ class ChatPage extends React.Component {
     this.consultationStatus = navigation.getParam("consultationStatus");
     console.log(this.myUser);
     console.log(this.consultationStatus);
-
+    this.consulation = navigation.getParam('consultation');
+  
     if(this.myUser.userType == "DOCTOR") {
-      
+    
       this.pet = navigation.getParam('petInfo');
       this.questions = navigation.getParam('questions');
-      this.consulation = navigation.getParam('consultation');
+  
       console.log(this.pet);
       console.log(this.questions);
     }
@@ -117,7 +118,12 @@ class ChatPage extends React.Component {
   }
 
   backButtonClick() {
-    this.props.navigation.goBack(null);
+    if (this.myUser.userType == 'USER') {
+      this.props.navigation.navigate('MainMenuPage');
+    } else {
+      this.props.navigation.goBack(null);
+    }
+   // 
     this.subscription.unsubscribe();
     // this.props.navigation.popToTop();
   }

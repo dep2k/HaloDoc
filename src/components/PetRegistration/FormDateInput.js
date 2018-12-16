@@ -16,7 +16,7 @@ export class FormDateInput extends React.Component {
       return (
         <View>
           <View style={styles.firstTextInputContainer}>
-            <Text style={styles.dogVacText}>{this.props.titleLabel}</Text>
+            <Text style={styles.horseVacText}>{this.props.titleLabel}</Text>
             <CheckBox
               center
               containerStyle={styles.vacCheckboxContainerStyle}

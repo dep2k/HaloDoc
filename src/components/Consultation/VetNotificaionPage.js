@@ -35,15 +35,15 @@ class VetNotificationPage extends React.Component {
          const { navigation } = this.props;
          const pet = navigation.getParam('petInfo');
          const id = navigation.getParam('chatId');
-        
-
+         const consultation = navigation.getParam('consultation');
+         console.log(consultation);
          Cache.getItem('User').then(user => {
             if (user) {
-               
                 this.props.navigation.navigate("ChatPage",{
                   petInfo:pet,
                   chatId: id,
-                  user: user
+                  user: user,
+                  consultation: consultation 
               });
             }
         });
@@ -68,11 +68,7 @@ class VetNotificationPage extends React.Component {
             <View style={styles.mainContainer}>
 
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
-
                 <View style = {styles.contentView}>
-                   
-                    
-
                     <View style={styles.descriptionView}>
                          <ImageBackground
                              source={petWithPathImage}
@@ -106,7 +102,10 @@ const styles = StyleSheet.create({
     },
 
     contentView: {
-        height: "70%",
+        flex: 2.3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
     },
 
 

@@ -23,6 +23,9 @@ const paymentHistoryIcon = require(base + "paymenthistoryIcon.png");
 class MainMenuPage extends React.Component {
   constructor(props) {
     super(props);
+
+
+   
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
     this.consultBtnClick = this.consultBtnClick.bind(this);
     this.vetListButtonClick = this.vetListButtonClick.bind(this);
@@ -40,8 +43,13 @@ class MainMenuPage extends React.Component {
     this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
   }
   myProfileButtonClick() {
-    this.props.navigation.navigate("ProfilePage");
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const uName = user.userName;
+    this.props.navigation.navigate("ProfilePage", {username: uName});
   }
+})
+}
  
   logOutButtonClick() {
     this.props.navigation.navigate("LoginPage");

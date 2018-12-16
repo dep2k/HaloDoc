@@ -232,8 +232,8 @@ const styles = StyleSheet.create({
   logoButton: {
     height: 60,
     width: 80,
-    marginRight: 35,
-   // backgroundColor: "transparent"
+    marginRight: 35
+    // backgroundColor: "transparent"
   },
   logoImage: {
     width: "100%",
@@ -247,12 +247,12 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: "100%",
     height: 80,
-    marginTop:10,
+    marginTop: 10,
     marginBottom: 50,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-   // backgroundColor: 'green'
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center"
+    // backgroundColor: 'green'
   },
   loginButton: {
     height: 40,
@@ -290,16 +290,23 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 15,
     fontWeight: "normal",
+    width: 35,
+    paddingLeft: 5,
     color: "#7C7B7B",
     marginBottom: 5,
-    marginRight: "60%"
+    marginRight: "60%",
+    textAlign: "left",
+   
   },
   passwordText: {
     fontSize: 15,
+    width: 35,
+    paddingLeft: 5,
     fontWeight: "normal",
     color: "#7C7B7B",
     marginBottom: 5,
-    marginRight: "60%"
+    marginRight: "60%",
+    textAlign: "left",
   },
   imageBackgroundStyle: {
     width: "100%",

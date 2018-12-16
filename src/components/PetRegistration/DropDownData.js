@@ -153,7 +153,7 @@ export const genderData = [
 
 export const petRaceListData = {
   cat: catRaceListdata,
-  dot: dogRaceListdata,
+  dog: dogRaceListdata,
   horse: horseRaceListdata
 }
 // export

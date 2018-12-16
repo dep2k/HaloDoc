@@ -27,12 +27,9 @@ import Loader from "../../ActivityIndicator";
 const base = "../../images/";
 const backButtonImage = require(base + "BackButtonShape.png");
 
-
 class UpdateProfilePage extends React.Component {
   constructor(props) {
     super(props);
-
-    // const styles_phnTextInput = StyleSheet.flatten(styles.phoneTextInput);
     this.state = {
       user: {
         firstName: "",
@@ -43,6 +40,7 @@ class UpdateProfilePage extends React.Component {
         password: "",
         confirmPassword: ""
       },
+      phncode: "+57",
       checked: true,
       animating: false
       // email: '',
@@ -73,79 +71,193 @@ class UpdateProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  updateButtonClick() {
-   
-  }
+  updateButtonClick() {}
 
   render() {
-    return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           {/* <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}> */}
-            <KeyboardAvoidingView style={styles.keyboradAvoidingContainer} behavior="padding">
-              <View style={styles.topContainer}>
-                <TouchableOpacity style={styles.backButtonStyle} onPress={this.backButtonClick}>
-                  <Image source={backButtonImage} style={styles.backButtonImageStyle} />
-                </TouchableOpacity>
-                <View style={styles.titleView}>
-                  {" "}
-                  <Text style={styles.registerTextStyle}>
-                    {I18n.get("UpdateProfile")}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.formContainer}>
-                <TextInput style={styles.firstTextInputStyle} autoCapitalize={"none"} placeholder={I18n.get("Firstname")} placeholderTextColor="white" returnKeyType={"next"} autoCorrect={false} onSubmitEditing={() => {
-                    this.secondTextInput.focus();
-                  }} blurOnSubmit={false} onChangeText={text => this.setState(state => ((state.user.firstName = text), state))} />
-                <TextInput ref={input => {
-                    this.secondTextInput = input;
-                  }} returnKeyType={"next"} onSubmitEditing={() => {
-                    this.thirdTextInput.focus();
-                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Lastname")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.lastName = text), state))} />
-                <TextInput ref={input => {
-                    this.thirdTextInput = input;
-                  }} returnKeyType={"next"} onSubmitEditing={() => {
-                    this.phone.focus();
-                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} placeholder={I18n.get("UserId")} autoCorrect={false} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.userName = text), state))} />
-                <TouchableWithoutFeedback>
-                  <PhoneInput style={styles.phoneTextInput} ref={ref => {
-                      this.phone = ref;
-                    }} returnKeyType={"next"} onSubmitEditing={() => {
-                      this.fifithTextInput.focus();
-                    }} blurOnSubmit={false} textStyle={{ color: "white" }} onChangePhoneNumber={number => this.setState(state => ((state.user.phoneNo = number), state)) // textProps={{ placeholder: "Phone Number" }}
-                    } />
-                </TouchableWithoutFeedback>
-
-                <TextInput ref={input => {
-                    this.fifithTextInput = input;
-                  }} returnKeyType={"next"} onSubmitEditing={() => {
-                    this.sixthTextInput.focus();
-                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} keyboardType={"email-address"} placeholder={I18n.get("Email")} autoCorrect={false} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
-                  } />
-                <TextInput ref={input => {
-                    this.sixthTextInput = input;
-                  }} secureTextEntry={true} returnKeyType={"next"} onSubmitEditing={() => {
-                    this.seventhTextInput.focus();
-                  }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Create password")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.password = text), state))} />
-                <TextInput ref={input => {
-                    this.seventhTextInput = input;
-                  }} secureTextEntry={true} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} placeholder={I18n.get("Confirm password")} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.confirmPassword = text), state))} />
-                <TextInput style={styles.lastTextInputStyle} placeholder={I18n.get("")} placeholderTextColor="white" />
-              </View>
-            </KeyboardAvoidingView>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={this.updateButtonClick} style={styles.registerButton}>
-                <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundRegisterButtonStyle} imageStyle={styles.imageStyleRegisterButtonImageBackground}>
-                  <Text style={styles.imageBackgroundTextStyle}>
-                    {I18n.get("Update")}
-                  </Text>
-                </ImageBackground>
+          <KeyboardAvoidingView
+            style={styles.keyboradAvoidingContainer}
+            behavior="padding"
+          >
+            <View style={styles.topContainer}>
+              <TouchableOpacity
+                style={styles.backButtonStyle}
+                onPress={this.backButtonClick}
+              >
+                <Image
+                  source={backButtonImage}
+                  style={styles.backButtonImageStyle}
+                />
               </TouchableOpacity>
+              <View style={styles.titleView}>
+                {" "}
+                <Text style={styles.registerTextStyle}>
+                  {I18n.get("UpdateProfile")}
+                </Text>
+              </View>
             </View>
-            {this.state.animating && <Loader animating={this.state.animating} />}
+            <View style={styles.formContainer}>
+              <TextInput
+                style={styles.firstTextInputStyle}
+                autoCapitalize={"none"}
+                placeholder={I18n.get("Firstname")}
+                placeholderTextColor="white"
+                returnKeyType={"next"}
+                autoCorrect={false}
+                onSubmitEditing={() => {
+                  this.secondTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                onChangeText={text =>
+                  this.setState(state => ((state.user.firstName = text), state))
+                }
+              />
+              <TextInput
+                ref={input => {
+                  this.secondTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.thirdTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                style={styles.textInput}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                placeholder={I18n.get("Lastname")}
+                placeholderTextColor="white"
+                onChangeText={text =>
+                  this.setState(state => ((state.user.lastName = text), state))
+                }
+              />
+              <TextInput
+                ref={input => {
+                  this.thirdTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.fourthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                style={styles.textInput}
+                autoCapitalize={"none"}
+                placeholder={I18n.get("UserId")}
+                autoCorrect={false}
+                placeholderTextColor="white"
+                onChangeText={text =>
+                  this.setState(state => ((state.user.userName = text), state))
+                }
+              />
+              <View style={styles.phnTextInputView}>
+                <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
+                <TextInput
+                  ref={input => {
+                    this.fourthTextInput = input;
+                  }}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => {
+                    this.fifthTextInput.focus();
+                  }}
+                  blurOnSubmit={false}
+                  style={styles.phnTextInput}
+                  autoCapitalize={"none"}
+                  autoCorrect={false}
+                  placeholder={I18n.get("PhoneNo")}
+                  autoCorrect={false}
+                  placeholderTextColor="white"
+                  onChangeText={
+                    text =>
+                      this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
+                  }
+                />
+              </View>
+              <TextInput
+                ref={input => {
+                  this.fifthTextInput = input;
+                }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.sixthTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                style={styles.textInput}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                keyboardType={"email-address"}
+                placeholder={I18n.get("Email")}
+                autoCorrect={false}
+                placeholderTextColor="white"
+                onChangeText={
+                  text =>
+                    this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
+                }
+              />
+              <TextInput
+                ref={input => {
+                  this.sixthTextInput = input;
+                }}
+                secureTextEntry={true}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                  this.seventhTextInput.focus();
+                }}
+                blurOnSubmit={false}
+                style={styles.textInput}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                placeholder={I18n.get("Create password")}
+                placeholderTextColor="white"
+                onChangeText={text =>
+                  this.setState(state => ((state.user.password = text), state))
+                }
+              />
+              <TextInput
+                ref={input => {
+                  this.seventhTextInput = input;
+                }}
+                secureTextEntry={true}
+                style={styles.textInput}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                placeholder={I18n.get("Confirm password")}
+                placeholderTextColor="white"
+                onChangeText={text =>
+                  this.setState(
+                    state => ((state.user.confirmPassword = text), state)
+                  )
+                }
+              />
+              <TextInput
+                style={styles.lastTextInputStyle}
+                placeholder={I18n.get("")}
+                placeholderTextColor="white"
+              />
+            </View>
+          </KeyboardAvoidingView>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={this.updateButtonClick}
+              style={styles.registerButton}
+            >
+              <ImageBackground
+                source={require("../../images/loginButtonImage.png")}
+                style={styles.imageBackgroundRegisterButtonStyle}
+                imageStyle={styles.imageStyleRegisterButtonImageBackground}
+              >
+                <Text style={styles.imageBackgroundTextStyle}>
+                  {I18n.get("Update")}
+                </Text>
+              </ImageBackground>
+            </TouchableOpacity>
+          </View>
+          {this.state.animating && <Loader animating={this.state.animating} />}
           {/* </ImageBackground> */}
         </View>
-      </TouchableWithoutFeedback>;
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
@@ -155,6 +267,25 @@ const styles = StyleSheet.create({
     // backgroundColor: "white",
     justifyContent: "flex-start",
     alignItems: "center"
+  },
+  phnTextInputView: {
+    flexDirection: "row",
+    marginTop: "3%",
+    height: 35,
+    width: "80%",
+    borderBottomColor: "white",
+    borderBottomWidth: 1
+  },
+  phnCodeText: {
+    color: "white",
+    width: "10%",
+    alignSelf: "center"
+  },
+  phnTextInput: {
+    height: 35,
+    width: "78%",
+    color: "white",
+    alignContent: "flex-end"
   },
   mainContainer: {
     flex: 1,
@@ -184,10 +315,8 @@ const styles = StyleSheet.create({
   keyboradAvoidingContainer: {
     height: 460,
     flexDirection: "column",
-    //backgroundColor: "yellow",
     width: "100%",
     justifyContent: "flex-start"
-    // alignItems: "center",
   },
   formContainer: {
     height: 360,
@@ -224,14 +353,6 @@ const styles = StyleSheet.create({
     color: "white",
     alignContent: "flex-end"
   },
-  phoneTextInput: {
-    height: 35,
-    width: "80%",
-    marginTop: "3%",
-    borderBottomColor: "white",
-    borderBottomWidth: 1,
-    alignContent: "flex-end"
-  },
   lastTextInputStyle: {
     height: 35,
     width: "80%",
@@ -247,15 +368,28 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
 
-  fullBackgroundImage: {
-    flex: 1
-  },
+  // fullBackgroundImage: {
+  //   flex: 1
+  // },
   checkboxContainer: {
     flexDirection: "row",
     //  backgroundColor: 'black',
     height: 60,
     justifyContent: "center",
     alignItems: "center"
+  },
+  phnTextInputView: {
+    flexDirection: "row",
+    marginTop: "3%",
+    height: 35,
+    width: "80%",
+    borderBottomColor: "white",
+    borderBottomWidth: 1
+  },
+  phnCodeText: {
+    color: "white",
+    width: "10%",
+    alignSelf: "center"
   },
   termsButton: {
     height: "30%",
@@ -265,17 +399,17 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
     // marginRight: "20%",
   },
-  fullbackgroundImageStyle: {
-    position: "absolute",
-    resizeMode: "cover",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "transparent",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "transparent"
-  },
+  // fullbackgroundImageStyle: {
+  //   position: "absolute",
+  //   resizeMode: "cover",
+  //   width: "100%",
+  //   height: "100%",
+  //   backgroundColor: "transparent",
+  //   flexDirection: "column",
+  //   justifyContent: "flex-start",
+  //   alignItems: "center",
+  //   backgroundColor: "transparent"
+  // },
   imageBackgroundRegisterButtonStyle: {
     width: "100%",
     height: "100%",
@@ -300,11 +434,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "white",
     marginTop: 25
-  },
-  checkboxContainerStyle: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    width: "15%"
   }
 });
 export default UpdateProfilePage;

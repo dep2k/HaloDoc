@@ -24,6 +24,7 @@ import { NavBar } from "../Reusable/NavBar";
 
 const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
+const petProfileImage = require(base + "petPlaceholderImage.jpg");
 const addIcon = require(base + "addIcon.png");
 const editIcon = require(base + "editIcon.png")
 import Loader from "../../ActivityIndicator";
@@ -32,6 +33,10 @@ class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { dataSource: [] };
+
+    const { navigation } = this.props;
+    this.myUsername = navigation.getParam("username");
+     
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
@@ -54,7 +59,8 @@ class ProfilePage extends React.Component {
   }
   componentDidMount() {
     this.startActivityIndicator();
-    const getPetsInput = { username: "deep" };
+    console.log(this.myUsername);
+    const getPetsInput = { username: this.myUsername };
 
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {
@@ -136,10 +142,7 @@ class ProfilePage extends React.Component {
                 <Avatar
                   medium
                   rounded
-                  source={{
-                    uri:
-                      "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-                  }}
+                  source={petProfileImage}
                   onPress={() => console.log("Works!")}
                   activeOpacity={0.7}
                 />
