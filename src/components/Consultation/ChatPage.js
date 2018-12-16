@@ -3,11 +3,6 @@ import {
   View,
   Alert,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  FlatList,
-  Button,
   ActivityIndicator
 } from "react-native";
 
@@ -17,48 +12,107 @@ import {
   messageIdGenerator
 } from "react-native-gifted-chat";
 import { NavBar } from "../Reusable/NavBar";
+import DropDown from "../PetRegistration/DropDown"
 import { I18n } from "aws-amplify";
 import {
   SubscriptionToNewMessage,
   CreateMessage,
-  GetMessages
+  GetMessages,
+  ConfirmPayment,
+  EndConversation
 } from "../../Queries/Chatapi";
 import Amplify, { API, graphqlOperation, Cache } from "aws-amplify";
 
 class ChatPage extends React.Component {
+
   constructor(props) {
     super(props);
-    state = {
-      messages: []
+    this.state = {
+      messages: [],
+      modalVisible: false,
+      animating: false
     };
     this.backButtonClick = this.backButtonClick.bind(this);
+    this.showQuestionAnsewrs = this.showQuestionAnsewrs.bind(this);
 
     const { navigation } = this.props;
-    // const pet = navigation.getParam('petInfo');
     // const questionsList = navigation.getParam('questions');
     this.conversationId = navigation.getParam("chatId");
     this.myUser = navigation.getParam("user");
     this.consultationStatus = navigation.getParam("consultationStatus");
-    console.log("constructor:" + this.myUser);
+    console.log(this.myUser);
     console.log(this.consultationStatus);
+
+    if(this.myUser.userType == "DOCTOR") {
+      
+      this.pet = navigation.getParam('petInfo');
+      this.questions = navigation.getParam('questions');
+      this.consulation = navigation.getParam('consultation');
+      console.log(this.pet);
+      console.log(this.questions);
+    }
   }
 
-  componentDidMount() {
+  startActivityIndicator() {
+    this.setState({ animating: true });
+  }
+
+  closeActivityIndicator() {
+    this.setState({ animating: false });
+  }
+
+  rightButtonClick() {
+    console.log("Right Button click");
+    this.showDropDown();
+  }
+
+  showDropDown(){
+   // console.log("ShowDropDown Function Called");
+   this.setState(
+    state => (
+      (state.modalVisible = true),
+      state
+    )
+  );
+  }
+
+  hideDropDown(){
+    this.setState(
+      state => (
+        (state.modalVisible = false),
+        state
+      )
+    );
+    console.log(this.state.modalVisible);
+  }
+
+  getChatMessages(){
+    this.startActivityIndicator();
     const getMessages = { conversationId: this.conversationId };
     console.log(this.conversationId);
     API.graphql(graphqlOperation(GetMessages, getMessages))
       .then(response => {
         console.log(response);
-        this.setState({
-          messages: response.data.getMessages.items
+        let messages =  response.data.getMessages.items;
+        messages.forEach(function(v,i){
+          let message = messages[i];
+          message._id = message.messageId;
+          message.user._id = message.user.username;   
         });
-        //this.closeActivityIndicator();
+        this.setState({
+          messages: response.data.getMessages.items.reverse()
+        });
+        this.closeActivityIndicator();
       })
       .catch(err => {
         console.log("Failed to show list");
         console.log(err);
-        //  this.closeActivityIndicator();
+        this.closeActivityIndicator();
       });
+  }
+
+  componentDidMount() {
+    this.getChatMessages();
     this.subscribeForChat(this.conversationId);
   }
 
@@ -110,6 +164,7 @@ class ChatPage extends React.Component {
     }
   }
 
+ 
   onReceive(messages = []) {
     console.log("OnReceiveCalled" + messages);
     this.setState(previousState => ({
@@ -169,17 +224,126 @@ class ChatPage extends React.Component {
     );
   };
 
+  endConsultation() {
+    this.startActivityIndicator();
+    const items = this.conversationId.split("-");
+    const uname = items[0];
+    const created = items[1];
+    const endConsultationInput = { 
+      username: uname,
+      createdAt: created ,
+      conversationStatus:"CLOSED"
+    };
+
+    API.graphql(graphqlOperation(EndConversation, endConsultationInput))
+      .then(response => {
+        console.log(response);
+        this.closeActivityIndicator();
+        this.props.navigation.navigate("DoctorMenuPage");
+      }).catch(err => {
+        console.log(err);
+        this.closeActivityIndicator();
+    });
+  }
+
+  confirmPayment() {
+    this.startActivityIndicator();
+    const items = this.conversationId.split("-");
+    const uname = items[0];
+    const created = items[1];
+    //Make an API call to update the chat room for payment confirmation
+    const confirmPaymentInput = { 
+      username: uname,
+      createdAt: created ,
+      payment:"Done"
+    }; 
+
+    console.log(confirmPaymentInput);
+    API.graphql(graphqlOperation(ConfirmPayment, confirmPaymentInput))
+      .then(response => {
+        console.log(response);
+        this.consulation.payment = "Done";
+        this.closeActivityIndicator();
+        Alert.alert(
+          "",
+          I18n.get("Payment Confirmed"),
+          [{ text: "OK",
+           onPress: () => console.log("OK Pressed") }],
+          { cancelable: false }
+        );
+      }).catch(err => {
+        console.log(err);
+        this.closeActivityIndicator();
+    });
+  }
+
+  showQuestionAnsewrs() {
+    const { navigation } = this.props;
+    const pet = navigation.getParam('petInfo');
+    this.props.navigation.navigate("QuestionsPage",{
+        petInfo:this.pet,
+        questions: this.questions
+    });
+  }
+
+  onPressDDList(item,type) {
+   // console.log(item + "-" + type);
+    this.hideDropDown();
+    switch(item.key) {
+      case "1": 
+        console.log("1");
+        this.endConsultation();
+        break;
+      
+      case "2":
+        console.log("2");
+        this.showQuestionAnsewrs();
+        break;
+
+      case "3":
+        console.log("3");
+        this.confirmPayment();
+        break;
+    }
+  }
+
+
+
   render() {
+
     const { navigation } = this.props;
     const navTitle = "";
     console.log("Render:" + this.myUser);
+    let chatOptions = null;
+    if(this.consultationStatus == "CLOSED"){
+      chatOptions = [
+        { key: "2", name: I18n.get("Questions Answers") },
+      ];
+    } else {
+      if (this.consulation.payment == "Done") {
+        chatOptions = [
+          { key: "1", name: I18n.get("End Consultation") },
+          { key: "2", name: I18n.get("Questions Answers") },
+       
+        ];
+      } else{
+        chatOptions = [
+          { key: "1", name: I18n.get("End Consultation") },
+          { key: "2", name: I18n.get("Questions Answers") },
+          { key: "3", name: I18n.get("Confirm Payment") },
+        ];
+      }
+    }
+ 
     return (
       <View style={styles.mainContainer}>
         <NavBar
           onBackPress={this.backButtonClick}
+          rightButton={"More"}
+          rightButtonClick = {()=>this.rightButtonClick()}
           title={navTitle.toUpperCase()}
         />
-        <GiftedChat
+         <GiftedChat
           messages={this.state.messages}
           renderBubble={this.renderBubble}
           messageIdGenerator={this.messageIdGenerator}
@@ -188,8 +352,15 @@ class ChatPage extends React.Component {
             _id: this.myUser.userName,
             username: this.myUser.userName,
             fullName: this.myUser.fullName
-          }}
-        />
+          }}/> 
+
+        <DropDown 
+            dropDownType={"ChatDD"}
+            modalVisible={this.state.modalVisible}
+            dropDownData={chatOptions}
+            onPressDDList={(item, type) => this.onPressDDList(item, type)}>
+        </DropDown>
+        {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
     );
   }

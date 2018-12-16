@@ -3,7 +3,7 @@ import { I18n } from 'aws-amplify';
 
 export const  setUpLanguage = () => {
 
-    I18n.setLanguage('es');
+    I18n.setLanguage('en');
     const dict = {
     'en': {
         'Sign In': "Sign In",
@@ -257,6 +257,10 @@ export const  setUpLanguage = () => {
         'Question3':'HAVE YOU PROVIDED ANY TYPE OF TREATMENT? HOW MUCH?',
         'Question4':'ANY SPECIAL CONDITION OR BACKGROUND?',
         'Question5':'WEIGHT',
+
+        'End Consultation': 'End Consultation',
+        'Questions Answers': 'Questions Answers',
+        'Confirm Payment': 'Confirm Payment',
 
     },
     'es': {
@@ -512,6 +516,9 @@ export const  setUpLanguage = () => {
         'Question4':'¿ALGUNA CONDICIÓN ESPECIAL O ANTECEDENTE?',
         'Question5':'PESO',
 
+        'End Consultation': 'End Consultation',
+        'Questions Answers': 'Questions Answers',
+        'Confirm Payment': 'Confirm Payment',
 
     },
 

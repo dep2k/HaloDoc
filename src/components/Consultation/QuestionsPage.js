@@ -26,7 +26,7 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
-import {Footer} from "../Reusable/Footer";
+import { Footer } from "../Reusable/Footer";
 class Page1 extends React.Component {
 
     render() {
@@ -60,33 +60,62 @@ class Page3 extends React.Component {
 
 class QuestionsPage extends React.Component {
 
+   
     constructor(props) {
         super(props);
-
-        this.state = {
-            set1: {
-                question: I18n.get("Question1"),
-                answer:null
-            },
-            set2: {
-                question: I18n.get("Question2"),
-                answer:null
-            },
-            set3: {
-                question: I18n.get("Question3"),
-                answer:null
-            },
-            set4: {
-                question: I18n.get("Question4"),
-                answer:null
-            },
-            set5: {
-                question: I18n.get("Question5"),
-                answer:null
-            },
-        }
+        //bindings
         this.continueBtnClick = this.continueBtnClick.bind(this);
         this.backButtonClick = this.backButtonClick.bind(this);
+
+        this.questions = this.props.navigation.getParam('questions');
+       // this.setBlankState();
+        if (this.questions) {
+            this.state = {
+                set1: {
+                    question: I18n.get("Question1"),
+                    answer: this.questions[0].answer
+                },
+                set2: {
+                    question: I18n.get("Question2"),
+                    answer: this.questions[1].answer
+                },
+                set3: {
+                    question: I18n.get("Question3"),
+                    answer: this.questions[2].answer
+                },
+                set4: {
+                    question: I18n.get("Question4"),
+                    answer: this.questions[3].answer
+                },
+                set5: {
+                    question: I18n.get("Question5"),
+                    answer: this.questions[4].answer
+                },
+            }
+        } else {
+            this.state = {
+                set1: {
+                    question: I18n.get("Question1"),
+                    answer: null
+                },
+                set2: {
+                    question: I18n.get("Question2"),
+                    answer: null
+                },
+                set3: {
+                    question: I18n.get("Question3"),
+                    answer: null
+                },
+                set4: {
+                    question: I18n.get("Question4"),
+                    answer: null
+                },
+                set5: {
+                    question: I18n.get("Question5"),
+                    answer: null
+                },
+            }
+        }
     }
 
     continueBtnClick() {
@@ -96,21 +125,17 @@ class QuestionsPage extends React.Component {
         this.props.navigation.navigate("PostQuestionsPage", {
             petInfo: pet,
             questions: [this.state.set1,
-                this.state.set2,
-                this.state.set3,
-                this.state.set4,
-                this.state.set5]
+            this.state.set2,
+            this.state.set3,
+            this.state.set4,
+            this.state.set5]
         });
-
     }
 
 
     backButtonClick() {
         this.props.navigation.goBack(null);
     }
-
-
-
 
     render() {
 
@@ -133,7 +158,7 @@ class QuestionsPage extends React.Component {
                                 <Text>{this.state.set1.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    multiline = {true}
+                                    multiline={true}
                                     onChangeText={text => this.setState(state => ((state.set1.answer = text), state))}
                                     value={this.state.set1.answer}
                                 />
@@ -143,7 +168,7 @@ class QuestionsPage extends React.Component {
                                 <Text>{this.state.set2.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    multiline = {true}
+                                    multiline={true}
                                     onChangeText={text => this.setState(state => ((state.set2.answer = text), state))}
                                     value={this.state.set2.answer}
                                 />
@@ -153,7 +178,7 @@ class QuestionsPage extends React.Component {
                                 <Text>{this.state.set3.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    multiline = {true}
+                                    multiline={true}
                                     onChangeText={text => this.setState(state => ((state.set3.answer = text), state))}
                                     value={this.state.set3.answer}
                                 />
@@ -163,7 +188,7 @@ class QuestionsPage extends React.Component {
                                 <Text>{this.state.set4.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    multiline = {true}
+                                    multiline={true}
                                     onChangeText={text => this.setState(state => ((state.set4.answer = text), state))}
                                     value={this.state.set4.answer}
                                 />
@@ -173,7 +198,7 @@ class QuestionsPage extends React.Component {
                                 <Text>{this.state.set5.question}</Text>
                                 <TextInput
                                     style={styles.answerTextInput}
-                                    multiline = {true}
+                                    multiline={true}
                                     onChangeText={text => this.setState(state => ((state.set5.answer = text), state))}
                                     value={this.state.set5.answer}
                                 />
@@ -183,7 +208,10 @@ class QuestionsPage extends React.Component {
 
                     </ScrollView>
 
-                <Footer  style = {styles.footer} showBtn = {true} onPress = {this.continueBtnClick}></Footer>
+                    {!this.questions &&
+                        <Footer style={styles.footer} showBtn={true} onPress={this.continueBtnClick}>
+                        </Footer>
+                    }
                 </View>
             </TouchableWithoutFeedback>
 
@@ -212,7 +240,7 @@ const styles = StyleSheet.create({
     },
 
     answerTextInput: {
-        height: 140, borderColor: 'gray', 
+        height: 140, borderColor: 'gray',
         borderWidth: 1
     },
 

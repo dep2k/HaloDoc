@@ -12,8 +12,7 @@ class DataListItem extends React.Component {
       return (
         <TouchableOpacity
           onPress={this.props.onPress}
-          style={styles.cellContainer}
-        >
+          style={styles.cellContainer}>
           <Text style={styles.nameText}>{this.props.item.name}</Text>
         </TouchableOpacity>
       );

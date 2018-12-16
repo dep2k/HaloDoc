@@ -74,7 +74,7 @@ class MainMenuPage extends React.Component {
           </View>
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={consultIcon} />
-          <TouchableOpacity onPress={() => this.ConsultationButtonClick("OnGoingStatus")}>
+          <TouchableOpacity onPress={() => this.ConsultationButtonClick("ONGOING")}>
               <Text style={styles.touchableOpacityText}>
                 {I18n.get("OpenConsultations")}
               </Text>
@@ -83,7 +83,7 @@ class MainMenuPage extends React.Component {
 
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
-            <TouchableOpacity onPress={() => this.ConsultationButtonClick("ClosedStatus")}>
+            <TouchableOpacity onPress={() => this.ConsultationButtonClick("CLOSED")}>
               <Text style={styles.touchableOpacityText}>
                 {I18n.get("HistoryOfConsultaions")}
               </Text>

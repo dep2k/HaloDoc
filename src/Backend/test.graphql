@@ -8,6 +8,17 @@
 #     query GetPost {
 #       singlePost(id: 123) {
 #         id
+#         title
+#       }# Welcome!
+#
+# This is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# An example query named "GetPost" might look like:
+#
+#     query GetPost {
+#       singlePost(id: 123) {
+#         id
 
 subscription SubscribeToCreateDoctor {
   subscribeToCreateDoctor {
@@ -75,11 +86,15 @@ mutation CreateConversation {
         fullName: "Deep A"
       },
       doctor: {
-        name: "Raman",
+        name: "TestDoctor",
         speciality: "dog",
-        doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7"
+        doctorId: "TestDoctor"
       },
-      questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, {question: "Question 2", answer: "Answer 2"}],
+      questionsAndAnswers: [{question: "Question 1", answer: "Answer 1"}, 
+        {question: "Question 2", answer: "Answer 2"},
+      {question: "Question 3", answer: null},
+      {question: "Question 4", answer: null},
+      {question: "Question 5", answer: null}],
       pet: {username: "deep39303903", petId: "238280340932", category: "Canine"}
     }) {
     username
@@ -110,6 +125,20 @@ mutation CreateConversation {
   }
 
 }
+
+mutation EndConversation {
+  endConversation(username:"TestUser",createdAt:"1544497484205",conversationStatus:"CLOSED"){
+    conversationStatus
+  }
+}
+
+mutation ConfirmPayment {
+  confirmPayment(username:"TestUser",createdAt:"1544497484205",payment:"DONE"){
+    payment
+  }
+}
+
+
 
 mutation CreateDoctor {
   createDoctor(input: 
@@ -229,8 +258,23 @@ query GetPets {
 query GetUserConversations {
   getUserConversations(username: "TestUser", conversationStatus: "CLOSED") {
     items {
-      conversationStatus
-    }
+           username
+     			 conversationStatus
+           createdAt
+           payment
+           doctor {
+               name
+           }
+           pet {
+             name
+             race
+             origin
+             age
+             gender
+             username
+           }
+        
+        }
   }
 }
 
@@ -242,10 +286,25 @@ query GetMessages {
   }
 }
 query GetDoctorConversations {
-  getDoctorConversations(username: "TestDoctor1", conversationStatus: "CLOSED") {
-    items {
-      conversationStatus
-    }
+  getDoctorConversations(username: "TestDoctor", conversationStatus: "CLOSED") {
+     items {
+           username
+     			 conversationStatus
+           createdAt
+           payment
+           doctor {
+               name
+           }
+           pet {
+             name
+             race
+             origin
+             age
+             gender
+             username
+           }
+        
+        }
   }
 }
 
@@ -277,6 +336,29 @@ query ListConversations {
 #       Run Query:  Ctrl+Enter   (or press the play button above)
 #   Auto Complete:  Ctrl+Space   (or just start typing)
 #
+
+
+
+
+#     }
+#
+# An example mutation named "PutPost" might look like:
+#
+#     mutation PutPost {
+#       putPost(id: 123, title: "Hello, world!") {
+#         id
+#         title
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Ctrl+Shift+P (also removes comments)
+#       Run Query:  Ctrl+Enter   (or press the play button above)
+#   Auto Complete:  Ctrl+Space   (or just start typing)
+#
+
+
 
 
 

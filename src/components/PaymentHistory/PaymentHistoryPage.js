@@ -65,15 +65,22 @@ class PaymentHistoryPage extends React.Component {
      if (this.username == "Admin") {
           return;
      }
-    this.props.navigation.navigate("ChatPage", { user : item.username,
-      chatId: item.username + "-" + item.createdAt , consultationStatus: this.consultationType} );
+    this.props.navigation.navigate("ChatPage",{ 
+         user : this.user,
+         chatId: item.username + "-" + item.createdAt , 
+         consultationStatus: this.consultationType,
+         petInfo: item.pet,
+         questions: item.questionsAndAnswers,
+         consultation: item,
+        }
+     );
   }
   renderHeading() {
-    if (this.consultationType == "OnGoingStatus") {
+    if (this.consultationType == "ONGOING") {
       return (
         <Text style={styles.historyText}>{I18n.get("OpenConsultations")}</Text>
       );
-    } else if (this.consultationType == "ClosedStatus") {
+    } else if (this.consultationType == "CLOSED") {
       return (
         <Text style={styles.historyText}>
           {I18n.get("HistoryOfConsultaions")}
@@ -93,21 +100,23 @@ class PaymentHistoryPage extends React.Component {
     this.startActivityIndicator();
     const { navigation } = this.props;
     this.consultationType = navigation.getParam("consultationType");
-    if (this.consultationType == "OnGoingStatus") {
+    if (this.consultationType == "ONGOING") {
       this.setState(
         state => ((state.consultationStatus = "ONGOING"), state)
       );
-    } else if (this.consultationType == "ClosedStatus") {
+    } else if (this.consultationType == "CLOSED") {
       this.setState(
         state => ((state.consultationStatus = "CLOSED"), state)
       );
     }
     Cache.getItem("User").then(user => {
+      this.user = user;
       if (user && user.userType == "DOCTOR") {
         const getDoctorConversations = {
           username: user.userName,
           conversationStatus: this.state.consultationStatus
         };
+        console.log(getDoctorConversations);
         return API.graphql(
           graphqlOperation(GetDoctorConversations, getDoctorConversations)
         )

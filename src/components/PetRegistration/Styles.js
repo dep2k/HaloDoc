@@ -304,8 +304,9 @@ export const styles = StyleSheet.create({
     },
   
     cellContainer: {
-      height: 30,
-      marginHorizontal: "5%"
+      height: 44,
+      marginHorizontal: "5%",
+      justifyContent: "center",
     },
   
     originTextInputStyle: {
@@ -344,7 +345,9 @@ export const styles = StyleSheet.create({
     nameText: {
       color: "#8BE0DE",
       fontSize: 18,
-      padding: 2
+      padding: 2,
+      textAlign:'center',
+      justifyContent: "center",
     },
   
     flatListContentContainerStyle: {

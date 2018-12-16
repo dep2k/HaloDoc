@@ -5,74 +5,103 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    Alert
 } from "react-native";
 
+import DropdownAlert from 'react-native-dropdownalert';
 import { I18n } from "aws-amplify";
-
-
+import { SubscriptionToCreateConversation } from "../../../Queries/Chatapi";
+import { API, graphqlOperation } from "aws-amplify";
 const base = "../../../images/"
 const consultIcon = require(base + "consultIcon.png");
 const myProfileIcon = require(base + "myProfileIcon.png");
 import { Cache } from "aws-amplify";
 
 class DoctorMenuPage extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-      this.ConsultationButtonClick = this.ConsultationButtonClick.bind(this);
-      this.logOutButtonClick = this.logOutButtonClick.bind(this);
+        this.ConsultationButtonClick = this.ConsultationButtonClick.bind(this);
+        this.logOutButtonClick = this.logOutButtonClick.bind(this);
 
-    
-  }
+        Cache.getItem('User').then(user => {
+            if (user) {
+                this.subscribeForNewConsultations(user.userName);
+            }
+        });
+    }
 
-ConsultationButtonClick(type) {
-    this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
-}
+    ConsultationButtonClick(type) {
+        this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
+    }
 
- logOutButtonClick() {
+    logOutButtonClick() {
         this.props.navigation.navigate("LoginPage");
         Cache.clear();
     }
 
+    subscribeForNewConsultations(docId) {
+        const subscriptionInput = {
+            doctorId: docId
+        };
+        console.log(subscriptionInput);
+        this.subscription = API.graphql(graphqlOperation(SubscriptionToCreateConversation, subscriptionInput)
+        ).subscribe({
+            next: (response) => {
+                console.log("Received New Consultation Request");
+                console.log(response);
+          // this.dropdown.alertWithType('success', 'Error', "Received New Consultation Request");
+                // var message = response.value.data.subscribeToNewMessage;
+                Alert.alert(
+                    "",
+                    I18n.get("Received New Consultation Request"),
+                    [{ text: "OK",
+                     onPress: () => console.log("OK Pressed") }],
+                    { cancelable: false }
+                  );
+            }
+        });
+    }
 
-  
-  render() {
-    return (
-      <View style={styles.mainContainer}>
-      <View
-      style= {styles.topContainer}>
 
-      </View>
-        <Text style={styles.menuText}>MENU</Text>
-        <View style={styles.buttonsMainContainer}>
-          <View style={styles.singleButtonContainer}>
-            <Image style={styles.iconImagesStyle} source={consultIcon} />
-                    <TouchableOpacity onPress={() => this.ConsultationButtonClick("OnGoingStatus")}>
-              <Text style={styles.touchableOpacityText}>
-                {I18n.get("OpenConsultations")}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.singleButtonContainer}>
-            <Image style={styles.iconImagesStyle} source={consultIcon} />
-                    <TouchableOpacity onPress={() => this.ConsultationButtonClick("ClosedStatus")}>
-              <Text style={styles.touchableOpacityText}>
-                {I18n.get("HistoryOfConsultaions")}
-              </Text>
-            </TouchableOpacity>
-          </View>
-                <View style={styles.singleButtonContainer}>
-                    <Image style={styles.iconImagesStyle} source={myProfileIcon} />
-                    <TouchableOpacity onPress={this.logOutButtonClick}>
-                        <Text style={styles.touchableOpacityText}>
-                            {I18n.get("LogOut")}
-                        </Text>
-                    </TouchableOpacity>
+    render() {
+        return (
+            <View style={styles.mainContainer}>
+                <View
+                    style={styles.topContainer}>
+
                 </View>
-        </View>
-      </View>
-    );
-  }
+                <Text style={styles.menuText}>MENU</Text>
+                <View style={styles.buttonsMainContainer}>
+                    <View style={styles.singleButtonContainer}>
+                        <Image style={styles.iconImagesStyle} source={consultIcon} />
+                        <TouchableOpacity onPress={() => this.ConsultationButtonClick("ONGOING")}>
+                            <Text style={styles.touchableOpacityText}>
+                                {I18n.get("OpenConsultations")}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.singleButtonContainer}>
+                        <Image style={styles.iconImagesStyle} source={consultIcon} />
+                        <TouchableOpacity onPress={() => this.ConsultationButtonClick("CLOSED")}>
+                            <Text style={styles.touchableOpacityText}>
+                                {I18n.get("HistoryOfConsultaions")}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.singleButtonContainer}>
+                        <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+                        <TouchableOpacity onPress={this.logOutButtonClick}>
+                            <Text style={styles.touchableOpacityText}>
+                                {I18n.get("LogOut")}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <DropdownAlert ref={ref => this.dropdown = ref} />
+            </View>
+        );
+    }
 }
 const styles = StyleSheet.create({
     mainContainer: {
@@ -114,7 +143,7 @@ const styles = StyleSheet.create({
     },
     buttonsMainContainer: {
         flexDirection: "column",
-        height:175,
+        height: 175,
         width: "100%",
         justifyContent: "flex-start",
         justifyContent: "space-evenly",

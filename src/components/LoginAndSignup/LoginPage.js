@@ -33,8 +33,8 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       user: {
-        username: "",
-        password: ""
+        username: "TestUser",
+        password: "TestUser"
       },
       animating: false
     };
@@ -77,7 +77,7 @@ class LoginPage extends React.Component {
           console.log(data);
           if(user.username == 'Admin'){
             this.props.navigation.navigate("AdminMenuPage"); 
-          } else{
+          } else {
             const payload = data.signInUserSession.idToken.payload;;
             let cognitoUser = {
               firstName: payload.given_name,

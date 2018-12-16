@@ -16,8 +16,6 @@ import Amplify, { Cache, I18n, Auth, API, graphqlOperation } from "aws-amplify";
 import { NavBar } from "../../Reusable/NavBar";
 
 
-
-
 class DataListItem extends React.Component {
   render() {
     return (

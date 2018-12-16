@@ -89,43 +89,53 @@ export  const AllMessages = `query AllMessages($nextToken: String) {
     }
 }`;
 
-// Get Detail of a single conversation
-export const GetConversation = `query GetConversation($username: String! ) {
-getConversations(username: $username) {
-     items {
+
+export const GetDoctorConversations = `query GetDoctorConversations($username: String!, $conversationStatus: String! ) {
+getDoctorConversations(username: $username ,conversationStatus: $conversationStatus ) {
+      items {
            username
-           status
+           conversationStatus
            createdAt
            payment
            doctor {
                name
            }
-        }
-    }
-}`;
-export const GetDoctorConversations = `query GetDoctorConversations($username: String!, $conversationStatus: String! ) {
-getDoctorConversations(username: $username ,conversationStatus: $conversationStatus ) {
-     items {
-         conversationStatus
-         username
-         createdAt
-         payment
-         doctor {
-           name
-         }
+           pet {
+             name
+             race
+             origin
+             age
+             gender
+             username
+             category
+           }
+           questionsAndAnswers {
+            question
+            answer
+          }
+        
         }
     }
 }`;
 export const GetUserConversations = `query GetUserConversations($username: String!, $conversationStatus: String! ) {
 getUserConversations(username: $username ,conversationStatus: $conversationStatus ) {
      items {
-         conversationStatus
-         username
-         createdAt
-         payment
-         doctor {
-           name
-         }
+           username
+           conversationStatus
+           createdAt
+           payment
+           doctor {
+               name
+           }
+           pet {
+             name
+             race
+             origin
+             age
+             gender
+             username
+           }
+        
         }
     }
 }`;
@@ -133,7 +143,15 @@ getUserConversations(username: $username ,conversationStatus: $conversationStatu
 export const GetMessages = `query GetMessages($conversationId : String!) {
   getMessages (conversationId: $conversationId ){
     items {
+      conversationId
+      createdAt
+      messageId
       text
+      user {
+        
+        username
+      }
+
     }
   }
 }`; 
@@ -156,13 +174,17 @@ export const SubscriptionToCreateConversation = `subscription SubscribeToCreateC
   subscribeToCreateConversation(doctorId: $doctorId) {
     username
     createdAt
-    user {
-      fullName
-      type
-    }
   }}`;
 
-
+  // export const SubscriptionToCreateConversation = `subscription SubscribeToCreateConversation($doctorId: String) {
+  //   subscribeToCreateConversation(doctorId: $doctorId) {
+  //     username
+  //     createdAt
+  //     user {
+  //       fullName
+  //       type
+  //     }
+  //   }}`;
   
 export const SubscriptionToNewMessage = `subscription SubscribeToNewMessage($conversationId:ID!) {
   subscribeToNewMessage(conversationId: $conversationId) {
@@ -174,5 +196,71 @@ export const SubscriptionToNewMessage = `subscription SubscribeToNewMessage($con
       username
       fullName
     }
+  }
+}`;
+
+export const ConfirmPayment = `mutation ConfirmPayment($username: String,$createdAt: String,$payment: String) {
+      confirmPayment(
+            username: $username,
+            createdAt: $createdAt,
+            payment: $payment,
+         ) {
+              username
+              createdAt
+              user {
+                fullName
+                type
+              }
+              pet {
+                category
+                name
+                race
+                gender
+                age
+                origin
+                use
+                background
+                weight
+              }
+                doctor {
+                name
+                speciality
+                doctorId
+              }
+              doctorId
+      }
+
+}`;
+
+
+export const EndConversation = `mutation EndConversation($username: String,$createdAt: String,$conversationStatus: String) {
+  endConversation(
+        username: $username,
+        createdAt: $createdAt,
+        conversationStatus: $conversationStatus,
+      ){
+          username
+          createdAt
+          user {
+            fullName
+            type
+          }
+          pet {
+            category
+            name
+            race
+            gender
+            age
+            origin
+            use
+            background
+            weight
+          }
+            doctor {
+            name
+            speciality
+            doctorId
+          }
+          doctorId
   }
 }`;
