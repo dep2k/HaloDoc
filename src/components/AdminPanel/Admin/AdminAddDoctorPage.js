@@ -4,6 +4,9 @@ import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { NavBar } from "../../Reusable/NavBar";
+import DropDown from "../../PetRegistration/DropDown";
+import { specialityData } from "../../PetRegistration/DropDown";
+import FormDropDownInput from "../../PetRegistration/FormDropDownInput";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import {
@@ -31,24 +34,28 @@ const placeHolderImage = require(base + "placeholderImage.png");
 class AdminAddDoctorPage extends React.Component {
   constructor(props) {
     super(props);
+
+    defaultValue = null;
     this.state = {
       doctor: {
-        name: "",
-        userName: "",
-        speciality: "",
-        profilePic: "",
-        registrationId: "",
-        phoneNo: "",
-        email: "",
-        homeTown: "",
-        medicalCenter: "",
-        department: "",
-        address: "",
-        password: "",
-        adminEmail: ""
+        name: defaultValue,
+        userName: defaultValue,
+        speciality: defaultValue,
+        profilePic: defaultValue,
+        registrationId: defaultValue,
+        phoneNo: defaultValue,
+        email: defaultValue,
+        homeTown: defaultValue,
+        medicalCenter: defaultValue,
+        department: defaultValue,
+        address: defaultValue,
+        password: defaultValue,
+        adminEmail: defaultValue
       },
       animating: false,
-       phncode: "+57",
+      phncode: "+57",
+      docSpecialityData: [],
+      modalVisible: false
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
@@ -60,6 +67,32 @@ class AdminAddDoctorPage extends React.Component {
 
   closeActivityIndicator() {
     this.setState({ animating: false });
+  }
+
+  onPressDDList(item) {
+    const speciality = item.name;
+    this.setState(
+      state => (
+        (state.doctor.speciality = speciality), 
+        (state.modalVisible = false),
+         state
+      )
+    );
+  }
+  onPress() {
+    console.log(specialityData);
+    this.showDropDown(specialityData);
+  }
+
+  showDropDown(data) {
+    console.log(data);
+    this.setState(
+      state => (
+        (state.modalVisible = true),
+        (state.docSpecialityData = data),
+        state
+      )
+    );
   }
 
   backButtonClick() {
@@ -96,7 +129,7 @@ class AdminAddDoctorPage extends React.Component {
           username: doc.userName,
           password: doc.password,
           attributes: {
-            phone_number: (this.state.phncode + doc.phoneNo),
+            phone_number: this.state.phncode + doc.phoneNo,
             email: doc.adminEmail,
             given_name: "abcd",
             family_name: "efgf",
@@ -164,6 +197,13 @@ class AdminAddDoctorPage extends React.Component {
               activeOpacity={0.7}
             />
           </View>
+          <DropDown
+            modalVisible={this.state.modalVisible}
+            dropDownData={this.state.docSpecialityData}
+            // onModalBackPress={this.onModalBackPress()}
+            onPressDDList={item => this.onPressDDList(item, type)}
+          />
+
           <View style={styles.headindTextStyle}>
             <Text style={styles.drNameText}>
               {I18n.get("AddDoctorDetailes")}
@@ -233,29 +273,11 @@ class AdminAddDoctorPage extends React.Component {
               />
             </View>
             <View style={styles.lastLineStyle} />
-
-            <View style={styles.textInputContainer}>
-              <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
-              <TextInput
-                style={styles.formTextInputStyle}
-                ref={input => {
-                  this.fourthTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.fifthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                onChangeText={text =>
-                  this.setState(
-                    state => ((state.doctor.speciality = text), state)
-                  )
-                }
+              <FormDropDownInput
+                titleLabel={I18n.get("Speciality")}
+                dropDownValue={this.state.doctor.speciality}
+                onPress={() => this.onPress()}
               />
-            </View>
-            <View style={styles.lastLineStyle} />
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("Address")}</Text>
               <TextInput
@@ -300,9 +322,7 @@ class AdminAddDoctorPage extends React.Component {
             <View style={styles.lastLineStyle} />
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
-              <Text style={styles.phnCodeText}>
-                {this.state.phncode}
-              </Text>
+              <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
               <TextInput
                 style={styles.formTextInputStyle}
                 ref={input => {
