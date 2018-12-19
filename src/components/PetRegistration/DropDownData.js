@@ -149,6 +149,22 @@ export const genderData = [
   }
 ];
 
+export const specialityData = [
+  {
+    key: "1",
+    name: "Cat"
+  },
+  {
+    key: "2",
+    name: "Dog"
+  },
+  {
+    key: "3",
+    name: "Horse"
+  }
+ 
+]
+
 
 
 export const petRaceListData = {
