@@ -27,6 +27,14 @@ subscription SubscribeToCreateDoctor {
   }
 }
 
+subscription SubscribeForEndOfConsulation {
+  subscribeForEndOfConsultation(username: "TestUser", createdAt: "1544960088795") {
+    createdAt
+  }
+}
+
+
+
 
 subscription SubscribeToCreateConversation {
   subscribeToCreateConversation(doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7") {
@@ -127,8 +135,8 @@ mutation CreateConversation {
 }
 
 mutation EndConversation {
-  endConversation(username:"TestUser",createdAt:"1544497484205",conversationStatus:"CLOSED"){
-    conversationStatus
+  endConversation(username:"TestUser",createdAt:"1544960871426",conversationStatus:"CLOSED"){
+    createdAt
   }
 }
 
@@ -357,6 +365,8 @@ query ListConversations {
 #       Run Query:  Ctrl+Enter   (or press the play button above)
 #   Auto Complete:  Ctrl+Space   (or just start typing)
 #
+
+
 
 
 

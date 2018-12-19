@@ -200,6 +200,15 @@ export const SubscriptionToNewMessage = `subscription SubscribeToNewMessage($con
   }
 }`;
 
+export const SubscribeForEndOfConsultation = `subscription SubscribeForEndOfConsultation($username: String, $createdAt:String) {
+  subscribeForEndOfConsultation(username: $username, createdAt: $createdAt) {
+    username
+    createdAt
+    conversationStatus
+  }
+}`;
+
+
 export const ConfirmPayment = `mutation ConfirmPayment($username: String,$createdAt: String,$payment: String) {
       confirmPayment(
             username: $username,
@@ -242,6 +251,7 @@ export const EndConversation = `mutation EndConversation($username: String,$crea
       ){
           username
           createdAt
+          conversationStatus
           user {
             fullName
             type

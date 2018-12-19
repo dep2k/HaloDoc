@@ -36,10 +36,10 @@ export class Footer extends React.Component {
                     {this.props.title && <Text style = {styles.continueText}>{this.props.title}</Text>}
                     {!this.props.title && <Text style = {styles.continueText}>{I18n.get("Continue")}</Text>}
                
-                    <Image
-                    source={nextBtnImage}
-                    style={styles.nextBtnImage}
-                     />
+                    {!this.props.hideBtn && <Image
+                        source={nextBtnImage}
+                         style={styles.nextBtnImage}/>
+                    }
                    
                     </TouchableOpacity>
           

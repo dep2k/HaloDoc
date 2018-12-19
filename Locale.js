@@ -263,7 +263,7 @@ export const  setUpLanguage = () => {
         'End Consultation': 'End Consultation',
         'Questions Answers': 'Questions Answers',
         'Confirm Payment': 'Confirm Payment',
-
+        'ConsultationEndMessage' : 'We HOPE YOU HAVE A HAPPY NIGHT / DAY AND your pet BECOME IMPROVED SOON. REMEMBER THAT IN HOLAVET WE ARE READY FOR YOU.',
     },
     'es': {
         'LogIn': "Inicio De Sesión",
@@ -525,6 +525,7 @@ export const  setUpLanguage = () => {
         'End Consultation': 'End Consultation',
         'Questions Answers': 'Questions Answers',
         'Confirm Payment': 'Confirm Payment',
+        'ConsultationEndMessage' : 'ESPERAMOS QUE TENGAS UNA FELIZ NOCHE / DÍA Y QUE TU MASCOTA SE HA MEJORADO PRONTO. RECUERDE QUE EN HOLAVET ESTAMOS LISTOS PARA USTED.',
 
     },
 

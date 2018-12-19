@@ -19,7 +19,8 @@ import {
   CreateMessage,
   GetMessages,
   ConfirmPayment,
-  EndConversation
+  EndConversation,
+  SubscribeForEndOfConsultation
 } from "../../Queries/Chatapi";
 import Amplify, { API, graphqlOperation, Cache } from "aws-amplify";
 
@@ -34,6 +35,7 @@ class ChatPage extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.showQuestionAnsewrs = this.showQuestionAnsewrs.bind(this);
+    this.subscribeForEndOfConsultation = this.subscribeForEndOfConsultation.bind(this);
 
     const { navigation } = this.props;
     // const questionsList = navigation.getParam('questions');
@@ -51,6 +53,8 @@ class ChatPage extends React.Component {
   
       console.log(this.pet);
       console.log(this.questions);
+    } else {
+
     }
   }
 
@@ -114,7 +118,11 @@ class ChatPage extends React.Component {
 
   componentDidMount() {
     this.getChatMessages();
-    this.subscribeForChat(this.conversationId);
+    this.subscribeForChat();
+    if(this.myUser.userType == 'USER'){
+      this.subscribeForEndOfConsultation();
+    }
+  
   }
 
   backButtonClick() {
@@ -124,7 +132,8 @@ class ChatPage extends React.Component {
       this.props.navigation.goBack(null);
     }
    // 
-    this.subscription.unsubscribe();
+    this.subscriptionForConsultationEnd.unsubscribe();
+    this.subscriptionForMessages.unsubscribe();
     // this.props.navigation.popToTop();
   }
 
@@ -178,12 +187,31 @@ class ChatPage extends React.Component {
     }));
   }
 
-  subscribeForChat(chatId) {
+  //chatId is same as consultationID
+ subscribeForEndOfConsultation(){
+  console.log("subscribeForEndOfConsultation");
+  const subscriptionInput = {
+    username: this.consulation.username,
+    createdAt: this.consulation.createdAt
+  };
+  console.log(subscriptionInput);
+  this.subscriptionForConsultationEnd = API.graphql(
+    graphqlOperation(SubscribeForEndOfConsultation, subscriptionInput)
+  ).subscribe({
+    next: response => {
+      console.log(response);
+      this.subscriptionForConsultationEnd.unsubscribe();
+      this.props.navigation.navigate('FeedbackPage');
+    }
+  });
+ }
+
+  subscribeForChat() {
     const subscriptionInput = {
-      conversationId: chatId
+      conversationId: this.conversationId
     };
-    console.log("subscribeForChat - ChatId:" + chatId);
-    this.subscription = API.graphql(
+  
+    this.subscriptionForMessages = API.graphql(
       graphqlOperation(SubscriptionToNewMessage, subscriptionInput)
     ).subscribe({
       next: response => {

@@ -42,6 +42,7 @@ import PaymentHistoryPage from '../components/PaymentHistory/PaymentHistoryPage'
 import AvailableDoctorsPage from '../components/Consultation/AvailableDoctorsPage';
 
 //import DoctorConsultationsPage from '../components/AdminPanel/Doctors/DoctorConsultationsPage';
+import FeedbackPage from '../components/Consultation/FeedbackPage'
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -272,6 +273,13 @@ const AppStackNavigator = createStackNavigator(
 
     ChatPage: {
       screen: ChatPage,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+    FeedbackPage: {
+      screen: FeedbackPage,
       navigationOptions: {
         header: null
       }
