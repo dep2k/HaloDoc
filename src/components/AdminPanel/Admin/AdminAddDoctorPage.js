@@ -72,7 +72,13 @@ class AdminAddDoctorPage extends React.Component {
   onPressDDList(item, type) {
     if (type == "SpecialityDD") {
       const speciality = item.name;
-      this.setState(state => ((state.doctor.speciality = speciality), (state.modalVisible = false), state));
+      this.setState(
+        state => (
+          (state.doctor.speciality = speciality),
+          (state.modalVisible = false),
+          state
+        )
+      );
     }
   }
   onPress() {
@@ -86,6 +92,12 @@ class AdminAddDoctorPage extends React.Component {
         (state.modalVisible = true), (state.docSpecialityData = data), state
       )
     );
+  }
+
+  hideModal() {
+    this.setState({
+      modalVisible: false
+    });
   }
 
   backButtonClick() {
@@ -194,7 +206,7 @@ class AdminAddDoctorPage extends React.Component {
             dropDownType={"SpecialityDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.docSpecialityData}
-            // onModalBackPress={this.onModalBackPress()}
+            onModalBackPress={() => this.hideModal()}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}
           />
 
@@ -252,9 +264,6 @@ class AdminAddDoctorPage extends React.Component {
                   this.thirdTextInput = input;
                 }}
                 returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.fourthTextInput.focus();
-                }}
                 blurOnSubmit={false}
                 autoCapitalize={"none"}
                 autoCorrect={false}
@@ -276,9 +285,6 @@ class AdminAddDoctorPage extends React.Component {
               <Text style={styles.formText}>{I18n.get("Address")}</Text>
               <TextInput
                 style={styles.formTextInputStyle}
-                ref={input => {
-                  this.fifthTextInput = input;
-                }}
                 returnKeyType={"next"}
                 onSubmitEditing={() => {
                   this.sixthTextInput.focus();
@@ -422,11 +428,10 @@ class AdminAddDoctorPage extends React.Component {
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("Password")}</Text>
               <TextInput
-                style={styles.formTextInputStyle}
                 ref={input => {
                   this.twelvethTextInput = input;
                 }}
-                blurOnSubmit={false}
+                style={styles.formTextInputStyle}
                 autoCapitalize={"none"}
                 autoCorrect={false}
                 onChangeText={text =>

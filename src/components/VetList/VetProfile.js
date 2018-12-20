@@ -76,7 +76,7 @@ class VetProfile extends React.Component {
         <View style={styles.middleContainer}>
           <Text style={styles.drNameText}>{docName}</Text>
           <Text style={styles.drSpecialityText}>
-            {docSpeciality + " " + I18n.get("Specialist")}
+            {I18n.get("Specialist") + ": " + docSpeciality}
           </Text>
 
           {/* <View style={styles.firstTextInputContainer}>

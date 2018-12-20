@@ -99,7 +99,7 @@ class PetRegistrationForm extends React.Component {
             dropDownType={this.state.dropDownType}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.dropDownData}
-            // onModalBackPress={this.onModalBackPress()}
+            onModalBackPress={() => this.hideModal()}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}>
           </DropDown>
 
@@ -221,7 +221,7 @@ class PetRegistrationForm extends React.Component {
 
   }
 
-  onModalBackPress() {
+  hideModal() {
     this.setState({
       modalVisible: false
     })
