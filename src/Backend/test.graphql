@@ -35,7 +35,6 @@ subscription SubscribeForEndOfConsulation {
 
 
 
-
 subscription SubscribeToCreateConversation {
   subscribeToCreateConversation(doctorId: "0bd9855e-a3f2-4616-8132-aed490973bf7") {
     username
@@ -59,6 +58,7 @@ subscription SubscribeToNewMessage {
     }
   }
 }
+
 
 
 mutation CreateMessage {
@@ -211,6 +211,28 @@ mutation UpdateHelper {
     isAvailable
   }
 }
+
+
+
+
+mutation UpdateDoctorAvailability {
+  updateDoctor(input:{
+      doctorId: "TestDoctor", 
+      isAvailable:"true",
+    	
+  }){
+    doctorId
+    isAvailable
+    speciality
+  }
+}
+
+query GetDoctorAvailability {
+  getDoctor(doctorId: "TestDoctor") {
+      isAvailable
+  }
+}
+
 
 mutation CreateHelper {
   createHelper(input: {name: "fdfads", phoneNo: "afdfad", email: "Adfad", address: "Afdads", password: "Fadfa", isAvailable: true}) {
@@ -365,6 +387,7 @@ query ListConversations {
 #       Run Query:  Ctrl+Enter   (or press the play button above)
 #   Auto Complete:  Ctrl+Space   (or just start typing)
 #
+
 
 
 

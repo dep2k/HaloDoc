@@ -5,12 +5,14 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Alert
+    Alert,
+    Switch
 } from "react-native";
 
 import DropdownAlert from 'react-native-dropdownalert';
 import { I18n } from "aws-amplify";
 import { SubscriptionToCreateConversation } from "../../../Queries/Chatapi";
+import {UpdateDoctorAvailability, GetDoctorAvailability} from "../../../Queries/DoctorAPI"
 import { API, graphqlOperation } from "aws-amplify";
 const base = "../../../images/"
 const consultIcon = require(base + "consultIcon.png");
@@ -20,15 +22,43 @@ import { Cache } from "aws-amplify";
 class DoctorMenuPage extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            animating: false,
+            available: true
+        }
         this.ConsultationButtonClick = this.ConsultationButtonClick.bind(this);
         this.logOutButtonClick = this.logOutButtonClick.bind(this);
 
         Cache.getItem('User').then(user => {
             if (user) {
+                this.user = user;
                 this.subscribeForNewConsultations(user.userName);
+
+                const input = {
+                    doctorId: this.user.userName
+                }
+                this.startActivityIndicator();
+                API.graphql(graphqlOperation(GetDoctorAvailability, input))
+                .then(response => {
+                  console.log(response);
+                  this.closeActivityIndicator();
+                  const isAvailable = response.data.getDoctor.isAvailable;
+                  this.setState({"available" : isAvailable});
+                // this.props.navigation.navigate("DoctorMenuPage");
+                }).catch(err => {
+                  console.log(err);
+                  this.closeActivityIndicator();
+              });
             }
         });
+    }
+
+    startActivityIndicator() {
+        this.setState({ animating: true });
+    }
+    
+    closeActivityIndicator() {
+    this.setState({ animating: false });
     }
 
     ConsultationButtonClick(type) {
@@ -38,6 +68,26 @@ class DoctorMenuPage extends React.Component {
     logOutButtonClick() {
         this.props.navigation.navigate("LoginPage");
         Cache.clear();
+    }
+
+    updateDoctorAvailability(value) {
+        console.log(value);
+        this.setState({available:value});
+        this.startActivityIndicator();
+        const updateInput = {
+            doctorId: this.user.userName,
+            isAvailable: value
+        };
+        console.log(updateInput);
+        API.graphql(graphqlOperation(UpdateDoctorAvailability, updateInput))
+        .then(response => {
+          console.log(response);
+          this.closeActivityIndicator();
+        // this.props.navigation.navigate("DoctorMenuPage");
+        }).catch(err => {
+          console.log(err);
+          this.closeActivityIndicator();
+      });
     }
 
     subscribeForNewConsultations(docId) {
@@ -69,7 +119,6 @@ class DoctorMenuPage extends React.Component {
             <View style={styles.mainContainer}>
                 <View
                     style={styles.topContainer}>
-
                 </View>
                 <Text style={styles.menuText}>MENU</Text>
                 <View style={styles.buttonsMainContainer}>
@@ -97,8 +146,16 @@ class DoctorMenuPage extends React.Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.availabilityViewContainer}>
+                        <Text style={styles.availabilityText}>
+                            {"Availability"}
+                        </Text>
+                        <Switch value = {this.state.available} onValueChange = {(value)=>this.updateDoctorAvailability(value)} ></Switch>
+                    </View>
+                    
                 </View>
                 <DropdownAlert ref={ref => this.dropdown = ref} />
+                {this.state.animating && <Loader animating={this.state.animating} />}
             </View>
         );
     }
@@ -141,22 +198,45 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: "15%"
     },
+
+    availabilityText: {
+        fontSize: 20,
+        color: "white",
+        fontWeight: "bold"
+    },
+
     buttonsMainContainer: {
         flexDirection: "column",
-        height: 175,
+        flex:1,
+        //height: 175,
         width: "100%",
         justifyContent: "flex-start",
-        justifyContent: "space-evenly",
+        //justifyContent: "space-evenly",
         //backgroundColor: "pink"
     },
     singleButtonContainer: {
         flexDirection: "row",
-        height: 46,
+        height: 50,
         width: "100%",
         justifyContent: "flex-start",
         alignItems: "center",
+        marginTop: 0
         // backgroundColor: "pink"
     },
+
+    availabilityViewContainer: {
+        marginLeft: 30,
+        marginRight: 80,
+        marginTop: 100,
+        flexDirection: "row",
+        height: 46,
+        width: "80%",
+      
+        justifyContent: "space-between",
+        alignItems: "center",
+        // backgroundColor: "pink"
+    },
+
     iconImagesStyle: {
         width: 30,
         height: 30,
@@ -164,6 +244,7 @@ const styles = StyleSheet.create({
         marginRight: "5%",
         resizeMode: 'contain'
     },
+
     touchableOpacityText: {
         fontSize: 16.5,
         color: "white",

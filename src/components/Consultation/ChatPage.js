@@ -35,8 +35,11 @@ class ChatPage extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.showQuestionAnsewrs = this.showQuestionAnsewrs.bind(this);
-    this.subscribeForEndOfConsultation = this.subscribeForEndOfConsultation.bind(this);
-
+    
+    if (this.consultationStatus == 'ONGOING'){
+      this.subscribeForEndOfConsultation = this.subscribeForEndOfConsultation.bind(this);
+    }
+  
     const { navigation } = this.props;
     // const questionsList = navigation.getParam('questions');
     this.conversationId = navigation.getParam("chatId");
@@ -119,14 +122,14 @@ class ChatPage extends React.Component {
   componentDidMount() {
     this.getChatMessages();
     this.subscribeForChat();
-    if(this.myUser.userType == 'USER'){
+    if((this.myUser.userType == 'USER') && this.subscribeForEndOfConsultation){
       this.subscribeForEndOfConsultation();
     }
   
   }
 
   backButtonClick() {
-    if (this.myUser.userType == 'USER') {
+    if (this.myUser.userType == 'USER' ) {
       this.props.navigation.navigate('MainMenuPage');
     } else {
       this.props.navigation.goBack(null);
@@ -341,7 +344,13 @@ class ChatPage extends React.Component {
     }
   }
 
-
+ getRightButtonText() {
+   if(this.myUser.userType == 'DOCTOR'){
+     return "More"
+   } else {
+     return ""
+   }
+ }
 
   render() {
 
@@ -373,7 +382,7 @@ class ChatPage extends React.Component {
       <View style={styles.mainContainer}>
         <NavBar
           onBackPress={this.backButtonClick}
-          rightButton={"More"}
+          rightButton={this.getRightButtonText()}
           rightButtonClick = {()=>this.rightButtonClick()}
           title={navTitle.toUpperCase()}
         />

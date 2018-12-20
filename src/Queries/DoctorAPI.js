@@ -38,8 +38,12 @@ export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: Stri
 
 
 
-export const UpdateDoctorAvailability = `query UpdateDoctorAvailability($id: String, $name: String, $isAvailable: String) {
-    updateDoctorAvailability(doctorId: $id, isAvailable: $isAvailable) {
+export const UpdateDoctorAvailability = `mutation UpdateDoctorAvailability($doctorId: ID!,  $isAvailable: String) {
+    updateDoctor(
+        input: {
+            doctorId: $doctorId,
+            isAvailable: $isAvailable 
+        }){
         doctorId
         name
         isAvailable
@@ -83,7 +87,11 @@ export const SubscribeToCreateDoctor = `subscription SubscribeToCreateDoctor {
     }
 }`;
 
-
+export const GetDoctorAvailability = `query GetDoctorAvailability($doctorId: String) {
+    getDoctor(doctorId: $doctorId) {
+        isAvailable
+    }
+}`;
 
 export const ListAvailableDoctors = `query ListAvailableDoctors($speciality: String) {
     listAvailableDoctors(speciality: $speciality, limit: 20, nextToken: "null") {

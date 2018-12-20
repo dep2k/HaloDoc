@@ -122,6 +122,7 @@ class AvailableDoctorsPage extends React.Component {
         };
 
         console.log(createConversationInput);
+        this.startActivityIndicator();
         API.graphql(graphqlOperation(CreateConversation, createConversationInput))
           .then(response => {
               this.closeActivityIndicator();

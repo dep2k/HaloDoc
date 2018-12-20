@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 import {Cache} from "aws-amplify";
-import { imageLogo } from "../images/resource";
-
 
 const base = "../images/";
 const consultIcon = require(base + "consultIcon.png");
