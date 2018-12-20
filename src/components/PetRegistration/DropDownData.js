@@ -112,7 +112,7 @@ const dogRaceListdata = [
   { key: "56", name: I18n.get("Weimaraner") },
   { key: "57", name: I18n.get("Schnauzer") }
 ];
-const horseRaceListdata = [
+export const horseRaceListdata = [
   { key: "1", name: I18n.get("Andalusian") },
   { key: "2", name: I18n.get("Arab") },
   { key: "3", name: I18n.get("Columbian") },
@@ -141,13 +141,29 @@ const horseRaceListdata = [
 export const genderData = [
   {
     key: "1",
-    name: "Hembra"
+    name: I18n.get("Hembra")
   },
   {
     key: "2",
-    name: "Macho"
+    name: I18n.get("Macho")
   }
 ];
+
+ export const specialityData = [
+  {
+    key: "1",
+    name:I18n.get("Cat")
+  },
+  {
+    key: "2",
+    name: I18n.get("Dog")
+  },
+  {
+    key: "3",
+    name: I18n.get("Horse")
+  }
+ 
+]
 
 
 
@@ -156,6 +172,7 @@ export const petRaceListData = {
   dog: dogRaceListdata,
   horse: horseRaceListdata
 }
+
 // export
 // {   genderData, 
 //     petRaceListData

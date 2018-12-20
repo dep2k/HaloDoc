@@ -22,7 +22,7 @@ import { CreatePet } from "../../Queries/PetAPI";
 import Loader from "../../ActivityIndicator";
 import { Avatar } from "react-native-elements";
 import { petRaceListData } from "./DropDownData";
-import { genderData } from './DropDownData';
+import {genderData} from "./DropDownData";
 import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
 import { styles } from './Styles';
@@ -252,7 +252,7 @@ class PetRegistrationForm extends React.Component {
   onPress(type) {
     //console.log("ONPress:" + type);
     //console.log(this.petType);
-
+    console.log(petRaceListData);
     if (type == "FormRaceDD") {
       //console.log(petRaceListData);
       const raceList = petRaceListData[this.petType];
