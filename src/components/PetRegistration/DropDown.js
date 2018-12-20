@@ -31,6 +31,7 @@ export class DropDown extends React.Component {
                 index={index}
                 onPress={() => {
                   console.log(this.dropDownType);
+                  
                   {this.props.dropDownType == "FormRaceDD" && this.props.onPressDDList(item, 'raceDDList')}
                   {this.props.dropDownType == "FormGenderDD" && this.props.onPressDDList(item, 'genderDDList')}
                 }}
