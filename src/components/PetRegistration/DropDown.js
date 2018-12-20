@@ -34,6 +34,8 @@ export class DropDown extends React.Component {
                   
                   {this.props.dropDownType == "FormRaceDD" && this.props.onPressDDList(item, 'raceDDList')}
                   {this.props.dropDownType == "FormGenderDD" && this.props.onPressDDList(item, 'genderDDList')}
+                  {this.props.dropDownType == "ChatDD" && this.props.onPressDDList(item, 'ChatDD')}
+                  {this.props.dropDownType == "SpecialityDD" && this.props.onPressDDList(item, 'SpecialityDD')}
                 }}
               />
             );

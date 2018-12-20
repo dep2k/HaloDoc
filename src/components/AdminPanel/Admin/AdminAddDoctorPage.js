@@ -69,15 +69,11 @@ class AdminAddDoctorPage extends React.Component {
     this.setState({ animating: false });
   }
 
-  onPressDDList(item) {
-    const speciality = item.name;
-    this.setState(
-      state => (
-        (state.doctor.speciality = speciality), 
-        (state.modalVisible = false),
-         state
-      )
-    );
+  onPressDDList(item, type) {
+    if (type == "SpecialityDD") {
+      const speciality = item.name;
+      this.setState(state => ((state.doctor.speciality = speciality), (state.modalVisible = false), state));
+    }
   }
   onPress() {
     this.showDropDown(specialityData);
@@ -87,9 +83,7 @@ class AdminAddDoctorPage extends React.Component {
     console.log(data);
     this.setState(
       state => (
-        (state.modalVisible = true),
-        (state.docSpecialityData = data),
-        state
+        (state.modalVisible = true), (state.docSpecialityData = data), state
       )
     );
   }
@@ -197,10 +191,11 @@ class AdminAddDoctorPage extends React.Component {
             />
           </View>
           <DropDown
+            dropDownType={"SpecialityDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.docSpecialityData}
             // onModalBackPress={this.onModalBackPress()}
-            onPressDDList={item => this.onPressDDList(item, type)}
+            onPressDDList={(item, type) => this.onPressDDList(item, type)}
           />
 
           <View style={styles.headindTextStyle}>
@@ -272,11 +267,11 @@ class AdminAddDoctorPage extends React.Component {
               />
             </View>
             <View style={styles.lastLineStyle} />
-              <FormDropDownInput
-                titleLabel={I18n.get("Speciality")}
-                dropDownValue={this.state.doctor.speciality}
-                onPress={() => this.onPress()}
-              />
+            <FormDropDownInput
+              titleLabel={I18n.get("Speciality")}
+              dropDownValue={this.state.doctor.speciality}
+              onPress={() => this.onPress()}
+            />
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("Address")}</Text>
               <TextInput
@@ -574,6 +569,7 @@ const styles = StyleSheet.create({
     height: 45,
     justifyContent: "flex-end",
     alignItems: "center",
+    color: "grey",
     //  backgroundColor: 'pink',
     fontSize: 14
   },
@@ -589,7 +585,7 @@ const styles = StyleSheet.create({
     marginBottom: 30
   },
   phnCodeText: {
-    color: "black",
+    color: "grey",
     width: "10%",
     alignSelf: 'center',
    // backgroundColor : 'black'
