@@ -112,19 +112,23 @@ const styles = StyleSheet.create({
     petWithPathImageStyle: {
         
         resizeMode: "contain",
+        
     },
  
     petWithPathStyle: {
         height: "100%",
-        width: "80%",  
+        width: "80%",
+      //  backgroundColor: "pink",
+        justifyContent: "center",
+        alignItems: 'center'
     },
 
     descriptionText: {
         
-        marginTop: 200,
+        marginTop: 40,
         marginLeft: 10,
         marginRight: 10,
-        fontSize: 24,
+        fontSize: 21,
         textAlign: 'center'
         
     },

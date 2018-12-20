@@ -1,9 +1,6 @@
 
 import { I18n } from "aws-amplify";
 
-
-
-
 const catRaceListdata = [
   { key: "1", name: I18n.get("Abisinio") },
   { key: "2", name: I18n.get("American") },
@@ -112,7 +109,7 @@ const dogRaceListdata = [
   { key: "56", name: I18n.get("Weimaraner") },
   { key: "57", name: I18n.get("Schnauzer") }
 ];
-export const horseRaceListdata = [
+  const horseRaceListdata = [
   { key: "1", name: I18n.get("Andalusian") },
   { key: "2", name: I18n.get("Arab") },
   { key: "3", name: I18n.get("Columbian") },
@@ -152,7 +149,7 @@ export const genderData = [
  export const specialityData = [
   {
     key: "1",
-    name:I18n.get("Cat")
+    name: I18n.get("Cat")
   },
   {
     key: "2",
@@ -163,18 +160,11 @@ export const genderData = [
     name: I18n.get("Horse")
   }
  
-]
-
-
+];
 
 export const petRaceListData = {
   cat: catRaceListdata,
   dog: dogRaceListdata,
   horse: horseRaceListdata
 }
-
-// export
-// {   genderData, 
-//     petRaceListData
-// };
   
