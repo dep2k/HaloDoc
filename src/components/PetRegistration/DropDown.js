@@ -10,14 +10,14 @@ export class DropDown extends React.Component {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
-          this.props.onModalBackPress;
+          this.props.onModalBackPress
         }}
       >
       <View>
           <Modal backdropOpacity={0.5} isVisible={this.props.modalVisible}>
             <View style={styles.flatListContentContainerStyle}>
               <FlatList
-                //contentContainerStyle={styles.flatListContentContainerStyle}
+               // contentContainerStyle={styles.flatListContainerStyle}
                 ItemSeparatorComponent={this.renderSeparator}
                 data={this.props.dropDownData}
                 renderItem={({ item, index }) => {

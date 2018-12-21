@@ -19,11 +19,17 @@ import { Cache } from "aws-amplify";
 const base = "../../images/";
 const historyIcon = require(base + "HistoryIcon.png");
 
+var moment = require("moment");
+//const newDate = moment(new Date(1528101680 * 1000)).format("MM/DD/YYYY ");  
+
+
 class DataListItem extends React.Component {
   render() {
     return <TouchableOpacity onPress={this.props.onPress} style={styles.cellContainer}>
+
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
-        <Text style={styles.nameText}>{this.props.item.createdAt}</Text>
+        
+      <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1000)).format("MM/DD/YYYY ")}</Text>
         <Text style={styles.nameText}>
         {I18n.get("ConsultationPayment") + " " + I18n.get("is") + " " + this.props.item.payment}
         </Text>
@@ -86,6 +92,7 @@ class PaymentHistoryPage extends React.Component {
   }
   componentDidMount() {
     this.startActivityIndicator();
+    //console.log(newDate);
     const { navigation } = this.props;
     this.consultationType = navigation.getParam("consultationType");
     if (this.consultationType == "OnGoingStatus") {
