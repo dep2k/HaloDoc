@@ -309,11 +309,6 @@ class RegistrationPage extends React.Component {
                   )
                 }
               />
-              <TextInput
-                style={styles.lastTextInputStyle}
-                placeholder={I18n.get("")}
-                placeholderTextColor="white"
-              />
             </View>
         
           <View style={styles.buttonContainer}>
