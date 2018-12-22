@@ -20,7 +20,22 @@ const myProfileIcon = require(base + "myProfileIcon.png");
 import { Cache } from "aws-amplify";
 
 class DoctorMenuPage extends React.Component {
+
+    componentWillUnmount(){
+        console.log("componentWillUnmount");
+    }
+
+    componentWillMount(){
+        console.log("componentWillMount");
+    }
+
+    componentDidMount(){
+        console.log("componentDidMount");
+    }
+
+
     constructor(props) {
+        console.log("Constructor");
         super(props);
         this.state = {
             animating: false,
@@ -30,6 +45,7 @@ class DoctorMenuPage extends React.Component {
         this.logOutButtonClick = this.logOutButtonClick.bind(this);
 
         Cache.getItem('User').then(user => {
+            console.log(user);
             if (user) {
                 this.user = user;
                 this.subscribeForNewConsultations(user.userName);
@@ -66,7 +82,8 @@ class DoctorMenuPage extends React.Component {
     }
 
     logOutButtonClick() {
-        this.props.navigation.navigate("LoginPage");
+        this.props.navigation.goBack();
+        //this.props.navigation.navigate("LoginPage");
         Cache.clear();
     }
 

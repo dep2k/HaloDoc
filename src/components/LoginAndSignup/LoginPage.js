@@ -88,13 +88,14 @@ class LoginPage extends React.Component {
               userType: payload['custom:userType']
             }
             console.log(cognitoUser);
-            Cache.setItem("User", cognitoUser);
+            Cache.setItem("User", cognitoUser).then(result => {
+              if (cognitoUser.userType == "USER") {
+                this.props.navigation.navigate("MainMenuPage");
+              } else if (cognitoUser.userType == "DOCTOR") {
+                this.props.navigation.navigate("DoctorMenuPage");
+              } 
+            });
 
-            if (cognitoUser.userType == "USER") {
-              this.props.navigation.navigate("MainMenuPage");
-            } else if (cognitoUser.userType == "DOCTOR") {
-              this.props.navigation.navigate("DoctorMenuPage");
-            } 
           }
         }).catch(err => {
           console.log(err);

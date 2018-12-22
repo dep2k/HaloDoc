@@ -67,7 +67,7 @@ class AvailableDoctorsPage extends React.Component {
     this.startActivityIndicator();
     const { navigation } = this.props;
     const pet = navigation.getParam('petInfo');
-    const listInput = { speciality: pet.category };
+    const listInput = { speciality: pet.category.toLowerCase() };
 
     API.graphql(graphqlOperation(ListAvailableDoctors, listInput))
       .then(response => {

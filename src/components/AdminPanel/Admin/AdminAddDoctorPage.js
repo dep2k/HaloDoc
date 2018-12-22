@@ -71,7 +71,7 @@ class AdminAddDoctorPage extends React.Component {
 
   onPressDDList(item, type) {
     if (type == "SpecialityDD") {
-      const speciality = item.name;
+      const speciality = item.name.toLowerCase();
       this.setState(
         state => (
           (state.doctor.speciality = speciality),
@@ -112,7 +112,7 @@ class AdminAddDoctorPage extends React.Component {
   _addDoctor() {
     const doc = this.state.doctor;
     const createDoctorInput = {
-      doctorId: this.state.doctor.name,
+      doctorId: this.state.doctor.userName,
       name: this.state.doctor.name,
       userName: this.state.doctor.userName,
       speciality: this.state.doctor.speciality,

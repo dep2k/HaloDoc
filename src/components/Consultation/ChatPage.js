@@ -122,7 +122,7 @@ class ChatPage extends React.Component {
   componentDidMount() {
     this.getChatMessages();
     this.subscribeForChat();
-    if((this.myUser.userType == 'USER') && this.subscribeForEndOfConsultation){
+    if((this.myUser.userType == 'USER') && this.subscriptionForConsultationEnd){
       this.subscribeForEndOfConsultation();
     }
   
@@ -132,10 +132,14 @@ class ChatPage extends React.Component {
     if (this.myUser.userType == 'USER' ) {
       this.props.navigation.navigate('MainMenuPage');
     } else {
-      this.props.navigation.goBack(null);
+      this.props.navigation.navigate('DoctorMenuPage');
     }
    // 
-    this.subscriptionForConsultationEnd.unsubscribe();
+   console.log(this.subscriptionForConsultationEnd);
+    if (this.subscriptionForConsultationEnd) {
+     this.subscriptionForConsultationEnd.unsubscribe();
+    }
+    
     this.subscriptionForMessages.unsubscribe();
     // this.props.navigation.popToTop();
   }
@@ -359,9 +363,18 @@ class ChatPage extends React.Component {
     console.log("Render:" + this.myUser);
     let chatOptions = null;
     if(this.consultationStatus == "CLOSED"){
-      chatOptions = [
-        { key: "2", name: I18n.get("Questions Answers") },
-      ];
+
+      if (this.consulation.payment == "Done") {
+        chatOptions = [
+          { key: "2", name: I18n.get("Questions Answers") },
+        ];
+      } else {
+        chatOptions = [
+          { key: "2", name: I18n.get("Questions Answers") },
+          { key: "3", name: I18n.get("Confirm Payment") },
+        ];
+      }
+     
     } else {
       if (this.consulation.payment == "Done") {
         chatOptions = [
