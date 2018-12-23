@@ -60,6 +60,7 @@ export const CreateConversation = `mutation CreateConversation(
                   doctorId
                 }
                 doctorId
+                conversationStatus
         }
 
   }`;

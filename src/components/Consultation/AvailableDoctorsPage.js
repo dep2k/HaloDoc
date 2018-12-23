@@ -21,7 +21,7 @@ import { CreateConversation, SubscriptionToNewMessage } from "../../Queries/Chat
 const base = "../../images/";
 const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
-
+const placeHolderImage = require(base + "placeholderImage.png");
 
 class DataListItem extends React.Component {
 
@@ -34,10 +34,7 @@ class DataListItem extends React.Component {
         <Avatar
           medium
           rounded
-          source={{
-            uri:
-              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
-          }}
+          source={placeHolderImage}
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />

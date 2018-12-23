@@ -28,36 +28,43 @@ class ChatPage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // Set State
     this.state = {
       messages: [],
       modalVisible: false,
       animating: false
     };
-    this.backButtonClick = this.backButtonClick.bind(this);
-    this.showQuestionAnsewrs = this.showQuestionAnsewrs.bind(this);
-    
-    if (this.consultationStatus == 'ONGOING'){
-      this.subscribeForEndOfConsultation = this.subscribeForEndOfConsultation.bind(this);
-    }
-  
+
+    // Fetch data passed in Navigation
     const { navigation } = this.props;
-    // const questionsList = navigation.getParam('questions');
     this.conversationId = navigation.getParam("chatId");
     this.myUser = navigation.getParam("user");
-    this.consultationStatus = navigation.getParam("consultationStatus");
-    console.log(this.myUser);
-    console.log(this.consultationStatus);
     this.consulation = navigation.getParam('consultation');
+    this.consultationStatus = this.consulation.conversationStatus;
+    this.pet = this.consulation.pet;
+    this.questions = this.consulation.questionsAndAnswers;
+    //logs
+    console.log(this.myUser);
+    console.log(this.consulation);
+    console.log(this.consultationStatus);
+   
+    // if(this.myUser.userType.toLowerCase() == "doctor") {
+    //   this.pet = navigation.getParam('petInfo');
+    //   this.questions = navigation.getParam('questions');
+    //   console.log(this.pet);
+    //   console.log(this.questions);
+    // } else {
   
-    if(this.myUser.userType == "DOCTOR") {
-    
-      this.pet = navigation.getParam('petInfo');
-      this.questions = navigation.getParam('questions');
-  
-      console.log(this.pet);
-      console.log(this.questions);
-    } else {
+    // }
 
+
+    // Bind Methods
+    this.backButtonClick = this.backButtonClick.bind(this);
+    this.showQuestionAnsewrs = this.showQuestionAnsewrs.bind(this);
+        // ONly the user need to subscribe for End of Consultaton
+    if (this.consultationStatus.toLowerCase() == 'ongoing'){
+      this.subscribeForEndOfConsultation = this.subscribeForEndOfConsultation.bind(this);
     }
   }
 
@@ -122,7 +129,7 @@ class ChatPage extends React.Component {
   componentDidMount() {
     this.getChatMessages();
     this.subscribeForChat();
-    if((this.myUser.userType == 'USER') && this.subscriptionForConsultationEnd){
+    if((this.myUser.userType == 'USER') && this.consultationStatus.toLowerCase() == 'ongoing' ){
       this.subscribeForEndOfConsultation();
     }
   

@@ -106,6 +106,7 @@ export const ListAvailableDoctors = `query ListAvailableDoctors($speciality: Str
             medicalCenter
             department
             address
+            
         }
         nextToken
     }

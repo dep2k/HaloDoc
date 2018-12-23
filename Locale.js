@@ -271,6 +271,8 @@ export const  setUpLanguage = () => {
         'ongoing' : "Ongoing",
         'done' : "Done",
         'pending': "Pending",
+
+        'paymentConfirmed' : "Payment Confirmed",
     },
     'es': {
         'LogIn': "Inicio De Sesión",
@@ -543,7 +545,7 @@ export const  setUpLanguage = () => {
         'done' : "Hecho",
         'pending': "Pendiente",
 
-
+        'paymentConfirmed' : "Pago confirmado",
     },
 
     };
