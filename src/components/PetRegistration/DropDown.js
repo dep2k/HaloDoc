@@ -8,13 +8,11 @@ import { styles } from "./Styles";
 export class DropDown extends React.Component {
   render() {
     return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          this.props.onModalBackPress
-        }}
-      >
-      <View>
+       
           <Modal backdropOpacity={0.5} isVisible={this.props.modalVisible}>
+        <TouchableWithoutFeedback
+          onPress= {this.props.onModalBackPress}
+          >
             <View style={styles.flatListContentContainerStyle}>
               <FlatList
                // contentContainerStyle={styles.flatListContainerStyle}
@@ -50,9 +48,9 @@ export class DropDown extends React.Component {
                 }}
               />
             </View>
+              </TouchableWithoutFeedback>
           </Modal>
-      </View>
-      </TouchableWithoutFeedback>
+         
     );
   }
 }

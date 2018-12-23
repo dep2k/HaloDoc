@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   Text,
-
 } from "react-native";
 
 import { NavBar } from "../Reusable/NavBar";
@@ -26,6 +25,7 @@ import {genderData} from "./DropDownData";
 import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
 import { styles } from './Styles';
+import Modal from "react-native-modal";
 const base = "../../images/";
 const petProfileImage = require(base + "petPlaceholderImage.jpg");
 
@@ -76,8 +76,6 @@ class PetRegistrationForm extends React.Component {
     this.onChangeText = this.onChangeText.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
-
-   
   }
 
   render() {
@@ -95,14 +93,18 @@ class PetRegistrationForm extends React.Component {
               activeOpacity={0.7}
             />
         </View>
-          <DropDown
-            dropDownType={this.state.dropDownType}
-            modalVisible={this.state.modalVisible}
-            dropDownData={this.state.dropDownData}
-            onModalBackPress={() => this.hideModal()}
-            onPressDDList={(item, type) => this.onPressDDList(item, type)}>
-          </DropDown>
-
+            <DropDown
+              dropDownType={this.state.dropDownType}
+              modalVisible={this.state.modalVisible}
+              dropDownData={this.state.dropDownData}
+              onModalBackPress={() => { this.setState(
+              state => (
+                (state.modalVisible = false),
+                state
+              )
+            )}}
+              onPressDDList={(item, type) => this.onPressDDList(item, type)}>
+            </DropDown>
           <Text style={styles.clinicHistoryText}>
             {I18n.get("ClinicHistory")}
           </Text>
@@ -219,12 +221,6 @@ class PetRegistrationForm extends React.Component {
       )
     );
 
-  }
-
-  hideModal() {
-    this.setState({
-      modalVisible: false
-    })
   }
 
   onPressDDList(item, type) {
