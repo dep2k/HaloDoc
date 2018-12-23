@@ -31,7 +31,7 @@ class DataListItem extends React.Component {
         
       <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1000)).format("MM/DD/YYYY ")}</Text>
         <Text style={styles.nameText}>
-        {I18n.get("ConsultationPayment") + " " + I18n.get("is") + " " + this.props.item.payment}
+        {I18n.get("ConsultationPayment") + ": "  + I18n.get(this.props.item.payment.toLowerCase())}
         </Text>
         <View style={styles.listSeperationLine} />
         {/* <Text style={styles.statusText}>{this.props.item.status}</Text> */}
@@ -101,6 +101,7 @@ class PaymentHistoryPage extends React.Component {
     this.startActivityIndicator();
     //console.log(newDate);
     const { navigation } = this.props;
+
     this.consultationType = navigation.getParam("consultationType");
     if (this.consultationType == "ONGOING") {
       this.setState(
@@ -111,8 +112,10 @@ class PaymentHistoryPage extends React.Component {
         state => ((state.consultationStatus = "CLOSED"), state)
       );
     }
+
     Cache.getItem("User").then(user => {
       this.user = user;
+      console.log(user);
       if (user && user.userType == "DOCTOR") {
         const getDoctorConversations = {
           username: user.userName,
@@ -187,7 +190,6 @@ class PaymentHistoryPage extends React.Component {
 
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
-
           {this.renderHeading()}
         </View>
 

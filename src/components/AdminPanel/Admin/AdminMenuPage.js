@@ -121,23 +121,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         resizeMode: 'contain'
     },
-    // fullBackgroundImage: {
-    //     flex: 1,
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center"
-    // },
-    // fullbackgroundImageStyle: {
-    //     position: "absolute",
-    //     resizeMode: "cover",
-    //     width: "100%",
-    //     height: "100%",
-    //     backgroundColor: "transparent",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center",
-    //     backgroundColor: "transparent"
-    // },
+ 
     menuText: {
         fontSize: 25,
         color: "white",

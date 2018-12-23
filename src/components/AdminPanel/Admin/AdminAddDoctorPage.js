@@ -231,8 +231,7 @@ class AdminAddDoctorPage extends React.Component {
                 onChangeText={text =>
                   this.setState(
                     state => ((state.doctor.adminEmail = text), state)
-                  )
-                }
+                  )}
               />
             </View>
             <View style={styles.lastLineStyle} />
@@ -278,7 +277,7 @@ class AdminAddDoctorPage extends React.Component {
             <View style={styles.lastLineStyle} />
             <FormDropDownInput
               titleLabel={I18n.get("Speciality")}
-              dropDownValue={this.state.doctor.speciality}
+              dropDownValue={I18n.get(this.state.doctor.speciality)}
               onPress={() => this.onPress()}
             />
             <View style={styles.textInputContainer}>

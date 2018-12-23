@@ -35,7 +35,7 @@ class DataListItem extends React.Component {
         />
         <View style={styles.textsView}>
           <Text style={styles.nameText}>{this.props.item.name}</Text>
-          <Text style={styles.categoryText}>{I18n.get("Specialist")+ ": " + this.props.item.speciality}</Text>
+          <Text style={styles.categoryText}>{I18n.get("Specialist")+ ": " + I18n.get(this.props.item.speciality.toLowerCase())}</Text>
         </View>
       </TouchableOpacity>
     );

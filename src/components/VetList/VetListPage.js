@@ -10,7 +10,7 @@ class FlatListItem extends React.Component {
                   backgroundColor: 'tomato',
             }}>
               <Text style ={styles.flatListName}>{this.props.item.name}</Text>
-                <Text style={styles.flatListCategory}>{this.props.item.category}</Text>
+                <Text style={styles.flatListCategory}>{I18n.get(this.props.item.category.toLowerCase())}</Text>
              
             </View>
         );

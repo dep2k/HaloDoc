@@ -43,7 +43,7 @@ class DataListItem extends React.Component {
         />
         <View style={styles.textsView}>
           <Text style={styles.nameText}>{this.props.item.name}</Text>
-          <Text style={styles.categoryText}>{this.props.item.speciality}</Text>
+          <Text style={styles.categoryText}>{I18n.get(this.props.item.speciality.toLowerCase())}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -69,6 +69,7 @@ class AvailableDoctorsPage extends React.Component {
     const pet = navigation.getParam('petInfo');
     const listInput = { speciality: pet.category.toLowerCase() };
 
+    console.log(listInput);
     API.graphql(graphqlOperation(ListAvailableDoctors, listInput))
       .then(response => {
         console.log("List shown");

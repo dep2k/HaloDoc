@@ -109,10 +109,9 @@ export const  setUpLanguage = () => {
         'Inprogress': "In Progress",
         'PaymentInfo' : `At this moment we are going to begin with the evaluation of the situation of (PATIENT),to correctly direct the attention. \n \n As long as it presents the sign. \n He has presented other signs. \nHave you given any medication? How much? In what dose? \n Did you have an answer? \n PATIENT Are you allergic to any food or medicine? \n\n Before continuing with the attention of (NAME OF THE PET), we want to remind you that the cost of veterinary attention is $ 50,000 Which should be canceled at the end of the service, through the PAYMENT HISTORY button, with debit card, credit, baloto, wins, ... \n\n Thanks for staying online, we will send you the list of available doctors after you answer the questions, to continue with the orientation. \n\n We remind you that this orientation does not replace or replace a face-to-face veterinary consultation, and it is necessary, in case PATIENT does not improve or worsen, that you come to a veterinary consultation or if you wish and you are within our coverage area, we can help you manage a face-to-face visit`,
         'SelectYourPet': 'Select your pet by whom you are going to consult',
-        'Cat' : "Cat",
-        'Dog' : "Dog",
-        'Horse' : "Horse",
-
+        'cat' : "Cat",
+        'dog' : "Dog",
+        'horse' : "Horse",
         
         // Cat Race
         'Abisinio': "Abisinio",
@@ -267,6 +266,11 @@ export const  setUpLanguage = () => {
         'Questions Answers': 'Questions Answers',
         'Confirm Payment': 'Confirm Payment',
         'ConsultationEndMessage' : 'We HOPE YOU HAVE A HAPPY NIGHT / DAY AND your pet BECOME IMPROVED SOON. REMEMBER THAT IN HOLAVET WE ARE READY FOR YOU.',
+
+        'closed' : "Closed",
+        'ongoing' : "Ongoing",
+        'done' : "Done",
+        'pending': "Pending",
     },
     'es': {
         'LogIn': "Inicio De Sesión",
@@ -372,9 +376,10 @@ export const  setUpLanguage = () => {
         'Inprogress': "en progreso",
         'PaymentInfo': `En este momento vamos a comenzar con la evaluación de la situación de (PACIENTE), para dirigir correctamente la atención. \n\nSiempre y cuando presente los signos. \nHa presentado otros signos \n¿Has dado alguna medicación? ¿Cuánto cuesta? ¿En qué dosis? \n¿Tuviste una respuesta? \nPACIENTE ¿Es usted alérgico a algún alimento o medicamento? \n\nAntes de continuar con la atención de (NOMBRE DE LA PET), queremos recordarle que el costo de la atención veterinaria es de $ 50,000 \nQue debe cancelarse al final del servicio, a través del botón HISTORIAL DE PAGOS, con tarjeta de débito, crédito, baloto, victorias, ... \n\nGracias por mantenerse en línea, le enviaremos la lista de médicos disponibles después de responder las preguntas para continuar con la orientación. \n\nLe recordamos que esta orientación no reemplaza ni reemplaza una consulta veterinaria cara a cara, y es necesario, en caso de que el PACIENTE no mejore o empeore, que acuda a una consulta veterinaria o si lo desea y está dentro de nuestro área de cobertura, podemos ayudarlo a administrar una visita en persona`,
         'SelectYourPet': 'Selecciona tú mascota por quién vas a consultar',
-        'Cat': "Feline",
-        'Dog': "Canine",
-        'Horse': "Equine",
+        
+        'cat': "Feline",
+        'dog': "Canine",
+        'horse': "Equine",
 
 
         //Cat Race
@@ -528,10 +533,16 @@ export const  setUpLanguage = () => {
         'Question4':'¿ALGUNA CONDICIÓN ESPECIAL O ANTECEDENTE?',
         'Question5':'PESO',
 
-        'End Consultation': 'End Consultation',
-        'Questions Answers': 'Questions Answers',
-        'Confirm Payment': 'Confirm Payment',
+        'End Consultation': 'Consulta final',
+        'Questions Answers': 'Preguntas y respuestas',
+        'Confirm Payment': 'Confirmar pago',
         'ConsultationEndMessage' : 'ESPERAMOS QUE TENGAS UNA FELIZ NOCHE / DÍA Y QUE TU MASCOTA SE HA MEJORADO PRONTO. RECUERDE QUE EN HOLAVET ESTAMOS LISTOS PARA USTED.',
+
+        'closed' : "Derrado",
+        'ongoing' : "En Marcha",
+        'done' : "Hecho",
+        'pending': "Pendiente",
+
 
     },
 
