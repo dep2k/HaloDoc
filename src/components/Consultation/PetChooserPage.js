@@ -20,6 +20,8 @@ import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
 
+const base = "../../images/";
+const petProfileImage = require(base + "petPlaceholderImage.jpg");
 
 class PetChooserPage extends React.Component {
 
@@ -129,7 +131,7 @@ class PetChooserPage extends React.Component {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" }}
+                                    source={petProfileImage}
                                     onPress={() => console.log("Works!")}
                                     activeOpacity={0.7}
                                 />

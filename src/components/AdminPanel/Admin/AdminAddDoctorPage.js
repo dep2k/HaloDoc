@@ -59,6 +59,7 @@ class AdminAddDoctorPage extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   startActivityIndicator() {
@@ -95,9 +96,8 @@ class AdminAddDoctorPage extends React.Component {
   }
 
   hideModal() {
-    this.setState({
-      modalVisible: false
-    });
+    console.log("hiding")
+    this.setState(state => ((state.modalVisible = false), state));
   }
 
   backButtonClick() {
@@ -206,7 +206,7 @@ class AdminAddDoctorPage extends React.Component {
             dropDownType={"SpecialityDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.docSpecialityData}
-            onModalBackPress={() => this.hideModal()}
+            onModalBackPress={() => {this.hideModal()}}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}
           />
 

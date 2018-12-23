@@ -29,7 +29,7 @@ class DataListItem extends React.Component {
 
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
         
-      <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1000)).format("MM/DD/YYYY ")}</Text>
+      <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1)).format("MM/DD/YYYY ")}</Text>
         <Text style={styles.nameText}>
         {I18n.get("ConsultationPayment") + ": "  + I18n.get(this.props.item.payment.toLowerCase())}
         </Text>
