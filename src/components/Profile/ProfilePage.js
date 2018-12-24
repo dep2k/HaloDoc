@@ -12,10 +12,9 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
+
 import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
+
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
@@ -28,6 +27,7 @@ const petProfileImage = require(base + "petPlaceholderImage.jpg");
 const addIcon = require(base + "addIcon.png");
 const editIcon = require(base + "editIcon.png")
 import Loader from "../../ActivityIndicator";
+import { LogoImage } from "../Reusable/LogoImage";
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -98,9 +98,7 @@ class ProfilePage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
-
-        <Image source={logoImage} style={styles.logoImage} />
-
+        <LogoImage/>
         <View style={styles.descriptionView}>
           <Image source={myProfileImage} style={styles.handSymbol} />
 

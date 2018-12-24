@@ -11,10 +11,10 @@ import { I18n } from "aws-amplify";
 
 import Loader from "../../ActivityIndicator";
 import { GetDoctorConversations, ListConversations, GetUserConversations } from "../../Queries/Chatapi";
-import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
+import { LogoImage } from "../Reusable/LogoImage";
 
 const base = "../../images/";
 const historyIcon = require(base + "HistoryIcon.png");
@@ -185,9 +185,7 @@ class PaymentHistoryPage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
-
-        <Image source={logoImage} style={styles.logoImage} />
-
+       <LogoImage/>
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
           {this.renderHeading()}

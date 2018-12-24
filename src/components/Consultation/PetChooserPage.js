@@ -13,12 +13,12 @@ import {
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { btnBackgroundImage, handIcon } from "../../images/resource";
-import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import {LogoImage} from "../Reusable/LogoImage";
 
 const base = "../../images/";
 const petProfileImage = require(base + "petPlaceholderImage.jpg");
@@ -81,11 +81,7 @@ class PetChooserPage extends React.Component {
             <View style={styles.mainContainer}>
 
                 <NavBar onBackPress={this.backButtonClick} ></NavBar>
-
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
+                <LogoImage></LogoImage>
 
                 <View style={styles.descriptionView}>
 
@@ -197,32 +193,10 @@ const styles = StyleSheet.create({
         alignItems: "flex-start"
     },
 
-
     petCategoryText: {
-
         fontSize: 12,
         color: "black"
-
     },
-
-    logoButton: {
-        height: "20%",
-        width: "25%",
-        // marginTop: "2%",
-        marginLeft: "70%",
-        backgroundColor: "transparent"
-    },
-
-    logoImage: {
-        alignSelf: 'flex-end',
-        resizeMode: "contain",
-        marginTop: 10,
-        width: 80,
-        height: 60,
-        marginRight: 35,
-
-    },
-
     imageBackgroundStyle: {
         width: "90%",
         height: "100%",

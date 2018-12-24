@@ -62,7 +62,6 @@ class PreQuestionPage extends React.Component {
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
 
                 <View style = {styles.contentView}>
-                   
                     <View style={styles.descriptionView}>
                          <ImageBackground
                              source={petWithPathImage}
@@ -99,32 +98,20 @@ const styles = StyleSheet.create({
         //height: "70%",
         flex:2.3
     },
-
-
     descriptionView: {
-      
         height: "100%",
-        alignItems: "center",
-     
-        
+        alignItems: "center", 
     },
-
     petWithPathImageStyle: {
-        
-        resizeMode: "contain",
-        
+        resizeMode: "contain", 
     },
- 
     petWithPathStyle: {
         height: "100%",
         width: "80%",
-      //  backgroundColor: "pink",
         justifyContent: "center",
         alignItems: 'center'
     },
-
     descriptionText: {
-        
         marginTop: 40,
         marginLeft: 10,
         marginRight: 10,

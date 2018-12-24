@@ -1,26 +1,21 @@
 import React from "react";
 import {
     View,
-    Image,
     StyleSheet,
     Text,
     ScrollView,
-    TouchableOpacity,
-    ImageBackground,
-    FlatList,
-    Button,
-    ActivityIndicator,
     Picker
 } from "react-native";
 
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
-import { logoImage } from "../../images/resource";
+
 
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { NavBar } from "../Reusable/NavBar";
 import { Footer } from "../Reusable/Footer";
+import { LogoImage } from  "../Reusable/LogoImage";
 
 
 
@@ -77,12 +72,8 @@ class PaymentInfoPage extends React.Component {
             <View style={styles.mainContainer}>
 
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
-
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
-
+                <LogoImage></LogoImage>
+              
                 <View style={styles.descriptionView}>
 
                      <Text style={styles.titleText}
@@ -129,29 +120,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
 
-
-    logoButton: {
-        height: "20%",
-        width: "25%",
-        // marginTop: "2%",
-        marginLeft: "70%",
-        backgroundColor: "transparent"
-    },
-
-    logoImage: {
-        alignSelf: 'flex-end',
-        resizeMode: "contain",
-        marginTop: 10,
-        width: 80,
-        height: 60,
-        marginRight: 35,
-
-    },
-
-
-
     headerContainer: {
-
         height: "10%",
         marginTop: 0,
         width: "100%",
@@ -161,7 +130,6 @@ const styles = StyleSheet.create({
     },
 
     headerImage: {
-
         width: "100%",
         height: "100%",
         flexDirection: 'row',
@@ -171,7 +139,6 @@ const styles = StyleSheet.create({
     },
 
     backButtonStyle: {
-
         backgroundColor: "transparent",
         width: 44,
         height: 44,
@@ -179,8 +146,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-
-
     descriptionView: {
         marginLeft:40,
         marginRight:40,
@@ -191,13 +156,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: 'column'
     },
-
-
     descriptionText: {
         marginLeft: 0,
         fontSize: 17,
         width: "100%",
-
     },
 
     titleText: {
@@ -205,16 +167,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width: "100%",
         color: 'green'
-         
-
     },
-
     backBtn: {
         marginLeft: 20,
         width: 30,
         height: 30,
     },
-
     backBtnImage: {
         width: 30,
         height: 30,

@@ -276,8 +276,15 @@ export const styles = StyleSheet.create({
   },
 
   cellContainer: {
-    height: 30,
-    marginHorizontal: "5%"
+    height: 40,
+    width: "100%",
+   // backgroundColor: 'grey',
+    marginBottom:2,
+  },
+  seperatorLine:{
+     height: 1,
+     width: "100%",
+    color: "#8BE0DE"
   },
 
   originTextInputStyle: {

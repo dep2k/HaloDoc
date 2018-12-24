@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+
 import React from "react";
 import {
   View,
@@ -7,14 +7,12 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  Image,
-  ImageBackground
+  Image
 } from "react-native";
 import { I18n } from "aws-amplify";
-import { Cache } from "aws-amplify";
+
 const base = "../../images/";
 const backButtonImage = require(base + "BackButtonShape.png");
-const backgroundImage = require(base + "newBackground.png");
 
 class ForgotPasswordPage extends React.Component {
   constructor(props) {
@@ -35,12 +33,6 @@ class ForgotPasswordPage extends React.Component {
       //Background image for full screen
 
       <View style={styles.mainContainer}>
-      {/* <MainContainer> */}
-        {/* <ImageBackground
-          source={backgroundImage}
-          style={styles.backgroundImage}
-          imageStyle={styles.imageBackgroundImageStyle}
-        > */}
           // header
           <View style={styles.headerContainer}>
             <TouchableOpacity
