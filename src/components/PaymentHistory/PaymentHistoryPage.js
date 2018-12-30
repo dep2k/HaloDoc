@@ -199,7 +199,7 @@ class PaymentHistoryPage extends React.Component {
             return <DataListItem 
             onPress={() => this._handleRowClick(item)}
             item={item} 
-            index={index} />;
+            index={index} />
           }}
         />
         {this.state.animating && <Loader animating={this.state.animating} />}

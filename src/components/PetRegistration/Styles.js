@@ -276,15 +276,17 @@ export const styles = StyleSheet.create({
   },
 
   cellContainer: {
-    height: 40,
+    height: 42,
     width: "100%",
-   // backgroundColor: 'grey',
-    marginBottom:2,
+    justifyContent: "center",
+    alignItems: "center"
+    //backgroundColor: 'grey',
+    //marginBottom: 2
   },
-  seperatorLine:{
-     height: 1,
-     width: "100%",
-    color: "#8BE0DE"
+  seperatorLine: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#8BE0DE"
   },
 
   originTextInputStyle: {
@@ -320,11 +322,20 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 150
   },
+  textContainer: {
+   // backgroundColor: "pink",
+    width: 250,
+    padding: 2,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center"
+  },
 
   nameText: {
+  //  backgroundColor: "orange",
     color: "#8BE0DE",
     fontSize: 18,
-    padding: 2
+    alignSelf: "center"
   },
 
   flatListContentContainerStyle: {
@@ -334,6 +345,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center"
+  },
+
+  flatListContainerStyle: {
+   // backgroundColor: "pink",
+    width: 250,
+    alignItems: "center",
+    justifyContent: "center"
   },
   buttonImageBackgroundStyle: {
     width: "100%",

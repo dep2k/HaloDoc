@@ -30,10 +30,7 @@ class ForgotPasswordPage extends React.Component {
 
   render() {
     return (
-      //Background image for full screen
-
       <View style={styles.mainContainer}>
-          // header
           <View style={styles.headerContainer}>
             <TouchableOpacity
               style={styles.backButtonStyle}
@@ -45,20 +42,16 @@ class ForgotPasswordPage extends React.Component {
               />
             </TouchableOpacity>
           </View>
-          //Confirm Code Field
           <Text style={styles.textStyle}>{I18n.get("EnterEmail")}</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={text => this.setState({ registrationCode: text })}
           />
-          //Continue Button
            <Button
             color="white"
             title={I18n.get('Continue')}
             onPress={this.onContinueClick}
           /> 
-        {/* </ImageBackground> */}
-      {/* </MainContainer> */}
       </View>
     );
   }

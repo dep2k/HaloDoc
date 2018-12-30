@@ -6,6 +6,20 @@ import DataListItem from "./DataListItem";
 import { styles } from "./Styles";
 
 export class DropDown extends React.Component {
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "90%",
+          marginHorizontal: "5%",
+          backgroundColor: "#CED0CE",
+         // marginLeft: "14%"
+        }}
+      />
+    );
+  };
   render() {
     return (
        

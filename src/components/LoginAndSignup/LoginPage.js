@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
     this.goToAdminPanel = this.goToAdminPanel.bind(this);
 
   }
-  
+
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -75,14 +75,14 @@ class LoginPage extends React.Component {
         .then(data => {
           this.closeActivityIndicator();
           console.log(data);
-          if(user.username == 'Admin'){
-            this.props.navigation.navigate("AdminMenuPage"); 
+          if (user.username == 'Admin') {
+            this.props.navigation.navigate("AdminMenuPage");
           } else {
             const payload = data.signInUserSession.idToken.payload;;
             let cognitoUser = {
               firstName: payload.given_name,
               lastName: payload.family_name,
-              userName: user.username,  
+              userName: user.username,
               phoneNo: payload.phone_number,
               email: payload.email,
               userType: payload['custom:userType']
@@ -93,7 +93,7 @@ class LoginPage extends React.Component {
                 this.props.navigation.navigate("MainMenuPage");
               } else if (cognitoUser.userType == "DOCTOR") {
                 this.props.navigation.navigate("DoctorMenuPage");
-              } 
+              }
             });
 
           }
@@ -102,8 +102,10 @@ class LoginPage extends React.Component {
           Alert.alert(
             "Error",
             I18n.get("Username and Password are not correct"),
-            [{ text: "OK",
-             onPress: () => console.log("OK Pressed") }],
+            [{
+              text: "OK",
+              onPress: () => console.log("OK Pressed")
+            }],
             { cancelable: false }
           );
           this.closeActivityIndicator();
@@ -118,11 +120,11 @@ class LoginPage extends React.Component {
       this.closeActivityIndicator();
     }
   }
-  
+
 
 
   goToAdminPanel() {
-  //  this.props.navigation.navigate("AdminLoginPage");
+    //  this.props.navigation.navigate("AdminLoginPage");
   }
 
   _onRegisterClick() {
@@ -140,7 +142,7 @@ class LoginPage extends React.Component {
               style={styles.headerImage}
             />
           </View>
-            <View style = {styles.logoContainer}>
+          <View style={styles.logoContainer}>
             <TouchableOpacity
               onPress={this.goToAdminPanel}
               style={styles.logoButton}>
@@ -151,10 +153,11 @@ class LoginPage extends React.Component {
               >
               </ImageBackground>
             </TouchableOpacity>
-            </View>
+          </View>
           <View style={styles.middleContainer}>
             <Text style={styles.loginText}>{I18n.get("Username")}</Text>
             <TextInput
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               autoCapitalize={"none"}
               returnKeyType={"next"}
               onSubmitEditing={() => {
@@ -172,6 +175,7 @@ class LoginPage extends React.Component {
               ref={input => {
                 this.secondTextInput = input;
               }}
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               secureTextEntry={true}
               style={styles.passwordTextInput}
               onChangeText={
@@ -193,17 +197,17 @@ class LoginPage extends React.Component {
                 </Text>
               </ImageBackground>
             </TouchableOpacity>
-            <Button
+            <TouchableOpacity
+
               style={styles.forgotPasswordButton}
-              color="grey"
-              title={I18n.get("Forgot Password")}
-              onPress={this.forgotPasswordButtonClick}
-            />
-            <Button
-              color="darkgrey"
-              title={I18n.get("RegisterMe")}
-              onPress={this._onRegisterClick}
-            />
+              onPress={this.forgotPasswordButtonClick} >
+              <Text style={{fontSize: 17,color:'grey'}}>{I18n.get("Forgot Password")}</Text>
+                        </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={this._onRegisterClick}>
+              <Text style={{color:'darkgrey'}}>{I18n.get("RegisterMe")}</Text>
+            </TouchableOpacity>
           </View>
           {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
@@ -249,7 +253,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 80,
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 20,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center"
@@ -296,8 +300,7 @@ const styles = StyleSheet.create({
     color: "#7C7B7B",
     marginBottom: 5,
     marginRight: "60%",
-    textAlign: "left",
-   
+    textAlign: "left"
   },
   passwordText: {
     fontSize: 15,
@@ -307,7 +310,7 @@ const styles = StyleSheet.create({
     color: "#7C7B7B",
     marginBottom: 5,
     marginRight: "60%",
-    textAlign: "left",
+    textAlign: "left"
   },
   imageBackgroundStyle: {
     width: "100%",
@@ -324,9 +327,8 @@ const styles = StyleSheet.create({
   },
 
   forgotPasswordButton: {
-    fontSize: 17,
     marginTop: "5%",
-    marginBottom: "8%"
+    marginBottom: "8%",
   }
 });
 

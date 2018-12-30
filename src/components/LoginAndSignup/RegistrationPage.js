@@ -166,7 +166,6 @@ class RegistrationPage extends React.Component {
               />
             </TouchableOpacity>
             <View style={styles.titleView}>
-              {" "}
               <Text style={styles.registerTextStyle}>
                 {I18n.get("Sign Up")}
               </Text>
@@ -343,13 +342,13 @@ class RegistrationPage extends React.Component {
               </TouchableOpacity>
             </View>
 
-            {this.state.animating && (
+            {!!this.state.animating && (
               <Loader animating={this.state.animating} />
             )}
           </KeyboardAwareScrollView>
         </View>
       </TouchableWithoutFeedback>
-    );
+    )
   }
 }
 

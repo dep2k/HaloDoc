@@ -39,7 +39,7 @@ export class NavBar extends React.Component {
                         </Text>
                     }
 
-                    {this.props.rightButton &&
+                    {!!this.props.rightButton &&
                         <Button style={styles.rightButton}
                             color="#ffffff"
                             title={this.props.rightButton}
@@ -53,59 +53,54 @@ export class NavBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  rightButton: {
+    marginTop: 50,
+    marginRight: 55,
+    width: 30,
+    height: 18,
+    backgroundColor: "#BED885"
+  },
 
-    rightButton: {
-        marginTop: 50,
-        marginRight: 55,
-        width: 30,
-        height: 18,
-        backgroundColor: "#BED885",
-    },
+  headerContainer: {
+    height: 70,
+    //height: "10%",
+    marginTop: 0,
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center"
+  },
 
-    headerContainer: {
-        height: 70,
-        //height: "10%",
-        marginTop: 0,
-        width: "100%",
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center",
-        
-    },
+  headerImage: {
+    width: "100%",
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
 
-    headerImage: {
+  headerText: {
+    marginTop: 30,
+    width: "85%",
+    textAlign: "center",
+    color: "white",
+    fontSize: 20,
+   // backgroundColor: "pink"
+  },
 
-        width: "100%",
-        height: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+  backBtn: {
+    marginTop: 20,
+    marginLeft: 25,
+    width: 30,
+    height: 30,
+   // backgroundColor: "black"
+  },
 
-    },
-
-    headerText: {
-        marginTop: 30,
-        width: "70%",
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
-
-    },
-
-    backBtn: {
-        marginTop: 20,
-        marginLeft: 25,
-        width: 30,
-        height: 30,
-    },
-
-    backBtnImage: {
-        width: 30,
-        height: 30,
-        resizeMode: "contain",
-    },
-
-
-})
+  backBtnImage: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain"
+  }
+});
 
 
