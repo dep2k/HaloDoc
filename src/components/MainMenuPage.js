@@ -40,6 +40,7 @@ class MainMenuPage extends React.Component {
     console.log("ConsultationButtonClick:" + type);
     this.props.navigation.navigate("PaymentHistoryPage", { consultationType: type });
   }
+  
   myProfileButtonClick() {
     Cache.getItem("User").then(user => {
       if (user) {
@@ -58,9 +59,7 @@ class MainMenuPage extends React.Component {
     this.props.navigation.navigate("PetChooserPage");
   }
 
-  // static navigationOptions = ({ navigation }) => ({
-  //   headerTitle: <SVGImage style={StyleSheet.absoluteFill} />
-  // });
+
   render() {
     return <View style={styles.mainContainer}>
         {/* <ImageBackground

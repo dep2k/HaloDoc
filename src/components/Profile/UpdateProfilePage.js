@@ -43,9 +43,11 @@ class UpdateProfilePage extends React.Component {
       phncode: "+57",
       checked: true,
       animating: false
-      // email: '',
-      // validated: false,
     };
+
+    const { navigation } = this.props;
+    this.myInfo = navigation.getParam("userInfo");
+    
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this.updateButtonClick = this.updateButtonClick.bind(this);
@@ -103,7 +105,7 @@ class UpdateProfilePage extends React.Component {
               <TextInput
                 style={styles.firstTextInputStyle}
                 autoCapitalize={"none"}
-                placeholder={I18n.get("Firstname")}
+                placeholder={this.myInfo.firstName}
                 placeholderTextColor="white"
                 returnKeyType={"next"}
                 autoCorrect={false}
@@ -127,35 +129,17 @@ class UpdateProfilePage extends React.Component {
                 style={styles.textInput}
                 autoCapitalize={"none"}
                 autoCorrect={false}
-                placeholder={I18n.get("Lastname")}
+                placeholder={this.myInfo.lastName}
                 placeholderTextColor="white"
                 onChangeText={text =>
                   this.setState(state => ((state.user.lastName = text), state))
                 }
               />
-              <TextInput
-                ref={input => {
-                  this.thirdTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.fourthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                placeholder={I18n.get("UserId")}
-                autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.userName = text), state))
-                }
-              />
+
               <View style={styles.phnTextInputView}>
-                <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
                 <TextInput
                   ref={input => {
-                    this.fourthTextInput = input;
+                    this.thirdTextInput = input;
                   }}
                   returnKeyType={"next"}
                   onSubmitEditing={() => {
@@ -165,7 +149,7 @@ class UpdateProfilePage extends React.Component {
                   style={styles.phnTextInput}
                   autoCapitalize={"none"}
                   autoCorrect={false}
-                  placeholder={I18n.get("PhoneNo")}
+                  placeholder={this.myInfo.phoneNo}
                   autoCorrect={false}
                   placeholderTextColor="white"
                   onChangeText={
@@ -187,47 +171,12 @@ class UpdateProfilePage extends React.Component {
                 autoCapitalize={"none"}
                 autoCorrect={false}
                 keyboardType={"email-address"}
-                placeholder={I18n.get("Email")}
+                placeholder={this.myInfo.email}
                 autoCorrect={false}
                 placeholderTextColor="white"
                 onChangeText={
                   text =>
                     this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.sixthTextInput = input;
-                }}
-                secureTextEntry={true}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.seventhTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Create password")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.password = text), state))
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.seventhTextInput = input;
-                }}
-                secureTextEntry={true}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Confirm password")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(
-                    state => ((state.user.confirmPassword = text), state)
-                  )
                 }
               />
               <TextInput
