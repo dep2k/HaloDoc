@@ -105,7 +105,7 @@ class UpdateProfilePage extends React.Component {
               <TextInput
                 style={styles.firstTextInputStyle}
                 autoCapitalize={"none"}
-                placeholder={this.myInfo.firstName}
+                value={this.myInfo.firstName}
                 placeholderTextColor="white"
                 returnKeyType={"next"}
                 autoCorrect={false}
@@ -113,7 +113,7 @@ class UpdateProfilePage extends React.Component {
                   this.secondTextInput.focus();
                 }}
                 blurOnSubmit={false}
-                onChangeText={text =>
+                onChangeValue={text =>
                   this.setState(state => ((state.user.firstName = text), state))
                 }
               />
@@ -129,7 +129,7 @@ class UpdateProfilePage extends React.Component {
                 style={styles.textInput}
                 autoCapitalize={"none"}
                 autoCorrect={false}
-                placeholder={this.myInfo.lastName}
+                value={this.myInfo.lastName}
                 placeholderTextColor="white"
                 onChangeText={text =>
                   this.setState(state => ((state.user.lastName = text), state))
@@ -149,7 +149,7 @@ class UpdateProfilePage extends React.Component {
                   style={styles.phnTextInput}
                   autoCapitalize={"none"}
                   autoCorrect={false}
-                  placeholder={this.myInfo.phoneNo}
+                  value={this.myInfo.phoneNo}
                   autoCorrect={false}
                   placeholderTextColor="white"
                   onChangeText={
@@ -171,18 +171,13 @@ class UpdateProfilePage extends React.Component {
                 autoCapitalize={"none"}
                 autoCorrect={false}
                 keyboardType={"email-address"}
-                placeholder={this.myInfo.email}
+                value={this.myInfo.email}
                 autoCorrect={false}
                 placeholderTextColor="white"
                 onChangeText={
                   text =>
                     this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
                 }
-              />
-              <TextInput
-                style={styles.lastTextInputStyle}
-                placeholder={I18n.get("")}
-                placeholderTextColor="white"
               />
             </View>
           </KeyboardAvoidingView>
