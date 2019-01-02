@@ -1,5 +1,4 @@
-
-import { I18n } from "aws-amplify";
+import { I18n } from 'aws-amplify';
 
 const catRaceListdata = [
   { key: "1", name: I18n.get("Abisinio") },
@@ -161,6 +160,7 @@ export const genderData = [
   }
  
 ];
+console.log(I18n.get("ClinicHistory"));
 
 export const petRaceListData = {
   cat: catRaceListdata,

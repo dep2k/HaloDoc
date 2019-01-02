@@ -18,7 +18,7 @@ import Loader from "../../ActivityIndicator";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
-import {LogoImage} from "../Reusable/LogoImage";
+import { LogoImage } from "../Reusable/LogoImage";
 
 const base = "../../images/";
 const petProfileImage = require(base + "petPlaceholderImage.jpg");
@@ -41,25 +41,25 @@ class PetChooserPage extends React.Component {
                 API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {
                     console.log("Pets Received");
                     console.log(response);
-        
+
                     this.setState({
                         isLoading: false,
                         dataSource: response.data.getPets.items
                     });
-        
+
                 }).catch(err => {
                     console.log("Failed to add doctor");
                     console.log(err);
-        
+
                 });
-            } 
-          });
+            }
+        });
     }
 
     petButtonClick(item) {
         console.log(item);
-        this.props.navigation.navigate("PaymentInfoPage",{
-            petInfo:item,
+        this.props.navigation.navigate("PaymentInfoPage", {
+            petInfo: item,
         });
     }
 
@@ -76,7 +76,7 @@ class PetChooserPage extends React.Component {
 
     render() {
 
-  
+
         return (
             <View style={styles.mainContainer}>
 
@@ -105,7 +105,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {()=>this.petButtonClick(item)}
+                            onPress={() => this.petButtonClick(item)}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
@@ -117,9 +117,12 @@ class PetChooserPage extends React.Component {
                                         {item.name.toUpperCase()}
                                     </Text>
                                 </ImageBackground>
-                                <Text style={styles.petCategoryText}>
-                                    {item.category.toUpperCase()}
-                                </Text>
+                                <View style={{height:20}}>
+                                    <Text style={styles.petCategoryText}>
+                                        {item.category.toUpperCase()}
+                                    </Text>
+                                </View>
+                                
 
                             </View>
 
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
 
         flexDirection: "column",
         width: "75%",
-        height: 40,
+        height: 75,
         marginLeft: 20,
         justifyContent: "center",
         alignItems: "center",
@@ -196,10 +199,10 @@ const styles = StyleSheet.create({
     petCategoryText: {
         fontSize: 12,
         color: "black"
-    },
+        },
     imageBackgroundStyle: {
         width: "90%",
-        height: "100%",
+        height: 44,
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center"
@@ -209,7 +212,7 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     imageBackgroundImageStyle: {
-        borderRadius: 20
+        borderRadius: 20,
     },
 
 

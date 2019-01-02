@@ -23,29 +23,39 @@ export class NavBar extends React.Component {
             <View style={styles.headerContainer}>
                 <ImageBackground
                     source={navBarImage}
-                    style={styles.headerImage}>
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        flexDirection:'row',
+                        justifyContent:'center',
+                        alignContent:'center'}}>
+                    <View style={styles.headerContainer2} >
+                        <TouchableOpacity
+                            style={styles.backBtn}
+                            onPress={this.props.onBackPress}>
+                            <Image
+                                source={backBtnImage}
+                                style={styles.backBtnImage}
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.backBtn}
-                        onPress={this.props.onBackPress}>
-                        <Image
-                            source={backBtnImage}
-                            style={styles.backBtnImage}
-                        />
-                    </TouchableOpacity>
+                        {this.props.title &&
+                        <View style={{width:200,flexDirection:'row',justifyContent:"space-around",backgroundColor:'transparent'}}>
+                            <Text style={styles.headerText}>{this.props.title}
+                            </Text>
+                        </View>
+                            
+                        }
 
-                    {this.props.title && 
-                        <Text style={styles.headerText}>{this.props.title}
-                        </Text>
-                    }
-
-                    {!!this.props.rightButton &&
-                        <Button style={styles.rightButton}
-                            color="#ffffff"
-                            title={this.props.rightButton}
-                            onPress={this.props.rightButtonClick}>
-                        </Button>
-                    }
+                        {!!this.props.rightButton ?
+                            <TouchableOpacity
+                                onPress={this.props.rightButtonClick}>
+                                <Text style={{ color: "#ffffff" }}>{this.props.rightButton}</Text>
+                            </TouchableOpacity>
+                             : <Text>    </Text>
+                        }
+</View>
+                   
                 </ImageBackground>
             </View>
         );
@@ -53,9 +63,7 @@ export class NavBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  rightButton: {
-    marginTop: 50,
-    marginRight: 55,
+  rightButton: {    
     width: 30,
     height: 18,
     backgroundColor: "#BED885"
@@ -71,26 +79,23 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-  headerImage: {
-    width: "100%",
+  headerContainer2: {
+    width: "96%",
     height: "100%",
+    marginTop:10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
   },
 
   headerText: {
-    marginTop: 30,
-    width: "85%",
-    textAlign: "center",
+      marginLeft:5,
     color: "white",
     fontSize: 20,
    // backgroundColor: "pink"
   },
 
   backBtn: {
-    marginTop: 20,
-    marginLeft: 25,
     width: 30,
     height: 30,
    // backgroundColor: "black"
