@@ -3,6 +3,7 @@ import LoginPage from '../components/LoginAndSignup/LoginPage'
 import MainMenuPage from '../components/MainMenuPage'
 import PetCategories from '../components/PetRegistration/PetCategories'
 import { createStackNavigator } from 'react-navigation'
+import {createAppContainer} from 'react-navigation'
 //import Demo from '../components/Demo'
 
 import WelcomePage from '../components/LoginAndSignup/WelcomePage'
@@ -44,8 +45,8 @@ import AvailableDoctorsPage from '../components/Consultation/AvailableDoctorsPag
 //import DoctorConsultationsPage from '../components/AdminPanel/Doctors/DoctorConsultationsPage';
 import FeedbackPage from '../components/Consultation/FeedbackPage'
 
-const AppStackNavigator = createStackNavigator(
-  {
+const AppStackNavigator = createStackNavigator({
+
     LoginPage: {
       screen: LoginPage,
       navigationOptions: {
@@ -291,4 +292,7 @@ const AppStackNavigator = createStackNavigator(
   }
 );
 
-export default AppStackNavigator;
+const HolaVet = createAppContainer(AppStackNavigator);
+export default HolaVet;
+
+//export default AppStackNavigator;
