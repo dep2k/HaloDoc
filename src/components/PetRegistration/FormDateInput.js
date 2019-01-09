@@ -28,6 +28,7 @@ export class FormDateInput extends React.Component {
               onPress={() => this.props.onCheckboxPress()}/>
             <Text style={styles.pvcText}>{I18n.get("Date")}</Text>
             <TextInput
+              underlineColorAndroid={'rgba(0,0,0,0)'}
               style={styles.vaccAndDespatextInputStyle}
               // placeholder="DD/MM/AAAA"
               placeholderTextColor={"grey"}
