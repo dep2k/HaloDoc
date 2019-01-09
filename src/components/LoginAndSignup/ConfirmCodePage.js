@@ -44,48 +44,56 @@ class ConfirmCodePage extends React.Component {
     this.setState({ animating: false });
   }
 
-  onContinueClick() {
+  async onContinueClick() {
     console.log("Continue Button Clicked");
     this.startActivityIndicator();
-        Auth.confirmSignUp(this.username, this.state.registrationCode, {
+    if (this.pageType == "UpdateProfilePage"){
+      let result = await Auth.verifyCurrentUserAttributeSubmit('email', this.state.registrationCode);   
+      console.log(result);
+      this.props.navigation.navigate("ProfilePage")
+
+    } else{
+      Auth.confirmSignUp(
+        this.username,
+        this.state.registrationCode,
+        {
           // Optional. Force user confirmation irrespective of existing alias. By default set to True.
           forceAliasCreation: true
-        })
-          .then(data => {
-            console.log(data);
-            console.log(this.pageType)
-            if (this.pageType == "DocRegistrationPage"){
-              Alert.alert(
-                I18n.get("Success"),
-                I18n.get("SucessMessage"),
-                [
-                  {
-                    text: "OK",
-                    onPress: () =>
-                      this.props.navigation.navigate(
-                        "AdminMenuPage"
-                      )
-                  }
-                ],
-                { cancelable: false }
-              );
-
-            } else {
-              this.props.navigation.navigate("SuccesfulLoginPage");
-            }
-            this.closeActivityIndicator();
-          })
-          .catch(err => {
-            console.log(err);
+        }
+      )
+        .then(data => {
+          console.log(data);
+          console.log(this.pageType);
+          if (this.pageType == "DocRegistrationPage") {
             Alert.alert(
-              "Error",
-              I18n.get("WrongCode"),
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              I18n.get("Success"),
+              I18n.get("SucessMessage"),
+              [
+                {
+                  text: "OK",
+                  onPress: () =>
+                    this.props.navigation.navigate("AdminMenuPage")
+                }
+              ],
               { cancelable: false }
             );
-            this.closeActivityIndicator();
-          });
+          } else {
+            this.props.navigation.navigate("SuccesfulLoginPage");
+          }
+          this.closeActivityIndicator();
+        })
+        .catch(err => {
+          console.log(err);
+          Alert.alert(
+            "Error",
+            I18n.get("WrongCode"),
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            { cancelable: false }
+          );
+          this.closeActivityIndicator();
+        });
       }
+    }
 
   render() {
     return (

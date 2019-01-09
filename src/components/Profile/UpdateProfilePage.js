@@ -30,24 +30,19 @@ const backButtonImage = require(base + "BackButtonShape.png");
 class UpdateProfilePage extends React.Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    this.myInfo = navigation.getParam("userInfo");
+
     this.state = {
       user: {
-        firstName: "",
-        lastName: "",
-        userName: "",
-        phoneNo: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+        firstName: this.myInfo.firstName,
+        lastName: this.myInfo.lastName,
+        phoneNo: this.myInfo.phoneNo,
+        email: this.myInfo.email,
       },
-      phncode: "+57",
       checked: true,
       animating: false
     };
-
-    const { navigation } = this.props;
-    this.myInfo = navigation.getParam("userInfo");
-    
 
     this.backButtonClick = this.backButtonClick.bind(this);
     this.updateButtonClick = this.updateButtonClick.bind(this);
@@ -73,26 +68,26 @@ class UpdateProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  updateButtonClick() {}
+  async updateButtonClick() {
+    let user = await Auth.currentAuthenticatedUser();
+    let result = await Auth.updateUserAttributes(user, {
+      'family_name': this.state.user.lastName,
+      'email': this.state.user.email
+    });
+    console.log(result); // SUCCESS
+    this.props.navigation.navigate("CodeConfirmationPage", {
+      pageType: "UpdateProfilePage"
+    });
+  }
 
   render() {
-    return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    return <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
           {/* <ImageBackground source={require("../../images/newBackground.png")} style={styles.fullBackgroundImage} imageStyle={styles.fullbackgroundImageStyle}> */}
-          <KeyboardAvoidingView
-            style={styles.keyboradAvoidingContainer}
-            behavior="padding"
-          >
+          <KeyboardAvoidingView style={styles.keyboradAvoidingContainer} behavior="padding">
             <View style={styles.topContainer}>
-              <TouchableOpacity
-                style={styles.backButtonStyle}
-                onPress={this.backButtonClick}
-              >
-                <Image
-                  source={backButtonImage}
-                  style={styles.backButtonImageStyle}
-                />
+              <TouchableOpacity style={styles.backButtonStyle} onPress={this.backButtonClick}>
+                <Image source={backButtonImage} style={styles.backButtonImageStyle} />
               </TouchableOpacity>
               <View style={styles.titleView}>
                 {" "}
@@ -102,10 +97,10 @@ class UpdateProfilePage extends React.Component {
               </View>
             </View>
             <View style={styles.formContainer}>
-              <TextInput
+              {/* <TextInput
                 style={styles.firstTextInputStyle}
                 autoCapitalize={"none"}
-                value={this.myInfo.firstName}
+                value={this.state.user.firstName}
                 placeholderTextColor="white"
                 returnKeyType={"next"}
                 autoCorrect={false}
@@ -116,27 +111,14 @@ class UpdateProfilePage extends React.Component {
                 onChangeValue={text =>
                   this.setState(state => ((state.user.firstName = text), state))
                 }
-              />
-              <TextInput
-                ref={input => {
+              />*/}
+              <TextInput ref={input => {
                   this.secondTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
+                }} returnKeyType={"next"} onSubmitEditing={() => {
                   this.thirdTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                value={this.myInfo.lastName}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.lastName = text), state))
-                }
-              />
-
-              <View style={styles.phnTextInputView}>
+                }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} value={this.state.user.lastName} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.lastName = text), state))} />
+              {/* 
+               <View style={styles.phnTextInputView}>
                 <TextInput
                   ref={input => {
                     this.thirdTextInput = input;
@@ -149,48 +131,25 @@ class UpdateProfilePage extends React.Component {
                   style={styles.phnTextInput}
                   autoCapitalize={"none"}
                   autoCorrect={false}
-                  value={this.myInfo.phoneNo}
+                  value={this.state.user.phoneNo}
                   autoCorrect={false}
                   placeholderTextColor="white"
                   onChangeText={
                     text =>
-                      this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
+                      this.setState(state => ((state.user.phoneNo = text), state)) 
                   }
                 />
-              </View>
-              <TextInput
-                ref={input => {
+              </View> */}
+              <TextInput ref={input => {
                   this.fifthTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
+                }} returnKeyType={"next"} onSubmitEditing={() => {
                   this.sixthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                keyboardType={"email-address"}
-                value={this.myInfo.email}
-                autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={
-                  text =>
-                    this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
-                }
-              />
+                }} blurOnSubmit={false} style={styles.textInput} autoCapitalize={"none"} autoCorrect={false} keyboardType={"email-address"} value={this.state.user.email} autoCorrect={false} placeholderTextColor="white" onChangeText={text => this.setState(state => ((state.user.email = text), state))} />
             </View>
           </KeyboardAvoidingView>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={this.updateButtonClick}
-              style={styles.registerButton}
-            >
-              <ImageBackground
-                source={require("../../images/loginButtonImage.png")}
-                style={styles.imageBackgroundRegisterButtonStyle}
-                imageStyle={styles.imageStyleRegisterButtonImageBackground}
-              >
+            <TouchableOpacity onPress={this.updateButtonClick} style={styles.registerButton}>
+              <ImageBackground source={require("../../images/loginButtonImage.png")} style={styles.imageBackgroundRegisterButtonStyle} imageStyle={styles.imageStyleRegisterButtonImageBackground}>
                 <Text style={styles.imageBackgroundTextStyle}>
                   {I18n.get("Update")}
                 </Text>
@@ -200,8 +159,7 @@ class UpdateProfilePage extends React.Component {
           {this.state.animating && <Loader animating={this.state.animating} />}
           {/* </ImageBackground> */}
         </View>
-      </TouchableWithoutFeedback>
-    );
+      </TouchableWithoutFeedback>;
   }
 }
 
