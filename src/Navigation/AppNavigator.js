@@ -292,7 +292,7 @@ const AppStackNavigator = createStackNavigator({
   }
 );
 
-const HolaVet = createAppContainer(AppStackNavigator);
-export default HolaVet;
+//const HolaVet = createAppContainer(AppStackNavigator);
+//export default HolaVet;
 
-//export default AppStackNavigator;
+export default AppStackNavigator;
