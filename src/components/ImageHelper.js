@@ -34,6 +34,7 @@ export function uploadImage(base64,bucket,key) {
             .catch((err) => reject(err));
     });
 }
+
 export async function getImage(key,bucket) {
     console.log("​getImage -> key", key)
     const customPrefix = {

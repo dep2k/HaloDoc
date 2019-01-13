@@ -166,7 +166,7 @@ class RegistrationPage extends React.Component {
               />
             </TouchableOpacity>
             <View style={styles.titleView}>
-              {" "}
+          
               <Text style={styles.registerTextStyle}>
                 {I18n.get("Sign Up")}
               </Text>

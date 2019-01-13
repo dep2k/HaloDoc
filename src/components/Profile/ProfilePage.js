@@ -10,10 +10,11 @@ import {
   Button,
   ActivityIndicator
 } from "react-native";
-import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
+
+import { I18n } from "aws-amplify";
+import { Storage } from 'aws-amplify';
+import { uploadFile, getImage, launchPhotoLibrary, uploadBase64Image } from '../ImageHelper';
 import { btnBackgroundImage } from "../../images/resource";
 import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -36,8 +37,6 @@ class ProfilePage extends React.Component {
 
     const { navigation } = this.props;
     this.myUsername = navigation.getParam("username");
-     
-
     this.backButtonClick = this.backButtonClick.bind(this);
     this.petButtonClick = this.petButtonClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
@@ -58,15 +57,12 @@ class ProfilePage extends React.Component {
     this.setState({ animating: false });
   }
   componentDidMount() {
+
     this.startActivityIndicator();
     console.log(this.myUsername);
     const getPetsInput = { username: this.myUsername };
-
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {
-        // console.log("Pets Received");
-        // console.log(response);
-
         this.setState({
           isLoading: false,
           dataSource: response.data.getPets.items
@@ -79,10 +75,14 @@ class ProfilePage extends React.Component {
         this.closeActivityIndicator();
       });
   }
+
+
   backButtonClick() {
     console.log("BackBtnClick");
     this.props.navigation.goBack(null);
   }
+
+
   addButtonClick(nameOfPage) {
     console.log("addButtonClicked:" + nameOfPage);
     this.props.navigation.push("PetCategoriesPage", {
@@ -90,10 +90,40 @@ class ProfilePage extends React.Component {
     });
   }
 
+
   listBtnClick(item) {
     console.log("List Btn Click");
     console.log(item);
+    //uploadFile().then((result) => console.log(result)).
+    //   catch((err) => console.log(err));
+
+    /*
+    launchPhotoLibrary().then((result) => {
+      //console.log(result);
+      const base64Image = result.base64;
+      console.log(base64Image);
+      uploadBase64Image(base64Image);
+
+    }).catch((err) => {
+      console.log(err)
+    });*/
+
+    // downloadFile().then((result)=> {
+    //   console.log(result);
+    // }).catch((err)=>{
+    //   console.log(err);
+    // });
+
+    //downloadFile();
+
+    getImage("a.jpg", "Test").then((result)=>{
+			console.log("​ProfilePage -> listBtnClick -> result", result)
+    }).catch((err)=>{
+			console.log("​ProfilePage -> listBtnClick -> err", err)
+    });
   }
+
+
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -115,8 +145,7 @@ class ProfilePage extends React.Component {
             <ImageBackground
               source={addIcon}
               style={styles.addIconStyle}
-              imageStyle={styles.addIconImageStyle}
-            />
+              imageStyle={styles.addIconImageStyle} />
           </TouchableOpacity>
         </View>
 
@@ -130,8 +159,7 @@ class ProfilePage extends React.Component {
                 <ImageBackground
                   source={btnBackgroundImage}
                   style={styles.imageBackgroundStyle}
-                  imageStyle={styles.imageBackgroundImageStyle}
-                >
+                  imageStyle={styles.imageBackgroundImageStyle}>
                   <Text style={styles.imageBackgroundTextStyle}>
                     {item.name}
                   </Text>
@@ -143,7 +171,10 @@ class ProfilePage extends React.Component {
                   medium
                   rounded
                   source={petProfileImage}
-                  onPress={() => console.log("Works!")}
+                  onPress={() => {
+                    console.log("ListBtnClick!");
+                    this.listBtnClick(item);
+                  }}
                   activeOpacity={0.7}
                 />
               </View>
@@ -152,8 +183,7 @@ class ProfilePage extends React.Component {
         />
         <TouchableOpacity
           style={styles.editButton}
-          onPress={this.editButtonClick}
-        >
+          onPress={this.editButtonClick}>
           <Image source={editIcon} style={styles.editImageBackgroundStyle} />
           <Text style={styles.editButtonTextStyle}>
             {I18n.get("EditProfile")}
@@ -248,7 +278,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
- 
+
   imageBackgroundImageStyle: {
     borderRadius: 20
   },
@@ -287,7 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-   // backgroundColor: 'black'
+    // backgroundColor: 'black'
   },
 
   handSymbol: {

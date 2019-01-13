@@ -439,7 +439,6 @@ class AdminAddDoctorPage extends React.Component {
                   )
                 }
               />
-              />
             </View>
             <View style={styles.LastlastLineStyle} />
             <View style={styles.buttonsContainer}>

@@ -93,7 +93,6 @@ class UpdateProfilePage extends React.Component {
                 />
               </TouchableOpacity>
               <View style={styles.titleView}>
-                {" "}
                 <Text style={styles.registerTextStyle}>
                   {I18n.get("UpdateProfile")}
                 </Text>
