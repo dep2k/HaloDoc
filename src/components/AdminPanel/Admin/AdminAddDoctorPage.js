@@ -160,7 +160,10 @@ class AdminAddDoctorPage extends React.Component {
               .then(response => {
                 console.log(response);
                 if(base64){
-                  uploadImage(base64,createDoctorInput.s3Object.bucket,createDoctorInput.s3Object.key).then((result)=>{
+                  const s3Object = response.data.createDoctor.s3Object;
+                  const bucket = s3Object.bucket;
+                  const key =  s3Object.key + ".jpg";
+                  uploadImage(base64,bucket,key).then((result)=>{
                     console.log("​AdminAddDoctorPage -> _addDoctor -> Image Upload Result", result);
                     }).catch((error)=>{
                       console.log("​AdminAddDoctorPage -> _addDoctor -> Image Upload Error", error)

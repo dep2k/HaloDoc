@@ -33,6 +33,10 @@ export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: Stri
             medicalCenter
             department
             address
+            s3Object {
+                bucket
+                key
+            }
         }
     
       }`;

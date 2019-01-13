@@ -53,7 +53,7 @@ export const GetPets = `query GetPets($username: String!) {
 //   }`;
 export const CreatePet = `mutation CreatePet($username: String!, $category:String, $name: String, $race: String,
                 $gender: String, $age:String, $origin: String, $use: String, $background: String, $weight: String, $vaccinations: [VaccinationInput],
-                $petImage: String, $color: String, $product: String, $date: String, $feeding: String
+                $petImage: String, $color: String, $product: String, $date: String, $feeding: String, $s3Object: S3ObjectInput
                  ) {
     createPet(
   
@@ -74,9 +74,14 @@ export const CreatePet = `mutation CreatePet($username: String!, $category:Strin
             product: $product
             date: $date
             feeding: $feeding
+            s3Object: $s3Object
           })  {
          username
          name
+         s3Object {
+           bucket
+           key
+         }
          
     }
   }`;
