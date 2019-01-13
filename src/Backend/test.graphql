@@ -151,6 +151,7 @@ mutation ConfirmPayment {
 mutation CreateDoctor {
   createDoctor(input: 
     {
+      doctorId:"id"
     name: "Ajay", 
     speciality: "dog",
     profilePic: "http:somthing",
@@ -160,7 +161,11 @@ mutation CreateDoctor {
     homeTown: "patiala", 
     medicalCenter: "columbia",
     department: "child",
-    address: "anand"}) 
+    address: "anand",
+    s3Object:{
+      bucket:"Doctors",
+      key:"something"
+    }}) 
   {
     doctorId
     name
@@ -176,6 +181,10 @@ mutation CreateDoctor {
     address
     isAvailable
     isOnline
+    s3Object {
+      bucket
+      key
+    }
   }
 }
 
@@ -387,6 +396,7 @@ query ListConversations {
 #       Run Query:  Ctrl+Enter   (or press the play button above)
 #   Auto Complete:  Ctrl+Space   (or just start typing)
 #
+
 
 
 

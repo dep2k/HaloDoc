@@ -222,7 +222,7 @@ const AppStackNavigator = createStackNavigator({
   },
 
   {
-    initialRouteName: "WelcomePage"
+    initialRouteName: "AdminAddDoctorPage"
   }
 );
 

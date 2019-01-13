@@ -90,6 +90,7 @@ class ProfilePage extends React.Component {
   }
 
 
+
   addButtonClick(nameOfPage) {
     console.log("addButtonClicked:" + nameOfPage);
     this.props.navigation.push("PetCategoriesPage", {
@@ -123,11 +124,12 @@ class ProfilePage extends React.Component {
 
     //downloadFile();
 
+    /*
     getImage("a.jpg", "Test").then((result)=>{
 			console.log("​ProfilePage -> listBtnClick -> result", result)
     }).catch((err)=>{
 			console.log("​ProfilePage -> listBtnClick -> err", err)
-    });
+    });*/
   }
 
 

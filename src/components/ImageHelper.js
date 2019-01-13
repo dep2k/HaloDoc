@@ -1,6 +1,7 @@
 import { Storage } from 'aws-amplify';
 import { Buffer } from 'buffer';
 import {getFile} from './FileHelper'
+import {Permissions, ImagePicker,Camera} from 'expo';
 // For Testing
 export function uploadFile() {
     const customPrefix = {
