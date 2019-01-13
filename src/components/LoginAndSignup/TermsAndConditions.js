@@ -7,31 +7,43 @@ import {
   Image
 } from "react-native";
 
+import { I18n } from "aws-amplify";
+
+const base = "../../images/";
+const backButtonImage = require(base + "BackButtonShape.png");
+
 
 class TermsAndConditions extends React.Component {
   constructor(props) {
     super(props);
+    this.backButtonClick = this.backButtonClick.bind(this);
+    this.onContinueClick = this.onContinueClick.bind(this);
 
-     this.backButtonClick = this.backButtonClick.bind(this);
-    }
+  }
+  backButtonClick() {
+    this.props.navigation.goBack(null);
+  }
+  onContinueClick() {
+    console.log("continue button clicked")
+  }
 
-   backButtonClick(){
-           this.props.navigation.goBack(null);
-       }
-
-    render() {
+  render() {
     return (
+      //Background image for full screen
+
       <View style={styles.mainContainer}>
-         <View style={styles.headerContainer}>
-             <TouchableOpacity style = {{backgroundColor:"transparent",width:"15%", height:"80%",marginLeft: 8, justifyContent: 'center',
-                                          alignItems:'center'}}
-                                    onPress={this.backButtonClick}>
-                         <Image source = {require('../../images/backButton.png')}
-                                        style= {{width:"40%", height:"50%", justifyContent:'center',
-                                                 alignItems: 'center'}}>
-                       </Image>  
-             </TouchableOpacity> 
-         </View>
+        // header
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            style={styles.backButtonStyle}
+            onPress={this.backButtonClick}
+          >
+            <Image
+              source={backButtonImage}
+              style={styles.backButtonImage}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -40,16 +52,32 @@ class TermsAndConditions extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor:'white'
+    backgroundColor: "#AACB62",
+    flexDirection: "column"
   },
   headerContainer: {
-        height: "12%",
-        marginTop: 0,
-        width: "100%",
-       // backgroundColor:"green",
-        justifyContent: "flex-end",
-        alignItems:"flex-start"
-       },
+    height: 70,
+    marginTop: 0,
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "flex-start"
+  },
+  backgroundImage: {
+    flex: 1
+  },
+  backButtonStyle: {
+    backgroundColor: "transparent",
+    width: 30,
+    height: 30,
+    marginLeft: 20,
+    marginTop: 25
+  },
+  backButtonImage: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain"
+  },
 });
 
 export default TermsAndConditions;

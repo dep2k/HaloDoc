@@ -92,9 +92,6 @@ class PostQuestionsPage extends React.Component {
                  </View>
 
                 <Footer  style = {styles.footer} showBtn = {true} onPress = {this.continueBtnClick}></Footer>
-                />
-
-
             </View>
         );
     }

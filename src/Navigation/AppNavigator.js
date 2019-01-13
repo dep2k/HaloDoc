@@ -12,24 +12,15 @@ import RegistrationPage from '../components/LoginAndSignup/RegistrationPage'
 import SuccesfulLogin from '../components/LoginAndSignup/SuccesfulLogin'
 import PetRegistrationForm from '../components/PetRegistration/PetRegistrationForm'
 import CodeConfirmationPage from '../components/LoginAndSignup/ConfirmCodePage'
-import VetListPage from '../components/VetList/VetListPage'
 import VetProfile from '../components/VetList/VetProfile'
 import ProfilePage from '../components/Profile/ProfilePage'
 import UpdateProfilePage from '../components/Profile/UpdateProfilePage'
 import TermsAndConditions from '../components/LoginAndSignup/TermsAndConditions'
 import ForgotPasswordPage from "../components/LoginAndSignup/ForgotPasswordPage";
-import AdminLoginPage from "../components/AdminPanel/Admin/AdminLoginPage";
 import AdminMenuPage from "../components/AdminPanel/Admin/AdminMenuPage";
-import AdminCreateHelperDoctorPage from "../components/AdminPanel/Admin/AdminCreateHelperDoctorPage";
 import AdminAddDoctorPage from "../components/AdminPanel/Admin/AdminAddDoctorPage";
-import HelperLoginPage from "../components/AdminPanel/Helper/HelperLoginPage";
-import DoctorLoginPage from "../components/AdminPanel/Doctors/DoctorLoginPage";
 import DoctorMenuPage from "../components/AdminPanel/Doctors/DoctorMenuPage";
-import HelperServicesPage from "../components/AdminPanel/Helper/HelperServicesPage";
-import HelperHistoryPage from "../components/AdminPanel/Helper/HelperHistoryPage";
-import HelperShowServicesPage  from "../components/AdminPanel/Helper/HelperShowServicesPage";
 import HelperDoctorsListPage from "../components/AdminPanel/Helper/HelperDoctorsListPage";
-import AdminAddHelperPage from '../components/AdminPanel/Admin/AdminAddHelperPage';
 
 // Consult Module
 import PetChooserPage from '../components/Consultation/PetChooserPage';
@@ -80,12 +71,6 @@ const AppStackNavigator = createStackNavigator({
         header: null
       }
     },
-    VetListPage: {
-      screen: VetListPage,
-      navigationOptions: {
-        header: null
-      }
-    },
     MainMenuPage: {
       screen: MainMenuPage,
       navigationOptions: {
@@ -132,20 +117,8 @@ const AppStackNavigator = createStackNavigator({
         header: null
       }
     },
-    AdminLoginPage: {
-      screen: AdminLoginPage,
-      navigationOptions: {
-        header: null
-      }
-    },
     PaymentHistoryPage: {
       screen: PaymentHistoryPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-    AdminCreateHelperDoctorPage: {
-      screen: AdminCreateHelperDoctorPage,
       navigationOptions: {
         header: null
       }
@@ -156,53 +129,14 @@ const AppStackNavigator = createStackNavigator({
         header: null
       }
     },
-    AdminAddHelperPage: {
-      screen: AdminAddHelperPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-
-    HelperLoginPage: {
-      screen: HelperLoginPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-
-    HelperServicesPage: {
-      screen: HelperServicesPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-    HelperShowServicesPage: {
-      screen: HelperShowServicesPage,
-      navigationOptions: {
-        header: null
-      }
-    },
     HelperDoctorsListPage: {
       screen: HelperDoctorsListPage,
       navigationOptions: {
         header: null
       }
     },
-    DoctorLoginPage: {
-      screen: DoctorLoginPage,
-      navigationOptions: {
-        header: null
-      }
-    },
-
     WelcomeMessage: {
       screen: WelcomeMessage,
-      navigationOptions: {
-        header: null
-      }
-    },
-    HelperHistoryPage: {
-      screen: HelperHistoryPage,
       navigationOptions: {
         header: null
       }

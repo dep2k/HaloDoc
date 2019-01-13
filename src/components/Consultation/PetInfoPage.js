@@ -12,15 +12,13 @@ import {
 } from "react-native";
 import { I18n } from "aws-amplify";
 
-import { navBarImage } from "../../images/resource";
-import { backBtnImage } from "../../images/resource";
 import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import {LogoImage} from "../Reusable/LogoImage";
 
 class PetInfoPage extends React.Component {
 
@@ -62,12 +60,8 @@ class PetInfoPage extends React.Component {
             <View style={styles.mainContainer}>
 
                 <NavBar  onBackPress = {this.backButtonClick}></NavBar>
+                <LogoImage/>
             
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
-
                 <View style={styles.descriptionView}>
 
                     <Image

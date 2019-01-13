@@ -59,6 +59,7 @@ class AdminAddDoctorPage extends React.Component {
     };
     this.backButtonClick = this.backButtonClick.bind(this);
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   startActivityIndicator() {
@@ -71,7 +72,7 @@ class AdminAddDoctorPage extends React.Component {
 
   onPressDDList(item, type) {
     if (type == "SpecialityDD") {
-      const speciality = item.name.toLowerCase();
+      const speciality = item.name;
       this.setState(
         state => (
           (state.doctor.speciality = speciality),
@@ -95,9 +96,8 @@ class AdminAddDoctorPage extends React.Component {
   }
 
   hideModal() {
-    this.setState({
-      modalVisible: false
-    });
+    console.log("hiding");
+    this.setState(state => ((state.modalVisible = false), state));
   }
 
   backButtonClick() {
@@ -112,7 +112,7 @@ class AdminAddDoctorPage extends React.Component {
   _addDoctor() {
     const doc = this.state.doctor;
     const createDoctorInput = {
-      doctorId: this.state.doctor.userName,
+      doctorId: this.state.doctor.name,
       name: this.state.doctor.name,
       userName: this.state.doctor.userName,
       speciality: this.state.doctor.speciality,
@@ -191,7 +191,7 @@ class AdminAddDoctorPage extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <NavBar onBackPress={this.backButtonClick} />)
+        <NavBar onBackPress={this.backButtonClick} />
         <KeyboardAwareScrollView style={styles.scrollview}>
           <View style={styles.avatar}>
             <Avatar
@@ -206,7 +206,7 @@ class AdminAddDoctorPage extends React.Component {
             dropDownType={"SpecialityDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={this.state.docSpecialityData}
-            onModalBackPress={() => this.hideModal()}
+            onModalBackPress={() => {this.hideModal()}}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}
           />
 
@@ -231,7 +231,8 @@ class AdminAddDoctorPage extends React.Component {
                 onChangeText={text =>
                   this.setState(
                     state => ((state.doctor.adminEmail = text), state)
-                  )}
+                  )
+                }
               />
             </View>
             <View style={styles.lastLineStyle} />
@@ -277,7 +278,7 @@ class AdminAddDoctorPage extends React.Component {
             <View style={styles.lastLineStyle} />
             <FormDropDownInput
               titleLabel={I18n.get("Speciality")}
-              dropDownValue={I18n.get(this.state.doctor.speciality)}
+              dropDownValue={this.state.doctor.speciality}
               onPress={() => this.onPress()}
             />
             <View style={styles.textInputContainer}>
@@ -420,7 +421,6 @@ class AdminAddDoctorPage extends React.Component {
                     state => ((state.doctor.department = text), state)
                   )
                 }
-              />
               />
             </View>
             <View style={styles.lastLineStyle} />

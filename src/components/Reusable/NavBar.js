@@ -23,29 +23,39 @@ export class NavBar extends React.Component {
             <View style={styles.headerContainer}>
                 <ImageBackground
                     source={navBarImage}
-                    style={styles.headerImage}>
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        flexDirection:'row',
+                        justifyContent:'center',
+                        alignContent:'center'}}>
+                    <View style={styles.headerContainer2} >
+                        <TouchableOpacity
+                            style={styles.backBtn}
+                            onPress={this.props.onBackPress}>
+                            <Image
+                                source={backBtnImage}
+                                style={styles.backBtnImage}
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.backBtn}
-                        onPress={this.props.onBackPress}>
-                        <Image
-                            source={backBtnImage}
-                            style={styles.backBtnImage}
-                        />
-                    </TouchableOpacity>
+                        {this.props.title &&
+                        <View style={{width:200,flexDirection:'row',justifyContent:"space-around",backgroundColor:'transparent'}}>
+                            <Text style={styles.headerText}>{this.props.title}
+                            </Text>
+                        </View>
+                            
+                        }
 
-                    {this.props.title && 
-                        <Text style={styles.headerText}>{this.props.title}
-                        </Text>
-                    }
-
-                    {this.props.rightButton &&
-                        <Button style={styles.rightButton}
-                            color="#ffffff"
-                            title={this.props.rightButton}
-                            onPress={this.props.rightButtonClick}>
-                        </Button>
-                    }
+                        {!!this.props.rightButton ?
+                            <TouchableOpacity
+                                onPress={this.props.rightButtonClick}>
+                                <Text style={{ color: "#ffffff" }}>{this.props.rightButton}</Text>
+                            </TouchableOpacity>
+                             : <Text>    </Text>
+                        }
+</View>
+                   
                 </ImageBackground>
             </View>
         );
@@ -53,59 +63,49 @@ export class NavBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  rightButton: {    
+    width: 30,
+    height: 18,
+    backgroundColor: "#BED885"
+  },
 
-    rightButton: {
-        marginTop: 50,
-        marginRight: 55,
-        width: 30,
-        height: 18,
-        backgroundColor: "#BED885",
-    },
+  headerContainer: {
+    height: 70,
+    //height: "10%",
+    marginTop: 0,
+    width: "100%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center"
+  },
 
-    headerContainer: {
-        height: 70,
-        //height: "10%",
-        marginTop: 0,
-        width: "100%",
-        backgroundColor: "transparent",
-        justifyContent: "center",
-        alignItems: "center",
-        
-    },
+  headerContainer2: {
+    width: "96%",
+    height: "100%",
+    marginTop:10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
 
-    headerImage: {
+  headerText: {
+      marginLeft:5,
+    color: "white",
+    fontSize: 20,
+   // backgroundColor: "pink"
+  },
 
-        width: "100%",
-        height: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+  backBtn: {
+    width: 30,
+    height: 30,
+   // backgroundColor: "black"
+  },
 
-    },
-
-    headerText: {
-        marginTop: 30,
-        width: "70%",
-        textAlign: 'center',
-        color: 'white',
-        fontSize: 20,
-
-    },
-
-    backBtn: {
-        marginTop: 20,
-        marginLeft: 25,
-        width: 30,
-        height: 30,
-    },
-
-    backBtnImage: {
-        width: 30,
-        height: 30,
-        resizeMode: "contain",
-    },
-
-
-})
+  backBtnImage: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain"
+  }
+});
 
 

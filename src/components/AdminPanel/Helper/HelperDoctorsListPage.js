@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   listCell: {
     flexDirection: "row",
     width: "100%",
-    height: 40,
+    height: 50,
     // backgroundColor: "yellow",
     marginBottom: 25,
     marginLeft: 10

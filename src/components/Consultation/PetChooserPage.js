@@ -13,13 +13,15 @@ import {
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { btnBackgroundImage, handIcon } from "../../images/resource";
-import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import Loader from "../../ActivityIndicator";
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
+import { LogoImage } from "../Reusable/LogoImage";
 
+const base = "../../images/";
+const petProfileImage = require(base + "petPlaceholderImage.jpg");
 
 class PetChooserPage extends React.Component {
 
@@ -39,25 +41,25 @@ class PetChooserPage extends React.Component {
                 API.graphql(graphqlOperation(GetPets, getPetsInput)).then(response => {
                     console.log("Pets Received");
                     console.log(response);
-        
+
                     this.setState({
                         isLoading: false,
                         dataSource: response.data.getPets.items
                     });
-        
+
                 }).catch(err => {
                     console.log("Failed to add doctor");
                     console.log(err);
-        
+
                 });
-            } 
-          });
+            }
+        });
     }
 
     petButtonClick(item) {
         console.log(item);
-        this.props.navigation.navigate("PaymentInfoPage",{
-            petInfo:item,
+        this.props.navigation.navigate("PaymentInfoPage", {
+            petInfo: item,
         });
     }
 
@@ -74,16 +76,12 @@ class PetChooserPage extends React.Component {
 
     render() {
 
-  
+
         return (
             <View style={styles.mainContainer}>
 
                 <NavBar onBackPress={this.backButtonClick} ></NavBar>
-
-                <Image
-                    source={logoImage}
-                    style={styles.logoImage}
-                />
+                <LogoImage></LogoImage>
 
                 <View style={styles.descriptionView}>
 
@@ -107,7 +105,7 @@ class PetChooserPage extends React.Component {
 
                         <TouchableOpacity
                             style={styles.listItemCotainer}
-                            onPress = {()=>this.petButtonClick(item)}
+                            onPress={() => this.petButtonClick(item)}
                         >
                             <View style={styles.petButtonContainer}>
                                 <ImageBackground
@@ -119,9 +117,12 @@ class PetChooserPage extends React.Component {
                                         {item.name.toUpperCase()}
                                     </Text>
                                 </ImageBackground>
-                                <Text style={styles.petCategoryText}>
-                                    {item.category.toUpperCase()}
-                                </Text>
+                                <View style={{height:20}}>
+                                    <Text style={styles.petCategoryText}>
+                                        {item.category.toUpperCase()}
+                                    </Text>
+                                </View>
+                                
 
                             </View>
 
@@ -129,7 +130,7 @@ class PetChooserPage extends React.Component {
                                 <Avatar
                                     medium
                                     rounded
-                                    source={{ uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg" }}
+                                    source={petProfileImage}
                                     onPress={() => console.log("Works!")}
                                     activeOpacity={0.7}
                                 />
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
 
         flexDirection: "column",
         width: "75%",
-        height: 40,
+        height: 75,
         marginLeft: 20,
         justifyContent: "center",
         alignItems: "center",
@@ -195,35 +196,13 @@ const styles = StyleSheet.create({
         alignItems: "flex-start"
     },
 
-
     petCategoryText: {
-
         fontSize: 12,
         color: "black"
-
-    },
-
-    logoButton: {
-        height: "20%",
-        width: "25%",
-        // marginTop: "2%",
-        marginLeft: "70%",
-        backgroundColor: "transparent"
-    },
-
-    logoImage: {
-        alignSelf: 'flex-end',
-        resizeMode: "contain",
-        marginTop: 10,
-        width: 80,
-        height: 60,
-        marginRight: 35,
-
-    },
-
+        },
     imageBackgroundStyle: {
         width: "90%",
-        height: "100%",
+        height: 44,
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center"
@@ -233,7 +212,7 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     imageBackgroundImageStyle: {
-        borderRadius: 20
+        borderRadius: 20,
     },
 
 

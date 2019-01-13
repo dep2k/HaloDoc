@@ -1,23 +1,49 @@
 import React from "react";
-import { FlatList, View, TouchableWithoutFeedback } from "react-native";
+import { FlatList, View, TouchableWithoutFeedback,TouchableOpacity } from "react-native";
 
 import Modal from "react-native-modal";
 import DataListItem from "./DataListItem";
 import { styles } from "./Styles";
 
 export class DropDown extends React.Component {
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "90%",
+          marginHorizontal: "5%",
+          backgroundColor: "#CED0CE",
+          // marginLeft: "14%"
+        }}
+      />
+    );
+  };
   render() {
     return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          this.props.onModalBackPress
-        }}
-      >
       <View>
+       
           <Modal backdropOpacity={0.5} isVisible={this.props.modalVisible}>
+          <TouchableWithoutFeedback
+            onPress={() => { this.props.onModalBackPress() }}
+            style={{ backgroundColor: 'pink' }}
+          >
+            <View style={{
+              position: 'absolute',
+              top: -50,
+              bottom: -50,
+              left: -50,
+              right: -50,
+              backgroundColor: 'rgba(0,0,0,0)'
+            }} />
+
+          </TouchableWithoutFeedback>
+
             <View style={styles.flatListContentContainerStyle}>
+            
               <FlatList
-               // contentContainerStyle={styles.flatListContainerStyle}
+                // contentContainerStyle={styles.flatListContainerStyle}
                 ItemSeparatorComponent={this.renderSeparator}
                 data={this.props.dropDownData}
                 renderItem={({ item, index }) => {
@@ -49,12 +75,17 @@ export class DropDown extends React.Component {
                   );
                 }}
               />
+
             </View>
+
           </Modal>
+
+
       </View>
-      </TouchableWithoutFeedback>
+        
     );
   }
 }
 
 export default DropDown;
+

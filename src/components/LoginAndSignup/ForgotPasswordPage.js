@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+
 import React from "react";
 import {
   View,
@@ -7,9 +7,10 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 import { I18n } from "aws-amplify";
+
 const base = "../../images/";
 const backButtonImage = require(base + "BackButtonShape.png");
 
@@ -29,16 +30,7 @@ class ForgotPasswordPage extends React.Component {
 
   render() {
     return (
-      //Background image for full screen
-
       <View style={styles.mainContainer}>
-      {/* <MainContainer> */}
-        {/* <ImageBackground
-          source={backgroundImage}
-          style={styles.backgroundImage}
-          imageStyle={styles.imageBackgroundImageStyle}
-        > */}
-        
           <View style={styles.headerContainer}>
             <TouchableOpacity
               style={styles.backButtonStyle}
@@ -50,20 +42,16 @@ class ForgotPasswordPage extends React.Component {
               />
             </TouchableOpacity>
           </View>
-     
           <Text style={styles.textStyle}>{I18n.get("EnterEmail")}</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={text => this.setState({ registrationCode: text })}
           />
-        
            <Button
             color="white"
             title={I18n.get('Continue')}
             onPress={this.onContinueClick}
           /> 
-        {/* </ImageBackground> */}
-      {/* </MainContainer> */}
       </View>
     );
   }

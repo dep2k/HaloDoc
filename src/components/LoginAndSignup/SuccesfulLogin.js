@@ -24,13 +24,11 @@ constructor(props) {
               <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
             </View>
             <View style={styles.contentView}>
-
                 <View style={styles.descriptionView}>
                     <ImageBackground
                         source={catImage}
                         style={styles.catImageStyle}
                         imageStyle={styles.petWithPathImageStyle}>
-
                         <Text style={styles.descriptionText}
                             numberOfLines={0}>{I18n.get("SucessMessage")}
                         </Text>
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
   descriptionView: {
     height: "100%",
     width: "100%",
+    justifyContent: "center",
     alignItems: "center",
   //  backgroundColor: 'pink'
   },
@@ -76,18 +75,19 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     catImageStyle: {
-        height: "90%",
+        height: "50%",
         width: "85%",
-      //  backgroundColor: 'black'
+     //  backgroundColor: 'pink',
+      justifyContent: "center",
+      alignItems: 'center'
     },
 
     descriptionText: {
         color: 'grey',
-        marginTop: 250,
+        marginTop: 40,
         marginLeft: 10,
         marginRight: 10,
         fontSize: 24,
-       // fontWeight: 'bold',
         textAlign: 'center'
 
     },

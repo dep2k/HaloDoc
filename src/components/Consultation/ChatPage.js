@@ -141,7 +141,7 @@ class ChatPage extends React.Component {
     } else {
       this.props.navigation.navigate('DoctorMenuPage');
     }
-   // 
+   
    console.log(this.subscriptionForConsultationEnd);
     if (this.subscriptionForConsultationEnd) {
      this.subscriptionForConsultationEnd.unsubscribe();
@@ -366,19 +366,19 @@ class ChatPage extends React.Component {
   render() {
 
     const { navigation } = this.props;
-    const navTitle = "";
+    const navTitle = "Chat";
     console.log("Render:" + this.myUser);
     let chatOptions = null;
     if(this.consultationStatus == "CLOSED"){
 
       if (this.consulation.payment == "Done") {
         chatOptions = [
-          { key: "2", name: I18n.get("Questions Answers") },
+          { key: "2", name: I18n.get("Questions Answers") }
         ];
       } else {
         chatOptions = [
           { key: "2", name: I18n.get("Questions Answers") },
-          { key: "3", name: I18n.get("Confirm Payment") },
+          { key: "3", name: I18n.get("Confirm Payment") }
         ];
       }
      
@@ -386,24 +386,22 @@ class ChatPage extends React.Component {
       if (this.consulation.payment == "Done") {
         chatOptions = [
           { key: "1", name: I18n.get("End Consultation") },
-          { key: "2", name: I18n.get("Questions Answers") },
-       
+          { key: "2", name: I18n.get("Questions Answers") }
         ];
       } else{
         chatOptions = [
           { key: "1", name: I18n.get("End Consultation") },
           { key: "2", name: I18n.get("Questions Answers") },
-          { key: "3", name: I18n.get("Confirm Payment") },
+          { key: "3", name: I18n.get("Confirm Payment") }
         ];
       }
     }
- 
     return (
       <View style={styles.mainContainer}>
         <NavBar
           onBackPress={this.backButtonClick}
           rightButton={this.getRightButtonText()}
-          rightButtonClick = {()=>this.rightButtonClick()}
+          rightButtonClick={()=>this.rightButtonClick()}
           title={navTitle.toUpperCase()}
         />
          <GiftedChat
@@ -416,16 +414,15 @@ class ChatPage extends React.Component {
             username: this.myUser.userName,
             fullName: this.myUser.fullName
           }}/> 
-
         <DropDown 
             dropDownType={"ChatDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={chatOptions}
-            onPressDDList={(item, type) => this.onPressDDList(item, type)}>
+            onPressDDList={(item, type) => this.onPressDDList(item, type)} >
         </DropDown>
         {this.state.animating && <Loader animating={this.state.animating} />}
       </View>
-    );
+    )
   }
 }
 

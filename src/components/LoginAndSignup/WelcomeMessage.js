@@ -9,8 +9,9 @@ import {
   TouchableOpacity
 } from "react-native";
 const base = "../../images/";
-const logoImage = require(base + "logoImage.png");
+
 import { Footer } from "../Reusable/Footer";
+import { LogoImage } from "../Reusable/LogoImage";
 
 class SuccesfulLogin extends React.Component {
   constructor(props) {
@@ -23,23 +24,11 @@ class SuccesfulLogin extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.mainContainer}>
+    return <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
-          <Image
-            source={require("../../images/navbarImage.png")}
-            style={styles.headerImage}
-          />
+          <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
         </View>
-        <View style={styles.logoContainer}>
-            <ImageBackground
-              source={logoImage}
-              style={styles.logoImage}
-              imageStyle={styles.logoImageimageStyle}
-            >
-            </ImageBackground>
-        </View>
-      
+        <LogoImage />
         //contains center welcome Text
         <View style={styles.middleContainer}>
           <Text style={styles.headingTextStyle}>{I18n.get("Welcome")}</Text>
@@ -47,9 +36,8 @@ class SuccesfulLogin extends React.Component {
             {I18n.get("WelcomeMessage")}
           </Text>
         </View>
-         <Footer showBtn = {true} onPress = {this.enterButtonClick}></Footer>
-      </View>
-    );
+        <Footer showBtn={true} onPress={this.enterButtonClick} />
+      </View>;
   }
 }
 
@@ -61,7 +49,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     height:70,
-    //  marginTop: 30,
     width: "100%",
     backgroundColor: "transparent",
     justifyContent: "center",
@@ -74,28 +61,12 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: "100%",
     height: 80,
-   // marginTop: 10,
-    // /marginBottom: "10%",
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
   // backgroundColor: 'green'
   },
-  logoImage: {
-    height: 60,
-    width: 80,
-    marginRight: 35,
-  //  marginTop: 10,
-  //  backgroundColor: "black"
-  },
-  // topImageLogo: {
-  //   marginRight:35,
-  //   backgroundColor: "transparent",
-  //   resizeMode: "contain",
-  //    height: 60,
-  //   width: 80,
-  //   marginRight: 35,
-  // },
+
   middleContainer: {
     flexDirection: "column",
     justifyContent: "flex-start",

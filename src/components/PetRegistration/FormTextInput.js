@@ -16,6 +16,7 @@ class FormTextInput extends React.Component {
         <View style={styles.TextInputContainer}>
           <Text style={styles.originSelfText}>{this.props.titleLabel}</Text>
           <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
             style={styles.originTextInputStyle}
             placeholder={this.props.inputPlaceHolder}
             placeholderTextColor="grey"

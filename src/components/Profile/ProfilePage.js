@@ -7,16 +7,14 @@ import {
   TouchableOpacity,
   ImageBackground,
   FlatList,
-  Button,
   ActivityIndicator
 } from "react-native";
-
-
 import { I18n } from "aws-amplify";
-import { Storage } from 'aws-amplify';
-import { uploadFile, getImage, launchPhotoLibrary, uploadBase64Image } from '../ImageHelper';
+import {Cache} from "aws-amplify";
+
+
 import { btnBackgroundImage } from "../../images/resource";
-import { logoImage } from "../../images/resource";
+
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
 import { GetPets } from "../../Queries/PetAPI";
@@ -27,8 +25,9 @@ const base = "../../images/";
 const myProfileImage = require(base + "myProfileImage.png");
 const petProfileImage = require(base + "petPlaceholderImage.jpg");
 const addIcon = require(base + "addIcon.png");
-const editIcon = require(base + "editIcon.png")
+const editIcon = require(base + "editIcon.png");
 import Loader from "../../ActivityIndicator";
+import { LogoImage } from "../Reusable/LogoImage";
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -43,9 +42,17 @@ class ProfilePage extends React.Component {
     this.editButtonClick = this.editButtonClick.bind(this);
   }
 
-  editButtonClick() {
-    this.props.navigation.navigate("UpdateProfilePage");
-  }
+   editButtonClick() {
+    Cache.getItem("User").then(user => {
+      if (user) {
+        const aboutUser = user;
+        this.props.navigation.navigate("UpdateProfilePage", {
+          userInfo: aboutUser
+        });
+      }
+    });
+   }
+
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");
   }
@@ -59,7 +66,7 @@ class ProfilePage extends React.Component {
   componentDidMount() {
 
     this.startActivityIndicator();
-    console.log(this.myUsername);
+    //console.log(this.myUsername);
     const getPetsInput = { username: this.myUsername };
     API.graphql(graphqlOperation(GetPets, getPetsInput))
       .then(response => {
@@ -128,9 +135,7 @@ class ProfilePage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
-
-        <Image source={logoImage} style={styles.logoImage} />
-
+        <LogoImage />
         <View style={styles.descriptionView}>
           <Image source={myProfileImage} style={styles.handSymbol} />
 
@@ -138,9 +143,7 @@ class ProfilePage extends React.Component {
 
           <TouchableOpacity
             style={styles.handSymbol}
-            onPress={() =>
-              this.addButtonClick("ProfilePage")
-            }
+            onPress={() => this.addButtonClick("ProfilePage")}
           >
             <ImageBackground
               source={addIcon}
@@ -183,7 +186,8 @@ class ProfilePage extends React.Component {
         />
         <TouchableOpacity
           style={styles.editButton}
-          onPress={this.editButtonClick}>
+          onPress= { () => this.editButtonClick()}
+        >
           <Image source={editIcon} style={styles.editImageBackgroundStyle} />
           <Text style={styles.editButtonTextStyle}>
             {I18n.get("EditProfile")}
@@ -278,7 +282,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
-
   imageBackgroundImageStyle: {
     borderRadius: 20
   },
@@ -316,13 +319,13 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "center"
     // backgroundColor: 'black'
   },
 
   handSymbol: {
     width: 35,
-    height: 35,
+    height: 35
   },
 
   myProfileText: {

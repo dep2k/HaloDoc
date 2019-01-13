@@ -203,7 +203,6 @@ class QuestionsPage extends React.Component {
                                     value={this.state.set5.answer}
                                 />
                             </View>
-                            />
                 </View>
 
                     </ScrollView>
@@ -215,7 +214,7 @@ class QuestionsPage extends React.Component {
                 </View>
             </TouchableWithoutFeedback>
 
-        );
+        )
     }
 
 }

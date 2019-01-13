@@ -69,54 +69,64 @@ class RegistrationPage extends React.Component {
 
   _registerBtnClick() {
     if (this.state.checked == true) {
-    const user = this.state.user;
-    this.startActivityIndicator();
-    if (
-      user.firstName &&
-      user.lastName &&
-      user.userName &&
-      user.email &&
-      user.phoneNo &&
-      user.password &&
-      user.confirmPassword
-    ) {
-      if (user.password.length >= 8) {
-        if (user.password == user.confirmPassword) {
-          Auth.signUp({
-            username: user.userName,
-            password: user.password,
-            attributes: {
-              email: user.email,
-              phone_number: (this.state.phncode + user.phoneNo),
-              given_name: user.firstName,
-              family_name: user.lastName,
-              'custom:userType': "USER"
+      const user = this.state.user;
+      this.startActivityIndicator();
+      if (
+        user.firstName &&
+        user.lastName &&
+        user.userName &&
+        user.email &&
+        user.phoneNo &&
+        user.password &&
+        user.confirmPassword
+      ) {
+        if (user.password.length >= 8) {
+          if (user.password == user.confirmPassword) {
+            Auth.signUp({
+              username: user.userName,
+              password: user.password,
+              attributes: {
+                email: user.email,
+                phone_number: this.state.phncode + user.phoneNo,
+                given_name: user.firstName,
+                family_name: user.lastName,
+                "custom:userType": "USER"
 
-              // other custom attributes
-            }
-          })
-            .then(data => {
-              console.log(data);
-              Cache.setItem("User", this.state.user);
-              this.props.navigation.navigate("CodeConfirmationPage", {
-                username: user.userName , pageType: "UserRegistrationPage"
-              });
-              this.closeActivityIndicator();
+                // other custom attributes
+              }
             })
-            .catch(err => {
-              console.log(err);
-              this.closeActivityIndicator();
-              Alert.alert(
-                "Error",
-                I18n.get("RegistrationUnsuccessful"),
-                [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-                { cancelable: false }
-              );
-            });
+              .then(data => {
+                console.log(data);
+                Cache.setItem("User", this.state.user);
+                this.props.navigation.navigate("CodeConfirmationPage", {
+                  username: user.userName,
+                  pageType: "UserRegistrationPage"
+                });
+                this.closeActivityIndicator();
+              })
+              .catch(err => {
+                console.log(err);
+                this.closeActivityIndicator();
+                Alert.alert(
+                  "Error",
+                  I18n.get("RegistrationUnsuccessful"),
+                  [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+                  { cancelable: false }
+                );
+              });
+          } else {
+            Alert.alert(
+              "Error",
+              I18n.get("Passwords dont match"),
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+              { cancelable: false }
+            );
+            this.closeActivityIndicator();
+          }
         } else {
           Alert.alert(
             "Error",
-            I18n.get("Passwords dont match"),
+            I18n.get("PasswordLength"),
             [{ text: "OK", onPress: () => console.log("OK Pressed") }],
             { cancelable: false }
           );
@@ -125,7 +135,7 @@ class RegistrationPage extends React.Component {
       } else {
         Alert.alert(
           "Error",
-          I18n.get("PasswordLength"),
+          I18n.get("All Fields are mandatory"),
           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: false }
         );
@@ -134,22 +144,12 @@ class RegistrationPage extends React.Component {
     } else {
       Alert.alert(
         "Error",
-        I18n.get("All Fields are mandatory"),
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { cancelable: false }
-      );
-      this.closeActivityIndicator();
-    }
-  } else {
-      Alert.alert(
-        "Error",
         I18n.get("Accept terms and conditions"),
         [{ text: "OK", onPress: () => console.log("OK Pressed") }],
         { cancelable: false }
       );
     }
   }
-
 
   render() {
     return (
@@ -166,16 +166,12 @@ class RegistrationPage extends React.Component {
               />
             </TouchableOpacity>
             <View style={styles.titleView}>
-          
               <Text style={styles.registerTextStyle}>
                 {I18n.get("Sign Up")}
               </Text>
             </View>
           </View>
-          <KeyboardAwareScrollView
-            style={styles.keyboradAvoidingContainer}
-          >
-          
+          <KeyboardAwareScrollView style={styles.keyboradAvoidingContainer}>
             <View style={styles.formContainer}>
               <TextInput
                 style={styles.firstTextInputStyle}
@@ -228,12 +224,8 @@ class RegistrationPage extends React.Component {
                   this.setState(state => ((state.user.userName = text), state))
                 }
               />
-              <View
-                style={styles.phnTextInputView}
-              >
-              <Text style = {styles.phnCodeText}>
-                 {this.state.phncode}
-              </Text>
+              <View style={styles.phnTextInputView}>
+                <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
                 <TextInput
                   ref={input => {
                     this.fourthTextInput = input;
@@ -310,51 +302,53 @@ class RegistrationPage extends React.Component {
                 }
               />
             </View>
-        
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={this._registerBtnClick}
-              style={styles.registerButton}
-            >
-              <ImageBackground
-                source={require("../../images/loginButtonImage.png")}
-                style={styles.imageBackgroundRegisterButtonStyle}
-                imageStyle={styles.imageStyleRegisterButtonImageBackground}
-              >
-                <Text style={styles.imageBackgroundTextStyle}>
-                  {I18n.get("RegisterMe")}
-                </Text>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.checkboxContainer}>
-            <CheckBox
-              center
-              containerStyle={styles.checkboxContainerStyle}
-              checkedIcon="check-square-o"
-              checkedColor="green"
-              uncheckedColor="white"
-              uncheckedIcon="square-o"
-              checked={
-                this.state.checked // title= {I18n.get('Accept terms and conditions')}
-              }
-              onPress={this.checkBoxClick}
-            />
-            <TouchableOpacity
-              onPress={this.termsButtonClick}
-              style={styles.termsButton}
-            >
-              <Text style={{ color: "white", fontSize: 12 }}>
-                {I18n.get("Accept terms and conditions")}
-              </Text>
-            </TouchableOpacity>
-          </View>
 
-          {this.state.animating && <Loader animating={this.state.animating} />}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={this._registerBtnClick}
+                style={styles.registerButton}
+              >
+                <ImageBackground
+                  source={require("../../images/loginButtonImage.png")}
+                  style={styles.imageBackgroundRegisterButtonStyle}
+                  imageStyle={styles.imageStyleRegisterButtonImageBackground}
+                >
+                  <Text style={styles.imageBackgroundTextStyle}>
+                    {I18n.get("RegisterMe")}
+                  </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.checkboxContainer}>
+              <CheckBox
+                center
+                containerStyle={styles.checkboxContainerStyle}
+                checkedIcon="check-square-o"
+                checkedColor="green"
+                uncheckedColor="white"
+                uncheckedIcon="square-o"
+                checked={
+                  this.state.checked // title= {I18n.get('Accept terms and conditions')}
+                }
+                onPress={this.checkBoxClick}
+              />
+              <TouchableOpacity
+                onPress={this.termsButtonClick}
+                style={styles.termsButton}
+              >
+                <Text style={{ color: "white", fontSize: 12 }}>
+                  {I18n.get("Accept terms and conditions")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {!!this.state.animating && (
+              <Loader animating={this.state.animating} />
+            )}
           </KeyboardAwareScrollView>
         </View>
       </TouchableWithoutFeedback>
-    );
+    )
   }
 }
 
@@ -387,22 +381,21 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   keyboradAvoidingContainer: {
-   // height: 460,
+    // height: 460,
     flexDirection: "column",
     alignSelf: "stretch",
     //backgroundColor: "yellow",
-    width: "100%",
-   // justifyContent: "flex-start"
+    width: "100%"
+    // justifyContent: "flex-start"
     // alignItems: "center",
   },
   formContainer: {
-  
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 50,
-    alignSelf: "flex-end",
+    alignSelf: "flex-end"
     // backgroundColor: "black"
   },
   registerButton: {
@@ -428,24 +421,23 @@ const styles = StyleSheet.create({
     borderBottomColor: "white",
     borderBottomWidth: 1,
     color: "white",
-    alignContent: "flex-end",
-   // backgroundColor: "pink"
+    alignContent: "flex-end"
+    // backgroundColor: "pink"
   },
-  phnCodeText: { 
-    color: "white", 
+  phnCodeText: {
+    color: "white",
     width: "10%",
-     alignSelf: 'center' 
+    alignSelf: "center"
   },
-    phnTextInputView:{
+  phnTextInputView: {
     flexDirection: "row",
     marginTop: "3%",
     height: 35,
     width: "80%",
     borderBottomColor: "white",
-    borderBottomWidth: 1,
+    borderBottomWidth: 1
   },
   phnTextInput: {
-   
     height: 35,
     width: "78%",
     color: "white",
@@ -459,7 +451,7 @@ const styles = StyleSheet.create({
   // },
   buttonContainer: {
     height: 40,
-     //backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     justifyContent: "center",
     alignItems: "center",
     // marginBottom: 0,

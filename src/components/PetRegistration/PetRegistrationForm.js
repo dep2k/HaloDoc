@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   Text,
-
 } from "react-native";
 
 import { NavBar } from "../Reusable/NavBar";
@@ -26,6 +25,7 @@ import {genderData} from "./DropDownData";
 import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
 import { styles } from './Styles';
+import Modal from "react-native-modal";
 const base = "../../images/";
 const petProfileImage = require(base + "petPlaceholderImage.jpg");
 
@@ -40,7 +40,8 @@ class PetRegistrationForm extends React.Component {
     const { navigation } = this.props;
     this.petType = navigation.getParam("petType");
     defaultValue = null;
-   
+    console.log(I18n.get("ClinicHistory"));
+
     this.state = {
       pet: {
         info: {
@@ -76,8 +77,6 @@ class PetRegistrationForm extends React.Component {
     this.onChangeText = this.onChangeText.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
-
-   
   }
 
   render() {
@@ -85,6 +84,8 @@ class PetRegistrationForm extends React.Component {
       <View style={styles.mainContainer}>
         <NavBar onBackPress={this.backButtonClick} />
         <ScrollView style={styles.scrollview}
+          contentContainerStyle={{
+            justifyContent: "center" }}
           horizontal={false}>
           <View style={styles.profileImage}>
             <Avatar
@@ -95,18 +96,26 @@ class PetRegistrationForm extends React.Component {
               activeOpacity={0.7}
             />
         </View>
-          <DropDown
-            dropDownType={this.state.dropDownType}
-            modalVisible={this.state.modalVisible}
-            dropDownData={this.state.dropDownData}
-            onModalBackPress={() => this.hideModal()}
-            onPressDDList={(item, type) => this.onPressDDList(item, type)}>
-          </DropDown>
-
+            
           <Text style={styles.clinicHistoryText}>
             {I18n.get("ClinicHistory")}
           </Text>
-
+          <DropDown
+          
+            dropDownType={this.state.dropDownType}
+            modalVisible={this.state.modalVisible}
+            dropDownData={this.state.dropDownData}
+            onModalBackPress={() => {
+              this.setState(
+                state => (
+                  (state.modalVisible = false),
+                  state
+                )
+              )
+              console.log(this.state.modalVisible)
+            }}
+            onPressDDList={(item, type) => this.onPressDDList(item, type)}>
+          </DropDown>
           <InfoPanel
             name={this.state.pet.info.name}
             race={this.state.pet.info.race}
@@ -219,12 +228,6 @@ class PetRegistrationForm extends React.Component {
       )
     );
 
-  }
-
-  hideModal() {
-    this.setState({
-      modalVisible: false
-    })
   }
 
   onPressDDList(item, type) {

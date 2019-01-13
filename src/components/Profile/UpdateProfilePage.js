@@ -30,21 +30,18 @@ const backButtonImage = require(base + "BackButtonShape.png");
 class UpdateProfilePage extends React.Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
+    this.myInfo = navigation.getParam("userInfo");
+
     this.state = {
       user: {
-        firstName: "",
-        lastName: "",
-        userName: "",
-        phoneNo: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+        firstName: this.myInfo.firstName,
+        lastName: this.myInfo.lastName,
+        phoneNo: this.myInfo.phoneNo,
+        email: this.myInfo.email
       },
-      phncode: "+57",
       checked: true,
       animating: false
-      // email: '',
-      // validated: false,
     };
 
     this.backButtonClick = this.backButtonClick.bind(this);
@@ -71,7 +68,17 @@ class UpdateProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
-  updateButtonClick() {}
+  async updateButtonClick() {
+    let user = await Auth.currentAuthenticatedUser();
+    let result = await Auth.updateUserAttributes(user, {
+      family_name: this.state.user.lastName,
+      email: this.state.user.email
+    });
+    console.log(result); // SUCCESS
+    this.props.navigation.navigate("CodeConfirmationPage", {
+      pageType: "UpdateProfilePage"
+    });
+  }
 
   render() {
     return (
@@ -99,10 +106,10 @@ class UpdateProfilePage extends React.Component {
               </View>
             </View>
             <View style={styles.formContainer}>
-              <TextInput
+              {/* <TextInput
                 style={styles.firstTextInputStyle}
                 autoCapitalize={"none"}
-                placeholder={I18n.get("Firstname")}
+                value={this.state.user.firstName}
                 placeholderTextColor="white"
                 returnKeyType={"next"}
                 autoCorrect={false}
@@ -110,11 +117,12 @@ class UpdateProfilePage extends React.Component {
                   this.secondTextInput.focus();
                 }}
                 blurOnSubmit={false}
-                onChangeText={text =>
+                onChangeValue={text =>
                   this.setState(state => ((state.user.firstName = text), state))
                 }
-              />
+              />*/}
               <TextInput
+                underlineColorAndroid={"rgba(0,0,0,0)"}
                 ref={input => {
                   this.secondTextInput = input;
                 }}
@@ -126,35 +134,17 @@ class UpdateProfilePage extends React.Component {
                 style={styles.textInput}
                 autoCapitalize={"none"}
                 autoCorrect={false}
-                placeholder={I18n.get("Lastname")}
+                value={this.state.user.lastName}
                 placeholderTextColor="white"
                 onChangeText={text =>
                   this.setState(state => ((state.user.lastName = text), state))
                 }
               />
-              <TextInput
-                ref={input => {
-                  this.thirdTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.fourthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                placeholder={I18n.get("UserId")}
-                autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.userName = text), state))
-                }
-              />
-              <View style={styles.phnTextInputView}>
-                <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
+              {/* 
+               <View style={styles.phnTextInputView}>
                 <TextInput
                   ref={input => {
-                    this.fourthTextInput = input;
+                    this.thirdTextInput = input;
                   }}
                   returnKeyType={"next"}
                   onSubmitEditing={() => {
@@ -164,19 +154,20 @@ class UpdateProfilePage extends React.Component {
                   style={styles.phnTextInput}
                   autoCapitalize={"none"}
                   autoCorrect={false}
-                  placeholder={I18n.get("PhoneNo")}
+                  value={this.state.user.phoneNo}
                   autoCorrect={false}
                   placeholderTextColor="white"
                   onChangeText={
                     text =>
-                      this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
+                      this.setState(state => ((state.user.phoneNo = text), state)) 
                   }
                 />
-              </View>
+              </View> */}
               <TextInput
                 ref={input => {
                   this.fifthTextInput = input;
                 }}
+                underlineColorAndroid={"rgba(0,0,0,0)"}
                 returnKeyType={"next"}
                 onSubmitEditing={() => {
                   this.sixthTextInput.focus();
@@ -186,53 +177,12 @@ class UpdateProfilePage extends React.Component {
                 autoCapitalize={"none"}
                 autoCorrect={false}
                 keyboardType={"email-address"}
-                placeholder={I18n.get("Email")}
+                value={this.state.user.email}
                 autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={
-                  text =>
-                    this.setState(state => ((state.user.email = text), state)) // value={ this.state.user.email  } // onChangeText={text => this.validate(text)}
-                }
-              />
-              <TextInput
-                ref={input => {
-                  this.sixthTextInput = input;
-                }}
-                secureTextEntry={true}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.seventhTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Create password")}
                 placeholderTextColor="white"
                 onChangeText={text =>
-                  this.setState(state => ((state.user.password = text), state))
+                  this.setState(state => ((state.user.email = text), state))
                 }
-              />
-              <TextInput
-                ref={input => {
-                  this.seventhTextInput = input;
-                }}
-                secureTextEntry={true}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                placeholder={I18n.get("Confirm password")}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(
-                    state => ((state.user.confirmPassword = text), state)
-                  )
-                }
-              />
-              <TextInput
-                style={styles.lastTextInputStyle}
-                placeholder={I18n.get("")}
-                placeholderTextColor="white"
               />
             </View>
           </KeyboardAvoidingView>

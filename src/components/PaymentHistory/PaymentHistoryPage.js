@@ -11,10 +11,10 @@ import { I18n } from "aws-amplify";
 
 import Loader from "../../ActivityIndicator";
 import { GetDoctorConversations, ListConversations, GetUserConversations } from "../../Queries/Chatapi";
-import { logoImage } from "../../images/resource";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { NavBar } from "../Reusable/NavBar";
 import { Cache } from "aws-amplify";
+import { LogoImage } from "../Reusable/LogoImage";
 
 const base = "../../images/";
 const historyIcon = require(base + "HistoryIcon.png");
@@ -29,7 +29,7 @@ class DataListItem extends React.Component {
 
         <Text style={styles.nameText}>{this.props.item.doctor.name}</Text>
         
-      <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1000)).format("MM/DD/YYYY ")}</Text>
+      <Text style={styles.nameText}>{moment(new Date((this.props.item.createdAt) * 1)).format("MM/DD/YYYY ")}</Text>
         <Text style={styles.nameText}>
         {I18n.get("ConsultationPayment") + ": "  + I18n.get(this.props.item.payment.toLowerCase())}
         </Text>
@@ -185,9 +185,7 @@ class PaymentHistoryPage extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
-
-        <Image source={logoImage} style={styles.logoImage} />
-
+       <LogoImage/>
         <View style={styles.descriptionView}>
           <Image source={historyIcon} style={styles.handSymbol} />
           {this.renderHeading()}
@@ -201,7 +199,7 @@ class PaymentHistoryPage extends React.Component {
             return <DataListItem 
             onPress={() => this._handleRowClick(item)}
             item={item} 
-            index={index} />;
+            index={index} />
           }}
         />
         {this.state.animating && <Loader animating={this.state.animating} />}
