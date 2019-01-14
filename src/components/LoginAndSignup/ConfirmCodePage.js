@@ -103,6 +103,7 @@ class ConfirmCodePage extends React.Component {
           </View>
           <Text style={styles.textStyle}>{I18n.get("CodeSent")}</Text>
           <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
             style={styles.textInput}
             placeholder={I18n.get("Confirm Code")}
             onChangeText={text => this.setState({ registrationCode: text })}
