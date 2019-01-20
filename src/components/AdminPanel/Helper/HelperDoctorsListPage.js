@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   FlatList
 } from "react-native";
+
+import {getImage} from '../../ImageHelper';
 import { I18n } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -24,12 +26,14 @@ const placeHolderImage = require(base + "placeholderImage.png");
 
 class DataListItem extends React.Component {
   render() {
+    const base64 = `${this.props.item.profilePic}`;
+		console.log("​Rerendering -> DataListItem -> render -> base64", base64)
     return (
       <TouchableOpacity onPress={this.props.onPress} style={styles.listCell}>
         <Avatar
           medium
           rounded
-          source={placeHolderImage}
+          source={{uri: base64}}
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />
@@ -47,27 +51,68 @@ class HelperDoctorsListPage extends React.Component {
     super(props);
     this.state = {
       doctorsListData: [],
-      animating: false
+      animating: false,
+      profilePics:[]
     };
 
     const { navigation } = this.props;
     this.nameOfPage = navigation.getParam("nameOfPage");
-
     this.backButtonClick = this.backButtonClick.bind(this);
     this._handleRowClick = this._handleRowClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
+    this.getImagesForItems = this.getImagesForItems.bind(this);
+    this.getImageForItem = this.getImageForItem.bind(this);
   }
+
+   async getImageForItem(item) {
+      const s3Object = item.s3Object;
+      if(s3Object){
+        const bucket = s3Object.bucket;
+        const key = s3Object.key;
+        console.log("Calling Get Image For Item With Key",key);
+        const result = await getImage(key,bucket);
+        console.log("​HelperDoctorsListPage -> getImage -> result");
+        item.profilePic = result;
+        items[item.index] = item;
+        console.log("Before Updating the state with the images");
+        this.setState({
+          doctorsListData: []
+        });
+
+        this.setState({
+          doctorsListData: items
+        });
+        
+        /*
+        getImage(key,bucket).then((result)=> {
+          console.log("​HelperDoctorsListPage -> getImage -> result");
+          item.profilePic = result;
+          items[item.index] = item;
+          console.log("Updating the state with the images");
+        }).catch((error)=> {
+          console.log("​DataListItem -> getImageForItem -> error", error);
+        });*/
+      }
+   
+  }
+
+
   componentDidMount() {
+
     this.startActivityIndicator();
     const listInput = { nextToken: null };
-
     API.graphql(graphqlOperation(ListDoctors, listInput))
       .then(response => {
-        console.log("List shown");
-        console.log(response);
+        items = response.data.listDoctors.items;
+        for(i = 0; i < items.length; i++){
+            items[i]["index"] = i;
+        }
         this.setState({
-          doctorsListData: response.data.listDoctors.items
+          doctorsListData: items
         });
+
+        //this.getImageForItem(items[0])
+        this.getImagesForItems();
         this.closeActivityIndicator();
       })
       .catch(err => {
@@ -76,6 +121,7 @@ class HelperDoctorsListPage extends React.Component {
         this.closeActivityIndicator();
       });
   }
+
   startActivityIndicator() {
     this.setState({ animating: true });
   }
@@ -114,12 +160,19 @@ class HelperDoctorsListPage extends React.Component {
     }
   }
 
+
+   getImagesForItems() {
+    items.forEach(item => {
+       this.getImageForItem(item);
+    });
+  }
+
+
   render() {
     return (
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
         {this.renderAddButton()}
-
         <Text style={styles.doctorsDirectoryText}>
           {I18n.get("DoctorsDirectory")}
         </Text>

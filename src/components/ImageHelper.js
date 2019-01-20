@@ -37,7 +37,8 @@ export function uploadImage(base64,bucket,key) {
 }
 
 export async function getImage(key,bucket) {
-    console.log("​getImage -> key", key)
+    
+    console.log("​ImageHelper->getImage -> key", key)
     const customPrefix = {
         public: bucket + '/',
         protected: 'myProtectedPrefix/',
@@ -49,16 +50,19 @@ export async function getImage(key,bucket) {
         level: 'public'
     });
 
-    console.log("​getImage -> url", url)
-    const location = bucket + '/' + key;
-    console.log("​getImage -> location", location)
+    console.log("​ImageHelper->getImage -> url", url)
+   // const location = bucket + '/' + key;
+   // console.log("​getImage -> location", location)
 
-    getFile(url,key).then((result) =>{
-		console.log("​getImage -> result", result);
-        return result;
-    }).catch((err)=>{
-        console.log("​getImage -> error", err);
-    });
+   const result = await  getFile(url,key);
+   console.log("​ImageHelper->getImage -> result", result)
+   return result;
+    // getFile(url,key).then((result) =>{
+	// 	console.log("​ImageHelper->getImage -> result", result);
+    //     return result;
+    // }).catch((err)=>{
+    //     console.log("​ImageHelper->getImage -> error", err);
+    // });
 }
 
 

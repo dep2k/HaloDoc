@@ -156,7 +156,7 @@ class PetRegistrationForm extends React.Component {
 
           {this.state.animating && <Loader animating={this.state.animating} />}
           <ButtonsPanel onPress = {(type) => this.onPress(type)}></ButtonsPanel>
-
+          
         </ScrollView>
       </View>
     );

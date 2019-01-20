@@ -7,19 +7,19 @@ export async function getFile(httpUrl, location) {
 
     //location = "a.txt";
     const uri = FileSystem.documentDirectory + location;
-    console.log("​getFile -> uri", uri)
+    console.log("​FileHelper->getFile -> uri", uri)
     const fileInfo = await FileSystem.getInfoAsync(uri);
 
     return new Promise((resolve, reject) => {
-        console.log("​getFile -> fileInfo", fileInfo);
+        console.log("​FileHelper->getFile -> fileInfo", fileInfo);
         if(fileInfo.exists){
             const options = { encoding: Expo.FileSystem.EncodingTypes.Base64 };
-			console.log("​getFile -> options", options)
+			//console.log("​getFile -> options", options)
             FileSystem.readAsStringAsync(uri,options).then(data => {
-                const base64 = 'data:image/jpg;base64' + data;
+                const base64 = 'data:image/jpg;base64,' + data;
                 resolve(base64) ; 
             }).catch(err => {
-                console.log("​getFile -> err", err);
+                console.log("​FileHelper->getFile -> err", err);
                 reject(err) ;
             });
         } else {

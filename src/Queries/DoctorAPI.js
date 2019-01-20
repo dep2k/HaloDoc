@@ -87,6 +87,10 @@ export const SubscribeToCreateDoctor = `subscription SubscribeToCreateDoctor {
             medicalCenter
             department
             address
+            s3Object {
+                key
+                bucket
+            }
         }
         nextToken
     }
@@ -111,6 +115,10 @@ export const ListAvailableDoctors = `query ListAvailableDoctors($speciality: Str
             medicalCenter
             department
             address
+            s3Object {
+                key
+                bucket
+            }
             
         }
         nextToken
