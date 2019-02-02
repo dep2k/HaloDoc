@@ -112,7 +112,6 @@ class ConfirmCodePage extends React.Component {
             title={I18n.get("Continue")}
             onPress={this.onContinueClick}
           />
-          {/* </ImageBackground> */}
           {this.state.animating && <Loader animating={this.state.animating} />}
         </View>
       </TouchableWithoutFeedback>

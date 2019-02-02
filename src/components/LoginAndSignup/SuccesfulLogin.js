@@ -26,7 +26,7 @@ constructor(props) {
             <View style={styles.contentView}>
                 <View style={styles.descriptionView}>
                     <ImageBackground
-                        source={catImage}
+                        
                         style={styles.catImageStyle}
                         imageStyle={styles.petWithPathImageStyle}>
                         <Text style={styles.descriptionText}
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-  //  backgroundColor: 'pink'
   },
 
   headerContainer: {
@@ -74,12 +73,12 @@ const styles = StyleSheet.create({
     petWithPathImageStyle: {
         resizeMode: "contain",
     },
+
     catImageStyle: {
         height: "50%",
         width: "85%",
-     //  backgroundColor: 'pink',
-      justifyContent: "center",
-      alignItems: 'center'
+        justifyContent: "center",
+        alignItems: 'center'
     },
 
     descriptionText: {

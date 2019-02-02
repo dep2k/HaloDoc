@@ -185,8 +185,7 @@ class LoginPage extends React.Component {
             />
             <TouchableOpacity
               onPress={this._onSignInClick}
-              style={styles.loginButton}
-            >
+              style={styles.loginButton}>
               <ImageBackground
                 source={require("../../images/loginButtonImage.png")}
                 style={styles.imageBackgroundStyle}

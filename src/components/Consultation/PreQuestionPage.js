@@ -64,7 +64,7 @@ class PreQuestionPage extends React.Component {
                 <View style = {styles.contentView}>
                     <View style={styles.descriptionView}>
                          <ImageBackground
-                             source={petWithPathImage}
+                             
                              style= { styles.petWithPathStyle}
                              imageStyle={styles.petWithPathImageStyle}>
                 
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     descriptionView: {
         height: "100%",
         alignItems: "center", 
+     
     },
     petWithPathImageStyle: {
         resizeMode: "contain", 

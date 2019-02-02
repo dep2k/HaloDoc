@@ -34,8 +34,7 @@ class ForgotPasswordPage extends React.Component {
           <View style={styles.headerContainer}>
             <TouchableOpacity
               style={styles.backButtonStyle}
-              onPress={this.backButtonClick}
-            >
+              onPress={this.backButtonClick}>
               <Image
                 source={backButtonImage}
                 style={styles.backButtonImage}

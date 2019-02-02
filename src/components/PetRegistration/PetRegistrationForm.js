@@ -325,8 +325,10 @@ class PetRegistrationForm extends React.Component {
       this.state.pet.info.gender &&
       this.state.pet.info.age &&
       this.state.pet.info.origin) {
+      console.log("Valid State");
       return true
     }
+    console.log("Invalid State");
     return false
   }
 
@@ -438,6 +440,7 @@ class PetRegistrationForm extends React.Component {
     //const vaccinationArray = this.getVaccinationsArray();
     
     Cache.getItem("User").then(user => {
+      console.log(user);
       if (user) {
         const createPetInput = this.getCreatePetInput(user);
         console.log(createPetInput);

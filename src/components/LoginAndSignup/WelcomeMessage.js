@@ -29,7 +29,6 @@ class SuccesfulLogin extends React.Component {
           <Image source={require("../../images/navbarImage.png")} style={styles.headerImage} />
         </View>
         <LogoImage />
-        //contains center welcome Text
         <View style={styles.middleContainer}>
           <Text style={styles.headingTextStyle}>{I18n.get("Welcome")}</Text>
           <Text style={styles.messageTextStyle}>
