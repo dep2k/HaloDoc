@@ -17,6 +17,8 @@ constructor(props) {
   }
  continueButtonClick() {
      this.props.navigation.navigate('WelcomeMessage');
+
+     
  }
     render() {
         return <View style={styles.mainContainer}>

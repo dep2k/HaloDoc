@@ -76,14 +76,9 @@ class VetProfile extends React.Component {
         <View style={styles.middleContainer}>
           <Text style={styles.drNameText}>{docName}</Text>
           <Text style={styles.drSpecialityText}>
-            {I18n.get("Specialist") + ": " + docSpeciality}
+            {I18n.get("Specialist") + ": " + I18n.get(docSpeciality)}
           </Text>
 
-          {/* <View style={styles.firstTextInputContainer}>
-            <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
-            <Text style={styles.dataTextStyle}>{docSpeciality}</Text>
-          </View> */}
-          {/* <View style={styles.lastLineStyle} /> */}
           <View style={styles.firstTextInputContainer}>
             <Text style={styles.formText}>
               {I18n.get("RegistrationId")}
@@ -95,7 +90,7 @@ class VetProfile extends React.Component {
             <Text style={styles.formText}>{I18n.get("Address")}</Text>
             <Text style={styles.dataTextStyle}>{docAddress}</Text>
           </View>
-          <View style={styles.lastLineStyle} />
+          {/* <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
             <Text style={styles.dataTextStyle}>{docPhnNo}</Text>
@@ -104,7 +99,7 @@ class VetProfile extends React.Component {
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("Email")}</Text>
             <Text style={styles.dataTextStyle}>{docEmail}</Text>
-          </View>
+          </View> */}
           <View style={styles.lastLineStyle} />
           <View style={styles.textInputContainer}>
             <Text style={styles.formText}>{I18n.get("HomeTown")}</Text>

@@ -119,7 +119,7 @@ class PetChooserPage extends React.Component {
                                 </ImageBackground>
                                 <View style={{height:20}}>
                                     <Text style={styles.petCategoryText}>
-                                        {item.category.toUpperCase()}
+                                    {I18n.get(item.category.toUpperCase())}
                                     </Text>
                                 </View>
                                 

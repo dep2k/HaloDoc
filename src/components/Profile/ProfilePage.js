@@ -169,7 +169,8 @@ class ProfilePage extends React.Component {
                     {item.name}
                   </Text>
                 </ImageBackground>
-                <Text style={styles.petCategoryText}>{item.category}</Text>
+                <Text style={styles.petCategoryText}>{I18n.get(item.category.toLowerCase()
+                )}</Text>
               </View>
               <View style={styles.petImageContainer}>
                 <Avatar

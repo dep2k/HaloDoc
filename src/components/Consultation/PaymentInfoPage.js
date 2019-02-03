@@ -49,6 +49,7 @@ class PaymentInfoPage extends React.Component {
     }
 
     setInitialState() {
+
         Cache.getItem('User').then(user => {
         if(user) {
        
@@ -58,16 +59,30 @@ class PaymentInfoPage extends React.Component {
         } });
     }
 
-
+     replaceAll (str, searchStr, replaceStr) {
+        
+        // no match exists in string?
+        if(str.indexOf(searchStr) === -1) {
+            // return string
+            return str;
+        }
+        str = str.replace(searchStr, replaceStr)
+        // replace and remove first match, and do another recursirve search/replace
+        return this.replaceAll(str, searchStr, replaceStr);
+    }
+    
     render() {
 
         const { navigation } = this.props;
         const pet = navigation.getParam('petInfo');
         const petName = pet.name;
-        const petCategory = pet.category;
+        const petCategory = I18n.get(pet.category);
         const navTitle = petName + " - " + petCategory;
         console.log(petName + " - " + petCategory);
 
+        let payInfoText = I18n.get("PaymentInfo");
+        payInfoText = this.replaceAll(payInfoText, "(petName)",petName)
+        //payInfoText = payInfoText.replace(new RegExp('$(petName)', 'g'),petName)
         return (
             <View style={styles.mainContainer}>
 
@@ -76,13 +91,13 @@ class PaymentInfoPage extends React.Component {
               
                 <View style={styles.descriptionView}>
 
-                     <Text style={styles.titleText}
+                    <Text style={styles.titleText}
                         numberOfLines={0}>Hola {this.state.userFirstName},
                     </Text>
 
                     <ScrollView style = {styles.scrollView}  >
                         <Text style={styles.descriptionText}
-                            numberOfLines={0}>{ I18n.get("PaymentInfo")}
+                            numberOfLines={0}>{payInfoText}
                         </Text>
                     </ScrollView>
 

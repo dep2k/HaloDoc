@@ -334,7 +334,8 @@ export const styles = StyleSheet.create({
   //  backgroundColor: "orange",
     color: "#8BE0DE",
     fontSize: 18,
-    alignSelf: "center"
+    alignSelf: "center",
+ 
   },
 
   flatListContentContainerStyle: {

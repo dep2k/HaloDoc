@@ -21,9 +21,6 @@ const paymentHistoryIcon = require(base + "paymenthistoryIcon.png");
 class MainMenuPage extends React.Component {
   constructor(props) {
     super(props);
-
-
-   
     this.logOutButtonClick = this.logOutButtonClick.bind(this);
     this.consultBtnClick = this.consultBtnClick.bind(this);
     this.vetListButtonClick = this.vetListButtonClick.bind(this);
@@ -62,12 +59,8 @@ class MainMenuPage extends React.Component {
 
   render() {
     return <View style={styles.mainContainer}>
-        {/* <ImageBackground
-          source={require("../images/newBackground.png")}
-          style={styles.fullBackgroundImage}
-          imageStyle={styles.fullbackgroundImageStyle}
-        > */}
-        <Text style={styles.menuText}>MENU</Text>
+      
+        <Text style={styles.menuText}>{I18n.get('Menu')}</Text>
         <View style={styles.buttonsMainContainer}>
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={consultIcon} />
@@ -86,14 +79,7 @@ class MainMenuPage extends React.Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.singleButtonContainer}>
-            <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
-            <TouchableOpacity onPress={() => this.ConsultationButtonClick("CLOSED")}>
-              <Text style={styles.touchableOpacityText}>
-                {I18n.get("HistoryOfConsultaions")}
-              </Text>
-            </TouchableOpacity>
-          </View>
+        
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={myProfileIcon} />
             <TouchableOpacity onPress={() => this.myProfileButtonClick()}>
@@ -110,8 +96,17 @@ class MainMenuPage extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
+          
           <View style={styles.singleButtonContainer}>
-            <Image style={styles.iconImagesStyle} source={myProfileIcon} />
+            <Image style={styles.iconImagesStyle} source={conHistoryIcon} />
+            <TouchableOpacity onPress={() => this.ConsultationButtonClick("CLOSED")}>
+              <Text style={styles.touchableOpacityText}>
+                {I18n.get("HistoryOfConsultaions")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.logoutBtn}>
+ 
             <TouchableOpacity onPress={this.logOutButtonClick}>
               <Text style={styles.touchableOpacityText}>
                 {I18n.get("LogOut")}
@@ -131,23 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  // fullBackgroundImage: {
-  //   flex: 1,
-  //   flexDirection: "column",
-  //   justifyContent: "flex-start",
-  //   alignItems: "center"
-  // },
-  // fullbackgroundImageStyle: {
-  //   position: "absolute",
-  //   resizeMode: "cover",
-  //   width: "100%",
-  //   height: "100%",
-  //   backgroundColor: "transparent",
-  //   flexDirection: "column",
-  //   justifyContent: "flex-start",
-  //   alignItems: "center",
-  //   backgroundColor: "transparent"
-  // },
+
   menuText: {
     fontSize: 25,
     color: "white",
@@ -164,14 +143,29 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     // backgroundColor: "pink"
   },
+
+  logoutBtn : {
+    flexDirection: "row",
+    height: 46,
+    width: 180,
+    justifyContent: "center",
+    alignItems: "center", 
+    alignSelf: "center",
+    backgroundColor: '#5AAA61',
+    marginTop: 100,
+    marginRight: 20
+  },
+
   singleButtonContainer: {
     flexDirection: "row",
     height: 46,
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
+    
      //backgroundColor: "pink"
   },
+
   iconImagesStyle: {
     width: 30,
     height: 30,

@@ -274,11 +274,13 @@ class PetRegistrationForm extends React.Component {
     console.log(petRaceListData);
     if (type == "FormRaceDD") {
       //console.log(petRaceListData);
-      const raceList = petRaceListData[this.petType];
+      const data = petRaceListData()
+      const raceList = data[this.petType];
       this.showDropDown(raceList, 'FormRaceDD');
     } else if (type == "FormGenderDD") {
       //console.log(genderData);
-      this.showDropDown(genderData, 'FormGenderDD');
+      const data = genderData()
+      this.showDropDown(data, 'FormGenderDD');
     } else if (type == "SaveClick") {
       //console.log("SaveClick");
       this.registerPet();

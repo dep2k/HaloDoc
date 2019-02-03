@@ -5,7 +5,7 @@ import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { NavBar } from "../../Reusable/NavBar";
 import DropDown from "../../PetRegistration/DropDown";
-import { specialityData } from "../../PetRegistration/DropDownData";
+import { getSpecialityData } from "../../PetRegistration/DropDownData";
 import FormDropDownInput from "../../PetRegistration/FormDropDownInput";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import {launchPhotoLibrary,uploadImage} from '../../ImageHelper';
@@ -75,6 +75,7 @@ class AdminAddDoctorPage extends React.Component {
   onPressDDList(item, type) {
     if (type == "SpecialityDD") {
       const speciality = item.name;
+      this.specialityValue = item.value;
       this.setState(
         state => (
           (state.doctor.speciality = speciality),
@@ -85,6 +86,8 @@ class AdminAddDoctorPage extends React.Component {
     }
   }
   onPress() {
+    const specialityData = getSpecialityData();
+		console.log('TCL: AdminAddDoctorPage -> onPress -> specialityData', specialityData)
     this.showDropDown(specialityData);
   }
 
@@ -127,7 +130,7 @@ class AdminAddDoctorPage extends React.Component {
       doctorId: this.state.doctor.name,
       name: this.state.doctor.name,
       userName: this.state.doctor.userName,
-      speciality: this.state.doctor.speciality,
+      speciality: this.specialityValue,
       profilePic: "profilePic",
       registrationId: this.state.doctor.registrationId,
       phoneNo: this.state.doctor.phoneNo,

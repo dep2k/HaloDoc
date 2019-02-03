@@ -70,17 +70,10 @@ class VetNotificationPage extends React.Component {
                 <NavBar onBackPress={this.backButtonClick} title = {navTitle.toUpperCase()}></NavBar>
                 <View style = {styles.contentView}>
                     <View style={styles.descriptionView}>
-                         <ImageBackground
-                             source={petWithPathImage}
-                             style= { styles.petWithPathStyle}
-                             imageStyle={styles.petWithPathImageStyle}>
-                
-                            <Text style={styles.descriptionText}
-                                    numberOfLines={0}>{ I18n.get("VetNotified")}
-                            </Text>
-                        </ImageBackground>   
+                        <Text style={styles.descriptionText}
+                                numberOfLines={0}>{ I18n.get("VetNotified")}
+                        </Text>
                     </View>
-
                 </View>
               
 
