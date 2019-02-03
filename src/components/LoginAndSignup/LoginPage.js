@@ -33,8 +33,8 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       user: {
-        username: "",
-        password: ""
+        username: "TestUser",
+        password: "TestUser"
       },
       animating: false
     };

@@ -8,6 +8,7 @@ import DropDown from "../../PetRegistration/DropDown";
 import { specialityData } from "../../PetRegistration/DropDownData";
 import FormDropDownInput from "../../PetRegistration/FormDropDownInput";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
+import {launchPhotoLibrary,uploadImage} from '../../ImageHelper';
 
 import {
   StyleSheet,
@@ -50,7 +51,8 @@ class AdminAddDoctorPage extends React.Component {
         department: defaultValue,
         address: defaultValue,
         password: defaultValue,
-        adminEmail: defaultValue
+        adminEmail: defaultValue,
+        base64:defaultValue,
       },
       animating: false,
       phncode: "+57",
@@ -105,12 +107,22 @@ class AdminAddDoctorPage extends React.Component {
   }
 
   onRegisterButtonClick() {
-    this._addDoctor();
     console.log("DoctorAdded");
+    this._addDoctor();
+    
   }
 
   _addDoctor() {
     const doc = this.state.doctor;
+    let s3Object ;
+    if(base64){
+      s3Object = {
+        bucket: "Doctors",
+        key: this.state.doctor.name
+      }
+    } else{
+      s3Object = null;
+    }
     const createDoctorInput = {
       doctorId: this.state.doctor.name,
       name: this.state.doctor.name,
@@ -124,10 +136,11 @@ class AdminAddDoctorPage extends React.Component {
       homeTown: this.state.doctor.homeTown,
       medicalCenter: this.state.doctor.medicalCenter,
       department: this.state.doctor.department,
-      address: this.state.doctor.address
+      address: this.state.doctor.address,
+      s3Object: s3Object
     };
     this.startActivityIndicator();
-
+    
     if (doc.name && doc.adminEmail && doc.password && doc.phoneNo) {
       if (doc.password.length >= 8) {
         Auth.signUp({
@@ -146,8 +159,17 @@ class AdminAddDoctorPage extends React.Component {
             API.graphql(graphqlOperation(CreateDoctor, createDoctorInput))
               .then(response => {
                 console.log(response);
-              })
-              .catch(err => {
+                if(base64){
+                  const s3Object = response.data.createDoctor.s3Object;
+                  const bucket = s3Object.bucket;
+                  const key =  s3Object.key + ".jpg";
+                  uploadImage(base64,bucket,key).then((result)=>{
+                    console.log("​AdminAddDoctorPage -> _addDoctor -> Image Upload Result", result);
+                    }).catch((error)=>{
+                      console.log("​AdminAddDoctorPage -> _addDoctor -> Image Upload Error", error)
+                    });
+                }
+              }).catch(err => {
                 console.log(err);
               });
 
@@ -188,17 +210,32 @@ class AdminAddDoctorPage extends React.Component {
     }
   }
 
+  onAvatarClick(){
+    console.log("Works!")
+    launchPhotoLibrary().then((result)=>{
+      base64 = result.base64;
+      if(base64) {
+        this.setState(
+          state => ((state.doctor.base64 = base64), state)
+        )
+      }
+			console.log("​AdminAddDoctorPage -> onAvatarClick -> result", result)
+    }).catch((error)=>{
+		console.log("​AdminAddDoctorPage -> onAvatarClick -> error", error);
+    });
+  }
+
   render() {
     return (
       <View style={styles.mainContainer}>
-        <NavBar onBackPress={this.backButtonClick} />)
+        <NavBar onBackPress={this.backButtonClick} />
         <KeyboardAwareScrollView style={styles.scrollview}>
           <View style={styles.avatar}>
             <Avatar
               large
               rounded
-              source={placeHolderImage}
-              onPress={() => console.log("Works!")}
+              source={{uri: `data:image/jpg;base64,${this.state.doctor.base64}`}}
+              onPress={() => this.onAvatarClick()}
               activeOpacity={0.7}
             />
           </View>
@@ -422,7 +459,6 @@ class AdminAddDoctorPage extends React.Component {
                   )
                 }
               />
-              />
             </View>
             <View style={styles.lastLineStyle} />
             <View style={styles.textInputContainer}>
@@ -439,7 +475,6 @@ class AdminAddDoctorPage extends React.Component {
                     state => ((state.doctor.password = text), state)
                   )
                 }
-              />
               />
             </View>
             <View style={styles.LastlastLineStyle} />
@@ -485,6 +520,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
 
+  emptySpace: {
+    height: 120
+  },
   scrollview: {
     flexDirection: "column",
     backgroundColor: "white",

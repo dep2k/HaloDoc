@@ -281,7 +281,7 @@ export const  setUpLanguage = () => {
         'Sign Up': "REGISTRATE",
         'Username': "Usuario",
         'Password': "Contraseña",
-        'Forgot Password': "Olvidó tu contraseña?",
+        'Forgot Password': "Olvide mi contraseña?",
         'Name': "Nombre",
         'NameOfDoctor': "Nombre del doctor",
         'Firstname': "Nombre",

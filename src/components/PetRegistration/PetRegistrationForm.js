@@ -6,6 +6,7 @@ import {
   Text,
 } from "react-native";
 
+import {launchPhotoLibrary,uploadImage} from '../../components/ImageHelper';
 import { NavBar } from "../Reusable/NavBar";
 import InfoPanel from "./InfoPanel";
 import VaccinationPanel from './VaccinationPanel';
@@ -44,6 +45,7 @@ class PetRegistrationForm extends React.Component {
 
     this.state = {
       pet: {
+        base64: defaultValue,
         info: {
           name: defaultValue,
           race: defaultValue,
@@ -79,6 +81,20 @@ class PetRegistrationForm extends React.Component {
     this.onCheckboxPress = this.onCheckboxPress.bind(this);
   }
 
+  onAvatarClick(){
+    console.log("Works!")
+    launchPhotoLibrary().then((result)=>{
+      base64 = result.base64;
+      if(base64) {
+        this.setState(
+          state => ((state.pet.base64 = base64), state)
+        )
+      }
+			console.log("​AdminAddDoctorPage -> onAvatarClick -> result", result)
+    }).catch((error)=>{
+		console.log("​AdminAddDoctorPage -> onAvatarClick -> error", error);
+    });
+  }
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -91,8 +107,8 @@ class PetRegistrationForm extends React.Component {
             <Avatar
               large
               rounded
-              source={petProfileImage}
-              onPress={() => console.log("Works!")}
+              source={{uri: `data:image/jpg;base64,${this.state.pet.base64}`}}
+              onPress={() => this.onAvatarClick()}
               activeOpacity={0.7}
             />
         </View>
@@ -324,6 +340,16 @@ class PetRegistrationForm extends React.Component {
   }
 
   getCreatePetInput(user) {
+
+    let s3Object ;
+    if(base64){
+      s3Object = {
+        bucket: "Pets",
+        key: "anything" // will be set by server
+      }
+    } else{
+      s3Object = null;
+    }
     const createPetInput = {
       //partitionKey
       username: user.userName,
@@ -347,8 +373,8 @@ class PetRegistrationForm extends React.Component {
       // Pet Despa
       product: this.state.pet.despa.product,
       date: this.state.pet.despa.date,
-      feeding: this.state.pet.despa.feeding
-
+      feeding: this.state.pet.despa.feeding,
+      s3Object:s3Object
     };
 
     return createPetInput;
@@ -357,11 +383,21 @@ class PetRegistrationForm extends React.Component {
   registerPetAPICall(createPetInput) {
     //console.log("registerPetAPICall");
     this.startActivityIndicator();
+  
     API.graphql(graphqlOperation(CreatePet, createPetInput))
       .then(response => {
         console.log("API-Response:");
         console.log(response);
-
+        if(base64){
+          const s3Object = response.data.createPet.s3Object;
+          const bucket = s3Object.bucket;
+          const key =  s3Object.key + ".jpg";
+          uploadImage(base64,bucket,key).then((result)=>{
+            console.log("​AdminAddDoctorPage -> registerPetAPICall -> Image Upload Result", result);
+            }).catch((error)=>{
+              console.log("​AdminAddDoctorPage -> registerPetAPICall -> Image Upload Error", error)
+            });
+        }
         Alert.alert(
           I18n.get("Success"),
           I18n.get("RegistrationSuccessful"),

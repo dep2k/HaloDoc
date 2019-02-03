@@ -1,7 +1,7 @@
 
 export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: String, $speciality: String, 
         $profilePic: String, $registrationId: String, $phoneNo: String, $email: String,
-        $homeTown: String, $medicalCenter: String, $department: String, $address: String ) {
+        $homeTown: String, $medicalCenter: String, $department: String, $address: String, s3Object: $S3ObjectInput ) {
     
          createDoctor(
   
@@ -17,6 +17,7 @@ export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: Stri
             medicalCenter: $medicalCenter,
             department: $department,
             address: $address,
+            s3Object: $s3Object,
             
 
           }) {
@@ -32,6 +33,10 @@ export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: Stri
             medicalCenter
             department
             address
+            s3Object {
+                bucket
+                key
+            }
         }
     
       }`;
