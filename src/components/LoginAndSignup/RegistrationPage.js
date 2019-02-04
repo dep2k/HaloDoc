@@ -385,13 +385,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   keyboradAvoidingContainer: {
-    // height: 460,
+  
     flexDirection: "column",
     alignSelf: "stretch",
-    //backgroundColor: "yellow",
     width: "100%"
-    // justifyContent: "flex-start"
-    // alignItems: "center",
+
   },
   formContainer: {
     width: "100%",
@@ -455,7 +453,6 @@ const styles = StyleSheet.create({
   // },
   buttonContainer: {
     height: 40,
-    //backgroundColor: 'yellow',
     justifyContent: "center",
     alignItems: "center",
     // marginBottom: 0,
