@@ -58,8 +58,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     height: 40,
     width: "100%",
-    alignItems: "center"
-    // backgroundColor: "yellow"
+    alignItems: "center",
+  
   },
 
   originSelfText: {

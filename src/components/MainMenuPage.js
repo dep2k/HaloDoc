@@ -61,6 +61,8 @@ class MainMenuPage extends React.Component {
     return <View style={styles.mainContainer}>
       
         <Text style={styles.menuText}>{I18n.get('Menu')}</Text>
+        <View style={styles.middleContainer}>
+
         <View style={styles.buttonsMainContainer}>
           <View style={styles.singleButtonContainer}>
             <Image style={styles.iconImagesStyle} source={consultIcon} />
@@ -105,16 +107,19 @@ class MainMenuPage extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.logoutBtn}>
- 
-            <TouchableOpacity onPress={this.logOutButtonClick}>
-              <Text style={styles.touchableOpacityText}>
-                {I18n.get("LogOut")}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
-        {/* </ImageBackground> */}
+        </View>
+      <View style={styles.bottomContainer}>
+        <View style={styles.logoutBtn}>
+          <TouchableOpacity
+            style={styles.logoutBtnStyle}
+            onPress={this.logOutButtonClick}>
+            <Text style={styles.touchableOpacityText}>
+              {I18n.get("LogOut")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       </View>;
   }
 }
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#AACB61",
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "center"
   },
 
   menuText: {
@@ -136,24 +141,45 @@ const styles = StyleSheet.create({
   },
   buttonsMainContainer: {
     flexDirection: "column",
-   // flex: 0.7,
+    // flex: 0.7,
     height: 350,
     width: "100%",
     justifyContent: "flex-start",
-    justifyContent: "space-evenly",
-    // backgroundColor: "pink"
+    justifyContent: "space-evenly"
+    //  backgroundColor: "black"
+  },
+  middleContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // backgroundColor: 'orange',
+    flex: 1,
+    width: "100%"
+  },
+  bottomContainer: {
+    // backgroundColor: 'pink',
+    height: "20%",
+    width: "100%",
+    marginBottom: 0
   },
 
-  logoutBtn : {
+  logoutBtn: {
     flexDirection: "row",
-    height: 46,
-    width: 180,
+    height: 100,
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignSelf: "center"
+    // backgroundColor: 'black'
+  },
+  logoutBtnStyle: {
+    height: 35,
+    width: 150,
     justifyContent: "center",
-    alignItems: "center", 
+    marginLeft: "5%",
+    alignItems: "center",
     alignSelf: "center",
-    backgroundColor: '#5AAA61',
-    marginTop: 100,
-    marginRight: 20
+    backgroundColor: "#9DC76E"
   },
 
   singleButtonContainer: {
@@ -161,9 +187,8 @@ const styles = StyleSheet.create({
     height: 46,
     width: "100%",
     justifyContent: "flex-start",
-    alignItems: "center",
-    
-     //backgroundColor: "pink"
+    alignItems: "center"
+    // backgroundColor: "black"
   },
 
   iconImagesStyle: {
@@ -171,7 +196,7 @@ const styles = StyleSheet.create({
     height: 30,
     marginLeft: "5%",
     marginRight: "5%",
-    resizeMode: 'contain'
+    resizeMode: "contain"
   },
   touchableOpacityText: {
     fontSize: 16.5,

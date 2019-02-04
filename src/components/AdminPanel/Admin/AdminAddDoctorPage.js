@@ -14,6 +14,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
   ScrollView,
   KeyboardAvoidingView,
   ImageBackground,
@@ -30,6 +31,7 @@ const base = "../../../images/";
 const backgroundImage = require(base + "loginButtonImage.png");
 const navBarImage = require(base + "navbarImage.png");
 const placeHolderImage = require(base + "placeholderImage.png");
+const dropDownImage = require(base + "dropDownIcon.png");
 
 
 class AdminAddDoctorPage extends React.Component {
@@ -118,7 +120,7 @@ class AdminAddDoctorPage extends React.Component {
   _addDoctor() {
     const doc = this.state.doctor;
     let s3Object ;
-    if(base64){
+    if(this.base64){
       s3Object = {
         bucket: "Doctors",
         key: this.state.doctor.name
@@ -233,6 +235,7 @@ class AdminAddDoctorPage extends React.Component {
       <View style={styles.mainContainer}>
         <NavBar onBackPress={this.backButtonClick} />
         <KeyboardAwareScrollView style={styles.scrollview}>
+          <View style={styles.formContainer}>
           <View style={styles.avatar}>
             <Avatar
               large
@@ -256,8 +259,8 @@ class AdminAddDoctorPage extends React.Component {
             </Text>
           </View>
 
-          <View style={styles.formContainer}>
-            <View style={styles.textInputContainer}>
+          
+            <View style={styles.firstTextInputContainer}>
               <Text style={styles.formText}>{I18n.get("AdminEmail")}</Text>
               <TextInput
                 style={styles.formTextInputStyle}
@@ -316,11 +319,19 @@ class AdminAddDoctorPage extends React.Component {
               />
             </View>
             <View style={styles.lastLineStyle} />
-            <FormDropDownInput
-              titleLabel={I18n.get("Speciality")}
-              dropDownValue={this.state.doctor.speciality}
-              onPress={() => this.onPress()}
-            />
+            <View style={styles.dropdownTextInput}>
+              <Text style={styles.formText}>{I18n.get("Speciality")}</Text>
+                <TouchableOpacity
+                  style={styles.dropDownButtonStyle}
+                  onPress={() => this.onPress()}>
+                  <Text style={styles.dropDownButtonTextStyle}>
+                  {this.state.doctor.speciality}
+                  </Text>
+                  <Image style={styles.dropDownIconStyle} source={dropDownImage} />
+                </TouchableOpacity>
+             </View>
+            <View style={styles.lastLineStyle} />
+           
             <View style={styles.textInputContainer}>
               <Text style={styles.formText}>{I18n.get("Address")}</Text>
               <TextInput
@@ -364,7 +375,7 @@ class AdminAddDoctorPage extends React.Component {
               <Text style={styles.formText}>{I18n.get("PhoneNo")}</Text>
               <Text style={styles.phnCodeText}>{this.state.phncode}</Text>
               <TextInput
-                style={styles.formTextInputStyle}
+                style={styles.phnTextInputStyle}
                 ref={input => {
                   this.seventhTextInput = input;
                 }}
@@ -522,16 +533,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1
   },
-
-  emptySpace: {
-    height: 120
-  },
   scrollview: {
     flexDirection: "column",
     backgroundColor: "white",
-    alignSelf: "stretch",
-    marginBottom: 20,
-   // height: 1000,
+    alignSelf: "stretch"
   },
 
   headerContainer: {
@@ -595,13 +600,23 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "flex-end"
+    //backgroundColor: 'pink'
+  },
+  firstTextInputContainer: {
+    flexDirection: "row",
+    height: 45,
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+    marginTop: 20
   },
   formContainer: {
-    flex: 0.7,
     width: "90%",
     marginHorizontal: "5%",
-    marginTop: "5%"
-    //backgroundColor: 'yellow'
+    marginTop: "5%",
+
+    alignItems: "center",
+    alignSelf: "flex-end"
   },
   formText: {
     width: "35%",
@@ -613,10 +628,18 @@ const styles = StyleSheet.create({
   formTextInputStyle: {
     width: "63%",
     height: 45,
+    marginLeft: 5,
     justifyContent: "flex-end",
     alignItems: "center",
     color: "grey",
-    //  backgroundColor: 'pink',
+    fontSize: 14
+  },
+  phnTextInputStyle: {
+    width: "53%",
+    height: 45,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    color: "grey",
     fontSize: 14
   },
   lastLineStyle: {
@@ -630,11 +653,35 @@ const styles = StyleSheet.create({
     backgroundColor: "darkgrey",
     marginBottom: 30
   },
+  dropdownTextInput: {
+    flexDirection: "row",
+    height: 40,
+    width: "100%",
+    marginLeft: 5,
+    alignItems: "center",
+  },
+  dropDownButtonTextStyle: {
+    fontSize: 14,
+    alignSelf: "center",
+    color: "grey"
+  },
+  dropDownButtonStyle: {
+    flexDirection: "row",
+    width: "63%",
+    //  backgroundColor: 'pink',
+    height: 30,
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  dropDownIconStyle: {
+    height: 10,
+    width: 10
+  },
   phnCodeText: {
     color: "grey",
     width: "10%",
-    alignSelf: 'center',
-   // backgroundColor : 'black'
+    alignSelf: "center",
+    marginLeft: 5
   },
   registerButton: {
     height: 40,
@@ -659,14 +706,13 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   buttonsContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     // backgroundColor: "pink",
     width: "100%",
-    height: "50%",
+    height: 40,
     alignItems: "center",
-    paddingTop: "2%",
-    marginTop: "2%"
+    marginTop: 20,
+    marginBottom: 50
   },
   textInput: {
     height: 40,

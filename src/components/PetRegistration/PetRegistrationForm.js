@@ -337,7 +337,7 @@ class PetRegistrationForm extends React.Component {
   showErrorAlert() {
     Alert.alert(
       "Error",
-      I18n.get("Data missing"),
+      I18n.get("DataMissing"),
       [{ text: "OK", onPress: () => console.log("OK Pressed") }],
       { cancelable: false }
     );
@@ -346,7 +346,7 @@ class PetRegistrationForm extends React.Component {
   getCreatePetInput(user) {
 
     let s3Object ;
-    if(base64){
+    if(this.base64){
       s3Object = {
         bucket: "Pets",
         key: "anything" // will be set by server

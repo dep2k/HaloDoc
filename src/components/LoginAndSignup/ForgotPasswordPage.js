@@ -41,8 +41,9 @@ class ForgotPasswordPage extends React.Component {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.textStyle}>{I18n.get("EnterEmail")}</Text>
+        <Text style={styles.textStyle}>{I18n.get("EnterUsername")}</Text>
           <TextInput
+            underlineColorAndroid={'rgba(0,0,0,0)'}
             style={styles.textInput}
             onChangeText={text => this.setState({ registrationCode: text })}
           />
@@ -69,16 +70,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "flex-start"
-    //  marginBottom: "20%"
   },
   textInput: {
-    height: "6%",
-    width: "90%",
+    height: 40,
+    width: 300,
     borderRadius: 20,
     backgroundColor: "white",
-    marginBottom: "10%",
-    marginTop: "2%",
-    marginHorizontal: "5%"
+    marginBottom: 20,
+    marginTop: 10,
+    paddingLeft: 20,
+    alignSelf: "center"
   },
   backgroundImage: {
     flex: 1

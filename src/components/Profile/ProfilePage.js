@@ -10,13 +10,14 @@ import {
   ActivityIndicator
 } from "react-native";
 import { I18n } from "aws-amplify";
-import {Cache} from "aws-amplify";
+import { Cache } from "aws-amplify";
 
 
 import { btnBackgroundImage } from "../../images/resource";
 
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 
+import { getImage } from '../ImageHelper';
 import { GetPets } from "../../Queries/PetAPI";
 import { Avatar } from "react-native-elements";
 import { NavBar } from "../Reusable/NavBar";
@@ -29,6 +30,40 @@ const editIcon = require(base + "editIcon.png");
 import Loader from "../../ActivityIndicator";
 import { LogoImage } from "../Reusable/LogoImage";
 
+class DataListItem extends React.Component {
+  render() {
+    const base64 = `${this.props.item.profilePic}`;
+    console.log("​Rerendering -> DataListItem -> render -> base64", base64)
+    return (
+      <TouchableOpacity style={styles.listItemCotainer}>
+        <View style={styles.petButtonContainer}>
+          <ImageBackground
+            source={btnBackgroundImage}
+            style={styles.imageBackgroundStyle}
+            imageStyle={styles.imageBackgroundImageStyle}>
+            <Text style={styles.imageBackgroundTextStyle}>
+              {this.props.item.name}
+            </Text>
+          </ImageBackground>
+          <Text style={styles.petCategoryText}>{I18n.get(this.props.item.category.toLowerCase()
+          )}</Text>
+        </View>
+        <View style={styles.petImageContainer}>
+          <Avatar
+            medium
+            rounded
+            source={{ uri: base64 }}
+            onPress={() => {
+              console.log("ListBtnClick!");
+            }}
+            activeOpacity={0.7}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -40,9 +75,32 @@ class ProfilePage extends React.Component {
     this.petButtonClick = this.petButtonClick.bind(this);
     this.addButtonClick = this.addButtonClick.bind(this);
     this.editButtonClick = this.editButtonClick.bind(this);
+    this.getImagesForItems = this.getImagesForItems.bind(this);
+    this.getImageForItem = this.getImageForItem.bind(this);
   }
 
-   editButtonClick() {
+  async getImageForItem(item) {
+    const s3Object = item.s3Object;
+    if (s3Object) {
+      const bucket = s3Object.bucket;
+      const key = s3Object.key;
+      console.log("Calling Get Image For Item With Key", key);
+      const result = await getImage(key, bucket);
+      console.log("ProfilePage -> getImage -> result");
+      item.profilePic = result;
+      items[item.index] = item;
+      console.log("Before Updating the state with the images");
+      this.setState({
+        dataSource: []
+      });
+
+      this.setState({
+        dataSource: items
+      });
+    }
+  }
+
+  editButtonClick() {
     Cache.getItem("User").then(user => {
       if (user) {
         const aboutUser = user;
@@ -51,7 +109,7 @@ class ProfilePage extends React.Component {
         });
       }
     });
-   }
+  }
 
   petButtonClick() {
     // this.props.navigation.navigate("HelperHistoryPage");
@@ -74,6 +132,7 @@ class ProfilePage extends React.Component {
           isLoading: false,
           dataSource: response.data.getPets.items
         });
+        this.getImagesForItems();
         this.closeActivityIndicator();
       })
       .catch(err => {
@@ -89,6 +148,11 @@ class ProfilePage extends React.Component {
     this.props.navigation.goBack(null);
   }
 
+  getImagesForItems() {
+    items.forEach(item => {
+      this.getImageForItem(item);
+    });
+  }
 
 
   addButtonClick(nameOfPage) {
@@ -158,38 +222,18 @@ class ProfilePage extends React.Component {
           style={styles.petListContainer}
           data={this.state.dataSource}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.listItemCotainer}>
-              <View style={styles.petButtonContainer}>
-                <ImageBackground
-                  source={btnBackgroundImage}
-                  style={styles.imageBackgroundStyle}
-                  imageStyle={styles.imageBackgroundImageStyle}>
-                  <Text style={styles.imageBackgroundTextStyle}>
-                    {item.name}
-                  </Text>
-                </ImageBackground>
-                <Text style={styles.petCategoryText}>{I18n.get(item.category.toLowerCase()
-                )}</Text>
-              </View>
-              <View style={styles.petImageContainer}>
-                <Avatar
-                  medium
-                  rounded
-                  source={petProfileImage}
-                  onPress={() => {
-                    console.log("ListBtnClick!");
-                    this.listBtnClick(item);
-                  }}
-                  activeOpacity={0.7}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={({ item, index }) => {
+            return (
+              <DataListItem
+                item={item}
+                index={index}
+              />
+            );
+          }}
         />
         <TouchableOpacity
           style={styles.editButton}
-          onPress= { () => this.editButtonClick()}
+          onPress={() => this.editButtonClick()}
         >
           <Image source={editIcon} style={styles.editImageBackgroundStyle} />
           <Text style={styles.editButtonTextStyle}>
@@ -239,8 +283,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: "100%",
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent"
+    alignItems: "center"
   },
 
   petButtonContainer: {
@@ -249,8 +292,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginLeft: 20,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent"
+    alignItems: "center"
   },
 
   petImageContainer: {
@@ -258,7 +300,6 @@ const styles = StyleSheet.create({
     height: 70,
     marginLeft: 5,
     marginBottom: 20,
-    backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "flex-start"
   },
@@ -280,7 +321,13 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: "90%",
     height: "100%",
-    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  imageBackgroundTextStyle: {
+    color: "white",
+    fontSize: 18,
+    alignSelf: "center",
     justifyContent: "center",
     alignItems: "center"
   },

@@ -43,6 +43,7 @@ export const  setUpLanguage = () => {
         'OK' : "OK",
         'is' : "is",
         'EnterEmail': 'Enter email where password should be send',
+        'EnterUsername': 'Enter your username to reset your password',
         'PasswordLength':"Password should be greater than  Eight characters",
         'RegistrationUnsuccessful' : "Registration Unsucessfull",
         'RegistrationSuccessful': "Registration Sucessfull",
@@ -52,6 +53,7 @@ export const  setUpLanguage = () => {
         'ConsultationClosed' : "This Consultation is closed",
         'CantSendMessage' : "You can not send any message",
         'RegistrationOfPets': "REGISTRATION OF PETS",
+        'DataMissing': "Some required fields are missing",
        
         'ClinicHistory': "CLINIC HISTORY",
         'Origin': "Origin",
@@ -321,6 +323,7 @@ export const  setUpLanguage = () => {
         'OK':"OK",
         'is' : "es",
         'Both Fields are mandatory': "Ambos campos son obligatorios",
+        'EnterUsername': "Ingrese su nombre de usuario para restablecer su contraseña",
         'EnterEmail': "Ingrese el correo electrónico donde se debe enviar la contraseña",
         'PasswordLength': "La contraseña debe tener más de ocho caracteres",
         'RegistrationUnsuccessful': "Registro no exitoso",
@@ -331,6 +334,7 @@ export const  setUpLanguage = () => {
         'ConsultationClosed': "Esta consulta está cerrada",
         'CantSendMessage': "No puedes enviar ningún mensaje",
         'RegistrationOfPets' :"INSCRIPCION DE MASCOTAS",
+        'DataMissing': "Faltan algunos campos obligatorios",
        
         'ClinicHistory': "HISTORIA CLINICA",
         'Origin': "Procedencia",

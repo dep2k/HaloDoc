@@ -22,6 +22,7 @@ const backgroundImage = require(base + "newBackground.png");
 const backButtonImage = require(base + "BackButtonShape.png");
 const navBarImage = require(base + "navbarImage.png");
 const addIcon = require(base + "addIcon.png");
+const doctorIcon = require(base + "listOfDoctorsIconGreen.png")
 const placeHolderImage = require(base + "placeholderImage.png");
 
 class DataListItem extends React.Component {
@@ -173,9 +174,15 @@ class HelperDoctorsListPage extends React.Component {
       <View style={styles.mainContainer}>
         <NavBar showBackBtn="false" onBackPress={this.backButtonClick} />
         {this.renderAddButton()}
-        <Text style={styles.doctorsDirectoryText}>
-          {I18n.get("DoctorsDirectory")}
-        </Text>
+        <View style={styles.headingTextStyle}>
+           <Image
+            style={styles.iconImagesStyle} source={doctorIcon}>
+          </Image> 
+          <Text style={styles.doctorsDirectoryText}>
+            {I18n.get("DoctorsDirectory")}
+          </Text>
+        </View>
+
         <View style={styles.flatList}>
           <FlatList
             data={this.state.doctorsListData}
@@ -192,7 +199,9 @@ class HelperDoctorsListPage extends React.Component {
           />
         </View>
         {/* </ImageBackground>  */}
-        {this.state.animating && <Loader animating={this.state.animating} />}
+        {this.state.animating && (
+          <Loader animating={this.state.animating} />
+        )}
       </View>
     );
   }
@@ -220,12 +229,12 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30
   },
-  addButtonContainer : {
-    height: 40, 
+  addButtonContainer: {
+    height: 40,
     width: "100%",
-    flexDirection: 'row', 
-    justifyContent: 'flex-end', 
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   addButtonStyle: {
     marginTop: 30,
@@ -258,12 +267,26 @@ const styles = StyleSheet.create({
   doctorsDirectoryText: {
     fontSize: 21,
     color: "black",
-    marginTop: "10%",
-    marginBottom: 35
+    
+  },
+  headingTextStyle: {
+    flexDirection: 'row',
+     height: 80,
+     width: "90%",
+     justifyContent: 'flex-start',
+     alignItems: 'center',
+   //  backgroundColor: 'pink'
+  },
+  iconImagesStyle: {
+    width: 30,
+    height: 30,
+    marginLeft: "5%",
+    marginRight: "5%",
+    resizeMode: "contain"
   },
   flatList: {
     width: "100%",
-   // backgroundColor: "green",
+    // backgroundColor: "green",
     flex: 0.95
   },
   listCell: {
@@ -304,6 +327,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     resizeMode: "contain"
-  }
+  },
+
 });
 export default HelperDoctorsListPage;
