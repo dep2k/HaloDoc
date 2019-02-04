@@ -1,7 +1,7 @@
 
 export const CreateDoctor = `mutation CreateDoctor($doctorId: String,$name: String, $speciality: String, 
         $profilePic: String, $registrationId: String, $phoneNo: String, $email: String,
-        $homeTown: String, $medicalCenter: String, $department: String, $address: String, s3Object: $S3ObjectInput ) {
+        $homeTown: String, $medicalCenter: String, $department: String, $address: String, $s3Object: S3ObjectInput ) {
     
          createDoctor(
   

@@ -84,15 +84,7 @@ class HelperDoctorsListPage extends React.Component {
           doctorsListData: items
         });
         
-        /*
-        getImage(key,bucket).then((result)=> {
-          console.log("​HelperDoctorsListPage -> getImage -> result");
-          item.profilePic = result;
-          items[item.index] = item;
-          console.log("Updating the state with the images");
-        }).catch((error)=> {
-          console.log("​DataListItem -> getImageForItem -> error", error);
-        });*/
+       
       }
    
   }
@@ -164,7 +156,10 @@ class HelperDoctorsListPage extends React.Component {
 
    getImagesForItems() {
     items.forEach(item => {
-       this.getImageForItem(item);
+      if(item) {
+				console.log('TCL: HelperDoctorsListPage -> getImagesForItems -> item', item)
+        this.getImageForItem(item);
+      }
     });
   }
 

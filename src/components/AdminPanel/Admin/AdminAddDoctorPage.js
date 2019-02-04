@@ -129,10 +129,10 @@ class AdminAddDoctorPage extends React.Component {
       s3Object = null;
     }
     const createDoctorInput = {
-      doctorId: this.state.doctor.name,
+      doctorId: this.state.doctor.userName,
       name: this.state.doctor.name,
       userName: this.state.doctor.userName,
-      speciality: this.specialityValue,
+      speciality: this.specialityValue.toLowerCase(),
       profilePic: "profilePic",
       registrationId: this.state.doctor.registrationId,
       phoneNo: this.state.doctor.phoneNo,
