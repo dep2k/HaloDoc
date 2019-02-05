@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'black'
   },
   drNameText: {
-    fontSize: 21,
+    fontSize: 18,
     color: "#A4C952",
     fontWeight: "bold"
   },

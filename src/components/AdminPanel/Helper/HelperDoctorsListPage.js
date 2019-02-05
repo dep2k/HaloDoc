@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   doctorsDirectoryText: {
-    fontSize: 21,
+    fontSize: 19,
     color: "black",
     
   },
@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
    //  backgroundColor: 'pink'
   },
   iconImagesStyle: {
-    width: 30,
-    height: 30,
+    width: 28,
+    height: 28,
     marginLeft: "5%",
     marginRight: "5%",
     resizeMode: "contain"
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     color: "black",
-    fontSize: 18,
+    fontSize: 16,
     padding: 2
   },
   categoryText: {

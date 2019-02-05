@@ -274,13 +274,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   handSymbol: {
-    width: 35,
-    height: 35
+    width: 30,
+    height: 30
   },
 
   historyText: {
     marginLeft: 15,
-    fontSize: 20,
+    fontSize: 18,
     width: "80%",
     color: "#A4C952"
   },
