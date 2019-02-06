@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 
     petCategoryText: {
         fontSize: 12,
-        color: "black"
+        color: "black",
         },
     imageBackgroundStyle: {
         width: "90%",

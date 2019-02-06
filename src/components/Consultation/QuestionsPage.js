@@ -142,7 +142,7 @@ class QuestionsPage extends React.Component {
         const { navigation } = this.props;
         const pet = navigation.getParam('petInfo');
         const petName = pet.name;
-        const petCategory = pet.category;
+        const petCategory = I18n.get(pet.category);
         const navTitle = petName + " - " + petCategory;
 
         return (

@@ -106,84 +106,78 @@ class UpdateProfilePage extends React.Component {
               </View>
             </View>
             <View style={styles.formContainer}>
-              {/* <TextInput
-                style={styles.firstTextInputStyle}
-                autoCapitalize={"none"}
-                value={this.state.user.firstName}
-                placeholderTextColor="white"
-                returnKeyType={"next"}
-                autoCorrect={false}
-                onSubmitEditing={() => {
-                  this.secondTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                onChangeValue={text =>
-                  this.setState(state => ((state.user.firstName = text), state))
-                }
-              />*/}
-              <TextInput
-                underlineColorAndroid={"rgba(0,0,0,0)"}
-                ref={input => {
-                  this.secondTextInput = input;
-                }}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.thirdTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                value={this.state.user.lastName}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.lastName = text), state))
-                }
-              />
-              {/* 
-               <View style={styles.phnTextInputView}>
+              <View style={styles.textInputContainer}>
+                <Text
+                  style={{
+                    color: "white",
+                    width: 60,
+                    alignSelf: "flex-end",
+                    marginRight: 7
+                  }}
+                >
+                  {I18n.get("Username") + " " + ":"}
+                </Text>
                 <TextInput
+                  underlineColorAndroid={"rgba(0,0,0,0)"}
                   ref={input => {
-                    this.thirdTextInput = input;
+                    this.secondTextInput = input;
                   }}
                   returnKeyType={"next"}
                   onSubmitEditing={() => {
-                    this.fifthTextInput.focus();
+                    this.thirdTextInput.focus();
                   }}
                   blurOnSubmit={false}
-                  style={styles.phnTextInput}
+                  style={styles.textInput}
                   autoCapitalize={"none"}
                   autoCorrect={false}
-                  value={this.state.user.phoneNo}
-                  autoCorrect={false}
+                  value={this.state.user.lastName}
                   placeholderTextColor="white"
-                  onChangeText={
-                    text =>
-                      this.setState(state => ((state.user.phoneNo = text), state)) 
+                  onChangeText={text =>
+                    this.setState(
+                      state => ((state.user.lastName = text), state)
+                    )
                   }
                 />
-              </View> */}
-              <TextInput
-                ref={input => {
-                  this.fifthTextInput = input;
-                }}
-                underlineColorAndroid={"rgba(0,0,0,0)"}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  this.sixthTextInput.focus();
-                }}
-                blurOnSubmit={false}
-                style={styles.textInput}
-                autoCapitalize={"none"}
-                autoCorrect={false}
-                keyboardType={"email-address"}
-                value={this.state.user.email}
-                autoCorrect={false}
-                placeholderTextColor="white"
-                onChangeText={text =>
-                  this.setState(state => ((state.user.email = text), state))
-                }
-              />
+                
+              </View>
+              <View style={styles.lastLineStyle} />
+              <View style={styles.textInputContainer}>
+                <Text
+                  style={{
+                    color: "white",
+                    width: 60,
+                    alignSelf: "flex-end",
+                    marginRight: 7
+                  }}
+                >
+                  {I18n.get("Email") + " " + ":"}
+                </Text>
+                <TextInput
+                  ref={input => {
+                    this.fifthTextInput = input;
+                  }}
+                  underlineColorAndroid={"rgba(0,0,0,0)"}
+                  returnKeyType={"next"}
+                  onSubmitEditing={() => {
+                    this.sixthTextInput.focus();
+                  }}
+                  blurOnSubmit={false}
+                  style={styles.textInput}
+                  autoCapitalize={"none"}
+                  autoCorrect={false}
+                  keyboardType={"email-address"}
+                  value={this.state.user.email}
+                  autoCorrect={false}
+                  placeholderTextColor="white"
+                  onChangeText={text =>
+                    this.setState(
+                      state => ((state.user.email = text), state)
+                    )
+                  }
+                />
+               
+              </View>
+              <View style={styles.lastLineStyle} />
             </View>
           </KeyboardAvoidingView>
           <View style={styles.buttonContainer}>
@@ -202,7 +196,9 @@ class UpdateProfilePage extends React.Component {
               </ImageBackground>
             </TouchableOpacity>
           </View>
-          {this.state.animating && <Loader animating={this.state.animating} />}
+          {this.state.animating && (
+            <Loader animating={this.state.animating} />
+          )}
           {/* </ImageBackground> */}
         </View>
       </TouchableWithoutFeedback>
@@ -284,23 +280,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20
   },
+  textInputContainer: {
+    flexDirection: "row",
+    height: 35,
+    width: "90%",
+    justifyContent: "flex-start"
+  },
   firstTextInputStyle: {
     height: 35,
-    width: "80%",
+    width: "75%",
     marginTop: "3%",
-    borderBottomColor: "white",
-    borderBottomWidth: 1,
+    // borderBottomColor: "white",
+    // borderBottomWidth: 1,
     color: "white",
     alignContent: "flex-end"
   },
   textInput: {
     height: 35,
-    width: "80%",
+    width: "75%",
     marginTop: "3%",
-    borderBottomColor: "white",
-    borderBottomWidth: 1,
+    // borderBottomColor: "white",
+    // borderBottomWidth: 1,
     color: "white",
     alignContent: "flex-end"
+  },
+  lastLineStyle: {
+    width: "90%",
+    height: 1,
+    backgroundColor: "white"
   },
   lastTextInputStyle: {
     height: 35,
@@ -380,7 +387,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   registerTextStyle: {
-    fontSize: 25,
+    fontSize: 20,
     color: "white",
     marginTop: 25
   }

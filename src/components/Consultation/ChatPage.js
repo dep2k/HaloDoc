@@ -366,7 +366,7 @@ class ChatPage extends React.Component {
   render() {
 
     const { navigation } = this.props;
-    const navTitle = "Chat";
+    const navTitle = I18n.get("Chat");
     console.log("Render:" + this.myUser);
     let chatOptions = null;
     if(this.consultationStatus == "CLOSED"){
