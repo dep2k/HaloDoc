@@ -59,6 +59,7 @@ export const  setUpLanguage = () => {
         DataMissing: "Some required fields are missing",
         Chat: "Chat",
         Send: "Send",
+       'Options': "Options",
 
         ClinicHistory: "CLINIC HISTORY",
         Origin: "Origin",
@@ -337,10 +338,8 @@ export const  setUpLanguage = () => {
         OK: "OK",
         is: "es",
         "Both Fields are mandatory": "Ambos campos son obligatorios",
-        EnterUsername:
-          "Ingrese su nombre de usuario para restablecer su contraseña",
-        EnterEmail:
-          "Ingrese el correo electrónico donde se debe enviar la contraseña",
+        EnterUsername:  "Ingrese su nombre de usuario para restablecer su contraseña",
+        EnterEmail: "Ingrese el correo electrónico donde se debe enviar la contraseña",
         PasswordLength: "La contraseña debe tener más de ocho caracteres",
         RegistrationUnsuccessful: "Registro no exitoso",
         RegistrationSuccessful: "Registro exitoso",
@@ -353,6 +352,7 @@ export const  setUpLanguage = () => {
         DataMissing: "Faltan algunos campos obligatorios",
         Chat: "Charla",
         Send: "Enviar",
+        'Options': "Opciones",
 
         ClinicHistory: "HISTORIA CLINICA",
         Origin: "Procedencia",
@@ -380,8 +380,7 @@ export const  setUpLanguage = () => {
         SaveAndRegister: "GUARDAR E INSCRIBIR OTRA MASCOTA",
         Welcome: "Bienvenido a Holavet",
         Enter: "INGRESAR",
-        WelcomeMessage:
-          "A partir de ahora tienes a tu disposición un grupo de  veterinarios que te acompañar las 24 horas del dia, todos los dias del ano",
+        WelcomeMessage: "A partir de ahora tienes a tu disposición un grupo de  veterinarios que te acompañar las 24 horas del dia, todos los dias del ano",
         LogOut: "Cerrar sesión",
         NameOfPet: "Nombre de tu mascota",
         SelectRace: "Selecciona la raza",
@@ -568,20 +567,17 @@ export const  setUpLanguage = () => {
           "por tu información y tiempo en línea. Te recordamos que esta orientacion no reemplaza ni sustituye una consulta veterinaria presencial, si Balú no mejora o si empeora debes consultar nuevamente.",
         Payment: "PAGAR",
         ConsultationPayment: "Pago",
-        VetNotified:
-          "EL VETERINARIO YA ESTA SIENDO NOTIFICADO Y TE ATENDERÁ ANTES DE 30 MINUTOS.",
+        VetNotified: "EL VETERINARIO YA ESTA SIENDO NOTIFICADO Y TE ATENDERÁ ANTES DE 30 MINUTOS.",
         Question1: "¿HACE CUÁNTO PRESENTA LOS SÍNTOMAS?",
         Question2: "¿ALERGIA A ALGÚN ALIMENTO O MEDICAMENTO?",
-        Question3:
-          "¿LE HAS SUMINISTRADO ALGÚN TIPO DE TRATAMIENTO? ¿HACE CUÁNTO?",
+        Question3: "¿LE HAS SUMINISTRADO ALGÚN TIPO DE TRATAMIENTO? ¿HACE CUÁNTO?",
         Question4: "¿ALGUNA CONDICIÓN ESPECIAL O ANTECEDENTE?",
         Question5: "PESO",
 
         "End Consultation": "Consulta final",
         "Questions Answers": "Preguntas y respuestas",
         "Confirm Payment": "Confirmar pago",
-        ConsultationEndMessage:
-          "ESPERAMOS QUE TENGAS UNA FELIZ NOCHE / DÍA Y QUE TU MASCOTA SE HA MEJORADO PRONTO. RECUERDE QUE EN HOLAVET ESTAMOS LISTOS PARA USTED.",
+        ConsultationEndMessage:"ESPERAMOS QUE TENGAS UNA FELIZ NOCHE / DÍA Y QUE TU MASCOTA SE HA MEJORADO PRONTO. RECUERDE QUE EN HOLAVET ESTAMOS LISTOS PARA USTED.",
 
         closed: "Derrado",
         ongoing: "En Marcha",

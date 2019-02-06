@@ -357,7 +357,7 @@ class ChatPage extends React.Component {
 
  getRightButtonText() {
    if(this.myUser.userType == 'DOCTOR'){
-     return "More"
+     return (I18n.get("Options"))
    } else {
      return ""
    }
@@ -418,6 +418,15 @@ class ChatPage extends React.Component {
             dropDownType={"ChatDD"}
             modalVisible={this.state.modalVisible}
             dropDownData={chatOptions}
+            onModalBackPress={() => {
+            this.setState(
+              state => (
+                (state.modalVisible = false),
+                state
+              )
+            )
+            console.log(this.state.modalVisible)
+          }}
             onPressDDList={(item, type) => this.onPressDDList(item, type)} >
         </DropDown>
         {this.state.animating && <Loader animating={this.state.animating} />}
