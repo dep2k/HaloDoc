@@ -1,6 +1,5 @@
 import React from "react";
-//import { Provider } from "react-redux";
-//import store from './src/store'
+import { Asset, AppLoading } from 'expo';
 
 import AppStackNavigator from "./src/Navigation/AppNavigator";
 //import HolaVet from './src/Navigation/AppNavigator'
@@ -34,7 +33,20 @@ const TopLevelNavigator = AppStackNavigator;
 setUpLanguage(); // for I18n
 
 export default class App extends React.Component {
+  state = {
+    isReady: false,
+  };
   render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+
     return (
       <TopLevelNavigator
         ref={navigatorRef => {
@@ -42,5 +54,16 @@ export default class App extends React.Component {
         }}
       />
     );
+  }
+  async _cacheResourcesAsync() {
+    const images = [
+      require('./src/images/newBackground.png'),
+    ];
+
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+    return Promise.all(cacheImages)
+
   }
 }

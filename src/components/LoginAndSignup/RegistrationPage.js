@@ -24,6 +24,7 @@ import Loader from "../../ActivityIndicator";
 
 const base = "../../images/";
 const backButtonImage = require(base + "BackButtonShape.png");
+const newBackgroundImage = require(base + "newBackground.png");
 
 class RegistrationPage extends React.Component {
   constructor(props) {
@@ -159,6 +160,9 @@ class RegistrationPage extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainContainer}>
+        <ImageBackground source = {newBackgroundImage}
+            style={styles.fullBackgroundImage}
+            imageStyle={styles.fullbackgroundImageStyle}>
           <View style={styles.topContainer}>
             <TouchableOpacity
               style={styles.backButtonStyle}
@@ -350,7 +354,8 @@ class RegistrationPage extends React.Component {
               <Loader animating={this.state.animating} />
             )}
           </KeyboardAwareScrollView>
-        </View>
+          </ImageBackground>
+        </View>   
       </TouchableWithoutFeedback>
     )
   }
@@ -361,7 +366,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#AACB61"
+   // backgroundColor: "#AACB61"
+   backgroundColor: "transparent",
   },
   topContainer: {
     height: 60,
@@ -478,15 +484,14 @@ const styles = StyleSheet.create({
     // marginRight: "20%",
   },
   fullbackgroundImageStyle: {
-    position: "absolute",
-    resizeMode: "cover",
+   // position: "absolute",
+    resizeMode: "contain",
     width: "100%",
     height: "100%",
     backgroundColor: "transparent",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "transparent"
   },
   imageBackgroundRegisterButtonStyle: {
     width: "100%",
