@@ -1,0 +1,8 @@
+{
+  "version": "2017-02-28",
+  "operation": "DeleteItem",
+  "key": {
+    "doctorId": $util.dynamodb.toDynamoDBJson($ctx.args.input.id),
+    "name": $util.dynamodb.toDynamoDBJson($ctx.args.input.name),
+  },
+}

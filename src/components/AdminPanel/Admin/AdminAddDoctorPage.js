@@ -642,11 +642,6 @@ const styles = StyleSheet.create({
     color: "grey",
     fontSize: 14
   },
-  lastLineStyle: {
-    width: "100%",
-    height: 0.5,
-    backgroundColor: "darkgrey"
-  },
   LastlastLineStyle: {
     width: "100%",
     height: 0.5,

@@ -103,8 +103,6 @@ class HelperDoctorsListPage extends React.Component {
         this.setState({
           doctorsListData: items
         });
-
-        //this.getImageForItem(items[0])
         this.getImagesForItems();
         this.closeActivityIndicator();
       })

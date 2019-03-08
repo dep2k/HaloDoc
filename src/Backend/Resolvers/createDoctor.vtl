@@ -1,0 +1,39 @@
+## Below example shows how to create an object from all provided GraphQL arguments
+## The primary key of the obejct is a randomly generated UUD using the $util.autoId() utility
+## Other utilities include $util.matches() for regular expressions, $util.time.nowISO8601() or
+##   $util.time.nowEpochMilliSeconds() for timestamps, and even List or Map helpers like
+##   $util.list.copyAndRetainAll() $util.map.copyAndRemoveAllKeys() for shallow copies
+## Read more: https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html#utility-helpers-in-util
+
+{
+    "version" : "2017-02-28",
+    "operation" : "PutItem",
+    "key" : {
+        ## If object "id" should come from GraphQL arguments, change to $util.dynamodb.toDynamoDBJson($ctx.args.id)
+        ##"doctorId": $util.dynamodb.toDynamoDBJson($util.autoId()),
+        "doctorId": {"S": "${context.arguments.input.doctorId}"}
+    },
+    
+    "attributeValues" : {
+   	
+		 "name" : {"S": "${context.arguments.input.name}" },
+         "registrationId": {"S": "${context.arguments.input.registrationId}" },
+         "speciality": {"S": "${context.arguments.input.speciality}" },
+         "homeTown": {"S": "${context.arguments.input.homeTown}" },
+         "medicalCenter": {"S": "${context.arguments.input.medicalCenter}" },
+         "department": {"S": "${context.arguments.input.department}" },
+         "address": {"S": "${context.arguments.input.address}" },
+          "phoneNo": {"S": "${context.arguments.input.phoneNo}" },
+          "email": {"S": "${context.arguments.input.email}" },
+          "createdAt": {"S": "$util.time.nowEpochMilliSeconds()" },
+         "profilePic": {"S": "${context.arguments.input.profilePic}" },
+         "isAvailable" : {"BOOL" :  true },
+         "s3Object": {"M": {
+         	"bucket": {"S": "Doctors" },
+            "key":$util.dynamodb.toDynamoDBJson($util.autoId()),
+         } },
+         
+         ## "isOnline" : {"BOOL" :  false }
+         
+    }
+}
