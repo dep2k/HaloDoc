@@ -48,6 +48,7 @@ class PetRegistrationForm extends React.Component {
     this.state = {
       pet: {
         base64: defaultValue,
+        imageUrl: 'https://sigma-static-files.imgix.net/default_profile_pic.png',
         info: {
           name: defaultValue,
           race: defaultValue,
@@ -88,7 +89,7 @@ class PetRegistrationForm extends React.Component {
    
   }
 
-
+  
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -100,8 +101,8 @@ class PetRegistrationForm extends React.Component {
           <View style={styles.profileImage}>
             <Avatar
               large
-              rounded
-              source={{uri: `data:image/jpg;base64,${this.state.pet.base64}`}}
+              rounded  
+               source = {{ uri: `data:image/jpg;base64,${this.state.pet.base64}` }}
               onPress={() => this.onAvatarClick()}
               activeOpacity={0.7}
             />
@@ -281,19 +282,23 @@ class PetRegistrationForm extends React.Component {
           }).catch((error) => {
             console.log("​AdminAddDoctorPage -> onAvatarClick -> error", error);
           });
-        }, 500);
-        
+        }, 500);   
       } else if (option == "Cámara") {
-        setTimeout(() => { this.pickImage();
+        setTimeout(() => {
+          this.pickImage();  
         }, 500);
-      }
+      }  
      }
   }
-
+  
   pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
+   
+    let result = await ImagePicker.launchCameraAsync({
+        exif: true,
+        allowsEditing: true,
+        quality: 0.7,
+        base64: true,
+        aspect: [4, 3]
     });
     console.log(result);
     base64 = result.base64;
@@ -302,6 +307,10 @@ class PetRegistrationForm extends React.Component {
         state => ((state.pet.base64 = base64), state)
       )
   };
+ 
+    if (result.cancelled) {
+      return;
+    }
 }
 
   onPress(type) {
