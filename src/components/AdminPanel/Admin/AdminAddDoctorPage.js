@@ -1,6 +1,7 @@
 import React from "react";
 import { I18n } from "aws-amplify";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
+import amplify from '../../aws-exports';
 import { Auth } from "aws-amplify";
 import { Cache } from "aws-amplify";
 import { NavBar } from "../../Reusable/NavBar";
@@ -9,10 +10,13 @@ import { getSpecialityData } from "../../PetRegistration/DropDownData";
 import FormDropDownInput from "../../PetRegistration/FormDropDownInput";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import {launchPhotoLibrary,uploadImage} from '../../ImageHelper';
+import Storage from '@aws-amplify/storage';
+
+
 
 import {
   StyleSheet,
-  View,
+  View, 
   Text,
   Image,
   ScrollView,
@@ -32,7 +36,6 @@ const backgroundImage = require(base + "loginButtonImage.png");
 const navBarImage = require(base + "navbarImage.png");
 const placeHolderImage = require(base + "placeholderImage.png");
 const dropDownImage = require(base + "dropDownIcon.png");
-
 
 class AdminAddDoctorPage extends React.Component {
   constructor(props) {

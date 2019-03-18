@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
+import { ImagePicker } from 'expo';
 
 import {launchPhotoLibrary,uploadImage} from '../../components/ImageHelper';
 import { NavBar } from "../Reusable/NavBar";
@@ -23,6 +24,7 @@ import Loader from "../../ActivityIndicator";
 import { Avatar } from "react-native-elements";
 import { petRaceListData } from "./DropDownData";
 import {genderData} from "./DropDownData";
+import {cameraData} from "./DropDownData";
 import { vaccinationsDict, getVaccinationsArray } from "./VaccinationsData";
 
 import { styles } from './Styles';
@@ -82,19 +84,11 @@ class PetRegistrationForm extends React.Component {
   }
 
   onAvatarClick(){
-    console.log("Works!")
-    launchPhotoLibrary().then((result)=>{
-      base64 = result.base64;
-      if(base64) {
-        this.setState(
-          state => ((state.pet.base64 = base64), state)
-        )
-      }
-			console.log("​AdminAddDoctorPage -> onAvatarClick -> result", result)
-    }).catch((error)=>{
-		console.log("​AdminAddDoctorPage -> onAvatarClick -> error", error);
-    });
+    this.onPress('CameraOptionDD');
+   
   }
+
+
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -128,7 +122,6 @@ class PetRegistrationForm extends React.Component {
                   state
                 )
               )
-              console.log(this.state.modalVisible)
             }}
             onPressDDList={(item, type) => this.onPressDDList(item, type)}>
           </DropDown>
@@ -246,7 +239,7 @@ class PetRegistrationForm extends React.Component {
 
   }
 
-  onPressDDList(item, type) {
+   onPressDDList(item, type) {
     if (type == 'raceDDList') {
       const race = item.name;
       this.setState(
@@ -264,13 +257,54 @@ class PetRegistrationForm extends React.Component {
           (state.modalVisible = false),
           state
         )
+      ); 
+    } else if (type == 'photoPickDD') {
+      const option = item.name;
+      this.setState(
+        state => (
+          (state.modalVisible = false),
+          state
+        )
       );
-    }
+      if (option == "Galería de fotos") {
+        setTimeout(() => {
+          console.log("launchliabrary")
+          launchPhotoLibrary().then((result) => {
+            console.log("code for base 64")
+            base64 = result.base64;
+            if (base64) {
+              this.setState(
+                state => ((state.pet.base64 = base64), state)
+              )
+            }
+            console.log("​AdminAddDoctorPage -> onAvatarClick -> result", result)
+          }).catch((error) => {
+            console.log("​AdminAddDoctorPage -> onAvatarClick -> error", error);
+          });
+        }, 500);
+        
+      } else if (option == "Cámara") {
+        setTimeout(() => { this.pickImage();
+        }, 500);
+      }
+     }
   }
 
+  pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    console.log(result);
+    base64 = result.base64;
+    if (base64) {
+      this.setState(
+        state => ((state.pet.base64 = base64), state)
+      )
+  };
+}
+
   onPress(type) {
-    //console.log("ONPress:" + type);
-    //console.log(this.petType);
     console.log(petRaceListData);
     if (type == "FormRaceDD") {
       //console.log(petRaceListData);
@@ -281,7 +315,11 @@ class PetRegistrationForm extends React.Component {
       //console.log(genderData);
       const data = genderData()
       this.showDropDown(data, 'FormGenderDD');
-    } else if (type == "SaveClick") {
+    } else if (type == "CameraOptionDD") {
+         const data = cameraData()
+      this.showDropDown(data, 'CameraOptionDD')
+    } 
+    else if (type == "SaveClick") {
       //console.log("SaveClick");
       this.registerPet();
     } else if (type == "SaveAndRegisterClick") {

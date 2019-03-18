@@ -35,6 +35,11 @@
          "background" : {"S" :  "${context.arguments.input.background}"},
          "weight" : {"S" :  "${context.arguments.input.weight}"},
          "vaccinations": $util.dynamodb.toListJson($ctx.args.input.vaccinations),
+          "s3Object": {"M": {
+         	"bucket": {"S": "Pets" },
+            "key":$util.dynamodb.toDynamoDBJson($util.autoId()),
+         } },
+         ##"vaccinations": $util.dynamodb.toMap($ctx.args.input.vaccinations)
   
          
     }

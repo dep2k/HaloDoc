@@ -17,7 +17,22 @@ export function genderData() {
   ];
   return genderData;
 } 
-
+ 
+export function cameraData() {
+  const cameraData = [
+    {
+      key: "1",
+      name: I18n.get("Camera"),
+      value: "Female"
+    },
+    {
+      key: "2",
+      name: I18n.get("PhotoGallery"),
+      value: "Male"
+    }
+  ];
+  return cameraData;
+}
 
 export function getSpecialityData() {
   let specialityData = [

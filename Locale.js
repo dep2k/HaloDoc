@@ -6,6 +6,8 @@ export const  setUpLanguage = () => {
     I18n.setLanguage('es');
     const dict = {
       en: {
+        'Camera': "Camera",
+        'PhotoGallery': "Photo Gallery",
         Menu: "MENU",
         "Sign In": "Sign In",
         RegisterMe: "Register Me",
@@ -87,8 +89,7 @@ export const  setUpLanguage = () => {
         SaveAndRegister: "SAVE AND REGISTER ANOTHER MASCOT",
         Welcome: "Welcome to Holavet",
         Enter: "ENTER",
-        WelcomeMessage:
-          "From now on you have at your disposal a group of veterinarians who will accompany you 24 hours a day, every day of the year",
+        WelcomeMessage: "From now on you have at your disposal a group of veterinarians who will accompany you 24 hours a day, every day of the year",
         LogOut: "LOG OUT",
         NameOfPet: "Name of your pet",
         SelectRace: "Select the Race",
@@ -298,6 +299,8 @@ export const  setUpLanguage = () => {
         paymentConfirmed: "Payment Confirmed"
       },
       es: {
+        'Camera': "Cámara",
+        'PhotoGallery': "Galería de fotos",
         Menu: "MENÚ",
         LogIn: "Inicio De Sesión",
         RegisterMe: "REGISTRARME",

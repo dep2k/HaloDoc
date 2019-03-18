@@ -70,6 +70,10 @@ export class DropDown extends React.Component {
                           this.props.dropDownType == "SpecialityDD" &&
                             this.props.onPressDDList(item, "SpecialityDD");
                         }
+                        {
+                          this.props.dropDownType == "CameraOptionDD" && 
+                            this.props.onPressDDList(item, "photoPickDD");
+                        }
                       }}
                     />
                   );

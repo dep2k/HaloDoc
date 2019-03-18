@@ -1,0 +1,21 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        ## Provide a query expression. **
+        "expression": "username = :id",
+        "expressionValues" : {
+            ":id" : {
+                "S" : "${ctx.args.username}"
+            }
+        }
+    },
+    "filter": {
+        "expression": "contains(conversationStatus, :tag)",
+        "expressionValues" : {
+            ":tag": {
+                "S": "${ctx.args.conversationStatus}"
+            }
+        }
+    }
+}
